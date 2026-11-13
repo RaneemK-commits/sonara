@@ -1,4 +1,4 @@
-"""End-to-end flow through the real server + controller, without audio hardware."""
+"""Device role: request store + end-to-end flow through server and controller, no audio hardware."""
 import time
 
 from fastapi.testclient import TestClient
@@ -8,7 +8,9 @@ from sonara.controller import Controller
 from sonara.hw.mcu import NullMCU
 from sonara.server.app import create_app
 from sonara.server.hub import Hub
-from sonara.store import RequestStore
+import pytest
+
+from sonara.store import RequestStore, TransitionError
 
 
 class SilentSpeaker:
@@ -85,3 +87,20 @@ def test_no_receipt_becomes_not_displayed():
         c.post("/api/room/input", json={"action": "confirm"})
         assert wait_for(lambda: store.history() and store.history()[0]["status"] == "NOT_DISPLAYED", 4)
         assert "not_displayed" in spk.said
+
+
+def test_store_honest_transitions():
+    s = RequestStore(":memory:")
+    r = s.create("BED-01", "WATER", "Water")
+    assert r["status"] == "QUEUED"
+    with pytest.raises(TransitionError):
+        s.transition(r["request_id"], "COMPLETED", "caregiver")  # must be acknowledged first
+    s.transition(r["request_id"], "NOT_DISPLAYED", "system")
+    s.transition(r["request_id"], "DISPLAYED", "caregiver_screen")
+    _, changed = s.transition(r["request_id"], "DISPLAYED", "caregiver_screen")
+    assert not changed  # idempotent receipts
+    s.transition(r["request_id"], "ACKNOWLEDGED", "caregiver")
+    s.transition(r["request_id"], "COMPLETED", "caregiver")
+    assert [e["status"] for e in s.events(r["request_id"])] == [
+        "QUEUED", "NOT_DISPLAYED", "DISPLAYED", "ACKNOWLEDGED", "COMPLETED"]
+    assert s.active() == []

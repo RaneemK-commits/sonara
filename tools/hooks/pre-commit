@@ -1,0 +1,40 @@
+#!/bin/sh
+# File-ownership guard (see AGENTS.md "Team and ownership").
+# Enable once per clone:  git config core.hooksPath tools/hooks && git config hackathon.role <speech|device|ui|lead>
+#   (or set SONARA_ROLE for the agent's shell; it overrides git config)
+# Humans changing shared files on purpose:  ALLOW_SHARED=1 git commit ...   (agents: only when your human asks)
+
+[ "$ALLOW_SHARED" = "1" ] && exit 0
+
+role=${SONARA_ROLE:-$(git config hackathon.role)}
+case "$role" in
+  speech) allowed="sonara/models/ sonara/audio/ sonara/recognizer.py sonara/tts.py
+                   scripts/download_models.py scripts/pregenerate_tts.py scripts/enroll.py
+                   scripts/evaluate.py scripts/benchmark.py tests/test_speech results/ roles/speech/" ;;
+  device) allowed="sonara/controller.py sonara/store.py sonara/server/ sonara/hw/ sonara/__main__.py
+                   sonara/__init__.py sonara/config.py sonara/metrics.py config/sonara.toml mcu/
+                   tests/test_device roles/device/" ;;
+  ui)     allowed="web/ pitch/ assets/ README.md config/intents.toml roles/ui/" ;;
+  lead)   allowed="AGENTS.md CLAUDE.md docs/ tools/ roles/ .claude/ .github/ .gitignore .gitattributes
+                   pyproject.toml LICENSE" ;;
+  *)
+    echo "pre-commit: set your role first: git config hackathon.role <speech|device|ui|lead>" >&2
+    exit 1 ;;
+esac
+
+bad=$(git diff --cached --name-only --no-renames | while IFS= read -r f; do
+  ok=0
+  for p in $allowed; do
+    case "$f" in ("$p"*) ok=1 ;; esac
+  done
+  [ $ok -eq 0 ] && echo "  $f"
+done)
+
+if [ -n "$bad" ]; then
+  echo "pre-commit: role '$role' may only commit inside: $(echo $allowed)" >&2
+  echo "These staged files belong to another role or are shared:" >&2
+  echo "$bad" >&2
+  echo "Unstage them (git restore --staged <file>) and post a NEED on the board to the owner." >&2
+  exit 1
+fi
+exit 0

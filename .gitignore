@@ -21,3 +21,6 @@ results/*.json
 *.egg-info/
 build/
 dist/
+
+# Agent board read cursors (per clone)
+.board/

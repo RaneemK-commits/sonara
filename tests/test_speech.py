@@ -5,7 +5,6 @@ from sonara.audio.vad import StreamingVAD, trim_silence
 from sonara.models.classifier import PrototypeClassifier
 from sonara.models.dtw import dtw_distance
 from sonara.models.features import mfcc
-from sonara.store import RequestStore, TransitionError
 
 SR = 16000
 
@@ -57,18 +56,3 @@ def test_classifier_few_shot_and_reject(tmp_path):
     assert clf2.counts() == clf.counts() and clf2.threshold == clf.threshold
 
 
-def test_store_honest_transitions():
-    s = RequestStore(":memory:")
-    r = s.create("BED-01", "WATER", "Water")
-    assert r["status"] == "QUEUED"
-    with pytest.raises(TransitionError):
-        s.transition(r["request_id"], "COMPLETED", "caregiver")  # must be acknowledged first
-    s.transition(r["request_id"], "NOT_DISPLAYED", "system")
-    s.transition(r["request_id"], "DISPLAYED", "caregiver_screen")
-    _, changed = s.transition(r["request_id"], "DISPLAYED", "caregiver_screen")
-    assert not changed  # idempotent receipts
-    s.transition(r["request_id"], "ACKNOWLEDGED", "caregiver")
-    s.transition(r["request_id"], "COMPLETED", "caregiver")
-    assert [e["status"] for e in s.events(r["request_id"])] == [
-        "QUEUED", "NOT_DISPLAYED", "DISPLAYED", "ACKNOWLEDGED", "COMPLETED"]
-    assert s.active() == []
