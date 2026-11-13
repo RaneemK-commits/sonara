@@ -1,5 +1,9 @@
 # ui design rules
 
+> **2026-11-13, user decision:** the v2 light mockup is the spec and wins where it clashes with these rules
+> (Inter and the purple listening/confirm accents are allowed; no character on the patient screen).
+> The honesty rules at the bottom still bind.
+
 Binding for every change in `web/`. Checked with the Hallmark linter (`sloplint`) and the
 Impeccable / anti-ui-slop skills before each push.
 

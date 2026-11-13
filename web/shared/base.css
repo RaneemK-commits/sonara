@@ -1,40 +1,43 @@
-/* Shared base for both Sonara screens (Hallmark floor rules). */
-*, *::before, *::after { box-sizing: border-box; }
-html, body { overflow-x: clip; }
-body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body);
-  font-size: var(--text-lg); line-height: 1.5; -webkit-font-smoothing: antialiased; }
-h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 700; font-synthesis: none;
-  overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
-p { margin: 0; text-wrap: pretty; }
-svg { display: block; }
-[hidden] { display: none !important; }
+/* Sonara, branding v2 (light clinical). Fonts are bundled: nothing loads from the internet. */
+@font-face { font-family: "Inter"; src: url("/static/shared/fonts/Inter.ttf") format("truetype");
+  font-weight: 100 900; font-style: normal; font-display: swap; }
+
+:root {
+  --canvas: #FBF7F3;
+  --surface: #FFFFFF;
+  --ink: #161616;
+  --ink-2: #5E5955;
+  --line: #CFC9C2;
+  --divider: #ECE7E0;
+  --frame: #1C1C1E;
+  --sand: #F4E8D5;      --sand-wash: #FBEBD6;    --peach-ring: #FCE9D2;
+  --lavender: #C8A9FF;  --lavender-wash: #EFE3FF; --violet: #9B6BE6;
+  --lilac: #CFAEEF;     --lilac-wash: #ECDDF8;
+  --green: #6FC043;     --green-wash: #E6F2D9;    --green-ink: #2F6B12;
+  --rose-wash: #F8E1E4; --rose-ink: #9B2C3D;
+  --radius-card: 8px; --radius-chip: 10px; --radius-control: 4px;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--canvas); color: var(--ink); }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
-.num { font-variant-numeric: tabular-nums; }
-.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+[hidden] { display: none !important; }
+.tnum { font-variant-numeric: tabular-nums; }
 .ico { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* wordmark: five-bar soundmark + name */
-.wordmark { display: inline-flex; align-items: center; gap: var(--space-1); font-weight: 700; color: var(--color-ink); }
-.wordmark .ico { stroke-width: 2.5; }
+.logo { display: inline-flex; align-items: center; gap: .4em; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+.logo .ico { width: 1.25em; height: 1.25em; stroke-width: 2.6; }
 
-/* connection: icon + word, never a coloured dot */
-.conn { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-md); color: var(--color-ink-2); }
-.conn[data-state="off"] { color: var(--color-error); font-weight: 700; }
-
-/* buttons: one primary style */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); min-height: 48px;
-  padding: 0 var(--space-3); border-radius: var(--radius); font-weight: 700; border: 2px solid var(--color-rule);
-  background: var(--color-paper); transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
-.btn:hover { background: var(--color-paper-2); }
-.btn:active { transform: scale(0.98); }
-.btn:disabled { opacity: 0.5; cursor: default; transform: none; }
-.btn-primary { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-primary-ink); }
-.btn-primary:hover { background: var(--color-primary); opacity: 0.88; }
+/* Connection chip: wifi icon + word, never colour alone */
+.conn { display: inline-flex; align-items: center; gap: .5em; padding: .5em .95em; border-radius: var(--radius-chip);
+  font-weight: 500; white-space: nowrap; background: var(--rose-wash); color: var(--rose-ink); }
+.conn.on { background: var(--green-wash); color: var(--ink); }
+.conn .ico { stroke-width: 2.4; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; }
 }
-::selection { background: var(--color-accent); color: var(--color-accent-ink); }
-html { scrollbar-color: var(--color-rule) var(--color-paper); }

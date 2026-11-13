@@ -3,44 +3,81 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F0EBE2">
-<title>Sonara requests</title>
-<meta name="description" content="Sonara, an offline bedside speech assistant.">
-<link rel="stylesheet" href="/static/caregiver/caregiver.css">
+<meta name="theme-color" content="#FAF8F3">
+<title>Sonara · Nurse</title>
+<link rel="preload" href="/static/shared/fonts/Inter.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="/static/shared/base.css">
+<style>
+  body { min-height: 100vh; font-size: 16px; -webkit-tap-highlight-color: transparent; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px calc(24px + env(safe-area-inset-bottom)); }
+  header { position: sticky; top: 0; z-index: 2; background: var(--canvas); padding: calc(12px + env(safe-area-inset-top)) 0 12px;
+    border-bottom: 1px solid var(--divider); }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 20px; }
+  .tools { display: flex; gap: 8px; align-items: center; }
+  .conn { font-size: 14px; }
+  .icon-btn .ico { width: 20px; height: 20px; }
+  .logo .ico { width: 30px; height: 28px; stroke-width: 3; }
+  .foot { margin: 16px 0 32px; }
+  .icon-btn { min-width: 44px; min-height: 44px; padding: 0 12px; border-radius: var(--radius-control);
+    background: var(--surface); border: 1px solid var(--line); font-size: 14px; font-weight: 600; }
+  h1 { margin: 14px 0 2px; font-size: 28px; font-weight: 700; letter-spacing: -.01em; }
+  .count { margin: 0; color: var(--ink-2); font-size: 15px; }
+  .banner { margin: 12px 0 0; padding: 12px 14px; border-radius: var(--radius-control); font-weight: 600; font-size: 15px;
+    color: var(--rose-ink); background: var(--rose-wash); }
+  .banner::before { content: "⚠ "; }
+  [hidden] { display: none !important; }
+
+  .list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+  .row { position: relative; background: var(--surface); border: 1px solid var(--divider); border-radius: 14px;
+    padding: 14px 14px 14px 20px; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: center; }
+  .row::before { content: ""; position: absolute; left: 7px; top: 14px; bottom: 14px; width: 4px; border-radius: 2px; background: var(--lavender); }
+  .row.ack::before { background: var(--green); }
+  .row.idle::before { background: var(--divider); }
+  .row.flash { animation: flash 1.2s ease-out; }
+  @keyframes flash { from { background: var(--lavender-wash); } }
+  .bed { font-size: 21px; font-weight: 700; }
+  .what { font-size: 16px; font-weight: 500; color: var(--ink); }
+  .state { justify-self: start; font-size: 13px; font-weight: 600; padding: .2em .6em; border-radius: 8px; background: var(--green-wash); color: var(--green-ink); }
+  .state.new { background: var(--lavender-wash); color: #5B2FA6; }
+  .wait { grid-column: 2; grid-row: 1; justify-self: end; font-size: 15px; color: var(--ink-2); }
+  .act { grid-column: 2; grid-row: 2 / span 2; justify-self: end; min-height: 44px; padding: 0 16px;
+    border-radius: var(--radius-control); font-size: 15px; font-weight: 600; }
+  .act.primary { background: var(--ink); color: #fff; }
+  .act.secondary { background: var(--surface); border: 1.5px solid var(--line); }
+  .act:disabled { opacity: .5; }
+  .empty { color: var(--ink-2); padding: 16px 4px; }
+
+  details { margin-top: 24px; color: var(--ink-2); font-size: 14px; }
+  summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 6px 4px; border-bottom: 1px solid var(--divider); }
+</style>
 </head>
 <body>
 <svg hidden aria-hidden="true">
-  <symbol id="i-mark" viewBox="0 0 24 24"><path d="M3 10v4M7.5 7v10M12 4v16M16.5 7v10M21 10v4"/></symbol>
-  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.8 16a4.8 4.8 0 0 1 6.4 0M12 19.5v.01"/></symbol>
-  <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M3 3l18 18M8.8 16a4.8 4.8 0 0 1 6.4 0M12 19.5v.01M5.5 12.5a9.5 9.5 0 0 1 4-2.3M14.5 10.3a9.5 9.5 0 0 1 4 2.2"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 42 40"><path d="M3 15v10M11 10v20M19 4v32M27 9v22M35 14v12"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2.5 9.5a14 14 0 0 1 19 0M5.8 13a9.3 9.3 0 0 1 12.4 0M9 16.4a4.6 4.6 0 0 1 6 0"/><circle cx="12" cy="19.6" r="1" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0v4l-2 3h16l-2-3zM10 19a2 2 0 0 0 4 0"/></symbol>
   <symbol id="i-bell-off" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0v4l-2 3h16l-2-3zM10 19a2 2 0 0 0 4 0M3 3l18 18"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-  <symbol id="i-new" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol>
-  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l9.5 17h-19zM12 10v4M12 17.5v.01"/></symbol>
 </svg>
-
 <div class="wrap">
-<header class="bar">
-  <span class="wordmark"><svg aria-hidden="true" class="ico"><use href="#i-mark"/></svg>Sonara</span>
-  <div class="tools">
-    <span class="conn" id="conn" data-state="off"><svg aria-hidden="true" class="ico" id="connIco"><use href="#i-wifi-off"/></svg><span id="connText">Connecting</span></span>
-    <button class="btn icon" type="button" id="sound" aria-pressed="false" aria-label="Alert sound off"><svg aria-hidden="true" class="ico"><use href="#i-bell-off"/></svg></button>
-    <button class="btn" type="button" id="tokenBtn">Token</button>
+<header>
+  <div class="top">
+    <span class="logo"><svg class="ico" aria-hidden="true"><use href="#i-mark"/></svg>Sonara</span>
+    <div class="tools">
+      <span class="conn" id="conn"><svg class="ico" aria-hidden="true"><use href="#i-wifi"/></svg><span id="connText">Connecting</span></span>
+      <button class="icon-btn" id="sound" aria-label="Alert sound off"><svg class="ico" aria-hidden="true"><use href="#i-bell-off"/></svg></button>
+    </div>
   </div>
+  <h1>Requests</h1>
+  <p class="count tnum" id="count">—</p>
+  <p class="banner" id="banner" hidden>Disconnected from the bedside device. New requests cannot reach this screen.</p>
 </header>
 
-<section class="top">
-  <h1 class="title">Requests</h1>
-  <p class="count num" id="count">Loading</p>
-</section>
-<p class="banner" id="banner" role="alert" hidden><svg aria-hidden="true" class="ico"><use href="#i-alert"/></svg><span id="bannerText">Disconnected from the bedside device. New requests cannot reach this screen.</span></p>
+<ul class="list" id="list" aria-live="polite"></ul>
 
-<ul class="list" id="list" aria-live="polite"><li class="skeleton" aria-hidden="true"></li><li class="skeleton" aria-hidden="true"></li></ul>
-
-<details><summary>Recent history</summary>
-  <table><thead><tr><th>Time</th><th>Bed</th><th>Request</th><th>Outcome</th></tr></thead><tbody id="history"></tbody></table>
-</details>
+<details><summary>Recent history</summary><table><tbody id="history"></tbody></table></details>
+<p class="foot"><button class="icon-btn" id="tokenBtn">Change caregiver token</button></p>
 </div>
 
 <script>
@@ -51,15 +88,14 @@ $("tokenBtn").onclick = askToken;
 if (!token) askToken();
 
 const ACTIVE = ["QUEUED", "DISPLAYED", "NOT_DISPLAYED", "ACKNOWLEDGED"];
-const OUTCOME = { COMPLETED: "Resolved", CANCELLED: "Cancelled by patient" };
-const reqs = new Map(), receipted = new Set(), seen = new Set(), busy = new Set();
-let ws, audioCtx = null, beds = new Set(), loaded = false, pressing = false, dirty = false;
+const LABEL = { QUEUED: "New", DISPLAYED: "New", NOT_DISPLAYED: "New", ACKNOWLEDGED: "Acknowledged",
+                COMPLETED: "Resolved", CANCELLED: "Cancelled by patient" };
+const reqs = new Map(), receipted = new Set(), flashed = new Set(), busy = new Set();
+let ws, audioCtx = null, beds = new Set(), pressing = false, dirty = false;
 
 $("sound").onclick = () => {   // audio needs a user gesture (autoplay rules)
   audioCtx = audioCtx || new AudioContext(); audioCtx.resume(); beep();
-  $("sound").setAttribute("aria-pressed", "true");
-  $("sound").setAttribute("aria-label", "Alert sound on");
-  $("sound").innerHTML = '<svg aria-hidden="true" class="ico"><use href="#i-bell"/></svg>';
+  $("sound").innerHTML = '<svg class="ico" aria-hidden="true"><use href="#i-bell"/></svg>'; $("sound").setAttribute("aria-label", "Alert sound on");
 };
 function beep() {
   if (!audioCtx) return;
@@ -68,52 +104,54 @@ function beep() {
     g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + t + .2);
     o.connect(g).connect(audioCtx.destination); o.start(audioCtx.currentTime + t); o.stop(audioCtx.currentTime + t + .2); });
 }
-const wait = iso => { const m = Math.max(0, (Date.now() - Date.parse(iso)) / 60000 | 0); return m < 1 ? "under 1 min" : `${m} min`; };
+const wait = iso => { const m = Math.max(0, (Date.now() - Date.parse(iso)) / 60000 | 0); return m < 1 ? "<1 min" : `${m} min`; };
 const time = iso => new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 async function act(id, what, btn) {
   busy.add(id); btn.disabled = true;
-  try {   // the row changes only when the server broadcasts the new status
+  try {   // UI changes only when the server's broadcast confirms the new status
     const r = await fetch(`/api/requests/${id}/${what}`, { method: "POST", headers: { "X-Sonara-Token": token } });
     if (r.status === 401) askToken();
   } finally { busy.delete(id); render(); }
 }
-addEventListener("pointerdown", () => pressing = true);           // never reorder under a finger
+
+// Don't reorder rows under a nurse's finger
+addEventListener("pointerdown", () => pressing = true);
 addEventListener("pointerup", () => { pressing = false; if (dirty) render(); });
 
 function render() {
-  if (!loaded) return;
   if (pressing) { dirty = true; return; } dirty = false;
   const all = [...reqs.values()];
   const active = all.filter(r => ACTIVE.includes(r.status))
     .sort((a, b) => (a.status === "ACKNOWLEDGED") - (b.status === "ACKNOWLEDGED") || a.created_at.localeCompare(b.created_at));
-  const fresh = active.filter(r => r.status !== "ACKNOWLEDGED").length;
-  $("count").textContent = active.length ? `${fresh} new, ${active.length - fresh} acknowledged` : "No active requests";
   const busyBeds = new Set(active.map(r => r.bed_id));
   const idle = [...beds].filter(b => !busyBeds.has(b)).sort();
+  const n = active.filter(r => r.status !== "ACKNOWLEDGED").length;
+  $("count").textContent = `${active.length} active · ${n} new`;
 
   $("list").innerHTML = active.map(r => {
     const ack = r.status === "ACKNOWLEDGED";
-    return `<li class="row ${ack ? "is-ack" : "is-new"} ${seen.has(r.request_id) ? "" : "flash"}">
-      <span class="bed num">${esc(r.bed_id)}</span>
-      <span class="wait num" data-since="${r.created_at}">${wait(r.created_at)}</span>
+    return `<li class="row ${ack ? "ack" : ""} ${flashed.has(r.request_id) ? "" : "flash"}">
+      <span class="bed tnum">${esc(r.bed_id)}</span>
+      <span class="wait tnum" data-since="${r.created_at}">${wait(r.created_at)}</span>
       <span class="what">${esc(r.label)}</span>
-      <span class="state"><svg aria-hidden="true" class="ico"><use href="#${ack ? "i-check" : "i-new"}"/></svg>${ack ? "Acknowledged" : "New"}</span>
-      <button class="btn act ${ack ? "" : "btn-primary"}" type="button" data-id="${r.request_id}" data-do="${ack ? "complete" : "acknowledge"}"
+      <span class="state ${ack ? "" : "new"}">${ack ? "Acknowledged" : "New"}</span>
+      <button class="act ${ack ? "secondary" : "primary"}" data-id="${r.request_id}" data-do="${ack ? "complete" : "acknowledge"}"
         ${busy.has(r.request_id) ? "disabled" : ""}>${ack ? "Resolve" : "Acknowledge"}</button></li>`;
-  }).join("") + idle.map(b => `<li class="row idle"><span class="bed num">${esc(b)}</span><span class="what">No active request</span></li>`).join("")
-    || '<li class="note">No beds have reported yet. Requests appear here as soon as a patient confirms one.</li>';
-  active.forEach(r => seen.add(r.request_id));
+  }).join("") + idle.map(b => `<li class="row idle"><span class="bed tnum">${esc(b)}</span>
+      <span class="what" style="color:var(--ink-2)">No active request</span></li>`).join("")
+    || '<li class="empty">No active requests.</li>';
+  active.forEach(r => flashed.add(r.request_id));
 
   const hist = all.filter(r => !ACTIVE.includes(r.status)).sort((a, b) => b.updated_at.localeCompare(a.updated_at)).slice(0, 20);
-  $("history").innerHTML = hist.map(r => `<tr><td class="num">${time(r.updated_at)}</td><td class="num">${esc(r.bed_id)}</td>
-    <td>${esc(r.label)}</td><td>${OUTCOME[r.status] || esc(r.status)}</td></tr>`).join("") || '<tr><td colspan="4">Nothing resolved yet.</td></tr>';
+  $("history").innerHTML = hist.map(r => `<tr><td class="tnum">${time(r.updated_at)}</td><td>${esc(r.bed_id)}</td>
+    <td>${esc(r.label)}</td><td>${LABEL[r.status] || esc(r.status)}</td></tr>`).join("") || "<tr><td>Nothing yet.</td></tr>";
   receiptVisible();
 }
 $("list").addEventListener("click", e => { const b = e.target.closest("button.act"); if (b) act(b.dataset.id, b.dataset.do, b); });
 
-// tell the device a request is really on screen (sets DISPLAYED, never ACKNOWLEDGED)
+// Tell the device a request is actually on screen (sets DISPLAYED, never ACKNOWLEDGED)
 function receiptVisible() {
   if (!ws || ws.readyState !== 1 || document.hidden) return;
   for (const r of reqs.values())
@@ -124,32 +162,26 @@ function receiptVisible() {
 }
 document.addEventListener("visibilitychange", receiptVisible);
 setInterval(() => document.querySelectorAll("[data-since]").forEach(e => e.textContent = wait(e.dataset.since)), 15000);
+
 fetch("/api/health").then(r => r.json()).then(h => { if (h.bed_id) { beds.add(h.bed_id); render(); } }).catch(() => {});
 
-function setConn(on) {
-  $("conn").dataset.state = on ? "on" : "off";
-  $("connText").textContent = on ? "Connected" : "Disconnected";
-  $("connIco").firstElementChild.setAttribute("href", on ? "#i-wifi" : "#i-wifi-off");
-  $("banner").hidden = on;
-}
 function connect() {
   ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws?role=caregiver&token=${encodeURIComponent(token)}`);
-  ws.onopen = () => { setConn(true); receipted.clear(); };
+  ws.onopen = () => { $("connText").textContent = "Connected"; $("conn").classList.add("on"); $("banner").hidden = true; receipted.clear(); };
   ws.onmessage = e => {
     const m = JSON.parse(e.data);
-    if (m.type === "snapshot") { loaded = true; reqs.clear(); [...m.history, ...m.active].forEach(r => { reqs.set(r.request_id, r); seen.add(r.request_id); }); }
+    if (m.type === "snapshot") { reqs.clear(); [...m.history, ...m.active].forEach(r => { reqs.set(r.request_id, r); flashed.add(r.request_id); }); }
     if (m.type === "request") {
       const isNew = !reqs.has(m.request.request_id) && m.request.status === "QUEUED";
       reqs.set(m.request.request_id, m.request);
-      if (isNew) { beep(); document.title = `New request, ${m.request.bed_id}`; }
+      if (isNew) { beep(); document.title = `New request · ${m.request.bed_id} — Sonara`; }
     }
     for (const r of reqs.values()) beds.add(r.bed_id);
     render();
   };
   ws.onclose = e => {
-    setConn(false);
-    if (!loaded) $("count").textContent = "Not connected";
-    if (e.code === 4401) { $("bannerText").textContent = "Wrong caregiver token. Tap Token to enter the right one."; return; }
+    $("connText").textContent = "Disconnected"; $("conn").classList.remove("on"); $("banner").hidden = false;
+    if (e.code === 4401) { $("banner").textContent = "Wrong caregiver token. Tap Token to fix it."; return; }
     setTimeout(connect, 1500);
   };
 }

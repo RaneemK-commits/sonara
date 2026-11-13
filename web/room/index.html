@@ -4,64 +4,160 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sonara</title>
-<meta name="description" content="Sonara, an offline bedside speech assistant.">
-<link rel="preload" href="/static/shared/fonts/AtkinsonHyperlegible-Bold.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="stylesheet" href="/static/room/room.css">
+<link rel="preload" href="/static/shared/fonts/Inter.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="/static/shared/base.css">
+<style>
+  /* Sized in mockup pixels: the v2 mockup panel is 690 x 478, so 1 mock px = --px at any screen size. */
+  :root { --px: min(calc(100vw / 690), calc(100vh / 478)); }
+  html, body { height: 100%; overflow: hidden; background: var(--canvas); }
+  body { display: grid; place-items: center; --wash: var(--sand-wash); }
+  body[data-view="listening"], body[data-view="processing"] { --wash: var(--lavender-wash); }
+  body[data-view="confirm"] { --wash: var(--lilac-wash); }
+  body[data-view="notified"], body[data-view="acked"] { --wash: var(--green-wash); }
+  body[data-view="failed"], body[data-view="offline"] { --wash: var(--rose-wash); }
+
+  .screen { position: relative; overflow: hidden; width: calc(684 * var(--px)); height: calc(472 * var(--px));
+    border: calc(3 * var(--px)) solid var(--frame); border-radius: calc(22 * var(--px)); background: var(--canvas); }
+  .floor { position: absolute; inset: auto 0 0 0; height: calc(118 * var(--px)); pointer-events: none;
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--wash) 0%, transparent), var(--wash) 70%);
+    clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 100%, 0 100%); transition: background .3s ease; }
+
+  header { position: absolute; top: calc(24 * var(--px)); left: calc(34 * var(--px)); right: calc(26 * var(--px));
+    display: flex; align-items: center; justify-content: space-between; z-index: 1; }
+  .logo { font-size: calc(29 * var(--px)); gap: calc(12 * var(--px)); }
+  .logo .ico { width: calc(42 * var(--px)); height: calc(40 * var(--px)); stroke-width: 3.2; }
+  .conn { font-size: calc(18 * var(--px)); padding: calc(9 * var(--px)) calc(17 * var(--px)); border-radius: calc(9 * var(--px)); gap: calc(10 * var(--px)); }
+  .conn .ico { width: calc(23 * var(--px)); height: calc(23 * var(--px)); }
+
+  /* every screen is laid out absolutely to mockup coordinates, so states never reflow each other */
+  .view { position: absolute; inset: 0; display: none; }
+  body[data-view="ready"] #v-ready, body[data-view="retry"] #v-ready, body[data-view="cancelled"] #v-ready,
+  body[data-view="listening"] #v-listen, body[data-view="processing"] #v-listen,
+  body[data-view="confirm"] #v-confirm,
+  body[data-view="sending"] #v-done, body[data-view="notified"] #v-done, body[data-view="acked"] #v-done,
+  body[data-view="failed"] #v-done, body[data-view="offline"] #v-done { display: block; animation: in .25s ease both; }
+  @keyframes in { from { opacity: 0; } }
+
+  .t { position: absolute; left: 0; right: 0; text-align: center; margin: 0; padding: 0 calc(24 * var(--px)); }
+  h1.t { font-weight: 800; letter-spacing: -.028em; line-height: 1.05; }
+  .gray { color: var(--ink-2); font-weight: 400; letter-spacing: -.01em; }
+
+  /* ready */
+  #v-ready h1 { top: calc(110 * var(--px)); font-size: calc(54 * var(--px)); }
+  #v-ready .sub { top: calc(174 * var(--px)); font-size: calc(24.5 * var(--px)); }
+  .mic { position: absolute; left: 50%; top: calc(332 * var(--px)); width: calc(168 * var(--px)); height: calc(168 * var(--px));
+    transform: translate(-50%, -50%); border-radius: 50%; background: #1E1E1E; color: #fff; display: grid; place-items: center;
+    box-shadow: 0 0 0 calc(22 * var(--px)) var(--peach-ring); }
+  .mic .ico { width: calc(66 * var(--px)); height: calc(66 * var(--px)); stroke-width: 1.5; }
+
+  /* listening */
+  .wave { position: absolute; left: 50%; top: calc(180 * var(--px)); transform: translate(-50%, -50%);
+    display: flex; align-items: center; gap: calc(13 * var(--px)); }
+  .wave i { width: calc(10 * var(--px)); height: calc(var(--h) * var(--px)); border-radius: 99px; background: var(--c);
+    animation: bar 1.2s ease-in-out infinite; animation-delay: var(--d); }
+  @keyframes bar { 50% { transform: scaleY(.6); } }
+  #v-listen h1 { top: calc(270 * var(--px)); font-size: calc(56 * var(--px)); }
+  #v-listen .sub { top: calc(337 * var(--px)); font-size: calc(26 * var(--px)); }
+
+  /* confirm */
+  #v-confirm .ask { top: calc(84 * var(--px)); font-size: calc(26 * var(--px)); }
+  .card { position: absolute; left: calc(57 * var(--px)); right: calc(57 * var(--px)); top: calc(137 * var(--px)); height: calc(103 * var(--px));
+    background: var(--lilac-wash); border-radius: calc(6 * var(--px)); display: flex; align-items: center; justify-content: center; }
+  .card .ico { width: calc(54 * var(--px)); height: calc(54 * var(--px)); stroke-width: 1.6; }
+  .card .sep { width: 1px; height: calc(58 * var(--px)); background: var(--lilac); margin: 0 calc(36 * var(--px)) 0 calc(42 * var(--px)); }
+  .card .phrase { font-size: calc(50 * var(--px)); font-weight: 800; letter-spacing: -.035em; white-space: nowrap; }
+  #v-confirm .hint { top: calc(258 * var(--px)); font-size: calc(22 * var(--px)); }
+  .pill { position: absolute; left: 50%; top: calc(312 * var(--px)); transform: translateX(-50%); height: calc(42 * var(--px));
+    padding: 0 calc(30 * var(--px)); border-radius: calc(8 * var(--px)); background: var(--lilac-wash); display: flex; align-items: center;
+    gap: calc(14 * var(--px)); font-size: calc(20 * var(--px)); color: #333; white-space: nowrap; }
+  .pill .ico { width: calc(28 * var(--px)); height: calc(28 * var(--px)); }
+  .btns { position: absolute; left: calc(40 * var(--px)); right: calc(27 * var(--px)); top: calc(390 * var(--px));
+    display: grid; grid-template-columns: 201fr 187fr 187fr; gap: calc(21 * var(--px)); }
+  .btns button { height: calc(62 * var(--px)); border-radius: calc(4 * var(--px)); border: calc(1.6 * var(--px)) solid #8E8A86; background: var(--surface);
+    display: flex; align-items: center; justify-content: center; gap: calc(14 * var(--px)); font-size: calc(22 * var(--px)); font-weight: 600; letter-spacing: -.01em; }
+  .btns button .ico { width: calc(28 * var(--px)); height: calc(28 * var(--px)); stroke-width: 2.2; }
+  .btns .yes { background: #161616; border-color: #161616; color: #fff; }
+
+  /* sending / notified / acknowledged / failed / offline */
+  .badge { position: absolute; left: 50%; top: calc(176 * var(--px)); width: calc(108 * var(--px)); height: calc(108 * var(--px));
+    transform: translate(-50%, -50%); border-radius: 50%; display: grid; place-items: center; color: #fff;
+    background: radial-gradient(circle at 35% 30%, #86D35A, var(--green) 70%); }
+  .badge .ico { width: calc(58 * var(--px)); height: calc(58 * var(--px)); stroke-width: 3.2; }
+  .badge.wait { background: var(--sand); color: var(--ink); }
+  .badge.wait .ico { animation: spin 1.6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .badge.bad { background: var(--rose-wash); color: var(--rose-ink); }
+  #v-done h1 { top: calc(245 * var(--px)); font-size: calc(42 * var(--px)); }
+  #v-done .sub { top: calc(306 * var(--px)); font-size: calc(24 * var(--px)); }
+  body[data-view="failed"] #v-done h1, body[data-view="offline"] #v-done h1 { color: var(--rose-ink); }
+
+  body.paused * { animation-play-state: paused !important; }
+  .demo { position: fixed; right: 8px; bottom: 8px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 60vw; z-index: 3; font-size: 13px; }
+  .demo button { padding: 6px 10px; min-height: 36px; border-radius: 4px; background: var(--surface); border: 1px solid var(--line); font-weight: 600; }
+  .demo span { width: 100%; text-align: right; color: var(--ink-2); }
+</style>
 </head>
-<body>
+<body data-view="ready">
 <svg hidden aria-hidden="true">
-  <symbol id="i-mark" viewBox="0 0 24 24"><path d="M3 10v4M7.5 7v10M12 4v16M16.5 7v10M21 10v4"/></symbol>
-  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.8 16a4.8 4.8 0 0 1 6.4 0M12 19.5v.01"/></symbol>
-  <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M3 3l18 18M8.8 16a4.8 4.8 0 0 1 6.4 0M12 19.5v.01M5.5 12.5a9.5 9.5 0 0 1 4-2.3M14.5 10.3a9.5 9.5 0 0 1 4 2.2"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
-  <symbol id="i-retry" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></symbol>
-  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 6v8M12 18v.01"/></symbol>
-  <symbol id="i-WATER" viewBox="0 0 24 24"><path d="M5 3h14l-1.6 17.2a1 1 0 0 1-1 .8H7.6a1 1 0 0 1-1-.8zM6 9h12"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 42 40"><path d="M3 15v10M11 10v20M19 4v32M27 9v22M35 14v12"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2.5 9.5a14 14 0 0 1 19 0M5.8 13a9.3 9.3 0 0 1 12.4 0M9 16.4a4.6 4.6 0 0 1 6 0"/><circle cx="12" cy="19.6" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M3 3l18 18M9 16.4a4.6 4.6 0 0 1 6 0M5.8 13a9.3 9.3 0 0 1 4-2.2M14.6 10.9a9.3 9.3 0 0 1 3.6 2.1"/><circle cx="12" cy="19.6" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M8.5 21.5h7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 7.8"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-retry" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4.6h-4.6"/></symbol>
+  <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 6.5v7M12 17.5v.01"/></symbol>
+  <symbol id="i-WATER" viewBox="0 0 24 24"><path d="M4.5 3h15l-1.7 17.3a1 1 0 0 1-1 .9H7.2a1 1 0 0 1-1-.9zM5.6 10.5h12.8"/></symbol>
   <symbol id="i-FOOD" viewBox="0 0 24 24"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 21V3c-2 0-3.5 2.5-3.5 6S15 13 17 13"/></symbol>
   <symbol id="i-BATHROOM" viewBox="0 0 24 24"><path d="M4 12h16v2a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6zM6 12V5a2 2 0 0 1 4 0M8 20l-1 2M16 20l1 2"/></symbol>
   <symbol id="i-PAIN" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
   <symbol id="i-HELP" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0v4l-2 3h16l-2-3zM10 19a2 2 0 0 0 4 0"/></symbol>
 </svg>
 
-<header class="bar">
-  <span class="wordmark"><svg aria-hidden="true" class="ico"><use href="#i-mark"/></svg>Sonara</span>
-  <span class="conn" id="conn" data-state="off"><svg aria-hidden="true" class="ico" id="connIco"><use href="#i-wifi-off"/></svg><span id="connText">Connecting</span></span>
-</header>
+<div class="screen">
+  <div class="floor" aria-hidden="true"></div>
+  <header>
+    <span class="logo"><svg class="ico"><use href="#i-mark"/></svg>Sonara</span>
+    <span class="conn" id="conn"><svg class="ico"><use href="#i-wifi-off" id="connIco"/></svg><span id="connText">Connecting</span></span>
+  </header>
 
-<main class="stage" id="stage" aria-live="polite">
-  <div class="face" id="face" data-mode="idle" aria-hidden="true">
-    <svg viewBox="0 0 100 100">
-      <circle class="shell" cx="50" cy="50" r="44"/>
-      <g class="part eyes-open"><rect x="34" y="38" width="7" height="12" rx="3.5"/><rect x="59" y="38" width="7" height="12" rx="3.5"/></g>
-      <path class="part eyes-up" d="M33 42q4-4 8 0M59 42q4-4 8 0"/>
-      <path class="part eyes-happy" d="M32 45q5-6 10 0M58 45q5-6 10 0"/>
-      <path class="part mouth-flat" d="M42 66h16"/>
-      <circle class="part mouth-o" cx="50" cy="66" r="4"/>
-      <path class="part mouth-talk" d="M43 64q7 8 14 0z"/>
-      <path class="part mouth-smile" d="M39 62q11 11 22 0"/>
-      <path class="part mouth-worry" d="M41 68q9-6 18 0"/>
-    </svg>
-  </div>
-  <div class="meter" id="meter" hidden aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-  <div class="badge badge-ok" id="ok" hidden><svg aria-hidden="true" class="ico"><use href="#i-check"/></svg></div>
-  <div class="badge badge-bad" id="bad" hidden><svg aria-hidden="true" class="ico"><use href="#i-alert"/></svg></div>
-  <p class="ask" id="ask" hidden>Did you mean…</p>
-  <h1 class="head" id="head">What do you need?</h1>
-  <p class="sub" id="sub">Just speak, and I’ll let your nurse know.</p>
-  <div class="request" id="request" hidden></div>
-  <p class="hint" id="hint" hidden>Say “yes” to confirm, or “no” to try again.</p>
-  <div class="controls" id="controls" hidden>
-    <button class="btn" type="button" data-a="retry"><svg aria-hidden="true" class="ico"><use href="#i-retry"/></svg>Try again</button>
-    <button class="btn" type="button" data-a="cancel"><svg aria-hidden="true" class="ico"><use href="#i-x"/></svg>No</button>
-    <button class="btn btn-primary" type="button" data-a="confirm"><svg aria-hidden="true" class="ico"><use href="#i-check"/></svg>Yes</button>
-  </div>
-</main>
+  <section class="view" id="v-ready" aria-live="polite">
+    <h1 class="t" id="readyHead">What do you need?</h1>
+    <p class="t gray sub" id="readySub">Just speak, and I’ll let your nurse know.</p>
+    <div class="mic" aria-hidden="true"><svg class="ico"><use href="#i-mic"/></svg></div>
+  </section>
 
-<footer class="demo" id="demo" hidden aria-label="Demo controls">
-  <span>Demo controls, simulated input</span>
-  <button class="btn" type="button" data-a="talk">Talk</button>
-</footer>
+  <section class="view" id="v-listen" aria-live="polite">
+    <div class="wave" id="wave" aria-hidden="true"></div>
+    <h1 class="t" id="listenHead">I’m listening…</h1>
+    <p class="t gray sub" id="listenSub">Tell me what you need.</p>
+  </section>
+
+  <section class="view" id="v-confirm" aria-live="polite">
+    <p class="t gray ask">Did you mean…</p>
+    <div class="card"><span id="cardIcon"></span><span class="sep" id="cardSep"></span><span class="phrase" id="phrase"></span></div>
+    <p class="t gray hint">Say “yes” to confirm, or “no” to try again.</p>
+    <div class="pill" id="pill"><svg class="ico"><use href="#i-speaker"/></svg>Playing aloud…</div>
+    <div class="btns">
+      <button data-a="retry"><svg class="ico"><use href="#i-retry"/></svg>Try again</button>
+      <button data-a="cancel"><svg class="ico"><use href="#i-x"/></svg>No</button>
+      <button class="yes" data-a="confirm"><svg class="ico"><use href="#i-check"/></svg>Yes</button>
+    </div>
+  </section>
+
+  <section class="view" id="v-done" aria-live="polite">
+    <div class="badge" id="badge"><svg class="ico"><use href="#i-check" id="badgeIco"/></svg></div>
+    <h1 class="t" id="doneHead"></h1>
+    <p class="t gray sub" id="doneSub"></p>
+  </section>
+</div>
+
+<section class="demo" id="demo" hidden aria-label="Demo controls">
+  <span>Demo controls (simulated input)</span>
+  <button data-a="talk">Talk</button>
+</section>
 
 <script>
 const $ = id => document.getElementById(id);
@@ -70,27 +166,31 @@ const post = (action, intent) => fetch("/api/room/input", { method: "POST",
 const act = (a, i) => a === "retry" ? post("cancel").then(() => post("talk")) : post(a, i);
 document.addEventListener("click", e => { const b = e.target.closest("button[data-a]"); if (b) act(b.dataset.a, b.dataset.i); });
 
+// listening waveform: 15 bars, tallest in the middle, lavender to violet
+[14, 20, 30, 42, 56, 74, 104, 136, 104, 74, 56, 42, 30, 20, 14].forEach((h, k) => {
+  const t = 1 - Math.abs(k - 7) / 7;
+  $("wave").insertAdjacentHTML("beforeend",
+    `<i style="--h:${h};--d:${-(k % 5) * .17}s;--c:color-mix(in srgb, var(--violet) ${Math.round(35 + t * 65)}%, var(--lavender-wash))"></i>`);
+});
+
+// what the patient sees on the confirm card, in their words (ui owns these texts)
+const PHRASE = { WATER: "I need water?", HELP: "I need help?", FOOD: "I’m hungry?", PAIN: "I’m in pain?", BATHROOM: "I need the bathroom?" };
+
 const demo = $("demo");
 demo.hidden = !new URLSearchParams(location.search).has("demo");
 addEventListener("keydown", e => { if (e.key === "d" || e.key === "D") demo.hidden = !demo.hidden; });
 let demoBuilt = false;
 
-// view: face, visual (meter|ok|bad|""), ask?, head, sub, request?, controls?, tone
-const V = {
-  ready:      ["idle",      "",      0, "What do you need?", "Just speak, and I’ll let your nurse know."],
-  listening:  ["listening", "meter", 0, "I’m listening…", "Tell me what you need."],
-  processing: ["thinking",  "",      0, "One moment…", ""],
-  confirm:    ["speaking",  "",      1, "", "", 1, 1],
-  retry:      ["idle",      "",      0, "I didn’t understand.", "Please try again."],
-  sending:    ["thinking",  "",      0, "Sending to your nurse…", ""],
-  notified:   ["success",   "ok",    0, "Your nurse has been notified.", ""],
-  acked:      ["success",   "ok",    0, "Your nurse has acknowledged your request.", ""],
-  cancelled:  ["idle",      "",      0, "Okay, not sent.", ""],
-  failed:     ["error",     "bad",   0, "Unable to notify your nurse.", "Use the existing nurse-call system.", 0, 0, "error"],
-  offline:    ["error",     "bad",   0, "Not connected.", "Requests can’t be sent right now. Use the existing nurse-call system.", 0, 0, "error"],
+// done-view texts: [icon, badge style, headline, subline]. Never "they'll be with you soon": nobody has promised that.
+const DONE = {
+  sending:  ["clock", "wait", "Sending to your nurse…", ""],
+  notified: ["check", "", "Your nurse has been notified.", ""],
+  acked:    ["check", "", "Your nurse acknowledged your request.", ""],
+  failed:   ["alert", "bad", "Unable to notify your nurse.", "Use the existing nurse-call system."],
+  offline:  ["alert", "bad", "Not connected.", "Use the existing nurse-call system."],
 };
-const RECENT_MS = 60000;
-let current = "", retryUntil = 0, lastKey = "", last = null;
+const RECENT_MS = 60000, PILL_MS = 4000;
+let current = "", retryUntil = 0, lastKey = "", last = null, confirmSince = 0;
 
 function pick(s) {
   if (!s) return "offline";
@@ -109,54 +209,53 @@ function pick(s) {
 
 function show(key, s) {
   const it = s && s.last && (s.intents || []).find(i => i.id === s.last.intent);
-  const label = it ? it.label : (s && s.last && s.last.text || "").replace(/[.!?]+$/, "");
-  if (key + label === current) return;
-  const [face, vis, ask, head, sub, req, ctl, tone] = V[key];
-  const apply = () => {
-    $("face").dataset.mode = face;
-    $("meter").hidden = vis !== "meter"; $("ok").hidden = vis !== "ok"; $("bad").hidden = vis !== "bad";
-    $("ask").hidden = !ask;
-    $("head").textContent = head; $("head").hidden = !head;
-    $("sub").textContent = sub; $("sub").hidden = !sub;
-    $("request").hidden = !req; $("hint").hidden = !req; $("controls").hidden = !ctl;
-    if (req) {
-      const icon = it && document.getElementById("i-" + it.id) ? `<svg aria-hidden="true" class="ico"><use href="#i-${it.id}"/></svg>` : "";
-      $("request").innerHTML = icon + "<span></span>"; $("request").lastChild.textContent = label + "?";
-    }
-    $("stage").dataset.tone = tone || "";
-  };
-  if (current) { $("stage").classList.add("swap"); setTimeout(() => { apply(); $("stage").classList.remove("swap"); }, 200); } else apply();
-  current = key + label;
+  const sig = key + (it ? it.id : "");
+  if (key === "confirm") $("pill").hidden = Date.now() - confirmSince > PILL_MS;
+  if (sig === current) return;
+  if (key === "confirm") { confirmSince = Date.now(); $("pill").hidden = false; }
+  current = sig;
+  document.body.dataset.view = key;
+  $("readyHead").textContent = key === "retry" ? "I didn’t understand." : key === "cancelled" ? "Okay, not sent." : "What do you need?";
+  $("readySub").textContent = key === "retry" ? "Please try again." : key === "cancelled" ? "Say something whenever you’re ready." : "Just speak, and I’ll let your nurse know.";
+  $("listenHead").textContent = key === "processing" ? "One moment…" : "I’m listening…";
+  $("listenSub").textContent = key === "processing" ? "Working out what you said." : "Tell me what you need.";
+  if (key === "confirm") {
+    const id = it && it.id, has = id && document.getElementById("i-" + id);
+    $("cardIcon").innerHTML = has ? `<svg class="ico"><use href="#i-${id}"/></svg>` : "";
+    $("cardSep").hidden = !has;
+    $("phrase").textContent = PHRASE[id] || ((it ? it.label : (s.last.text || "").replace(/[.!?]+$/, "")) + "?");
+  }
+  if (DONE[key]) {
+    const [ico, cls, head, sub] = DONE[key];
+    $("badge").className = "badge " + cls; $("badgeIco").setAttribute("href", "#i-" + ico);
+    $("doneHead").textContent = head; $("doneSub").textContent = sub;
+  }
 }
 
 function render(s) {
   last = s;
   const k = s.last && s.last.understood === false ? JSON.stringify(s.last) : "";
-  if (k && k !== lastKey && s.state === "IDLE") retryUntil = Date.now() + 5000;
+  if (k && k !== lastKey && s.state === "IDLE") retryUntil = Date.now() + 5000;   // fresh rejection
   lastKey = k;
   if (!demoBuilt && s.intents) {
     demoBuilt = true;
     for (const i of s.intents) { const b = document.createElement("button");
-      b.className = "btn"; b.type = "button"; b.textContent = i.label; b.dataset.a = "select"; b.dataset.i = i.id; demo.append(b); }
+      b.textContent = i.label; b.dataset.a = "select"; b.dataset.i = i.id; demo.append(b); }
   }
   show(pick(s), s);
 }
-setInterval(() => last && show(pick(last), last), 1000);
+// shortcut: "Playing aloud…" shows for the first 4 s of confirm; upgrade when device sends TTS start/end events
+setInterval(() => last && show(pick(last), last), 500);
 
-function setConn(on) {
-  $("conn").dataset.state = on ? "on" : "off";
-  $("connText").textContent = on ? "Connected" : "Disconnected";
-  $("connIco").firstElementChild.setAttribute("href", on ? "#i-wifi" : "#i-wifi-off");
-}
 function connect() {
   const ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws?role=room`);
-  ws.onopen = () => setConn(true);
+  ws.onopen = () => { $("conn").classList.add("on"); $("connText").textContent = "Connected"; $("connIco").setAttribute("href", "#i-wifi"); };
   ws.onmessage = e => { const m = JSON.parse(e.data); if (m.type === "room_state") render(m); };
-  ws.onclose = () => { setConn(false); last = null; show("offline"); setTimeout(connect, 1500); };
+  ws.onclose = () => { $("conn").classList.remove("on"); $("connText").textContent = "Disconnected"; $("connIco").setAttribute("href", "#i-wifi-off");
+    last = null; show("offline"); setTimeout(connect, 1500); };
 }
 connect();
-document.addEventListener("visibilitychange", () =>
-  document.getAnimations && document.getAnimations().forEach(a => document.hidden ? a.pause() : a.play()));
+document.addEventListener("visibilitychange", () => document.body.classList.toggle("paused", document.hidden));
 </script>
 </body>
 </html>
