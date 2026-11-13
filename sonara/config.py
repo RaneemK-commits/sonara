@@ -45,9 +45,19 @@ class Config:
 
 def load_config(config_path: str | Path | None = None,
                 intents_path: str | Path | None = None) -> Config:
+    use_local = config_path is None
     config_path = Path(config_path) if config_path else ROOT / "config" / "sonara.toml"
     intents_path = Path(intents_path) if intents_path else ROOT / "config" / "intents.toml"
     raw = tomllib.loads(config_path.read_text(encoding="utf-8"))
+    # Board-only overrides survive code syncs; explicit --config stays self-contained.
+    local_path = ROOT / "data" / "local.toml"
+    if use_local and local_path.exists():
+        local = tomllib.loads(local_path.read_text(encoding="utf-8"))
+        for key, value in local.items():
+            if isinstance(value, dict) and isinstance(raw.get(key), dict):
+                raw[key].update(value)
+            else:
+                raw[key] = value
     idata = tomllib.loads(intents_path.read_text(encoding="utf-8"))
     intents = [Intent(**i) for i in idata.get("intent", [])]
     return Config(raw=raw, intents=intents, prompts=dict(idata.get("prompts", {})))

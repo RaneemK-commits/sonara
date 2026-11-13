@@ -1,5 +1,11 @@
 # UNO Q bring-up checklist (device)
 
+## Config/deployment update (2026-11-13, new device agent)
+- Default startup now merges `data/local.toml` over `config/sonara.toml` one section at a time. The data directory is already git-ignored and excluded from `git archive`; keep device mic settings and caregiver token there. Explicit `--config` does not load this override.
+- Migrated current board mic/device duration/token into `data/local.toml` with permissions 0600, verified effective settings unchanged and that tracked defaults plus overrides match. Loader deployed without restarting the live service. The older instructions to reapply mic/token after every sync are no longer needed once this loader is in the synced revision.
+- Updated audio-check staged at `/tmp/sonara-audio-check.service`, verified with `systemd-analyze verify`. Human installation: `sudo install -m 644 /tmp/sonara-audio-check.service /etc/systemd/system/sonara-audio-check.service && sudo systemctl daemon-reload`. Sudo requires a password; installation not yet verified.
+- Full suite: 55 passed on isolated board copy; no-audio startup/health passed on port 8019. Automated reconnect/NOT_DISPLAYED and real SQLite reopen checks passed. These do not establish physical phone, LED or power-cut behavior.
+
 Tick items as they pass and write down what you actually saw. Anything marked **VERIFY** is an
 assumption from docs, not yet seen on our board.
 

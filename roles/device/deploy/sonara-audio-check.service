@@ -12,16 +12,24 @@ After=multi-user.target
 [Service]
 Type=oneshot
 ExecStart=/bin/sh -c '\
+  recovered=0; \
   for try in 1 2 3; do \
     sleep 30; \
-    grep -q ArduinoImolaHPH /proc/asound/cards && { echo "sound card present"; exit 0; }; \
+    grep -q ArduinoImolaHPH /proc/asound/cards && { echo "sound card present"; break; }; \
     for r in /sys/class/remoteproc/remoteproc*; do \
       [ "$(cat $r/name)" = adsp ] || continue; \
       echo "sound card missing, restarting ADSP ($r), try $try"; \
       echo stop > $r/state; sleep 2; echo start > $r/state; \
+      recovered=1; \
     done; \
   done; \
-  grep -q ArduinoImolaHPH /proc/asound/cards || { echo "sound card still missing"; exit 1; }'
+  sleep 3; \
+  grep -q ArduinoImolaHPH /proc/asound/cards || { echo "sound card still missing"; exit 1; }; \
+  if [ "$recovered" = 1 ]; then \
+    uid=$(id -u arduino); \
+    runuser -u arduino -- env XDG_RUNTIME_DIR=/run/user/$uid systemctl --user restart pipewire pipewire-pulse wireplumber || exit 1; \
+  fi; \
+  grep -Eq "eld_valid[[:space:]]+1" /proc/asound/card*/eld* 2>/dev/null || echo "WARNING: HDMI ELD missing; replug HDMI if audio is silent"'
 
 [Install]
 WantedBy=multi-user.target
