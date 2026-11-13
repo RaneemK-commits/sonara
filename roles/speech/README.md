@@ -19,6 +19,14 @@ Recognition requires NumPy, CPU and personal templates only. No speech model wei
 embedding runtime, cloud service, or model selection switches are used. Piper's optional TTS
 package owns any ONNX dependencies needed for output speech. Existing voice assets are preserved.
 
+## Keywords inside longer phrases (current objective)
+
+The user target is a personal WATER/PAIN sound inside a longer phrase. The existing pipeline
+above classifies a complete utterance; it does not provide keyword localization. The separate
+[experimental stream matcher and comparison](docs/KEYWORDS_IN_PHRASES.md) add bounded streaming
+subsequence matching. This path is not activated and real-speech candidates still reject; it
+requires fresh keyword enrollment and natural phrase/continuous-negative validation.
+
 ## Run locally
 
 Python 3.11+ is required. From the repository root:

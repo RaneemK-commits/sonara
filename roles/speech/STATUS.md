@@ -1,6 +1,32 @@
 # Speech STATUS
 
-## Now
+## Main objective: keywords inside longer phrases
+
+- User clarified WATER/PAIN-like personal keywords inside “I need water please”, not just
+  pause-separated utterances. Production whole-utterance recognition does not solve this.
+- Added experimental shared-scaling MFCC + subsequence DTW localization, same-span all-intent
+  rescoring, repeated-word proposals, bounded rolling feed and duplicate accepted-event suppression.
+- New keyword profiles require fresh raw-MFCC enrollment and are separate from active CMVN profiles.
+  Endpoint trimming preserves 180 ms padding; manual word boundaries remain available.
+- Added persistent-stream chunk read/overrun APIs for the device worker; no new microphone opened,
+  no controller/server/config/UI changes and no runtime activation.
+- Added artificial composed-TORGO comparison and generic annotated natural WAV-stream evaluator.
+  Corpus compositions are not natural phrases and are not WATER/PAIN recordings.
+- 116 tests pass locally (6.09 s). Board passed 115 tests before the final chunk API test addition;
+  final board check/replay is pending. Initial replay was interrupted by a board reboot; restored
+  the isolated copy with the board's existing .venv. An omitted static-web test fixture was fixed,
+  then integration tests passed. No failing tests were deleted.
+- Laptop comparison: 15 composed positive clips and 30 negatives, all predictions rejected.
+  Before rejection, stream proposals localize the correct best label in 12/15 clips; that is not
+  recognition accuracy. Shared-scale whole-recording best labels also get 12/15; no measured
+  accuracy improvement from subsequence matching is established. Continuous false-acceptance
+  calibration, fresh natural phrase tests and real-time board feasibility remain unresolved.
+- Current production pipeline remains untouched. NEED device/UI integration only after validation:
+  single microphone owner, bounded worker, reset on drops/TTS/enrollment/profile reload, pause
+  pending confirmation, request keywords only and mandatory patient confirmation.
+- Read docs/KEYWORDS_IN_PHRASES.md and new CONTRACT section for APIs and evaluation commands.
+
+## Earlier pipeline follow-up
 
 - Follow-up branch `speech/voice-pipeline-improvements`, based on integrated main `6cd70b5`.
 - Core MFCC/enrollment device hooks were integrated by device (`f4ca596`, `f157554`).

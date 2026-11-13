@@ -81,3 +81,40 @@ for acceptance. The process stderr/log stream contains best label, distance, thr
 and required margin, frames, template count, processing milliseconds and reason. No raw audio
 or template arrays are logged. New calibration `status`/`loo_gap_p10`/`required_margin` fields
 are additive; no threshold is relaxed. CLI enrollment prints actionable calibration reasons.
+
+## Experimental keyword-in-phrase contract (not activated)
+
+The user's target is WATER/PAIN-like personal keywords inside longer phrases, rather than
+classification of a whole phrase as though it were an isolated word. New speech-only APIs:
+
+```python
+from sonara.models.keywords import KeywordSpotter
+spotter = KeywordSpotter.enroll({"WATER": clips, "PAIN": other_clips})
+spotter.save(keyword_profile_directory)
+spotter = KeywordSpotter.load(keyword_profile_directory)
+spotter.scan(audio_window)  # <=5 s, returns KeywordEvent list, including rejections
+spotter.feed(chunk)         # <=1 s chunks, bounded rolling buffer, synchronous worker call
+spotter.reset()             # drop buffered audio / duplicate history on pause or dropped input
+```
+
+KeywordEvent has `start_s`, `end_s`, `observed_until_s`, `prediction` and `to_dict()`.
+This requires fresh raw-MFCC references and shared enrollment scaling; existing CMVN templates
+are rejected. Keyword profiles use keyword.json/references/, separate from active production
+profiles. Existing Recognizer/AudioCapture APIs and controller behavior remain unchanged.
+
+NEED for eventual device integration: shared microphone chunks on a bounded audio worker;
+pause/reset for TTS, enrollment and AWAIT_CONFIRM; discard/reset on queue loss; request intents
+only; accepted candidates enter existing confirmation, never direct caregiver dispatch. No
+ambient keyword YES/NO confirmation. This is not ready to enable: real composed-speech trials
+still reject all candidates, natural phrase accuracy and continuous negative calibration are
+missing, and CPU real-time feasibility must be measured. See docs/KEYWORDS_IN_PHRASES.md.
+
+The same persistent AudioCapture now exposes `read_chunk(timeout_s=.1)` (one float32 block or
+None), with timeout bounded to 0–1 s, and monotonic `dropped_blocks`. It rejects reads during a
+manual/VAD recording; the shared audio lock is still mandatory to serialize all consumers.
+The keyword worker must compare the overrun counter before/after processing, discard results
+on change, flush stale blocks and reset the detector. No new stream is opened automatically.
+Fresh keyword enrollment trims only endpoints with 180 ms padding by default; callers can use
+`trim_endpoints=False` for manual word boundaries. Existing enrollment/Recognizer behavior is
+unchanged. `roles/speech/evaluation/evaluate_keyword_streams.py` measures annotated real WAV
+streams, including event misses/false alarms, duplicate accepts and processing real-time factor.

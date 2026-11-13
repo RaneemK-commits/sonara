@@ -21,6 +21,7 @@ class AudioCapture:
         if sr != 16000 or not 5 <= block_ms <= 100 or not .3 <= max_utterance_s <= 5:
             raise ValueError("capture requires 16 kHz, 5–100 ms blocks, and 0.3–5 second utterances")
         self._recording = threading.Event()
+        self._dropped_blocks = 0
         self._ambient_lock = threading.Lock()
         # Keep quiet-frame evidence across short spoken prompts; never learn from capture itself.
         self._ambient_energies: deque[float] = deque(maxlen=max(10, 10000 // block_ms))
@@ -61,6 +62,7 @@ class AudioCapture:
         except queue.Full:  # drop oldest to stay bounded
             try:
                 self._q.get_nowait()
+                self._dropped_blocks = getattr(self, "_dropped_blocks", 0) + 1
             except queue.Empty:
                 pass
             try:
@@ -74,6 +76,27 @@ class AudioCapture:
                 self._q.get_nowait()
             except queue.Empty:
                 break
+
+    @property
+    def dropped_blocks(self) -> int:
+        """Monotonic overrun counter: stream workers must reset on discontinuities."""
+        return getattr(self, "_dropped_blocks", 0)
+
+    def read_chunk(self, timeout_s: float = .1) -> np.ndarray | None:
+        """Read one existing-stream block for a dedicated keyword worker.
+
+        Caller must own the shared audio lock; do not mix with enrollment/Talk
+        capture. Flush stale audio and reset the detector after TTS or queue loss.
+        No second microphone stream is opened. Returns None when input times out.
+        """
+        if not np.isfinite(timeout_s) or not 0 <= timeout_s <= 1:
+            raise ValueError("chunk timeout must be 0–1 seconds")
+        if self._recording.is_set():
+            raise RuntimeError("another recording owns the microphone; use the shared audio lock")
+        try:
+            return self._q.get(timeout=timeout_s)
+        except queue.Empty:
+            return None
 
     def record_utterance(self, wait_s: float) -> np.ndarray | None:
         """Wait up to `wait_s` for speech to start, then record until trailing silence.
