@@ -1,0 +1,21 @@
+# Sonara bedside device as a systemd *user* service on the UNO Q (user arduino, linger on).
+# Install:  cp roles/device/deploy/sonara.service ~/.config/systemd/user/
+#           systemctl --user daemon-reload && systemctl --user enable --now sonara
+# Logs:     journalctl --user -u sonara -f
+# Needs: roles/device/deploy/51-sonara-hdmi.conf (WirePlumber HDMI profile), the App Lab default app user:sonara-mcu (buttons), PipeWire on the HDMI profile
+# (speaker via display jack), pipewire-alsa installed. See roles/device/BRINGUP.md.
+[Unit]
+Description=Sonara bedside speech translator
+After=pipewire.service wireplumber.service network-online.target
+Wants=pipewire.service wireplumber.service
+
+[Service]
+WorkingDirectory=%h/sonara
+ExecStartPre=-/usr/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.8
+ExecStart=%h/sonara/.venv/bin/python -m sonara --mcu unoq
+Restart=on-failure
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=default.target

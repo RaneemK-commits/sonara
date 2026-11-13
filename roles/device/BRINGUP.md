@@ -65,3 +65,19 @@ assumption from docs, not yet seen on our board.
 sudo apt install -y libportaudio2 i2c-tools python3-venv python3-pip   # done
 sudo usermod -aG arduino-router arduino                                 # then log out/in
 ```
+
+## Speaker + start on boot (2026-11-13, working)
+- **Speaker works.** Cause of the static/silence: PipeWire/WirePlumber had the UNO Q card on the `HiFi` profile
+  (headphone/lineout only). Fix: `HDMI` profile → sink "HDMI Digital Stereo Output" (`hw:ArduinoImolaHPH,3`,
+  route `SEC_MI2S_RX Audio Mixer MultiMedia4`, set by the profile) → display over HDMI → display 3.5 mm jack → Creative Pebble V2.
+  Ignore `DISPLAY_PORT_RX` (wrong control). PipeWire negotiates S24_LE 48 kHz itself.
+- `sudo apt install -y pipewire-alsa` so ALSA programs (Sonara's Speaker, aplay) go through PipeWire. Old `~/.asoundrc` removed (backup `~/.asoundrc.sonara-hw-backup`).
+- WirePlumber does not remember the profile across reboots: pinned with `roles/device/deploy/51-sonara-hdmi.conf`.
+- ALSA card numbers swap between boots (USB mic was card 1, now 0): always use card **names**, never `-c 0`.
+- Start on boot: `roles/device/deploy/sonara.service` (systemd user unit, linger already on) + `sonara-room.desktop` (kiosk autostart). Reboot 1: MCU app, Sonara, kiosk came back; audio did not (fixed with the WirePlumber rule). Reboot 2: see below.
+
+## Performance (2026-11-13, evening)
+- Lag report: room page idle costs chromium 114-136% + Xorg 22-26% + xfwm4 18% of one core (of 4). Cause: `web/shared/orb.js` 60 fps rAF loop forever (ui, NEED posted). Sonara itself 1.4%.
+- Done on board: xfwm4 compositing off (`DISPLAY=:0 xfconf-query -c xfwm4 -p /general/use_compositing -s false`, persists): xfwm4 18% -> 0%.
+- Second, intermittent load: USB mic `xhci-hcd: WARN: buffer overrun event for slot 5 ep 4` ~10/s, CPU0 98% IRQ. Gone when Sonara's continuous `arecord` stops; did not reappear after restart (trigger unknown, FYI to speech). Kernel console loglevel is 7; lowering it (`kernel.printk = 3 4 1 3` in /etc/sysctl.d, sudo) is a possible mitigation, not yet tested.
+- Boot race: sometimes the ADSP publishes no APR services, sound card missing ("deferred probe pending", lpass-lpi-pinctrl clk 'audio'). ADSP restart fixes it: `roles/device/deploy/sonara-audio-check.service` (needs sudo install).
