@@ -1,0 +1,7 @@
+# Room display in kiosk mode after desktop login. Install:
+#   cp roles/device/deploy/sonara-room.desktop ~/.config/autostart/
+[Desktop Entry]
+Type=Application
+Name=Sonara room display
+Exec=sh -c 'for i in $(seq 1 60); do curl -sf http://localhost:8000/api/health >/dev/null && break; sleep 2; done; exec chromium --kiosk --noerrdialogs --disable-session-crashed-bubble --no-first-run --password-store=basic http://localhost:8000/room'
+X-GNOME-Autostart-enabled=true

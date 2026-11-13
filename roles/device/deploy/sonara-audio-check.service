@@ -1,0 +1,26 @@
+# System unit (root): after boot, if the UNO Q sound card did not load, restart the audio DSP.
+# Seen 2026-11-13: sometimes the ADSP boots but never publishes its APR audio services, so the
+# card stays in "deferred probe pending" (no speaker). Restarting the ADSP recovers it.
+# Install (once): sudo cp roles/device/deploy/sonara-audio-check.service /etc/systemd/system/
+#                 sudo systemctl daemon-reload && sudo systemctl enable sonara-audio-check
+# Log: journalctl -u sonara-audio-check
+[Unit]
+Description=Sonara: recover the UNO Q sound card if the audio DSP came up without services
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '\
+  for try in 1 2 3; do \
+    sleep 30; \
+    grep -q ArduinoImolaHPH /proc/asound/cards && { echo "sound card present"; exit 0; }; \
+    for r in /sys/class/remoteproc/remoteproc*; do \
+      [ "$(cat $r/name)" = adsp ] || continue; \
+      echo "sound card missing, restarting ADSP ($r), try $try"; \
+      echo stop > $r/state; sleep 2; echo start > $r/state; \
+    done; \
+  done; \
+  grep -q ArduinoImolaHPH /proc/asound/cards || { echo "sound card still missing"; exit 1; }'
+
+[Install]
+WantedBy=multi-user.target
