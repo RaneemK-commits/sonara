@@ -45,3 +45,19 @@ Server → client:
 
 Client → server (caregiver only):
 - `{type: "receipt", request_id}`: send **only when the request is actually rendered on a visible screen**. This is what sets `DISPLAYED`.
+
+## Authoritative room display (additive)
+`room_state.display = {view, intent, event_id}`. Existing `state` and request statuses remain unchanged.
+`view` uses existing UI names: ready, listening, processing, confirm, retry, cancelled,
+sending, failed, notified, acked. The browser renders this field directly; only transport
+disconnect and explicit demo previews override it locally. Do not infer retry from identical
+`last` values or expire device views using browser timers. `intent` retains the pending phrase
+during rejection/retry, and `event_id` distinguishes repeated attempts/outcomes within a process.
+Snapshots on reconnect include the current display; event IDs are not durable across restart.
+
+Priority: capture/processing → five-second retry/cancel feedback → pending confirmation →
+request status → ready. Feedback expiry is published by the controller. QUEUED and
+NOT_DISPLAYED never expire into success. DISPLAYED/ACKNOWLEDGED/CANCELLED use the existing
+60-second recency rule, now on device time. COMPLETED returns to ready.
+An expired confirmation cannot create a request, including under queued input load.
+This does not claim actual TTS playback: no playback start/end contract exists yet.

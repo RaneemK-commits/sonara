@@ -29,9 +29,10 @@ Board-local edits to `~/sonara/config/sonara.toml` (re-apply after every sync, s
 Sync code to the board: `git archive --format=tar HEAD | ssh arduino@192.168.1.242 'tar -xf - -C ~/sonara'`, then re-apply the above, then `systemctl --user restart sonara`.
 
 ## Next (in order)
+0. User requested end-to-end state-driven feedback after missing rejection screen. Device now implements additive authoritative `room_state.display` (see FLOW.md/CONTRACT.md), unique attempt/outcome IDs, explicit five-second feedback, server expiry publication, expired-confirm/busy-input guards. UI integration patch prepared at `integration/room-display.patch` (`git apply --check` passes); human explicitly left applying it to UI agent. Speech NEED requests true playback callbacks. Full isolated UNO Q suite: 63 passed, one Starlette deprecation warning; four focused regressions pass locally. Handoff branch `codex/device-room-state`; not live-deployed. Branch also includes prior audio-check correction in 4d12032, whose reinstallation remains pending.
 1. DONE: human installed updated `deploy/sonara-audio-check.service`; file match, systemd validation, enabled state and daemon reload verified. Adds PipeWire restart after ADSP recovery and ELD warning. Actual recovery on next boot remains untested; do not run recovery unnecessarily against live audio.
 2. DONE: default config loading merges git-ignored `data/local.toml`; explicit `--config` stays self-contained. Deployed loader and migrated board mic/device duration/token to mode-0600 local file. Verified tracked defaults + overrides exactly equal existing settings; no token logged. Live service not restarted.
-3. Phase 3 reliability: live no-caregiver test PASSED on 2026-11-13: human pressed B for WATER, req-0004 QUEUED at 20:44:44 UTC → NOT_DISPLAYED at 20:44:54 UTC; human verified C fast blink and not-reached feedback. Phone reconnect pending (first phone view address uncertain, server still had zero caregiver connections); power-cut mid-request remains untested.
+3. Phase 3 reliability: live no-caregiver and phone reconnect tests PASSED on 2026-11-13: human pressed B for WATER, req-0004 QUEUED at 20:44:44 UTC → NOT_DISPLAYED at 20:44:54 UTC; human verified C fast blink and not-reached feedback. Actual caregiver-screen receipt at 20:47:31 UTC → DISPLAYED; caregiver click at 20:47:38 → ACKNOWLEDGED (human heard speaker feedback); Resolve at 20:47:46 → COMPLETED. Verified server event log. Power-cut mid-request remains untested.
 4. Watch the USB mic overrun storm (CPU0 98% IRQ, stalls audio): restart Sonara clears it; root fix is speech opening capture only on Talk.
 5. Stretch: Modulino Distance; Nicla trigger (with speech).
 
@@ -42,6 +43,9 @@ Sync code to the board: `git archive --format=tar HEAD | ssh arduino@192.168.1.2
 - ALSA card numbers swap between boots: use card names.
 
 ## Needs from others
+- ui: integrate `roles/device/integration/room-display.patch` (authoritative display selection; repeated rejection; pending intent; no guessed playback pill). Human explicitly left this edit to UI. Existing public fields preserved.
+- speech: additive started/finished/failed playback events needed to complete truthful speaking state; no implementation guessed in device.
+- ui: human requested more discoverable caregiver history on phone. Existing collapsed Recent history shows completed/cancelled rows; NEED posted with existing API support and no contract change required.
 - speech: live recognition rejects every attempt (numbers in the board NEED); open the mic only on Talk (USB overrun storm).
 - ui: apply speech's `roles/speech/integration/ui.patch` (voice-setup screen) against device CONTRACT; enrollment is CLI-only until then.
 
