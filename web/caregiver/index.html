@@ -20,10 +20,13 @@
   .top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); font-size: 20px; }
   .tools { display: flex; gap: var(--space-2); align-items: center; }
   .logo .ico { width: 30px; height: 28px; stroke-width: 3; }
-  /* connection: plain glyph and word like the room's status bar, rose only when it is lost */
-  .conn, .conn.on { padding: 0 var(--space-1); background: none; color: var(--ink); font-size: 14px; }
-  .conn:not(.on) { color: var(--rose-ink); }
-  .conn .ico { width: 20px; height: 20px; }
+  /* connection: one black glyph like a phone's status bar (wifi, or wifi with a cross); the word is for screen readers */
+  .conn, .conn.on, .conn:not(.on) { padding: 0 var(--space-1); background: none; color: var(--ink); }
+  .conn .ico { width: 24px; height: 24px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  /* alert sound: a bare black bell, the tap target stays 44px */
+  .icon-btn.bare { background: none; border: 0; padding: 0; color: var(--ink); }
+  .icon-btn.bare .ico { width: 24px; height: 24px; }
   .icon-btn { min-width: 44px; min-height: 44px; padding: 0 var(--space-3); border-radius: var(--radius-control);
     background: var(--surface); border: 1px solid var(--line); font-size: 14px; font-weight: 600;
     display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
@@ -75,6 +78,7 @@
 <svg hidden aria-hidden="true">
   <symbol id="i-mark" viewBox="0 0 42 40"><path d="M3 15v10M11 10v20M19 4v32M27 9v22M35 14v12"/></symbol>
   <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2.5 9.5a14 14 0 0 1 19 0M5.8 13a9.3 9.3 0 0 1 12.4 0M9 16.4a4.6 4.6 0 0 1 6 0"/><circle cx="12" cy="19.6" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M3 3l18 18M9 16.4a4.6 4.6 0 0 1 6 0M5.8 13a9.3 9.3 0 0 1 4-2.2M14.6 10.9a9.3 9.3 0 0 1 3.6 2.1M2.5 9.5a14 14 0 0 1 4.3-2.8M11 5.6a14 14 0 0 1 10.5 3.9"/><circle cx="12" cy="19.6" r="1" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0v4l-2 3h16l-2-3zM10 19a2 2 0 0 0 4 0"/></symbol>
   <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19zM12 10v4.5M12 17.5v.01"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 7.8"/></symbol>
@@ -85,8 +89,8 @@
   <div class="top">
     <span class="logo"><svg class="ico" aria-hidden="true"><use href="#i-mark"/></svg>Sonara</span>
     <div class="tools">
-      <span class="conn" id="conn"><svg class="ico" aria-hidden="true"><use href="#i-wifi"/></svg><span id="connText">Connecting</span></span>
-      <button class="icon-btn" id="sound" aria-label="Alert sound off"><svg class="ico" aria-hidden="true"><use href="#i-bell-off"/></svg></button>
+      <span class="conn" id="conn"><svg class="ico" aria-hidden="true"><use href="#i-wifi-off" id="connIco"/></svg><span class="sr" id="connText">Connecting</span></span>
+      <button class="icon-btn bare" id="sound" aria-label="Alert sound off"><svg class="ico" aria-hidden="true"><use href="#i-bell-off"/></svg></button>
     </div>
   </div>
   <h1>Requests</h1>
@@ -187,7 +191,7 @@ fetch("/api/health").then(r => r.json()).then(h => { if (h.bed_id) { beds.add(h.
 
 function connect() {
   ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws?role=caregiver&token=${encodeURIComponent(token)}`);
-  ws.onopen = () => { $("connText").textContent = "Connected"; $("conn").classList.add("on"); $("banner").hidden = true; receipted.clear(); };
+  ws.onopen = () => { $("connText").textContent = "Connected"; $("conn").classList.add("on"); $("connIco").setAttribute("href", "#i-wifi"); $("banner").hidden = true; receipted.clear(); };
   ws.onmessage = e => {
     const m = JSON.parse(e.data);
     if (m.type === "snapshot") { reqs.clear(); [...m.history, ...m.active].forEach(r => { reqs.set(r.request_id, r); flashed.add(r.request_id); }); }
@@ -200,7 +204,7 @@ function connect() {
     render();
   };
   ws.onclose = e => {
-    $("connText").textContent = "Disconnected"; $("conn").classList.remove("on"); $("banner").hidden = false;
+    $("connText").textContent = "Disconnected"; $("conn").classList.remove("on"); $("connIco").setAttribute("href", "#i-wifi-off"); $("banner").hidden = false;
     if (e.code === 4401) { $("bannerText").textContent = "Wrong caregiver token. Use Change caregiver token below."; return; }
     setTimeout(connect, 1500);
   };
