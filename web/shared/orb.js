@@ -1,4 +1,4 @@
-// <sonara-orb mode="idle|listening|thinking|speaking|success|error"> — Sonara's companion.
+// <sonara-orb mode="idle|listening|thinking|speaking|success|error|card"> — Sonara's companion.
 // One solid circular body, white eyes up and to the right. Listening: turns lavender and the
 // circle morphs into a speech wave. Thinking: shrinks into the middle of three pulsing dots.
 // Theme per mode with CSS --orb-idle / --orb-listening / … Optional: orb.level = 0..1 (mic loudness) drives the wave; otherwise a synthetic speech rhythm.
@@ -6,13 +6,19 @@
   const N = 96, HALF = N / 2;                    // outline points: top edge L→R, then bottom edge R→L
   const ORANGE = "#F2994A", LAVENDER = "#A97BF0";
   const GREEN = "#78C83F", RED = "#E5484D";
-  const PAL = { idle: ORANGE, speaking: ORANGE, thinking: ORANGE, success: GREEN, error: RED, listening: LAVENDER };
-  const OPEN = { idle: 1, speaking: 1, thinking: 1, success: 1, error: 0.45, listening: 1 };
+  const PAL = { card: "#ECDDF8", idle: ORANGE, speaking: ORANGE, thinking: ORANGE, success: GREEN, error: RED, listening: LAVENDER };
+  const OPEN = { card: 1, idle: 1, speaking: 1, thinking: 1, success: 1, error: 0.45, listening: 1 };
 
   // Body: a plain circle. u = 0..1 left→right.
   const circle = (u, top) => {
     const a = top ? Math.PI - u * Math.PI : Math.PI + u * Math.PI;
     return [Math.cos(a) * 72, -Math.sin(a) * 72];
+  };
+  // Card: rounded rectangle, half-size w × h, corner r (viewBox units, set by the page with --orb-box-*)
+  const box = (u, top, w, h, r) => {
+    const x = (u - 0.5) * 2 * w, e = Math.abs(x) - (w - r);
+    const y = e > 0 ? h - r + Math.sqrt(Math.max(0, r * r - e * e)) : h;
+    return [x, top ? -y : y];
   };
   const wave = (u, top, t, amp) => {               // speech-wave ribbon
     const x = (u - 0.5) * 2, env = Math.pow(1 - x * x, 1.6), k = t * 5;
@@ -50,7 +56,7 @@
                   happy: q(".happy"), mouth: q(".mouth"), dots: root.querySelectorAll(".dot") };
       this.mode = "idle"; this.level = null;
       this.s = { wave: 0, think: 0, look: [0, 0], lookT: [0, 0], blink: 0, squish: 0, happy: 0, open: 1,
-                 talk: 0, think: 0, amp: 0, col: null };
+                 talk: 0, think: 0, box: 0, boxSize: [125, 22, 3], amp: 0, col: null };
       this.nextBlink = 0; this.t0 = performance.now();
     }
     attributeChangedCallback(_, __, v) { this.mode = PAL[v] ? v : "idle"; }
@@ -83,10 +89,15 @@
       s.wave = ease(s.wave, this.mode === "listening" ? 1 : 0, 0.09);
       s.happy = ease(s.happy, this.mode === "success" ? 1 : 0, 0.15);
       s.open = ease(s.open, OPEN[this.mode], 0.15);
+      s.box = ease(s.box, this.mode === "card" ? 1 : 0, 0.12);
       s.think = ease(s.think, this.mode === "thinking" ? 1 : 0, 0.12);
       s.talk = ease(s.talk, this.mode === "speaking" ? 1 : 0, 0.15);
       s.squish = ease(s.squish, 0, 0.12);
-      if (this.colMode !== this.mode) { this.colMode = this.mode; this.target = hex(this.colour(this.mode)); }
+      if (this.colMode !== this.mode) {
+        this.colMode = this.mode; this.target = hex(this.colour(this.mode));
+        if (this.mode === "card") { const cs = getComputedStyle(this), n = (k, d) => parseFloat(cs.getPropertyValue("--orb-box-" + k)) || d;
+          s.boxSize = [n("w", 125), n("h", 22), n("r", 3)]; }
+      }
       const target = this.target;
       s.col ??= target;
       s.col = s.col.map((v, j) => ease(v, target[j], 0.08));
@@ -113,7 +124,9 @@
       for (let i = 0; i < N; i++) {
         const top = i < HALF, u = top ? i / (HALF - 1) : 1 - (i - HALF) / (HALF - 1);
         const [cx, cy] = circle(u, top), [wx, wy] = wave(u, top, t, s.amp);
-        pts.push([(cx + (wx - cx) * w) * sx, (cy + (wy - cy) * w) * sy]);
+        const [bx, by] = box(u, top, ...s.boxSize), b = s.box * s.box * (3 - 2 * s.box);
+        const px = cx + (wx - cx) * w, py = cy + (wy - cy) * w;
+        pts.push([(px + (bx - px) * b) * (b > 0.99 ? 1 : sx), (py + (by - py) * b) * (b > 0.99 ? 1 : sy)]);
       }
       let d = "";
       for (let i = 0; i <= N; i++) {                          // quadratic smoothing through midpoints
@@ -134,7 +147,7 @@
       });
 
       // face: white slanted pill eyes up-right; fades out as the body becomes a wave
-      el.face.setAttribute("opacity", Math.max(0, 1 - w * 1.6 - s.think * 1.6).toFixed(2));
+      el.face.setAttribute("opacity", Math.max(0, 1 - w * 1.6 - s.think * 1.6 - s.box * 2.5).toFixed(2));
       const ox = s.look[0] * 12, oy = s.look[1] * 9;
       const h = Math.max(3, 26 * s.open * (1 - s.blink * 0.9));
       const happy = s.happy > 0.5;
