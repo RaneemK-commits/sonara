@@ -1,0 +1,49 @@
+--- a/web/caregiver/index.html
++++ b/web/caregiver/index.html
+@@ -9,7 +9,7 @@
+ <link rel="preload" href="/static/shared/fonts/Inter.ttf" as="font" type="font/ttf" crossorigin>
+ <link rel="stylesheet" href="/static/shared/base.css">
+ <style>
+-/* Hallmark · app screen · nurse worklist · v2 light (Inter, warm canvas), one accent: the room orb's orange marks what is new */
++/* Hallmark Â· app screen Â· nurse worklist Â· v2 light (Inter, warm canvas), one accent: the room orb's orange marks what is new */
+ /* critique: a list a nurse reads in two seconds; bed, need, wait, one action. Tap a patient for their own page of requests. Status is always a word plus an icon. */
+   :root { --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px; }
+   html, body { overflow-x: clip; }
+@@ -181,13 +181,22 @@
+     unlockAudio(); removeEventListener("pointerdown", once);
+   });
+ }
+-function beep() {
++async function beep() {
+   if (!soundOn || !audioCtx) return;
+-  if (audioCtx.state !== "running") audioCtx.resume();
+-  [0, .25].forEach(t => { const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+-    o.frequency.value = 880; g.gain.setValueAtTime(.2, audioCtx.currentTime + t);
+-    g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + t + .2);
+-    o.connect(g).connect(audioCtx.destination); o.start(audioCtx.currentTime + t); o.stop(audioCtx.currentTime + t + .2); });
++  try { if (audioCtx.state !== "running") await audioCtx.resume(); } catch { return; }
++  if (!soundOn || audioCtx.state !== "running") return;
++  const now = audioCtx.currentTime;
++  [0, .55, 1.1].forEach((delay, i) => {
++    const o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = now + delay;
++    o.frequency.value = i === 1 ? 1175 : 880;
++    g.gain.setValueAtTime(0, t);
++    g.gain.linearRampToValueAtTime(.65, t + .01);
++    g.gain.setValueAtTime(.65, t + .22);
++    g.gain.exponentialRampToValueAtTime(.001, t + .4);
++    o.connect(g).connect(audioCtx.destination);
++    o.start(t); o.stop(t + .41);
++    o.onended = () => { o.disconnect(); g.disconnect(); };
++  });
+ }
+ 
+ const wait = iso => { const m = Math.max(0, (Date.now() - Date.parse(iso)) / 60000 | 0); return m < 1 ? "<1 min" : m < 60 ? `${m} min` : `${m / 60 | 0} h ${m % 60} min`; };
+@@ -245,7 +254,7 @@
+   const targets = ack ? g.items : fresh;            // acknowledge the new ones first, then resolve all
+   const counts = new Map();
+   g.items.forEach(r => counts.set(r.label, (counts.get(r.label) || 0) + 1));
+-  const what = [...counts].map(([l, n]) => n > 1 ? `${esc(l)} ×${n}` : esc(l)).join(", ");
++  const what = [...counts].map(([l, n]) => n > 1 ? `${esc(l)} Ã—${n}` : esc(l)).join(", ");
+   return `<li class="row ${ack ? "ack" : "new"} ${g.items.some(r => !flashed.has(r.request_id)) ? "flash" : ""}">
+     <a class="bed tnum" href="${bedHref(g.bed)}">${esc(g.bed)}<svg class="ico" aria-hidden="true"><use href="#i-next"/></svg></a>
+     <span class="wait tnum" data-since="${g.items[0].created_at}">${wait(g.items[0].created_at)}</span>
