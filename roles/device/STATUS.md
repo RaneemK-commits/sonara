@@ -61,6 +61,7 @@ Nothing has touched real hardware yet. Hardware checklist: [BRINGUP.md](BRINGUP.
 - [ ] USB power meter readings for SCI (labelled measured), with speech.
 
 ## Needs from others
+- speech (posted 2026-11-13): live recognition on the board rejects every attempt (data in the board post); speech owns the fix. Board-local now: `manual_duration_s = 3.0`, mic `alsa:plughw:CARD=Set,DEV=0`, profile `patient_001`.
 - speech: `DONE` when `Recognizer` + `AudioCapture` + `Speaker` work, so the mic path can be tested on the board.
 - ui: nothing yet. Will post `CONTRACT` if `room_state` gains fields (e.g. `caregiver_nearby`).
 

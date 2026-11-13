@@ -24,7 +24,12 @@ assumption from docs, not yet seen on our board.
 - [ ] Full flow with mic once speech's recognizer is ready: Talk → phrase spoken → confirm → caregiver.
 
 ## 4. Room display
-- [ ] USB-C speaker: NOT seen as an audio device (only the capture-only USB headset, card 1, plus on-board codec card 0). Needs model + whether an audio cable is used.
+- [ ] **Speaker: NOT working (2026-11-13), parked.** Creative Pebble V2 has no USB audio (USB-C is power only); its 3.5 mm plug is in the touch display's jack, so audio must go over DisplayPort.
+  - Board side: DP audio is `hw:ArduinoImolaHPH,3` (MultiMedia4). UCM `Qualcomm/qcm2290/HDMI.conf` enables `SEC_MI2S_RX Audio Mixer MultiMedia4` (I2S to the anx7625 DP bridge); `DISPLAY_PORT_RX Audio Mixer MultiMedia4` is the wrong control (with it on, hw_params fails) and the two are mutually exclusive. UCM `HiFi.conf` lists "HDMI support" as a TODO.
+  - Result: playback with `SEC_MI2S_RX` on succeeds (rc 0) but the human hears only static, for tones and prompts alike. One clean tone was heard once (16:04, after `alsaucm -c 0 set _verb HDMI set _enadev HDMI`) and could not be reproduced.
+  - Something resets `SEC_MI2S_RX` to off over time (probably WirePlumber restoring the HiFi verb).
+  - Board-local leftovers: `~/.asoundrc` (default playback → plug to hw:...,3 at 48 kHz stereo, capture → USB mic). Remove it if a USB audio output is used instead.
+  - Recommended fix: a USB audio adapter with a 3.5 mm output (class-compliant, `snd-usb-audio`) for the Pebble, or a USB speaker. Then point `~/.asoundrc` playback at that card.
 - [ ] External display: board shows `card0-DP-1` under `/sys/class/drm`, session is xfce4 on tty. `chromium` is installed. Still to confirm the display is lit.
 - [ ] Kiosk: `chromium --kiosk http://localhost:8000/room` (or whatever browser is installed).
 - [ ] Touch input works on the room tiles (fallback when there is no mic).
