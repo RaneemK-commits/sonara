@@ -13,7 +13,7 @@ Nothing has touched real hardware yet. Hardware checklist: [BRINGUP.md](BRINGUP.
 | Request store | `sonara/store.py` | works (SQLite, honest transitions, event log) |
 | Server + WS | `sonara/server/app.py`, `hub.py` | works (API per CONTRACT.md, NOT_DISPLAYED watchdog, snapshot replay) |
 | MCU bridge (Linux) | `sonara/hw/mcu.py` | keyboard + null work; `UnoQBridgeMCU` **unverified** |
-| MCU sketch | `mcu/sonara_mcu/sonara_mcu.ino` | Modulino Buttons version, **not compiled or flashed yet** |
+| MCU app | `mcu/` (App Lab app: `sketch/sketch.ino`, empty `python/main.py`) | **works on board**: presses → Sonara, LEDs ← Sonara; deployed as default app `user:sonara-mcu` |
 | Entry point / config | `sonara/__main__.py`, `config.py`, `config/sonara.toml` | works |
 
 ## Plan (in order; top open item = what to do next)
@@ -74,4 +74,5 @@ Nothing has touched real hardware yet. Hardware checklist: [BRINGUP.md](BRINGUP.
 - 2026-11-13: Confirm LED blinks slow (400 ms), Cancel blinks fast (150 ms) so the two blinks are distinguishable.
 - 2026-11-13: Active requests ordered by `created_at, request_id` (second-resolution timestamps tie).
 - 2026-11-13: Qwiic/Modulino is on the STM32 side (no 0x3E on Linux I2C buses 0/1): MCU sketch reads the buttons, Python only gets Bridge events. Caveat: Buttons module may not have been plugged in during the scan.
+- 2026-11-13: `arduino-app-cli app stop` kills the sketch's Bridge link (sketch keeps looping, no RPC either way). So `mcu/` is an App Lab app that stays running as the board's default app; its Python is empty and Sonara (outside App Lab, `arduino-router-bridge`) owns the `button` route.
 - 2026-11-13: Plan lives in this file plus `BRINGUP.md`; no new code modules until hardware forces them.

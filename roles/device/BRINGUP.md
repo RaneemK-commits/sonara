@@ -39,7 +39,9 @@ assumption from docs, not yet seen on our board.
 - [ ] (older) Bridge round-trip: sketch `Bridge.notify` reaches Python; Python `Bridge.call` reaches sketch
       (**VERIFY** names in `Arduino_RouterBridge` and `arduino.app_utils`).
 - [ ] Modulino Buttons example runs (presses + LEDs), then the Sonara sketch.
-- [ ] `python -m sonara --mcu unoq`: each button drives the controller; LEDs follow the state.
+- [x] `python -m sonara --no-audio --mcu unoq` (2026-11-13): room-tile WATER → Confirm button → `QUEUED` → Cancel button → `CANCELLED`, both with actor `patient`. LED states per step: confirmed by eye for the echo test; full-flow LED pattern still to confirm by eye.
+- [x] Root cause of earlier "no presses": `app stop` of the test app left the MCU's Bridge dead (LEDs frozen, no events). Fix: keep `user:sonara-mcu` running, `arduino-app-cli properties set default user:sonara-mcu` (start on boot, **reboot not yet tested**).
+- Deploy `mcu/`: `tar -cf - -C mcu . | ssh arduino@<ip> 'tar -xf - -C ~/ArduinoApps/sonara-mcu'` then `arduino-app-cli app restart user:sonara-mcu`.
 
 ## 6. Run on boot
 - [ ] systemd unit (or App Lab app) starts Sonara and the kiosk after power-on; `Restart=on-failure`.
