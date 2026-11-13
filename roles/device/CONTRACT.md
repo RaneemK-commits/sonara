@@ -14,12 +14,32 @@ Change only with a `CONTRACT` post to `ui`.
 | GET | `/api/metrics` | — | per-stage latency summary |
 | POST | `/api/reset` | `X-Sonara-Token` | deletes request history |
 
+### Voice setup (enrollment), added 2026-11-13 with speech
+All return JSON from `EnrollmentService`; 409 = mic/profile busy, 422 = bad input/profile data, 503 = mic unavailable.
+While enrollment is active, `/api/room/input` returns 409 for `talk` and `select` (confirm/cancel still work).
+
+| Method | Path | Body / purpose |
+|---|---|---|
+| GET | `/api/profiles` | active profile, profile list, ready/error, counts, calibration, intents |
+| POST | `/api/enrollment/start` | `{profile_id, keep_audio: false}`; pauses recognition |
+| POST | `/api/enrollment/intent` | `{intent}` |
+| POST | `/api/enrollment/capture` | `{manual: true, seconds: 0.3..5}`; stage one take from the device mic |
+| POST | `/api/enrollment/sample` | keep the staged take (stores MFCCs, never audio unless keep_audio) |
+| DELETE | `/api/enrollment/intents/{intent}` | clear all takes for an intent |
+| DELETE | `/api/enrollment/intents/{intent}/samples/{index}` | delete one take |
+| POST | `/api/enrollment/calibrate` | recompute thresholds |
+| POST | `/api/enrollment/test` | `{manual, seconds}`; test the draft, never creates a request |
+| POST | `/api/enrollment/finish` | save + load profile, resume recognition |
+| POST | `/api/enrollment/cancel` | discard draft, resume recognition |
+| POST | `/api/profiles/{profile_id}/load` | switch profile |
+| DELETE | `/api/profiles/{profile_id}` | delete profile (and opt-in recordings) |
+
 Request: `{request_id, bed_id, intent, label, status, created_at, updated_at}`.
 Status: `QUEUED → DISPLAYED → ACKNOWLEDGED → COMPLETED`, plus `NOT_DISPLAYED`, `CANCELLED`.
 
 ## WebSocket `/ws?role=room` | `/ws?role=caregiver&token=…`
 Server → client:
-- `{type: "room_state", bed_id, state: IDLE|LISTENING|PROCESSING|AWAIT_CONFIRM, pending, last: {text, intent, score, understood}, request, has_mic, intents: [{id, label}]}` (room)
+- `{type: "room_state", bed_id, state: IDLE|LISTENING|PROCESSING|AWAIT_CONFIRM, pending, last: {text, intent, score, understood}, request, has_mic, enrollment_active, intents: [{id, label}]}` (room). `has_mic` is false while enrollment owns the mic.
 - `{type: "snapshot", active: [Request], history: [Request]}` (caregiver, on connect)
 - `{type: "request", request: Request}` (everyone, on every change)
 
