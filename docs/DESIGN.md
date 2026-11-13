@@ -49,8 +49,14 @@ mic (USB) ─► ring buffer ─► energy VAD ─► utterance (≤5 s)
 MCU (Zephyr/Arduino): Talk/Confirm/Cancel buttons, 3 status LEDs, via Arduino Bridge RPC
 ```
 
+## Resolved questions
+1. Request metadata over local Wi-Fi: **allowed** by the organisers.
+2. Power meter: **none**. Energy is *calculated* and labelled as such. Environmental impact is
+   reported with the Green Software Foundation **SCI** standard → [SCI.md](SCI.md).
+3. External display: **touchscreen**. The room UI is touch-first, and the phrase tiles double as a manual fallback.
+4. Data: **TORGO** (real dysarthric speakers) for evaluation, plus our own consented recordings
+   (labelled simulated) for the demo phrases → [DATASETS.md](DATASETS.md).
+
 ## Open questions
-1. Organisers: is structured request metadata on the local Wi-Fi allowed? (assumed yes)
-2. Do we have a USB power meter for real energy numbers?
-3. Is the external display touch-capable? (room UI works with mouse/touch either way)
-4. Can we obtain TORGO (public dysarthric speech corpus) for a stretch validation?
+- Hackathon location (country/region), needed for grid carbon intensity *I* in SCI.
+- UI design and branding: not decided.
