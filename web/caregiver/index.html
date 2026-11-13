@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/static/shared/base.css">
 <style>
 /* Hallmark · app screen · nurse worklist · v2 light (Inter, warm canvas), one accent: the room orb's orange marks what is new */
-/* critique: a list a nurse reads in two seconds; bed, need, wait, one action. Status is always a word plus an icon, never colour alone. */
+/* critique: a list a nurse reads in two seconds; bed, need, wait, one action. Tap a patient for their own page of requests. Status is always a word plus an icon. */
   :root { --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px; }
   html, body { overflow-x: clip; }
   body { min-height: 100vh; font-size: 16px; -webkit-tap-highlight-color: transparent; }
@@ -24,36 +24,45 @@
   .conn, .conn.on, .conn:not(.on) { padding: 0 var(--space-1); background: none; color: var(--ink); }
   .conn .ico { width: 24px; height: 24px; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  /* alert sound: a bare black bell, the tap target stays 44px */
-  .icon-btn.bare { background: none; border: 0; padding: 0; color: var(--ink); }
-  .icon-btn.bare .ico { width: 24px; height: 24px; }
   .icon-btn { min-width: 44px; min-height: 44px; padding: 0 var(--space-3); border-radius: var(--radius-control);
     background: var(--surface); border: 1px solid var(--line); font-size: 14px; font-weight: 600;
     display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
-    transition: transform .1s ease, opacity .15s ease; }
+    transition: transform .1s ease, opacity .15s ease; touch-action: manipulation; }
   .icon-btn .ico { width: 20px; height: 20px; }
+  /* alert sound: a bare black bell (crossed out when off), the tap target stays 44px */
+  .icon-btn.bare { background: none; border: 0; padding: 0; color: var(--ink); }
+  .icon-btn.bare .ico { width: 24px; height: 24px; }
   h1 { margin: var(--space-4) 0 0; font-size: 28px; font-weight: 800; letter-spacing: -.02em; text-wrap: balance; }
   .count { margin: var(--space-1) 0 0; color: var(--ink-2); font-size: 15px; }
+  .back { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 44px; margin: var(--space-2) 0 0 calc(-1 * var(--space-2));
+    padding: 0 var(--space-2); font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; }
+  .back .ico { width: 20px; height: 20px; stroke-width: 2.4; }
   .banner { margin: var(--space-3) 0 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-control); font-weight: 600; font-size: 15px;
     color: var(--rose-ink); background: var(--rose-wash); display: flex; gap: var(--space-2); align-items: flex-start; }
   .banner .ico { width: 20px; height: 20px; flex: none; stroke-width: 2.4; }
 
   .list { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: var(--space-2); }
-  .row { background: var(--surface); border: 1px solid var(--divider); border-radius: var(--radius-card);
+  .row { position: relative; background: var(--surface); border: 1px solid var(--divider); border-radius: var(--radius-card);
     padding: var(--space-4); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); align-items: center; }
   .row.new { border-color: var(--orange-line); }
   .row.flash { animation: flash 1.2s ease-out; }
   @keyframes flash { from { opacity: .4; transform: translateY(-4px); } }
-  .bed { font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
+  /* the patient's name opens their page; the whole card is the tap target, the action button sits above it */
+  .bed { justify-self: start; display: inline-flex; align-items: center; gap: var(--space-1); font-size: 21px; font-weight: 700;
+    letter-spacing: -.01em; color: var(--ink); text-decoration: none; }
+  .bed::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+  .bed .ico { width: 18px; height: 18px; stroke-width: 2.4; color: var(--ink-2); }
+  .row:has(.bed:active) { background: var(--canvas); }
   .what { font-size: 17px; font-weight: 500; color: var(--ink); min-width: 0; overflow-wrap: break-word; }
-  .row.idle .what { color: var(--ink-2); }
+  .row.idle .what, .what.sub { color: var(--ink-2); }
+  .what.sub { font-size: 15px; font-weight: 400; }
   .state { justify-self: start; display: inline-flex; align-items: center; gap: var(--space-1); font-size: 13px; font-weight: 600;
     padding: var(--space-1) var(--space-2); border-radius: var(--radius-control); background: var(--green-wash); color: var(--green-ink); }
   .state .ico { width: 14px; height: 14px; stroke-width: 2.6; }
   .state.new { background: var(--orange-wash); color: var(--orange-ink); }
   .wait { grid-column: 2; grid-row: 1; justify-self: end; font-size: 15px; color: var(--ink-2); }
-  .act { grid-column: 2; grid-row: 2 / span 2; justify-self: end; min-height: 44px; padding: 0 var(--space-4);
-    border-radius: var(--radius-control); font-size: 15px; font-weight: 600; transition: transform .1s ease, opacity .15s ease; }
+  .act { position: relative; z-index: 1; grid-column: 2; grid-row: 2 / span 2; justify-self: end; min-height: 44px; padding: 0 var(--space-4);
+    border-radius: var(--radius-control); font-size: 15px; font-weight: 600; transition: transform .1s ease, opacity .15s ease; touch-action: manipulation; }
   .act.primary { background: var(--ink); color: var(--on-ink); }
   .act.secondary { background: var(--surface); border: 1.5px solid var(--line); }
   .act:hover:not(:disabled), .icon-btn:hover { opacity: .88; }
@@ -62,27 +71,27 @@
   button:focus-visible, a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
   .empty { color: var(--ink-2); padding: var(--space-4) var(--space-1); }
 
-  /* history: always visible under the active list (no expander to discover); the clock in the header jumps here */
-  html { scroll-behavior: smooth; }
-  .hist { margin-top: var(--space-8); scroll-margin-top: 160px; }
-  h2 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -.01em; }
-  .hsub { margin: var(--space-1) 0 0; color: var(--ink-2); font-size: 15px; }
+  /* patient page */
+  h2 { margin: var(--space-8) 0 0; font-size: 20px; font-weight: 700; letter-spacing: -.01em; }
+  .elsewhere { margin: var(--space-3) 0 0; }
+  .elsewhere a { display: flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-control); background: var(--orange-wash); color: var(--orange-ink); font-weight: 600; font-size: 15px; text-decoration: none; }
+  .elsewhere .ico { width: 18px; height: 18px; flex: none; }
   .hlist { list-style: none; margin: var(--space-3) 0 0; padding: 0; border-top: 1px solid var(--divider); }
-  .hrow { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: var(--space-3); align-items: center;
-    padding: var(--space-3) var(--space-1); border-bottom: 1px solid var(--divider); font-size: 15px; }
-  .htime { color: var(--ink-2); }
-  .hwhat { min-width: 0; overflow-wrap: break-word; }
-  .hwhat b { font-weight: 700; margin-right: var(--space-2); white-space: nowrap; }
-  .hstate { display: inline-flex; align-items: center; gap: var(--space-1); font-size: 13px; font-weight: 600; color: var(--green-ink); white-space: nowrap; }
+  .hrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); align-items: center;
+    padding: var(--space-3) var(--space-1); border-bottom: 1px solid var(--divider); }
+  .hwhat { font-size: 16px; font-weight: 600; min-width: 0; overflow-wrap: break-word; }
+  .htime { grid-column: 1; font-size: 14px; color: var(--ink-2); }
+  .hstate { grid-column: 2; grid-row: 1 / span 2; display: inline-flex; align-items: center; gap: var(--space-1); font-size: 13px; font-weight: 600;
+    color: var(--green-ink); white-space: nowrap; }
   .hstate.off { color: var(--ink-2); }
   .hstate .ico { width: 14px; height: 14px; stroke-width: 2.6; }
   .hempty { padding: var(--space-3) var(--space-1); color: var(--ink-2); border-bottom: 1px solid var(--divider); }
-  .foot { margin: var(--space-4) 0 var(--space-8); }
+  .foot { margin: var(--space-6) 0 var(--space-8); }
 
   @media (prefers-reduced-motion: reduce) {
     .row.flash { animation: none; }
     .act, .icon-btn { transition: none; }
-    html { scroll-behavior: auto; }
   }
 </style>
 </head>
@@ -94,8 +103,9 @@
   <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0v4l-2 3h16l-2-3zM10 19a2 2 0 0 0 4 0"/></symbol>
   <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19zM12 10v4.5M12 17.5v.01"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 7.8"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6"/></symbol>
   <symbol id="i-bell-off" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0v4l-2 3h16l-2-3zM10 19a2 2 0 0 0 4 0M3 3l18 18"/></symbol>
 </svg>
 <div class="wrap">
@@ -104,23 +114,29 @@
     <span class="logo"><svg class="ico" aria-hidden="true"><use href="#i-mark"/></svg>Sonara</span>
     <div class="tools">
       <span class="conn" id="conn"><svg class="ico" aria-hidden="true"><use href="#i-wifi-off" id="connIco"/></svg><span class="sr" id="connText">Connecting</span></span>
-      <a class="icon-btn bare" href="#hist" aria-label="History"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></a>
-      <button class="icon-btn bare" id="sound" aria-label="Alert sound off"><svg class="ico" aria-hidden="true"><use href="#i-bell-off"/></svg></button>
+      <button class="icon-btn bare" id="sound" type="button" aria-pressed="false" aria-label="Alert sound off"><svg class="ico" aria-hidden="true"><use href="#i-bell-off" id="soundIco"/></svg></button>
     </div>
   </div>
-  <h1>Requests</h1>
+  <a class="back" id="back" href="#" hidden><svg class="ico" aria-hidden="true"><use href="#i-prev"/></svg>All patients</a>
+  <h1 id="title">Requests</h1>
   <p class="count tnum" id="count">Loading requests</p>
   <p class="banner" id="banner" hidden><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg><span id="bannerText">Disconnected from the bedside device. New requests cannot reach this screen.</span></p>
 </header>
 
-<ul class="list" id="list" aria-live="polite"></ul>
+<!-- all patients -->
+<main id="listView">
+  <ul class="list" id="list" aria-live="polite"></ul>
+</main>
 
-<section class="hist" id="hist" aria-labelledby="histHead">
-  <h2 id="histHead">History</h2>
-  <p class="hsub">Resolved and cancelled requests, newest first.</p>
-  <ul class="hlist" id="history"></ul>
-</section>
-<p class="foot"><button class="icon-btn" id="tokenBtn">Change caregiver token</button></p>
+<!-- one patient: opened by tapping a patient, /caregiver#bed=<id> -->
+<main id="bedView" hidden>
+  <div class="elsewhere" id="elsewhere" aria-live="polite"></div>
+  <ul class="list" id="bedActive" aria-live="polite"></ul>
+  <h2>Earlier requests</h2>
+  <ul class="hlist" id="bedHistory"></ul>
+</main>
+
+<p class="foot"><button class="icon-btn" id="tokenBtn" type="button">Change caregiver token</button></p>
 </div>
 
 <script>
@@ -134,22 +150,52 @@ const ACTIVE = ["QUEUED", "DISPLAYED", "NOT_DISPLAYED", "ACKNOWLEDGED"];
 const LABEL = { QUEUED: "New", DISPLAYED: "New", NOT_DISPLAYED: "New", ACKNOWLEDGED: "Acknowledged",
                 COMPLETED: "Resolved", CANCELLED: "Cancelled by patient" };
 const reqs = new Map(), receipted = new Set(), flashed = new Set(), busy = new Set();
-let ws, audioCtx = null, beds = new Set(), pressing = false, dirty = false;
+let ws, beds = new Set(), pressing = false, dirty = false;
 
-$("sound").onclick = () => {   // audio needs a user gesture (autoplay rules)
-  audioCtx = audioCtx || new AudioContext(); audioCtx.resume(); beep();
-  $("sound").innerHTML = '<svg class="ico" aria-hidden="true"><use href="#i-bell"/></svg>'; $("sound").setAttribute("aria-label", "Alert sound on");
-};
+// ---- alert sound: a real on/off toggle. Browsers only allow audio after a tap, so the
+// preference is remembered and the sound is unlocked again on the first tap after a reload.
+let audioCtx = null, soundOn = false;
+const AC = window.AudioContext || window.webkitAudioContext;
+function unlockAudio() {
+  if (!AC) return false;
+  try { audioCtx = audioCtx || new AC(); if (audioCtx.state !== "running") audioCtx.resume(); return true; } catch { return false; }
+}
+function setSound(on) {
+  soundOn = on;
+  $("soundIco").setAttribute("href", on ? "#i-bell" : "#i-bell-off");
+  $("sound").setAttribute("aria-pressed", String(on));
+  $("sound").setAttribute("aria-label", on ? "Alert sound on" : "Alert sound off");
+  try { localStorage.setItem("sonara_sound", on ? "1" : "0"); } catch {}
+}
+$("sound").addEventListener("click", () => {
+  if (soundOn) { setSound(false); return; }
+  setSound(unlockAudio());
+  beep();                                    // test beep so the nurse hears it works
+});
+let wantSound = false;
+try { wantSound = localStorage.getItem("sonara_sound") === "1"; } catch {}
+if (wantSound) {
+  setSound(true);
+  addEventListener("pointerdown", function once(e) {
+    if (e.target.closest("#sound")) return;  // the bell handles its own tap
+    unlockAudio(); removeEventListener("pointerdown", once);
+  });
+}
 function beep() {
-  if (!audioCtx) return;
+  if (!soundOn || !audioCtx) return;
+  if (audioCtx.state !== "running") audioCtx.resume();
   [0, .25].forEach(t => { const o = audioCtx.createOscillator(), g = audioCtx.createGain();
     o.frequency.value = 880; g.gain.setValueAtTime(.2, audioCtx.currentTime + t);
     g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + t + .2);
     o.connect(g).connect(audioCtx.destination); o.start(audioCtx.currentTime + t); o.stop(audioCtx.currentTime + t + .2); });
 }
+
 const wait = iso => { const m = Math.max(0, (Date.now() - Date.parse(iso)) / 60000 | 0); return m < 1 ? "<1 min" : m < 60 ? `${m} min` : `${m / 60 | 0} h ${m % 60} min`; };
-const time = iso => new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+const when = iso => { const d = new Date(iso), t = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  return d.toDateString() === new Date().toDateString() ? `Today, ${t}` : `${d.toLocaleDateString([], { day: "numeric", month: "short" })}, ${t}`; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const bedHref = b => "#bed=" + encodeURIComponent(b);
+const openBed = () => location.hash.startsWith("#bed=") ? decodeURIComponent(location.hash.slice(5)) : null;
 
 async function act(id, what, btn) {
   busy.add(id); btn.disabled = true;
@@ -159,49 +205,81 @@ async function act(id, what, btn) {
   } finally { busy.delete(id); render(); }
 }
 
-// Don't reorder rows under a nurse's finger
-addEventListener("pointerdown", () => pressing = true);
-addEventListener("pointerup", () => { pressing = false; if (dirty) render(); });
+// Don't reorder rows under a nurse's finger (a scroll ends in pointercancel, not pointerup)
+addEventListener("pointerdown", e => { if (e.target.closest(".list")) pressing = true; });
+const release = () => { pressing = false; if (dirty) render(); };
+addEventListener("pointerup", release);
+addEventListener("pointercancel", release);
 
+function card(r, onBedPage) {   // on the patient page the card leads with the need, not the (repeated) bed
+  const ack = r.status === "ACKNOWLEDGED";
+  return `<li class="row ${ack ? "ack" : "new"} ${flashed.has(r.request_id) ? "" : "flash"}">
+    ${onBedPage ? `<span class="bed">${esc(r.label)}</span>`
+      : `<a class="bed tnum" href="${bedHref(r.bed_id)}">${esc(r.bed_id)}<svg class="ico" aria-hidden="true"><use href="#i-next"/></svg></a>`}
+    <span class="wait tnum" data-since="${r.created_at}">${wait(r.created_at)}</span>
+    <span class="what${onBedPage ? " sub" : ""}">${onBedPage ? when(r.created_at) : esc(r.label)}</span>
+    <span class="state ${ack ? "" : "new"}"><svg class="ico" aria-hidden="true"><use href="#i-${ack ? "check" : "bell"}"/></svg>${ack ? "Acknowledged" : "New"}</span>
+    <button class="act ${ack ? "secondary" : "primary"}" type="button" data-id="${r.request_id}" data-do="${ack ? "complete" : "acknowledge"}"
+      ${busy.has(r.request_id) ? "disabled" : ""}>${ack ? "Resolve" : "Acknowledge"}</button></li>`;
+}
+const byUrgency = (a, b) => (a.status === "ACKNOWLEDGED") - (b.status === "ACKNOWLEDGED") || a.created_at.localeCompare(b.created_at);
+
+let shown = new Set();   // request ids actually rendered right now (receipts only for these)
 function render() {
   if (pressing) { dirty = true; return; } dirty = false;
-  const all = [...reqs.values()];
-  const active = all.filter(r => ACTIVE.includes(r.status))
-    .sort((a, b) => (a.status === "ACKNOWLEDGED") - (b.status === "ACKNOWLEDGED") || a.created_at.localeCompare(b.created_at));
-  const busyBeds = new Set(active.map(r => r.bed_id));
-  const idle = [...beds].filter(b => !busyBeds.has(b)).sort();
-  const n = active.filter(r => r.status !== "ACKNOWLEDGED").length;
-  $("count").textContent = `${active.length} active, ${n} new`;
+  const all = [...reqs.values()], bed = openBed();
+  const active = all.filter(r => ACTIVE.includes(r.status)).sort(byUrgency);
+  shown = new Set();
+  $("listView").hidden = !!bed; $("bedView").hidden = !bed; $("back").hidden = !bed;
 
-  $("list").innerHTML = active.map(r => {
-    const ack = r.status === "ACKNOWLEDGED";
-    return `<li class="row ${ack ? "ack" : "new"} ${flashed.has(r.request_id) ? "" : "flash"}">
-      <span class="bed tnum">${esc(r.bed_id)}</span>
-      <span class="wait tnum" data-since="${r.created_at}">${wait(r.created_at)}</span>
-      <span class="what">${esc(r.label)}</span>
-      <span class="state ${ack ? "" : "new"}"><svg class="ico" aria-hidden="true"><use href="#i-${ack ? "check" : "bell"}"/></svg>${ack ? "Acknowledged" : "New"}</span>
-      <button class="act ${ack ? "secondary" : "primary"}" data-id="${r.request_id}" data-do="${ack ? "complete" : "acknowledge"}"
-        ${busy.has(r.request_id) ? "disabled" : ""}>${ack ? "Resolve" : "Acknowledge"}</button></li>`;
-  }).join("") + idle.map(b => `<li class="row idle"><span class="bed tnum">${esc(b)}</span>
-      <span class="what">No active request</span></li>`).join("")
-    || '<li class="empty">No active requests.</li>';
+  if (!bed) {
+    const busyBeds = new Set(active.map(r => r.bed_id));
+    const idle = [...beds].filter(b => !busyBeds.has(b)).sort();
+    const n = active.filter(r => r.status !== "ACKNOWLEDGED").length;
+    $("title").textContent = "Requests";
+    $("count").textContent = `${active.length} active, ${n} new`;
+    $("list").innerHTML = active.map(r => card(r)).join("") + idle.map(b => `<li class="row idle">
+        <a class="bed tnum" href="${bedHref(b)}">${esc(b)}<svg class="ico" aria-hidden="true"><use href="#i-next"/></svg></a>
+        <span class="what">No active request</span></li>`).join("")
+      || '<li class="empty">No active requests.</li>';
+    active.forEach(r => shown.add(r.request_id));
+  } else {
+    const mine = all.filter(r => r.bed_id === bed);
+    const open = active.filter(r => r.bed_id === bed);
+    const past = mine.filter(r => !ACTIVE.includes(r.status)).sort((a, b) => b.created_at.localeCompare(a.created_at));
+    const others = active.filter(r => r.bed_id !== bed && r.status !== "ACKNOWLEDGED");
+    $("title").textContent = bed;
+    $("count").textContent = `${open.length} active, ${past.length} earlier`;
+    // a new request from another patient is never hidden behind this page
+    $("elsewhere").innerHTML = others.map(r => `<a href="${bedHref(r.bed_id)}"><svg class="ico" aria-hidden="true"><use href="#i-bell"/></svg>
+        New from ${esc(r.bed_id)}: ${esc(r.label)}</a>`).join("");
+    $("bedActive").innerHTML = open.map(r => card(r, true)).join("") || '<li class="empty">No active request.</li>';
+    $("bedHistory").innerHTML = past.map(r => { const done = r.status === "COMPLETED";
+      return `<li class="hrow"><span class="hwhat">${esc(r.label)}</span>
+        <span class="htime tnum">${when(r.created_at)}</span>
+        <span class="hstate ${done ? "" : "off"}"><svg class="ico" aria-hidden="true"><use href="#i-${done ? "check" : "x"}"/></svg>${LABEL[r.status] || esc(r.status)}</span></li>`;
+    }).join("") || '<li class="hempty">No earlier requests.</li>';
+    [...open, ...others].forEach(r => shown.add(r.request_id));
+  }
   active.forEach(r => flashed.add(r.request_id));
-
-  const hist = all.filter(r => !ACTIVE.includes(r.status)).sort((a, b) => b.updated_at.localeCompare(a.updated_at)).slice(0, 20);
-  $("history").innerHTML = hist.map(r => { const done = r.status === "COMPLETED";
-    return `<li class="hrow"><span class="htime tnum">${time(r.updated_at)}</span>
-      <span class="hwhat"><b class="tnum">${esc(r.bed_id)}</b>${esc(r.label)}</span>
-      <span class="hstate ${done ? "" : "off"}"><svg class="ico" aria-hidden="true"><use href="#i-${done ? "check" : "x"}"/></svg>${LABEL[r.status] || esc(r.status)}</span></li>`;
-  }).join("") || '<li class="hempty">Nothing resolved yet.</li>';
   receiptVisible();
 }
-$("list").addEventListener("click", e => { const b = e.target.closest("button.act"); if (b) act(b.dataset.id, b.dataset.do, b); });
+document.addEventListener("click", e => { const b = e.target.closest("button.act"); if (b) act(b.dataset.id, b.dataset.do, b); });
+addEventListener("hashchange", () => { scrollTo(0, 0); if (openBed()) loadHistory(); render(); });
+
+// The live feed only carries the latest 20 finished requests; a patient page loads up to 50 more
+function loadHistory() {
+  fetch("/api/requests").then(r => r.json()).then(list => {
+    for (const r of list) if (!reqs.has(r.request_id)) reqs.set(r.request_id, r);
+    render();
+  }).catch(() => {});
+}
 
 // Tell the device a request is actually on screen (sets DISPLAYED, never ACKNOWLEDGED)
 function receiptVisible() {
   if (!ws || ws.readyState !== 1 || document.hidden) return;
   for (const r of reqs.values())
-    if ((r.status === "QUEUED" || r.status === "NOT_DISPLAYED") && !receipted.has(r.request_id + r.status)) {
+    if (shown.has(r.request_id) && (r.status === "QUEUED" || r.status === "NOT_DISPLAYED") && !receipted.has(r.request_id + r.status)) {
       receipted.add(r.request_id + r.status);
       ws.send(JSON.stringify({ type: "receipt", request_id: r.request_id }));
     }
@@ -210,13 +288,15 @@ document.addEventListener("visibilitychange", receiptVisible);
 setInterval(() => document.querySelectorAll("[data-since]").forEach(e => e.textContent = wait(e.dataset.since)), 15000);
 
 fetch("/api/health").then(r => r.json()).then(h => { if (h.bed_id) { beds.add(h.bed_id); render(); } }).catch(() => {});
+if (openBed()) loadHistory();
 
 function connect() {
   ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws?role=caregiver&token=${encodeURIComponent(token)}`);
   ws.onopen = () => { $("connText").textContent = "Connected"; $("conn").classList.add("on"); $("connIco").setAttribute("href", "#i-wifi"); $("banner").hidden = true; receipted.clear(); };
   ws.onmessage = e => {
     const m = JSON.parse(e.data);
-    if (m.type === "snapshot") { reqs.clear(); [...m.history, ...m.active].forEach(r => { reqs.set(r.request_id, r); flashed.add(r.request_id); }); }
+    if (m.type === "snapshot") { reqs.clear(); [...m.history, ...m.active].forEach(r => { reqs.set(r.request_id, r); flashed.add(r.request_id); });
+      if (openBed()) loadHistory(); }
     if (m.type === "request") {
       const isNew = !reqs.has(m.request.request_id) && m.request.status === "QUEUED";
       reqs.set(m.request.request_id, m.request);
@@ -231,6 +311,7 @@ function connect() {
     setTimeout(connect, 1500);
   };
 }
+render();
 connect();
 </script>
 </body>
