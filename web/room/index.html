@@ -25,10 +25,12 @@
 
   header { position: absolute; top: calc(24 * var(--px)); left: calc(34 * var(--px)); right: calc(26 * var(--px));
     display: flex; align-items: center; justify-content: space-between; z-index: 1; }
-  .logo { font-size: calc(29 * var(--px)); gap: calc(12 * var(--px)); }
-  .logo .ico { width: calc(42 * var(--px)); height: calc(40 * var(--px)); stroke-width: 3.2; }
-  .conn { font-size: calc(18 * var(--px)); padding: calc(9 * var(--px)) calc(17 * var(--px)); border-radius: calc(9 * var(--px)); gap: calc(10 * var(--px)); }
-  .conn .ico { width: calc(23 * var(--px)); height: calc(23 * var(--px)); }
+  /* status-bar style: just the wifi glyph, like a phone (word kept for screen readers); logo only on the boot screen */
+  header { justify-content: flex-end; }
+  .conn, .conn.on { padding: 0; background: none; color: var(--ink); }
+  .conn:not(.on) { color: var(--rose-ink); }
+  .conn .ico { width: calc(28 * var(--px)); height: calc(28 * var(--px)); stroke-width: 2.2; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   /* every screen is laid out absolutely to mockup coordinates, so states never reflow each other */
   /* the content box keeps the mockup's 690 x 478 proportions, centred on any screen shape */
@@ -114,8 +116,7 @@
 <div class="screen">
   <div class="floor" aria-hidden="true"></div>
   <header>
-    <span class="logo"><svg class="ico"><use href="#i-mark"/></svg>Sonara</span>
-    <span class="conn" id="conn"><svg class="ico"><use href="#i-wifi-off" id="connIco"/></svg><span id="connText">Connecting</span></span>
+    <span class="conn" id="conn"><svg class="ico"><use href="#i-wifi-off" id="connIco"/></svg><span class="sr" id="connText">Connecting</span></span>
   </header>
 
   <sonara-orb class="orb" id="orb" mode="idle" aria-hidden="true"></sonara-orb>
