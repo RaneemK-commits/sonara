@@ -1,0 +1,11 @@
+# Arduino App Lab app that keeps the Sonara MCU sketch running on the UNO Q.
+# Deploy: copy this folder to ~/ArduinoApps/sonara-mcu on the board, then
+#   arduino-app-cli app start user:sonara-mcu
+#   arduino-app-cli properties set default user:sonara-mcu   # start on boot
+# Why an app at all: `arduino-app-cli app stop` also stops the sketch's Bridge link (seen on the
+# board 2026-11-13), so the app must stay running. Sonara itself runs outside App Lab and owns
+# the Bridge routes ("button"); see sonara/hw/mcu.py.
+name: Sonara MCU
+icon: 🔘
+ports: []
+bricks: []

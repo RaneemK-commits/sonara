@@ -13,7 +13,7 @@ import threading
 from typing import Callable
 
 ButtonCb = Callable[[str], None]
-LED_CODE = {"off": 0, "on": 1, "blink": 2}   # same codes as mcu/sonara_mcu/sonara_mcu.ino
+LED_CODE = {"off": 0, "on": 1, "blink": 2}   # same codes as mcu/sketch/sketch.ino
 
 
 class NullMCU:
@@ -47,7 +47,7 @@ class KeyboardMCU(NullMCU):
 
 
 class UnoQBridgeMCU(NullMCU):
-    """Arduino UNO Q: talks to mcu/sonara_mcu over the Arduino Router (msgpack-RPC on a unix socket).
+    """Arduino UNO Q: talks to mcu/sketch (App Lab app in mcu/) over the Arduino Router (msgpack-RPC on a unix socket).
 
     Uses the standalone `arduino-router-bridge` package (`pip install arduino-router-bridge`, import
     `arduino.router_bridge`), so Sonara runs as a normal service and needs no App Lab container.
