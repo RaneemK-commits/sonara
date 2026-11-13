@@ -47,23 +47,29 @@ class KeyboardMCU(NullMCU):
 
 
 class UnoQBridgeMCU(NullMCU):
-    """Arduino UNO Q: talks to mcu/sonara_mcu sketch over the Arduino Router Bridge (RPC).
+    """Arduino UNO Q: talks to mcu/sonara_mcu over the Arduino Router (msgpack-RPC on a unix socket).
 
-    VERIFY ON BOARD: the Python Bridge module ships with Arduino App Lab (`arduino.app_utils`).
-    The sketch calls Bridge.notify("button", "<name>") and provides "set_leds(talk, confirm, cancel)"
-    with LED_CODE ints.
+    Uses the standalone `arduino-router-bridge` package (`pip install arduino-router-bridge`, import
+    `arduino.router_bridge`), so Sonara runs as a normal service and needs no App Lab container.
+    Needs read/write on /var/run/arduino-router.sock: `sudo usermod -aG arduino-router $USER`, re-login.
+    Seen on the board: the sketch's Bridge.notify("button", name) reaches a provided Python handler
+    (checked inside an App Lab container with arduino.app_utils). Handlers must not call the Bridge
+    themselves (nested calls raise); the controller only queues the event, so that holds here.
+    VERIFY: this plain-venv path once the socket group is set.
     """
 
     def start(self, on_button: ButtonCb) -> None:
-        from arduino.app_utils import Bridge  # type: ignore  # available on the UNO Q
+        from arduino.router_bridge import Bridge  # type: ignore
 
-        self.Bridge = Bridge
         self.on_button = on_button
-        Bridge.provide("button", lambda name: on_button(str(name)))
+        self.bridge = Bridge()
+        self.bridge.provide("button", lambda name: on_button(str(name)))
+        if not self.bridge.connect(timeout=10):
+            print("[mcu] Bridge not connected yet; it keeps retrying in the background")
 
     def set_leds(self, talk: str, confirm: str, cancel: str) -> None:
         try:
-            self.Bridge.call("set_leds", LED_CODE[talk], LED_CODE[confirm], LED_CODE[cancel])
+            self.bridge.notify("set_leds", LED_CODE[talk], LED_CODE[confirm], LED_CODE[cancel])
         except Exception as e:
             print(f"[mcu] set_leds failed: {e}")
 

@@ -24,6 +24,7 @@ assumption from docs, not yet seen on our board.
 - [ ] Full flow with mic once speech's recognizer is ready: Talk → phrase spoken → confirm → caregiver.
 
 ## 4. Room display
+- [ ] USB-C speaker: NOT seen as an audio device (only the capture-only USB headset, card 1, plus on-board codec card 0). Needs model + whether an audio cable is used.
 - [ ] External display: board shows `card0-DP-1` under `/sys/class/drm`, session is xfce4 on tty. `chromium` is installed. Still to confirm the display is lit.
 - [ ] Kiosk: `chromium --kiosk http://localhost:8000/room` (or whatever browser is installed).
 - [ ] Touch input works on the room tiles (fallback when there is no mic).
@@ -33,7 +34,9 @@ assumption from docs, not yet seen on our board.
 - [ ] (older note) `/dev/i2c-0`, `i2c-1`, `i2c-2` exist on Linux; `i2cdetect` is not installed (`sudo apt install i2c-tools`). `arduino-router` is running (Bridge). Open question: Qwiic connector wired to the STM32 or to Linux I2C? Check board docs +
       `i2cdetect -l` / `i2cdetect -y <bus>` on Linux. Write the answer in STATUS.md Decisions.
 - [ ] App Lab / `arduino-cli` (installed at `/usr/bin/arduino-cli`; `~/ArduinoApps` has `blink-from-mpu`, `reading-accelerometer-data`) can flash the sketch; an LED blink example runs.
-- [ ] Bridge round-trip: sketch `Bridge.notify` reaches Python; Python `Bridge.call` reaches sketch
+- [x] **Modulino Buttons work (2026-11-13):** sketch compiles for `arduino:zephyr:unoq` against Arduino_Modulino 0.10.0 + Arduino_RouterBridge 0.4.4, flashed via a throwaway App Lab app (`~/ArduinoApps/sonara-buttons-test`; its sketch.yaml needs the full lib list copied from `blink-from-mpu`, else VL53L4CD headers are missing). Presses talk/confirm/cancel all arrived in Python via Bridge. LED echo from a handler failed: nested Bridge calls inside a provided handler are not allowed (controller never does this). MCU→Linux **notify works**; **Python→MCU `set_leds` still to verify**.
+- [ ] Plain-venv Bridge: `arduino.app_utils` only exists inside App Lab containers. Use `pip install arduino-router-bridge` (`arduino.router_bridge.Bridge`). Socket `/var/run/arduino-router.sock` is `root:arduino-router 660` and `arduino` is not in that group: needs `sudo usermod -aG arduino-router arduino` + re-login. Stop the test app first (it also provides `button`).
+- [ ] (older) Bridge round-trip: sketch `Bridge.notify` reaches Python; Python `Bridge.call` reaches sketch
       (**VERIFY** names in `Arduino_RouterBridge` and `arduino.app_utils`).
 - [ ] Modulino Buttons example runs (presses + LEDs), then the Sonara sketch.
 - [ ] `python -m sonara --mcu unoq`: each button drives the controller; LEDs follow the state.
@@ -52,5 +55,6 @@ assumption from docs, not yet seen on our board.
 
 ## Needs the human (no sudo for the agent)
 ```bash
-sudo apt install -y libportaudio2 i2c-tools python3-venv python3-pip
+sudo apt install -y libportaudio2 i2c-tools python3-venv python3-pip   # done
+sudo usermod -aG arduino-router arduino                                 # then log out/in
 ```
