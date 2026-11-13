@@ -1,8 +1,8 @@
 # Speech contract: MFCC + DTW
 
 User-authorized replacement: MFCC is the only production frontend. No recognition model download,
-ONNX embedding runtime, unrestricted ASR or cloud service is used. The device owner must apply
-[the integration handoff](integration/README.md) before enabling touchscreen enrollment.
+ONNX embedding runtime, unrestricted ASR or cloud service is used. Device integration landed on main through `f4ca596`/`f157554`; the original
+[integration handoff](integration/README.md) remains available for reference.
 
 ```python
 from sonara.recognizer import Recognizer
@@ -66,3 +66,18 @@ The device owner publishes the HTTP/WebSocket contract after integrating its own
 **Threshold migration:** remove legacy `threshold = 0.0` from sonara.toml to use profile limits.
 An explicitly configured zero now safely rejects all; it never disables rejection. The current
 old config therefore remains fail-closed until the device config proposal is integrated.
+
+## Voice pipeline follow-up (additive, no device API changes)
+
+Batched DTW preserves scores and rejection settings. AudioCapture maintains bounded idle-energy
+history to initialize VAD; existing capture signatures and the shared audio lock still apply.
+An explicit failed `reload(profile_id)` now preserves the prior patient and raises ValueError;
+a corrupt currently selected profile fails closed. Profile IDs must match their directory.
+Evaluation RSS is null where Unix/Linux measurement is unavailable. No controller, server,
+configuration, speaker-routing or button changes are needed for this follow-up.
+
+Rejection diagnostics use Python logger `sonara.recognizer`, WARNING for rejection and INFO
+for acceptance. The process stderr/log stream contains best label, distance, threshold, actual
+and required margin, frames, template count, processing milliseconds and reason. No raw audio
+or template arrays are logged. New calibration `status`/`loo_gap_p10`/`required_margin` fields
+are additive; no threshold is relaxed. CLI enrollment prints actionable calibration reasons.

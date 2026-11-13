@@ -2,41 +2,53 @@
 
 ## Now
 
-- MFCC + DTW implementation ready on `speech/mfcc-enrollment`, based on main `1abda6f`.
-- NEED device integration: exact hooks and a current-main proposal in `integration/README.md`
-  and `integration/device.patch`. Device-owned production files are unchanged in this branch.
-- NEED UI/lead: review `integration/ui.patch`, `integration/lead-dependencies.patch` and scoped docs.
-- Recognition code, audio capture, playback, profile storage and template enrollment service are
-  implemented. Endpoint/controller/UI proposals remain pending their owners' integration.
+- Follow-up branch `speech/voice-pipeline-improvements`, based on integrated main `6cd70b5`.
+- Core MFCC/enrollment device hooks were integrated by device (`f4ca596`, `f157554`).
+- Follow-up changes only speech-owned files: exact batched DTW, idle-noise VAD initialization,
+  safe profile-switch/recovery behavior, Windows-compatible evaluation imports, recognition logs,
+  actionable enrollment calibration diagnostics and isolated English TORGO evaluation.
+- Controller/server/config/MCU/UI/audio-output route are unchanged. No running app was redeployed.
+- Need device to integrate this branch and collect fresh, consistent enrollment plus independent
+  held-out recordings. All-rejected live recognition is diagnosed, NOT resolved by relaxing safety.
 
 ## Verified
 
-- Before ownership handoff: 53 tests passed on both laptop and owner UNO Q; current-main speech-only
-  and proposed integrated checks are recorded in integration/VALIDATION.md before push.
-- USB headset works with ALSA `plughw:CARD=Set,DEV=0`; no PortAudio/sudo needed for that path.
-- Piper generated 16 prompts; board `aplay` accepted the Listening WAV with matching checksum.
-- Short synthetic 25-template processing: board mean 298 ms / p95 351 ms. Five-second stress: ~4.1 s.
-- Public German corpus: four complete single-take references; 40 independent five-second UNKNOWN
-  windows, zero observed false accepts on laptop and board. Mean ~83 ms / ~1.19 s respectively.
-- Corpus lacks repeated phrases and speaker IDs; held-out personalized intent accuracy is unmeasured.
+- 94 tests passed locally (5.86 s) and on UNO Q (28.97 s); one upstream test-client deprecation
+  warning on board. Windows resource-unavailable behavior is simulated, not an actual Windows run.
+- Paired UNO Q matching, 25 templates: 0.6 s scalar 502.5 → batched 169.3 ms (2.97×),
+  5 s 5001 → 2949 ms (1.70×), no observed score/prediction difference. Full short synthetic
+  recognition 138.6 ms mean / 159.5 p95; five-second recognition remains ~2.88 seconds.
+- Read-only live-profile diagnosis: 14/25 nearest intents correct in leave-one-out enrollment
+  comparisons; several positive/cross-intent distributions overlap. This is not held-out accuracy.
+  Feature-only self-query timing (not accuracy): 299 frames × 25 templates, three runs each,
+  scalar matching ~3.11 s vs batched ~1.44 s on shared board. Timing report remains private in /tmp.
+- English TORGO: all five speakers meeting fixed-word repetition eligibility were selected.
+  Two profiles fail preselected enrollment clipping checks. Three completed profiles:
+  22 known tests all rejected, nearest intent correct 17/22; 30 other-word UNKNOWN and 60
+  same-word impostors all rejected. Zero accepts is NOT successful speaker verification.
+- TORGO laptop/board predictions agree, same manifest checksum. Board processing mean 561.1 ms,
+  p95 988.5 ms, RSS 46.0 MiB. Calibration remains insufficient; no test-dependent threshold tuning.
+- Detailed evidence: docs/VOICE_PIPELINE_IMPROVEMENTS.md, docs/TORGO_EVALUATION.md and validation JSONs.
 
 ## Board isolation
 
-- Other agent's `~/sonara` and port 8000 were not changed.
-- Speech validation copy is `/tmp/sonara-mfcc-validation`; temporary onboarding instance used
-  port 8012, separate profiles. The validation directory is not a persistent deployment.
-- No patient recording, public corpus WAV, model weight, token or generated playback WAV is committed.
+- Device owner's `/home/arduino/sonara`, port 8000, patient profiles, microphone, firmware and
+  working Creative Pebble/monitor audio route were not modified by these follow-up tests.
+- Temporary test copy: `/tmp/sonara-voice-improvements/source`; dependencies under
+  `/tmp/sonara-mfcc-validation/deps`. No extra corpus dependencies installed on the board.
+- English bundle is 137 public-corpus complete takes (~9 MiB), laptop ignored data directory and
+  isolated board /tmp only. No raw patient audio leaves the board. No audio/weights committed.
 
-## Decisions
+## Decisions / limitations
 
-- User explicitly requested MFCC-only recognition; neural selection/download paths removed from
-  speech code. Device/lead proposals remove the remaining legacy CLI/config/dependency entries.
-- Preserve existing device reboot/Modulino work; publish owner-scoped integration patches rather
-  than edit their production files. Do not merge or force-push main.
-- Keep a transitional `Recognizer(cfg, None)` calling form and fixed `backend="mfcc"` identifier
-  so the old entry point can call speech code while device migrates.
-- Explicit zero thresholds reject all. The old config must drop its zero sentinel before normal
-  recognition; its old templates cannot be converted into MFCC templates.
-- Core enrollment service moved to speech-owned `sonara/models/enrollment.py`; helper tools and
-  documentation moved under `roles/speech/` to honor the ownership hook.
-- User will copy the hub message. No external board comment is posted automatically.
+- Keep fixed feature/scoring/rejection settings for paired comparisons and frozen TORGO tests.
+  Current 0.8 fallback cap rejects independent real speech; overlapping enrollment also prevents
+  reliable separation. Raising the cap until tests accept would be unsafe and leak test information.
+- Two TORGO enrollment takes per word is a dataset limitation, not the recommended onboarding
+  quantity. Corpus words are YES/NO/SIP/SIGH/LEAK, not relabeled bedside requests.
+- Live 3 s clips cannot be compared with the 0.6 s synthetic latency benchmark; long sequences
+  need further reduction/optimization after reliable personal segmentation and enrollment.
+- Manual boundaries remain available. Idle-noise VAD change has automated tests, not live
+  patient/noise validation. User cancelled button testing; buttons/MCU remain device-owned.
+- No speaker-authentication gate or clinical claim. Confirmation remains mandatory.
+- User will copy the hub message. Do not post comments or merge/push main automatically.

@@ -79,7 +79,14 @@ def main() -> None:
     clf.save(path)
     rec.reload(args.profile)
     print(f"Saved {path}: {clf.counts()}")
-    print(clf.calibration)
+    for label, detail in clf.calibration.get("intents", {}).items():
+        print(f"{label}: {detail.get('status', 'uncalibrated')}; "
+              f"own p90={detail['positive_p90']}, other p10={detail['negative_p10']}, "
+              f"threshold={detail['threshold']:.3f}, LOO gap p10={detail.get('loo_gap_p10')}")
+    if clf.calibration.get("requires_more_recordings"):
+        print("WARNING: Enrollment is not reliably separated. Test before use. "
+              "Repeat inconsistent/noisy takes or choose more distinct natural vocalizations; "
+              "adding the same poor recordings or raising thresholds alone will not fix overlap.")
 
 
 if __name__ == "__main__":

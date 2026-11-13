@@ -209,6 +209,11 @@ def test_capture_boundaries_without_hardware():
     import queue
     from sonara.audio.vad import StreamingVAD
     cap = AudioCapture.__new__(AudioCapture)
+    import threading
+    from collections import deque
+    cap._recording = threading.Event()
+    cap._ambient_lock = threading.Lock()
+    cap._ambient_energies = deque(maxlen=333)
     cap.sr, cap.block, cap.max_blocks = 16000, 480, 166
     cap.vad = StreamingVAD(16000,30)
     cap._q = queue.Queue(maxsize=334)

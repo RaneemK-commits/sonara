@@ -49,7 +49,11 @@ class StreamingVAD:
         self.noise_floor = 1e-5
         self.reset()
 
-    def reset(self) -> None:
+    def reset(self, noise_floor: float | None = None) -> None:
+        if noise_floor is not None:
+            if not np.isfinite(noise_floor) or noise_floor < 0:
+                raise ValueError("noise floor must be finite and nonnegative")
+            self.noise_floor = max(float(noise_floor), 1e-6)
         self.in_speech = False
         self.speech_blocks = 0
         self.silent_blocks = 0
