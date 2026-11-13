@@ -1,0 +1,36 @@
+--- a/web/room/index.html
++++ b/web/room/index.html
+@@ -196,6 +196,7 @@
+ function pick(s) {
+   if (preview) return preview;
+   if (!s) return "offline";
++  if (s.display) return s.display.view;
+   if (s.state === "LISTENING") return "listening";
+   if (s.state === "PROCESSING") return "processing";
+   if (s.state === "AWAIT_CONFIRM") return "confirm";
+@@ -210,11 +211,12 @@
+ }
+ 
+ function show(key, s) {
+-  const it = s && s.last && (s.intents || []).find(i => i.id === s.last.intent);
+-  const sig = key + (it ? it.id : "");
+-  if (key === "confirm") $("pill").hidden = Date.now() - confirmSince > PILL_MS;
++  const intent = s && (s.display ? s.display.intent : s.last && s.last.intent);
++  const it = s && (s.intents || []).find(i => i.id === intent);
++  const sig = key + (it ? it.id : "") + (s && s.display ? s.display.event_id : "");
++  if (key === "confirm") $("pill").hidden = !!(s && s.display) || Date.now() - confirmSince > PILL_MS;
+   if (sig === current) return;
+-  if (key === "confirm") { confirmSince = Date.now(); $("pill").hidden = false; }
++  if (key === "confirm") { confirmSince = Date.now(); $("pill").hidden = !!(s && s.display); }
+   current = sig;
+   document.body.dataset.view = key;
+   $("orb").setAttribute("mode", DONE[key] ? DONE[key][0] : key === "listening" ? "listening" : key === "processing" ? "thinking" : key === "confirm" ? "card" : "idle");
+@@ -248,7 +250,7 @@
+ function render(s) {
+   last = s;
+   const k = s.last && s.last.understood === false ? JSON.stringify(s.last) : "";
+-  if (k && k !== lastKey && s.state === "IDLE") retryUntil = Date.now() + 5000;   // fresh rejection
++  if (!s.display && k && k !== lastKey && s.state === "IDLE") retryUntil = Date.now() + 5000;   // fresh rejection
+   lastKey = k;
+   if (!demoBuilt && s.intents) {
+     demoBuilt = true;

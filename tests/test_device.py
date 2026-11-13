@@ -169,3 +169,65 @@ def test_receipt_after_not_displayed_reconnect():
             cg.send_json({"type": "receipt", "request_id": rid})
             assert wait_for(lambda: store.get(rid)["status"] == "DISPLAYED")
         assert "displayed" in spk.said
+
+
+def test_repeated_rejection_is_explicit_and_survives_snapshot():
+    cfg, store, spk, ctl, app = make()
+    published = []
+    ctl.hub.publish = lambda event, role=None: published.append(event)
+    ctl._reject(0.2)
+    first = ctl.room_state()
+    ctl._feedback_until = time.monotonic() - 1
+    ctl._check_timeout()
+    assert ctl.room_state()["display"]["view"] == "ready"
+    assert published[-1]["display"]["view"] == "ready"
+    ctl._reject(0.2)
+    second = ctl.room_state()
+    assert second["display"]["view"] == "retry"
+    assert second["display"]["event_id"] > first["display"]["event_id"]
+    assert second["last"] != first["last"]  # Legacy clients also see a fresh result.
+    assert published[-1]["display"] == second["display"]
+    assert ctl.room_state()["display"] == second["display"]  # Reconnect snapshot.
+    assert store.history() == []
+
+
+def test_rejection_during_confirmation_restores_correct_phrase():
+    cfg, store, spk, ctl, app = make()
+    ctl._on_select("WATER")
+    ctl._reject()
+    assert ctl.room_state()["display"]["view"] == "retry"
+    assert ctl.room_state()["display"]["intent"] == "WATER"
+    ctl._feedback_until = time.monotonic() - 1
+    ctl._check_timeout()
+    assert ctl.room_state()["display"]["view"] == "confirm"
+    assert ctl.room_state()["display"]["intent"] == "WATER"
+    ctl.pending_deadline = time.monotonic() - 1
+    ctl._on_confirm()  # Expired confirmation cannot race the queue timeout.
+    assert store.history() == []
+    assert ctl.room_state()["display"]["view"] == "cancelled"
+
+
+def test_new_attempt_clears_retry_and_request_states_remain_honest():
+    cfg, store, spk, ctl, app = make()
+    ctl._reject()
+    ctl._on_select("HELP")
+    assert ctl.room_state()["display"]["view"] == "confirm"
+    ctl._on_confirm()
+    assert ctl.room_state()["display"]["view"] == "sending"
+    for status, view in [("NOT_DISPLAYED", "failed"), ("DISPLAYED", "notified"),
+                         ("ACKNOWLEDGED", "acked"), ("COMPLETED", "ready")]:
+        req, _ = store.transition(ctl.request_id, status, "test")
+        ctl.on_request_status(req)
+        assert ctl.room_state()["display"]["view"] == view
+
+
+def test_busy_input_cannot_queue_another_recording_or_confirm():
+    cfg, store, spk, ctl, app = make()
+    ctl._on_select("WATER")
+    ctl._set("PROCESSING")
+    ctl.submit("talk")
+    ctl.submit("select", "HELP")
+    ctl.submit("confirm")
+    assert ctl._q.empty()
+    ctl.submit("cancel")
+    assert ctl._q.get_nowait()[0] == "cancel"
