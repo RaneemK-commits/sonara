@@ -147,7 +147,7 @@ def audit(directory: Path) -> list[dict]:
     return rows
 
 
-def prepare(directory: Path) -> dict:
+def prepare(directory: Path, selection: dict | None = None) -> dict:
     from huggingface_hub import HfFileSystem
     import pyarrow.parquet as pq
     import soundfile as sf
@@ -161,7 +161,7 @@ def prepare(directory: Path) -> dict:
                        else json.loads(hub.read_text()).get('sha') if hub.exists() else None)
     metadata = (json.loads((directory/'rows.json').read_text())
                 if (directory/'rows.json').exists() and cached_revision == REVISION else audit(directory))
-    manifest = select(metadata)
+    manifest = select(metadata) if selection is None else selection
     validate(manifest)
     bundle = directory/'bundle'
     bundle.mkdir(exist_ok=True)

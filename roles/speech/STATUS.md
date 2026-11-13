@@ -1,5 +1,23 @@
 # Speech STATUS
 
+## Expanded noisy-stream experiment
+
+- User requested more TORGO samples assembled into sentence-like streams with intervening noise.
+- Downloaded 36 new full filler recordings (12 per completed speaker), with no original
+  enrollment/test source or alternate-microphone leakage. Expanded source cache: 173 takes.
+- Built 115 annotated streams / 17.72 minutes / 51 MiB under ignored data/evaluation/torgo_noisy.
+  Target positions vary; repeated targets, target-free speech and noise-only controls included.
+  Clean/gap-noise/20 dB/10 dB variants share the same 22 independent target recordings; variants
+  and repeated takes are not new independent positives. No natural-sentence/clinical claims.
+- All 115 streams replayed locally in 50 ms chunks. Accepted recall remains 0%. Correct-label
+  overlapping pre-rejection proposals cover 18/28 clean, 17/28 gap-noise, 18/28 at 20 dB and
+  17/28 at 10 dB occurrences. Zero false accepts is not useful evidence with all positives rejected.
+- 121 tests pass locally (5.79 s). Noise/timestamp/source-split checks pass, 36 local player
+  links verified. Laptop real-time factor 0.24–0.26, RSS 61.4 MiB; no new board benchmark.
+- Local listening gallery: data/evaluation/torgo_noisy/preview.html. Raw/generated audio stays
+  ignored and is not committed. See docs/NOISY_STREAMS.md and validation/noisy_streams_laptop.json.
+- No production/controller/server/config/UI changes or live microphone use in this experiment.
+
 ## Main objective: keywords inside longer phrases
 
 - User clarified WATER/PAIN-like personal keywords inside “I need water please”, not just

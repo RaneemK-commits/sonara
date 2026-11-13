@@ -211,3 +211,5 @@ preserved), so a fixed three-second take does not become a three-second word tem
 by silence. Use `KeywordSpotter.enroll(..., trim_endpoints=False)` for explicit manual word
 boundaries when trimming is unreliable. The prepared TORGO bundle disables this second trim
 because it was already endpoint-trimmed; comparison arms therefore use the same input takes.
+
+Expanded experiment: [additional full speech samples and controlled noise](NOISY_STREAMS.md).

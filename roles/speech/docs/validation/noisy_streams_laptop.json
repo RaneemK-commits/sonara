@@ -1,0 +1,4310 @@
+{
+  "version": 1,
+  "source_repository": "abnerh/TORGO-database",
+  "source_revision": "6e9b33c1af30eb3878574a1c1f5e60a60bd6d9c5",
+  "seed": 20261113,
+  "failed_profiles": [
+    {
+      "speaker": "M01",
+      "reason": "recording is clipped"
+    },
+    {
+      "speaker": "M05",
+      "reason": "recording is clipped"
+    }
+  ],
+  "new_filler_source_count": 36,
+  "independent_positive_source_count": 22,
+  "artificially_composed": true,
+  "noise_is_synthetic": true,
+  "natural_sentence_accuracy": false,
+  "target_sources_reused_from_prior_evaluation": true,
+  "variants_are_independent_recordings": false,
+  "summary": {
+    "background_10db": {
+      "streams": 28,
+      "target_occurrences": 28,
+      "correct_events": 0,
+      "event_recall": 0.0,
+      "false_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "nearest_localized_before_rejection": 17,
+      "audio_duration_s": 259.7585625,
+      "real_time_factor": 0.2589420352794123
+    },
+    "background_20db": {
+      "streams": 28,
+      "target_occurrences": 28,
+      "correct_events": 0,
+      "event_recall": 0.0,
+      "false_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "nearest_localized_before_rejection": 18,
+      "audio_duration_s": 259.7585625,
+      "real_time_factor": 0.2597865715013901
+    },
+    "clean": {
+      "streams": 28,
+      "target_occurrences": 28,
+      "correct_events": 0,
+      "event_recall": 0.0,
+      "false_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "nearest_localized_before_rejection": 18,
+      "audio_duration_s": 259.7585625,
+      "real_time_factor": 0.24132571139404022
+    },
+    "gap_noise": {
+      "streams": 28,
+      "target_occurrences": 28,
+      "correct_events": 0,
+      "event_recall": 0.0,
+      "false_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "nearest_localized_before_rejection": 17,
+      "audio_duration_s": 259.7585625,
+      "real_time_factor": 0.24612485251955132
+    },
+    "noise_only": {
+      "streams": 3,
+      "target_occurrences": 0,
+      "correct_events": 0,
+      "event_recall": null,
+      "false_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "nearest_localized_before_rejection": 0,
+      "audio_duration_s": 24.0,
+      "real_time_factor": 0.26214508104173245
+    }
+  },
+  "rows": [
+    {
+      "speaker": "F03",
+      "base_id": "target_00",
+      "condition": "clean",
+      "duration_s": 7.8494375,
+      "processing_s": 1.3794228190017748,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 7.8494375,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_00_clean.wav",
+      "wav_sha256": "d2ab195fcaa6d5b7b8f6133897a730872d1242dc4fbcf9a67c44640191da4471",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.050200449546795534,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 0.84,
+          "source": "F03_2_headMic_0059.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_00",
+      "condition": "gap_noise",
+      "duration_s": 7.8494375,
+      "processing_s": 1.3738449880002008,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 7.8494375,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_00_gap_noise.wav",
+      "wav_sha256": "63d6d7d48a2404cb8e489b22a61141c529b7e09f1074193c668a53c1d356f797",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.050200449546795534,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 0.84,
+          "source": "F03_2_headMic_0059.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_00",
+      "condition": "background_20db",
+      "duration_s": 7.8494375,
+      "processing_s": 1.3924022169994714,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 7.8494375,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_00_background_20db.wav",
+      "wav_sha256": "f0ed9787e79138db2baca6e8dc2074d641a5ae322b8ed63a0c06b5addf4bbdb5",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.050200449546795534,
+        "measured_speech_snr_db": 19.9991585208049,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 0.84,
+          "source": "F03_2_headMic_0059.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_00",
+      "condition": "background_10db",
+      "duration_s": 7.8494375,
+      "processing_s": 1.3100585100000899,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 7.8494375,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_00_background_10db.wav",
+      "wav_sha256": "37edf6fdb3f8a64359a6197ddd29fdc6f94f9b6ec898b0ec93a5318112b0fedc",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.050200449546795534,
+        "measured_speech_snr_db": 9.999158520804903,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 0.84,
+          "source": "F03_2_headMic_0059.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_01",
+      "condition": "clean",
+      "duration_s": 6.307125,
+      "processing_s": 0.9271271609977703,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.307125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_01_clean.wav",
+      "wav_sha256": "e4339dff64a731f15a5925b9740474fe5f4681217b53ec1e77c68136c81b6511",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.16411834299891226,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 1.4184375,
+          "end_s": 2.3584375,
+          "source": "F03_3_headMic_0146.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_01",
+      "condition": "gap_noise",
+      "duration_s": 6.307125,
+      "processing_s": 0.9157264010027575,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.307125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_01_gap_noise.wav",
+      "wav_sha256": "ffdb21b36e644f699be57c53666045ba6dae6f330067138f6442dc1320c6124c",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.16411834299891226,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 1.4184375,
+          "end_s": 2.3584375,
+          "source": "F03_3_headMic_0146.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_01",
+      "condition": "background_20db",
+      "duration_s": 6.307125,
+      "processing_s": 0.8970838770001137,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.307125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_01_background_20db.wav",
+      "wav_sha256": "13a8f0d414365cec808341a7dec7b58cb897df36f20b5996ac175183c9d569d4",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.16411834299891226,
+        "measured_speech_snr_db": 20.01524392292132,
+        "common_gain": 0.9105490576719021,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 1.4184375,
+          "end_s": 2.3584375,
+          "source": "F03_3_headMic_0146.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_01",
+      "condition": "background_10db",
+      "duration_s": 6.307125,
+      "processing_s": 0.8843097999997553,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.307125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_01_background_10db.wav",
+      "wav_sha256": "fb92af80afad6cf09f2e587fdbff28ae6b00939d6bc717d5ce204725c190e6c6",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.16411834299891226,
+        "measured_speech_snr_db": 10.01524392292132,
+        "common_gain": 0.830762320920532,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 1.4184375,
+          "end_s": 2.3584375,
+          "source": "F03_3_headMic_0146.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_02",
+      "condition": "clean",
+      "duration_s": 5.56425,
+      "processing_s": 0.8262853490014095,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.56425,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_02_clean.wav",
+      "wav_sha256": "67fc4ff7f817a86e608f599698cae10b779de9abf858b6def1ead40ce8ad2811",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.08508169365600997,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 2.7493125,
+          "end_s": 3.5693125,
+          "source": "F03_3_headMic_0200.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_02",
+      "condition": "gap_noise",
+      "duration_s": 5.56425,
+      "processing_s": 0.8202479050014517,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.56425,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_02_gap_noise.wav",
+      "wav_sha256": "b6bb919a5a951cf23fdcf76add5a9d471ceab3265364f00d4179081ac4313224",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.08508169365600997,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 2.7493125,
+          "end_s": 3.5693125,
+          "source": "F03_3_headMic_0200.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_02",
+      "condition": "background_20db",
+      "duration_s": 5.56425,
+      "processing_s": 0.8322724839999864,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.56425,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_02_background_20db.wav",
+      "wav_sha256": "5a5340be4d76ed5568eb4f246b75036dc2e13dbe713c6adadde70cde6b1ec855",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.08508169365600997,
+        "measured_speech_snr_db": 20.02088339808757,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 2.7493125,
+          "end_s": 3.5693125,
+          "source": "F03_3_headMic_0200.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_02",
+      "condition": "background_10db",
+      "duration_s": 5.56425,
+      "processing_s": 0.856959733999247,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.56425,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_02_background_10db.wav",
+      "wav_sha256": "f9034089b6f3ba5570436ea7a1b933a0a8e32aa06647112e13725f3ed2a8269c",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.08508169365600997,
+        "measured_speech_snr_db": 10.020883398087573,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 2.7493125,
+          "end_s": 3.5693125,
+          "source": "F03_3_headMic_0200.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_03",
+      "condition": "clean",
+      "duration_s": 5.7175625,
+      "processing_s": 0.814406923000206,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.7175625,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_03_clean.wav",
+      "wav_sha256": "6823e68bc7906cf02b835849a32d42f784356b808582665cf9e4b79664ddf46f",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.026373447920660917,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 3.3975625,
+          "end_s": 4.7175625,
+          "source": "F03_1_headMic_0113.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_03",
+      "condition": "gap_noise",
+      "duration_s": 5.7175625,
+      "processing_s": 0.8268415279999317,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.7175625,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_03_gap_noise.wav",
+      "wav_sha256": "0fd5da758707265ad9beaf14b3df46682c5eae8be7b2e8361757044c76364f3d",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.026373447920660917,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 3.3975625,
+          "end_s": 4.7175625,
+          "source": "F03_1_headMic_0113.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_03",
+      "condition": "background_20db",
+      "duration_s": 5.7175625,
+      "processing_s": 0.9116294929990545,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.7175625,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_03_background_20db.wav",
+      "wav_sha256": "e9184ec8e224ef9bc31563bb053a4cd03257c4b0e8d3309b8f457b860cf3c4ff",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.026373447920660917,
+        "measured_speech_snr_db": 20.020143103288955,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 3.3975625,
+          "end_s": 4.7175625,
+          "source": "F03_1_headMic_0113.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_03",
+      "condition": "background_10db",
+      "duration_s": 5.7175625,
+      "processing_s": 0.8676552990000346,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.7175625,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_03_background_10db.wav",
+      "wav_sha256": "960148798c5b2e7a0cd8d6b0dc3f9d6c3cc123fd92d7e0d12cc92627936cbbe1",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.026373447920660917,
+        "measured_speech_snr_db": 10.020143103288955,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 3.3975625,
+          "end_s": 4.7175625,
+          "source": "F03_1_headMic_0113.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_04",
+      "condition": "clean",
+      "duration_s": 8.2068125,
+      "processing_s": 1.5144372899994778,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.2068125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_04_clean.wav",
+      "wav_sha256": "5643b46fa9b6b55deafc960b2b50a88af32dfab327d90d914c742607094e2fd5",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.03062797577694992,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 0.0,
+          "end_s": 1.06,
+          "source": "F03_3_headMic_0086.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_04",
+      "condition": "gap_noise",
+      "duration_s": 8.2068125,
+      "processing_s": 1.4970439889984846,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.2068125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_04_gap_noise.wav",
+      "wav_sha256": "53ed22f0fefc2023601d2d42b3f774102b75cee7c77e696a94388526bac8a1f0",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.03062797577694992,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 0.0,
+          "end_s": 1.06,
+          "source": "F03_3_headMic_0086.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_04",
+      "condition": "background_20db",
+      "duration_s": 8.2068125,
+      "processing_s": 1.6100084419995255,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.2068125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_04_background_20db.wav",
+      "wav_sha256": "0629ebe0faae8739ab2d3ca58647a441151c2534a60e6bcc15d6cee94c1ecc51",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.03062797577694992,
+        "measured_speech_snr_db": 19.98989946507865,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 0.0,
+          "end_s": 1.06,
+          "source": "F03_3_headMic_0086.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_04",
+      "condition": "background_10db",
+      "duration_s": 8.2068125,
+      "processing_s": 1.5799891120004759,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.2068125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_04_background_10db.wav",
+      "wav_sha256": "4e8ef465e38c2b9030609d76acd94cd2f777e32fcd5925ef429de3bc84d40596",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.03062797577694992,
+        "measured_speech_snr_db": 9.989899465078654,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 0.0,
+          "end_s": 1.06,
+          "source": "F03_3_headMic_0086.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_05",
+      "condition": "clean",
+      "duration_s": 6.235875,
+      "processing_s": 0.8939031310001155,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.235875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_05_clean.wav",
+      "wav_sha256": "3b8b07ef38cf139971fed34f82f1b09d96791ae2c2264ad0d8151f417fc5a45e",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.1639671124662111,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 1.2826875,
+          "end_s": 2.2026875,
+          "source": "F03_3_headMic_0161.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_05",
+      "condition": "gap_noise",
+      "duration_s": 6.235875,
+      "processing_s": 0.8870018110028468,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.235875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_05_gap_noise.wav",
+      "wav_sha256": "8b4c9cdbd6e250e655dd0da09b448e75be2be5b5d343b70f28b247f30b603a96",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.1639671124662111,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 1.2826875,
+          "end_s": 2.2026875,
+          "source": "F03_3_headMic_0161.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_05",
+      "condition": "background_20db",
+      "duration_s": 6.235875,
+      "processing_s": 0.9650817849978921,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.235875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_05_background_20db.wav",
+      "wav_sha256": "3a67c00a3067cd92480ade8e44e23a747f82421a76b99554fd11b90e5565b656",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.1639671124662111,
+        "measured_speech_snr_db": 20.00245868314068,
+        "common_gain": 0.9015876798990325,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 1.2826875,
+          "end_s": 2.2026875,
+          "source": "F03_3_headMic_0161.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_05",
+      "condition": "background_10db",
+      "duration_s": 6.235875,
+      "processing_s": 0.9039389300014591,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.235875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_05_background_10db.wav",
+      "wav_sha256": "3a97708718d52e27f4bf4dd5985d30a0097e9fe2725711b96aa216a9adbb0907",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.1639671124662111,
+        "measured_speech_snr_db": 10.002458683140683,
+        "common_gain": 0.8075012688701957,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 1.2826875,
+          "end_s": 2.2026875,
+          "source": "F03_3_headMic_0161.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_06",
+      "condition": "clean",
+      "duration_s": 6.074125,
+      "processing_s": 0.8896044620014436,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.074125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_06_clean.wav",
+      "wav_sha256": "92a29c6a312bdfa7c3004f1a4699915950338820ec272ccbf6aadb0b2621ddd6",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.07543967401382813,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 2.6478125,
+          "end_s": 4.083,
+          "source": "F03_1_headMic_0193.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_06",
+      "condition": "gap_noise",
+      "duration_s": 6.074125,
+      "processing_s": 0.8889453479969234,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.074125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_06_gap_noise.wav",
+      "wav_sha256": "c5c165b51cd3450671a26cd1910a25d63c0bb3706944eb4f513248676ffc4fc9",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.07543967401382813,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 2.6478125,
+          "end_s": 4.083,
+          "source": "F03_1_headMic_0193.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_06",
+      "condition": "background_20db",
+      "duration_s": 6.074125,
+      "processing_s": 0.9246146619989304,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.074125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_06_background_20db.wav",
+      "wav_sha256": "2fb53a95348bf4b2177e14d132c7e1a252ebb2888f3e57c1d99f59005e052e57",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.07543967401382813,
+        "measured_speech_snr_db": 19.98685199617097,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 2.6478125,
+          "end_s": 4.083,
+          "source": "F03_1_headMic_0193.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_06",
+      "condition": "background_10db",
+      "duration_s": 6.074125,
+      "processing_s": 0.9348124579992145,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.074125,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_06_background_10db.wav",
+      "wav_sha256": "0f56b4025c18db552bb43b638643cd6e8ab9cdee030b3b5f5181d3d1bf307f11",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.07543967401382813,
+        "measured_speech_snr_db": 9.986851996170973,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 2.6478125,
+          "end_s": 4.083,
+          "source": "F03_1_headMic_0193.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_07",
+      "condition": "clean",
+      "duration_s": 5.2766875,
+      "processing_s": 0.7120508760017401,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.2766875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_07_clean.wav",
+      "wav_sha256": "62956bae47856768ea4e84683c52c961b9922c523105d26ea1227a40dec8260f",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.058528012137182846,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 3.5966875,
+          "end_s": 4.2766875,
+          "source": "F03_2_headMic_0119.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_07",
+      "condition": "gap_noise",
+      "duration_s": 5.2766875,
+      "processing_s": 0.70552182299798,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.2766875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_07_gap_noise.wav",
+      "wav_sha256": "d441b169979ffc8d46f6eb586c61eecc70bf73890d0ce04a06224e2c79664cb6",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.058528012137182846,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 3.5966875,
+          "end_s": 4.2766875,
+          "source": "F03_2_headMic_0119.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_07",
+      "condition": "background_20db",
+      "duration_s": 5.2766875,
+      "processing_s": 0.8345041329994274,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.2766875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_07_background_20db.wav",
+      "wav_sha256": "68aaf4ad73f2d4169b29fcdf976391fdf3e641fa58b608c6b489c762f0b80290",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.058528012137182846,
+        "measured_speech_snr_db": 20.01744392202323,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 3.5966875,
+          "end_s": 4.2766875,
+          "source": "F03_2_headMic_0119.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_07",
+      "condition": "background_10db",
+      "duration_s": 5.2766875,
+      "processing_s": 0.7476748219996807,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.2766875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_07_background_10db.wav",
+      "wav_sha256": "54b66c5e44fbcb35b5726610e5c36b473449905fec951cf2fa53b7752813eb16",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.058528012137182846,
+        "measured_speech_snr_db": 10.017443922023233,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 3.5966875,
+          "end_s": 4.2766875,
+          "source": "F03_2_headMic_0119.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_08",
+      "condition": "clean",
+      "duration_s": 8.9135,
+      "processing_s": 1.5299704809985997,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.9135,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_08_clean.wav",
+      "wav_sha256": "fad5b84cc0cf80a49fb3a1aec6eb6452e8561c2af679086ab1939df27907fdd9",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262121,
+        "speech_rms_before_gain": 0.0399461086361171,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 0.0,
+          "end_s": 1.64,
+          "source": "F03_2_headMic_0095.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_08",
+      "condition": "gap_noise",
+      "duration_s": 8.9135,
+      "processing_s": 1.5629320410007495,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.9135,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_08_gap_noise.wav",
+      "wav_sha256": "cfa93e6b46b0433fae79f9bb0459e824d71a2a6aa09f50de7045944f27b2145f",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262121,
+        "speech_rms_before_gain": 0.0399461086361171,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 0.0,
+          "end_s": 1.64,
+          "source": "F03_2_headMic_0095.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_08",
+      "condition": "background_20db",
+      "duration_s": 8.9135,
+      "processing_s": 1.630745542999648,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.9135,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_08_background_20db.wav",
+      "wav_sha256": "e468071252277d1a0a4b96537b2189b4574cc7e083296410cd079217bb133f48",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262121,
+        "speech_rms_before_gain": 0.0399461086361171,
+        "measured_speech_snr_db": 19.99884955968396,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 0.0,
+          "end_s": 1.64,
+          "source": "F03_2_headMic_0095.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_08",
+      "condition": "background_10db",
+      "duration_s": 8.9135,
+      "processing_s": 1.5624042950003059,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.9135,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_08_background_10db.wav",
+      "wav_sha256": "f9b64fb1f718a792ad5869669c2d4520cc2208a93e8efb2cfd326eb88c23c4f5",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262121,
+        "speech_rms_before_gain": 0.0399461086361171,
+        "measured_speech_snr_db": 9.998849559683963,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 0.0,
+          "end_s": 1.64,
+          "source": "F03_2_headMic_0095.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_09",
+      "condition": "clean",
+      "duration_s": 6.1086875,
+      "processing_s": 0.9083301999999094,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.1086875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_09_clean.wav",
+      "wav_sha256": "ec626df0f6d961662ee014187428b5ca54a63c9ffa950ce70adb31896f93ecbf",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262122,
+        "speech_rms_before_gain": 0.16749143451333637,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 1.2009375,
+          "end_s": 1.9209375,
+          "source": "F03_3_headMic_0170.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_09",
+      "condition": "gap_noise",
+      "duration_s": 6.1086875,
+      "processing_s": 0.9075174089994107,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.1086875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_09_gap_noise.wav",
+      "wav_sha256": "a73e861a8965a0e76871b93190c966cd095708f4c0a4290d53620065294f9306",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262122,
+        "speech_rms_before_gain": 0.16749143451333637,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 1.2009375,
+          "end_s": 1.9209375,
+          "source": "F03_3_headMic_0170.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_09",
+      "condition": "background_20db",
+      "duration_s": 6.1086875,
+      "processing_s": 0.9090169990013237,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.1086875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_09_background_20db.wav",
+      "wav_sha256": "8a298682b04165fb920a7451678808fecc9a9ae26348ef43dfefca491986923b",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262122,
+        "speech_rms_before_gain": 0.16749143451333637,
+        "measured_speech_snr_db": 20.001795550422827,
+        "common_gain": 0.8928486739472994,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 1.2009375,
+          "end_s": 1.9209375,
+          "source": "F03_3_headMic_0170.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "target_09",
+      "condition": "background_10db",
+      "duration_s": 6.1086875,
+      "processing_s": 0.8907943869999144,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 6.1086875,
+      "detection_delay_s": [],
+      "file": "streams/F03/target_09_background_10db.wav",
+      "wav_sha256": "9a9d31856c443696febe1f58570a3560cc8a91df97f4171823b826c0888c682c",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262122,
+        "speech_rms_before_gain": 0.16749143451333637,
+        "measured_speech_snr_db": 10.001795550422825,
+        "common_gain": 0.7900315170615606,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 1.2009375,
+          "end_s": 1.9209375,
+          "source": "F03_3_headMic_0170.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "repeated",
+      "condition": "clean",
+      "duration_s": 8.7053125,
+      "processing_s": 1.5417405079970194,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.7053125,
+      "detection_delay_s": [],
+      "file": "streams/F03/repeated_clean.wav",
+      "wav_sha256": "c687f12e17ce0f2a9ecc35331c1536fc4ae5ca39493a9fddda5738cf6bce5b56",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262123,
+        "speech_rms_before_gain": 0.06045048475104304,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 2.670125,
+          "end_s": 3.510125,
+          "source": "F03_2_headMic_0059.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 4.40575,
+          "end_s": 5.24575,
+          "source": "F03_2_headMic_0059.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "repeated",
+      "condition": "gap_noise",
+      "duration_s": 8.7053125,
+      "processing_s": 1.5864389190028305,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.7053125,
+      "detection_delay_s": [],
+      "file": "streams/F03/repeated_gap_noise.wav",
+      "wav_sha256": "a4dbde6c4947623dd8b978e1b18de2a446cdc41f9b0727d33048ed9699db91a3",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262123,
+        "speech_rms_before_gain": 0.06045048475104304,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 2.670125,
+          "end_s": 3.510125,
+          "source": "F03_2_headMic_0059.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 4.40575,
+          "end_s": 5.24575,
+          "source": "F03_2_headMic_0059.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "repeated",
+      "condition": "background_20db",
+      "duration_s": 8.7053125,
+      "processing_s": 1.5605217590018583,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.7053125,
+      "detection_delay_s": [],
+      "file": "streams/F03/repeated_background_20db.wav",
+      "wav_sha256": "d5d89316d15251d40ab99ac11bb7d2886d056c47feaeca9413a5f06cb271a4a4",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262123,
+        "speech_rms_before_gain": 0.06045048475104304,
+        "measured_speech_snr_db": 19.991854315604524,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 2.670125,
+          "end_s": 3.510125,
+          "source": "F03_2_headMic_0059.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 4.40575,
+          "end_s": 5.24575,
+          "source": "F03_2_headMic_0059.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "repeated",
+      "condition": "background_10db",
+      "duration_s": 8.7053125,
+      "processing_s": 1.3996535029982624,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.7053125,
+      "detection_delay_s": [],
+      "file": "streams/F03/repeated_background_10db.wav",
+      "wav_sha256": "da86ba458cccac5d82cb0cec2241d9b76b787b6f7c3c2942920ee65100899fdc",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262123,
+        "speech_rms_before_gain": 0.06045048475104304,
+        "measured_speech_snr_db": 9.991854315604527,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 2.670125,
+          "end_s": 3.510125,
+          "source": "F03_2_headMic_0059.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 4.40575,
+          "end_s": 5.24575,
+          "source": "F03_2_headMic_0059.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "F03",
+      "base_id": "no_target",
+      "condition": "clean",
+      "duration_s": 5.6313125,
+      "processing_s": 0.782363999998779,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.6313125,
+      "detection_delay_s": [],
+      "file": "streams/F03/no_target_clean.wav",
+      "wav_sha256": "024c4fda8f83dc75f8cf45026573246cc496f7a2129f6617bd73fcf26560cc06",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262124,
+        "speech_rms_before_gain": 0.08401483109293785,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "F03",
+      "base_id": "no_target",
+      "condition": "gap_noise",
+      "duration_s": 5.6313125,
+      "processing_s": 0.7879969130008249,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.6313125,
+      "detection_delay_s": [],
+      "file": "streams/F03/no_target_gap_noise.wav",
+      "wav_sha256": "f1683d0d2e1359fcbc25428e54cbc757901311780fe70ded32b7432c4f1e713c",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262124,
+        "speech_rms_before_gain": 0.08401483109293785,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "F03",
+      "base_id": "no_target",
+      "condition": "background_20db",
+      "duration_s": 5.6313125,
+      "processing_s": 0.8296974629993201,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.6313125,
+      "detection_delay_s": [],
+      "file": "streams/F03/no_target_background_20db.wav",
+      "wav_sha256": "7b369d4f0210e587ccdf1c5666e97ab00418e651c2c64498ca46e7ba3085b668",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262124,
+        "speech_rms_before_gain": 0.08401483109293785,
+        "measured_speech_snr_db": 19.95320113833644,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "F03",
+      "base_id": "no_target",
+      "condition": "background_10db",
+      "duration_s": 5.6313125,
+      "processing_s": 0.8359410230004869,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 5.6313125,
+      "detection_delay_s": [],
+      "file": "streams/F03/no_target_background_10db.wav",
+      "wav_sha256": "0f3212dd8bbb0b0568bd118a3237a3631d641a42c12ab2a3f62f23160a2eed62",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262124,
+        "speech_rms_before_gain": 0.08401483109293785,
+        "measured_speech_snr_db": 9.953201138336443,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "F03",
+      "base_id": "noise_only",
+      "condition": "noise_only",
+      "duration_s": 8.0,
+      "processing_s": 1.4931907230020443,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.0,
+      "detection_delay_s": [],
+      "file": "streams/F03/noise_only.wav",
+      "wav_sha256": "09d7f55ab3f704a9dfa678ecdf96be3d6c434270c87a34188b1fdb646f66c8e0",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20261113,
+        "speech_rms_before_gain": 0.03,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_00",
+      "condition": "clean",
+      "duration_s": 11.8914375,
+      "processing_s": 4.0417206960009935,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.8914375,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_00_clean.wav",
+      "wav_sha256": "740d03d4d453b9f41816f4f946db79e5706c1ae54ecf12f44844243e28736904",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.08573308051122745,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 3.56,
+          "source": "M02_2_headMic_0156.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_00",
+      "condition": "gap_noise",
+      "duration_s": 11.8914375,
+      "processing_s": 4.143617632998939,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.8914375,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_00_gap_noise.wav",
+      "wav_sha256": "cc78cb63b2e8b75644bc5717bd40817d4a9b4bd0648ee8fab51c911c38da6fbc",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.08573308051122745,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 3.56,
+          "source": "M02_2_headMic_0156.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_00",
+      "condition": "background_20db",
+      "duration_s": 11.8914375,
+      "processing_s": 4.334940270000516,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.8914375,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_00_background_20db.wav",
+      "wav_sha256": "2453fb50dc9fe02d8ee312df44176abc5d1c8f606feadb4f22d134911ac9b55c",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.08573308051122745,
+        "measured_speech_snr_db": 19.997622824779477,
+        "common_gain": 0.9384062884506488,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 3.56,
+          "source": "M02_2_headMic_0156.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_00",
+      "condition": "background_10db",
+      "duration_s": 11.8914375,
+      "processing_s": 4.31926802900125,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.8914375,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_00_background_10db.wav",
+      "wav_sha256": "dece2e57688223317a60457b6d47f17e110e04d464a3e7b795a7ce5b55709eca",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.08573308051122745,
+        "measured_speech_snr_db": 9.997622824779477,
+        "common_gain": 0.914221992472717,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 3.56,
+          "source": "M02_2_headMic_0156.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_01",
+      "condition": "clean",
+      "duration_s": 8.907125,
+      "processing_s": 2.679583189001278,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.907125,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_01_clean.wav",
+      "wav_sha256": "155687615c9cf3d296e64a1e5d1d9fe1de34a9fdde1945e67c35aadefc42ac44",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.20616380931473857,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 1.9984375,
+          "end_s": 4.1784375,
+          "source": "M02_2_headMic_0220.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_01",
+      "condition": "gap_noise",
+      "duration_s": 8.907125,
+      "processing_s": 2.733736895999755,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.907125,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_01_gap_noise.wav",
+      "wav_sha256": "4173489520cdb69e13ddbd1f8ec46df1d5c60df2b870051a0736681216c3be4a",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.20616380931473857,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 1.9984375,
+          "end_s": 4.1784375,
+          "source": "M02_2_headMic_0220.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_01",
+      "condition": "background_20db",
+      "duration_s": 8.907125,
+      "processing_s": 2.975433965002594,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.907125,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_01_background_20db.wav",
+      "wav_sha256": "aefa59f62d6067a818d596120e3b44eab5be2a70102bd391f0656a9689b873a7",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.20616380931473857,
+        "measured_speech_snr_db": 20.011795175640398,
+        "common_gain": 0.8937288081088016,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 1.9984375,
+          "end_s": 4.1784375,
+          "source": "M02_2_headMic_0220.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_01",
+      "condition": "background_10db",
+      "duration_s": 8.907125,
+      "processing_s": 3.0594665089993214,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.907125,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_01_background_10db.wav",
+      "wav_sha256": "7fd5686fc53cd4aacc4f69c8a729095b828a56c09b1c6688ac5cf25dbccc5c5a",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.20616380931473857,
+        "measured_speech_snr_db": 10.011795175640394,
+        "common_gain": 0.7874049893841093,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 1.9984375,
+          "end_s": 4.1784375,
+          "source": "M02_2_headMic_0220.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_02",
+      "condition": "clean",
+      "duration_s": 10.3961875,
+      "processing_s": 3.14293205300055,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.3961875,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_02_clean.wav",
+      "wav_sha256": "bd488c1452952dd016664fa57fa02a3cd751427028a4fff57a54c909b5bf9074",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.10174924867523828,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 4.4093125,
+          "end_s": 6.84125,
+          "source": "M02_1_headMic_0091.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_02",
+      "condition": "gap_noise",
+      "duration_s": 10.3961875,
+      "processing_s": 3.2181706899973506,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.3961875,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_02_gap_noise.wav",
+      "wav_sha256": "2e356e50462b2266a8aec696262d2045ebc5b26efa3180490ddb543f6b8564ea",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.10174924867523828,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 4.4093125,
+          "end_s": 6.84125,
+          "source": "M02_1_headMic_0091.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_02",
+      "condition": "background_20db",
+      "duration_s": 10.3961875,
+      "processing_s": 3.62157121600103,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.3961875,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_02_background_20db.wav",
+      "wav_sha256": "b541882b351fa4bf6cedcb086e56b111b4c9d988fc6e2f2d3d53a4668d86be95",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.10174924867523828,
+        "measured_speech_snr_db": 19.99141501993779,
+        "common_gain": 0.9304729067470165,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 4.4093125,
+          "end_s": 6.84125,
+          "source": "M02_1_headMic_0091.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_02",
+      "condition": "background_10db",
+      "duration_s": 10.3961875,
+      "processing_s": 3.721835527998337,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.3961875,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_02_background_10db.wav",
+      "wav_sha256": "fa4b2108cdac380ed528eaba57eacb8fd4c177a9656a8c4765b11060d202e5da",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.10174924867523828,
+        "measured_speech_snr_db": 9.991415019937794,
+        "common_gain": 0.8861421710548067,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 4.4093125,
+          "end_s": 6.84125,
+          "source": "M02_1_headMic_0091.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_03",
+      "condition": "clean",
+      "duration_s": 11.37275,
+      "processing_s": 3.779992438998306,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.37275,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_03_clean.wav",
+      "wav_sha256": "92f45ec9c6d1f95c65c23fa31f85d352215811d21dd6310c9cbd5a354ff7b5bd",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.17458969698814217,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 7.71375,
+          "end_s": 10.37275,
+          "source": "M02_1_headMic_0233.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_03",
+      "condition": "gap_noise",
+      "duration_s": 11.37275,
+      "processing_s": 3.7692568890015536,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.37275,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_03_gap_noise.wav",
+      "wav_sha256": "8ba7f28eb7ec35cc7beec14bbf4825b63e262b9c5ddad99039479438c7825b1f",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.17458969698814217,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 7.71375,
+          "end_s": 10.37275,
+          "source": "M02_1_headMic_0233.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_03",
+      "condition": "background_20db",
+      "duration_s": 11.37275,
+      "processing_s": 4.054484537002281,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.37275,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_03_background_20db.wav",
+      "wav_sha256": "ff693acf3e270795575d87c150a9f704d3e6393583bf8d7bd2677ad5072490fc",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.17458969698814217,
+        "measured_speech_snr_db": 19.99653949196052,
+        "common_gain": 0.9012200032981839,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 7.71375,
+          "end_s": 10.37275,
+          "source": "M02_1_headMic_0233.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_03",
+      "condition": "background_10db",
+      "duration_s": 11.37275,
+      "processing_s": 4.134855229000095,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.37275,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_03_background_10db.wav",
+      "wav_sha256": "df74963ff51dd43e0c70ccf296c954430e7ac0e91136ccc753de239a7b103f92",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.17458969698814217,
+        "measured_speech_snr_db": 9.996539491960517,
+        "common_gain": 0.8111135168126348,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 7.71375,
+          "end_s": 10.37275,
+          "source": "M02_1_headMic_0233.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_04",
+      "condition": "clean",
+      "duration_s": 10.2288125,
+      "processing_s": 3.456926309001574,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.2288125,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_04_clean.wav",
+      "wav_sha256": "aae48205d70ec9622ed89d2981ea563c12d316e96ac9629bd1571e4167441ee0",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.08750187644771218,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 0.0,
+          "end_s": 1.76,
+          "source": "M02_2_headMic_0107.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_04",
+      "condition": "gap_noise",
+      "duration_s": 10.2288125,
+      "processing_s": 3.555999412001256,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.2288125,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_04_gap_noise.wav",
+      "wav_sha256": "c0f4994b8372f6edd98d2f811ca5802888d2d451629f814f0885d2b882d80370",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.08750187644771218,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 0.0,
+          "end_s": 1.76,
+          "source": "M02_2_headMic_0107.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_04",
+      "condition": "background_20db",
+      "duration_s": 10.2288125,
+      "processing_s": 3.724717317996692,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.2288125,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_04_background_20db.wav",
+      "wav_sha256": "dfa88c66f368dfa5bd3d08648cf924665c4ccfac6a52e4bbf5791266f1329cd5",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.08750187644771218,
+        "measured_speech_snr_db": 20.01561324541321,
+        "common_gain": 0.9337507189402376,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 0.0,
+          "end_s": 1.76,
+          "source": "M02_2_headMic_0107.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_04",
+      "condition": "background_10db",
+      "duration_s": 10.2288125,
+      "processing_s": 3.7368333720005467,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.2288125,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_04_background_10db.wav",
+      "wav_sha256": "5d5902863e9e2817201f18ec4f4ee283a64323735a34a2c7bd55d17c8fc5e068",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.08750187644771218,
+        "measured_speech_snr_db": 10.015613245413208,
+        "common_gain": 0.8960541841948384,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 0.0,
+          "end_s": 1.76,
+          "source": "M02_2_headMic_0107.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_05",
+      "condition": "clean",
+      "duration_s": 9.135875,
+      "processing_s": 2.8200258200013195,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.135875,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_05_clean.wav",
+      "wav_sha256": "ecfbe41299e8e7097ed50fac6cc4edd79bb2d76fefac230890cd7785241b8992",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.20776726290586808,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 1.8626875,
+          "end_s": 4.3226875,
+          "source": "M02_2_headMic_0219.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_05",
+      "condition": "gap_noise",
+      "duration_s": 9.135875,
+      "processing_s": 3.118426327000634,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.135875,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_05_gap_noise.wav",
+      "wav_sha256": "29d518479502893f0a224693d01a5637383d80e0b695422c5c7eafadd5486068",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.20776726290586808,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 1.8626875,
+          "end_s": 4.3226875,
+          "source": "M02_2_headMic_0219.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_05",
+      "condition": "background_20db",
+      "duration_s": 9.135875,
+      "processing_s": 3.2642494780011475,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.135875,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_05_background_20db.wav",
+      "wav_sha256": "8b8cf291a9a331e1ba260875440b1648115c3ebce1cc3cdb0ca39a5710270c58",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.20776726290586808,
+        "measured_speech_snr_db": 20.00194770255417,
+        "common_gain": 0.8878310690507376,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 1.8626875,
+          "end_s": 4.3226875,
+          "source": "M02_2_headMic_0219.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "target_05",
+      "condition": "background_10db",
+      "duration_s": 9.135875,
+      "processing_s": 3.317406278998533,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.135875,
+      "detection_delay_s": [],
+      "file": "streams/M02/target_05_background_10db.wav",
+      "wav_sha256": "f87616b47c35cd9293e15748d4868e3ce3146dbc4711be8b27c38dcec7ad8efc",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.20776726290586808,
+        "measured_speech_snr_db": 10.001947702554169,
+        "common_gain": 0.7777327084027491,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 1.8626875,
+          "end_s": 4.3226875,
+          "source": "M02_2_headMic_0219.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "repeated",
+      "condition": "clean",
+      "duration_s": 15.5623125,
+      "processing_s": 5.740075915000489,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 15.5623125,
+      "detection_delay_s": [],
+      "file": "streams/M02/repeated_clean.wav",
+      "wav_sha256": "65e07cf735f22d153d2b96ae59dc83755cb43b006945c0e930ae33a1c16e406b",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.09935696452946038,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 2.181,
+          "end_s": 5.741,
+          "source": "M02_2_headMic_0156.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 8.747,
+          "end_s": 12.307,
+          "source": "M02_2_headMic_0156.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "repeated",
+      "condition": "gap_noise",
+      "duration_s": 15.5623125,
+      "processing_s": 5.809393411000201,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 15.5623125,
+      "detection_delay_s": [],
+      "file": "streams/M02/repeated_gap_noise.wav",
+      "wav_sha256": "368dda3b0063ac2f397009fb34320a2b8eec5e91a680418c69f0700d2e88db77",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.09935696452946038,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 2.181,
+          "end_s": 5.741,
+          "source": "M02_2_headMic_0156.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 8.747,
+          "end_s": 12.307,
+          "source": "M02_2_headMic_0156.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "repeated",
+      "condition": "background_20db",
+      "duration_s": 15.5623125,
+      "processing_s": 6.091274794998753,
+      "nearest_localized_before_rejection": 2,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 15.5623125,
+      "detection_delay_s": [],
+      "file": "streams/M02/repeated_background_20db.wav",
+      "wav_sha256": "6da876c0f571bf51ccba28a06b5ca11b813f301577c381b741807cb8e0251d88",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.09935696452946038,
+        "measured_speech_snr_db": 20.00294934299896,
+        "common_gain": 0.9399242603817775,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 2.181,
+          "end_s": 5.741,
+          "source": "M02_2_headMic_0156.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 8.747,
+          "end_s": 12.307,
+          "source": "M02_2_headMic_0156.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "repeated",
+      "condition": "background_10db",
+      "duration_s": 15.5623125,
+      "processing_s": 6.1562984910015075,
+      "nearest_localized_before_rejection": 2,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 15.5623125,
+      "detection_delay_s": [],
+      "file": "streams/M02/repeated_background_10db.wav",
+      "wav_sha256": "a307df3aef3587bf9c2c7054f37d739867b8fd24c378afc605ca10912d3933e8",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.09935696452946038,
+        "measured_speech_snr_db": 10.002949342998962,
+        "common_gain": 0.9110026284269013,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 2.181,
+          "end_s": 5.741,
+          "source": "M02_2_headMic_0156.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 8.747,
+          "end_s": 12.307,
+          "source": "M02_2_headMic_0156.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M02",
+      "base_id": "no_target",
+      "condition": "clean",
+      "duration_s": 9.975625,
+      "processing_s": 3.048174358002143,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.975625,
+      "detection_delay_s": [],
+      "file": "streams/M02/no_target_clean.wav",
+      "wav_sha256": "a4f3487aa52c5a2aa048ad9498b1036f322e3dd3edc9d426572e72aa5342cf22",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.17786970658349194,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M02",
+      "base_id": "no_target",
+      "condition": "gap_noise",
+      "duration_s": 9.975625,
+      "processing_s": 3.071457334997831,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.975625,
+      "detection_delay_s": [],
+      "file": "streams/M02/no_target_gap_noise.wav",
+      "wav_sha256": "c8a5b5f22b12c9a9c30b40a2b1b4e570d7cbc9ecba471fc0da6d9100c8d6f125",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.17786970658349194,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M02",
+      "base_id": "no_target",
+      "condition": "background_20db",
+      "duration_s": 9.975625,
+      "processing_s": 3.4535331389997737,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.975625,
+      "detection_delay_s": [],
+      "file": "streams/M02/no_target_background_20db.wav",
+      "wav_sha256": "b95ed495d5080f46c62c4902e1c27d0b93a29231d918bff1a8f9b1b38cfafc4f",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.17786970658349194,
+        "measured_speech_snr_db": 19.999660242683042,
+        "common_gain": 0.9045722462867408,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M02",
+      "base_id": "no_target",
+      "condition": "background_10db",
+      "duration_s": 9.975625,
+      "processing_s": 3.4705574159997923,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.975625,
+      "detection_delay_s": [],
+      "file": "streams/M02/no_target_background_10db.wav",
+      "wav_sha256": "0b0e59f723eb8ed898986214e67030e6e17036686b22a68cf68175bde52ee22f",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.17786970658349194,
+        "measured_speech_snr_db": 9.999660242683046,
+        "common_gain": 0.819272039464653,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M02",
+      "base_id": "noise_only",
+      "condition": "noise_only",
+      "duration_s": 8.0,
+      "processing_s": 2.8115183349982544,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.0,
+      "detection_delay_s": [],
+      "file": "streams/M02/noise_only.wav",
+      "wav_sha256": "09d7f55ab3f704a9dfa678ecdf96be3d6c434270c87a34188b1fdb646f66c8e0",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20261113,
+        "speech_rms_before_gain": 0.03,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_00",
+      "condition": "clean",
+      "duration_s": 10.623375,
+      "processing_s": 2.4726223289981135,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.623375,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_00_clean.wav",
+      "wav_sha256": "6acff654fcda47cf65bb50aeb410900dddef6953a32d7b15b6002835b9fdf709",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.16199659260793214,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 2.22,
+          "source": "M03_2_headMic_0291.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_00",
+      "condition": "gap_noise",
+      "duration_s": 10.623375,
+      "processing_s": 2.5404264999997395,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.623375,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_00_gap_noise.wav",
+      "wav_sha256": "7a0bbb8b8318beb339b58a473ce41c262b1906935d70bbe0d85bc05c455bdab9",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.16199659260793214,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 2.22,
+          "source": "M03_2_headMic_0291.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_00",
+      "condition": "background_20db",
+      "duration_s": 10.623375,
+      "processing_s": 2.584392481003306,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.623375,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_00_background_20db.wav",
+      "wav_sha256": "3507f3050cf3cba1676ee5d19bb7774e15c814e8474b5ae2bad9a3e188de2f41",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.16199659260793214,
+        "measured_speech_snr_db": 19.99749183560217,
+        "common_gain": 0.910287878669166,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 2.22,
+          "source": "M03_2_headMic_0291.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_00",
+      "condition": "background_10db",
+      "duration_s": 10.623375,
+      "processing_s": 2.6147465129979537,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 10.623375,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_00_background_10db.wav",
+      "wav_sha256": "8491fe1fa5ab967c077033346f6e0e873c9ed2c326bd36f4ff69d8a688879932",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262113,
+        "speech_rms_before_gain": 0.16199659260793214,
+        "measured_speech_snr_db": 9.99749183560217,
+        "common_gain": 0.8291898039736572,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 0.0,
+          "end_s": 2.22,
+          "source": "M03_2_headMic_0291.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_01",
+      "condition": "clean",
+      "duration_s": 11.652125,
+      "processing_s": 2.7753949950019887,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.652125,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_01_clean.wav",
+      "wav_sha256": "4ab4a5f361e0a15df8cf652e0f41cb4825d197f07bd429d87e3f56ef5a3d05b6",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.09284728688472851,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 2.6284375,
+          "end_s": 4.7484375,
+          "source": "M03_2_headMic_0295.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_01",
+      "condition": "gap_noise",
+      "duration_s": 11.652125,
+      "processing_s": 2.8424396560003515,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.652125,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_01_gap_noise.wav",
+      "wav_sha256": "453892b1d04aa0ac12a1c5dc80d2817351e6efc5672403e3435620799acb7436",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.09284728688472851,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 2.6284375,
+          "end_s": 4.7484375,
+          "source": "M03_2_headMic_0295.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_01",
+      "condition": "background_20db",
+      "duration_s": 11.652125,
+      "processing_s": 3.0676245800023025,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.652125,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_01_background_20db.wav",
+      "wav_sha256": "4cb5f253de25b8eb7e1636b65ff2df6a98214382421a32b554815646fc918eb4",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.09284728688472851,
+        "measured_speech_snr_db": 19.991062746147247,
+        "common_gain": 0.928330244862306,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 2.6284375,
+          "end_s": 4.7484375,
+          "source": "M03_2_headMic_0295.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_01",
+      "condition": "background_10db",
+      "duration_s": 11.652125,
+      "processing_s": 3.0324498120025964,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.652125,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_01_background_10db.wav",
+      "wav_sha256": "78e99f77b2fd8737596cae00200754985550a6fd1bc8a62aec44a3fbec063815",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262114,
+        "speech_rms_before_gain": 0.09284728688472851,
+        "measured_speech_snr_db": 9.991062746147247,
+        "common_gain": 0.8846408276314948,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "NO",
+          "start_s": 2.6284375,
+          "end_s": 4.7484375,
+          "source": "M03_2_headMic_0295.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_02",
+      "condition": "clean",
+      "duration_s": 9.27425,
+      "processing_s": 2.0986838589997205,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.27425,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_02_clean.wav",
+      "wav_sha256": "86ee3722dc5df8c9d61f9950560953e134e107768941d58c7691b1461afbd4c1",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.11062097860641222,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 3.9893125,
+          "end_s": 5.9093125,
+          "source": "M03_2_headMic_0103.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_02",
+      "condition": "gap_noise",
+      "duration_s": 9.27425,
+      "processing_s": 2.1371355379997112,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.27425,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_02_gap_noise.wav",
+      "wav_sha256": "1eb9bef0cc0831e6d0303bed289210085e58d6a173be89041281162c7fcab9f2",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.11062097860641222,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 3.9893125,
+          "end_s": 5.9093125,
+          "source": "M03_2_headMic_0103.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_02",
+      "condition": "background_20db",
+      "duration_s": 9.27425,
+      "processing_s": 2.2260167919994274,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.27425,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_02_background_20db.wav",
+      "wav_sha256": "f821dd287917b83d03e0fd02fb10b8996af9807d02e35767fc07e959311220ae",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.11062097860641222,
+        "measured_speech_snr_db": 19.987704417042735,
+        "common_gain": 0.9305634399682676,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 3.9893125,
+          "end_s": 5.9093125,
+          "source": "M03_2_headMic_0103.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_02",
+      "condition": "background_10db",
+      "duration_s": 9.27425,
+      "processing_s": 2.1605357860025833,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.27425,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_02_background_10db.wav",
+      "wav_sha256": "a7084742777a4ec760067db98650282e6e321fba1961f08fe964c69919e0f2ce",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262115,
+        "speech_rms_before_gain": 0.11062097860641222,
+        "measured_speech_snr_db": 9.987704417042737,
+        "common_gain": 0.8841350444687938,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIP",
+          "start_s": 3.9893125,
+          "end_s": 5.9093125,
+          "source": "M03_2_headMic_0103.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_03",
+      "condition": "clean",
+      "duration_s": 13.8715,
+      "processing_s": 3.189909799999441,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 13.8715,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_03_clean.wav",
+      "wav_sha256": "23805527b7b916f90b1137b3e71ff4b9a0acb37d45249d6c5e218ac5a2adcc4f",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.15868112888076838,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 11.9115,
+          "end_s": 12.8715,
+          "source": "M03_2_headMic_0248.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_03",
+      "condition": "gap_noise",
+      "duration_s": 13.8715,
+      "processing_s": 3.306473939002899,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 13.8715,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_03_gap_noise.wav",
+      "wav_sha256": "8d39be89d71a9c33dc136ef914b1495aed9e8fae57c30ecac2cedc8b6266433f",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.15868112888076838,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 11.9115,
+          "end_s": 12.8715,
+          "source": "M03_2_headMic_0248.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_03",
+      "condition": "background_20db",
+      "duration_s": 13.8715,
+      "processing_s": 3.4094878409996454,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 13.8715,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_03_background_20db.wav",
+      "wav_sha256": "9604e3a1ab97cf612278f52a394364af1ab0a85b43230a545d062ce1e39ac6fd",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.15868112888076838,
+        "measured_speech_snr_db": 19.989399544355773,
+        "common_gain": 0.9074303744397565,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 11.9115,
+          "end_s": 12.8715,
+          "source": "M03_2_headMic_0248.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_03",
+      "condition": "background_10db",
+      "duration_s": 13.8715,
+      "processing_s": 3.3800420529987605,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 13.8715,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_03_background_10db.wav",
+      "wav_sha256": "afe41c6667ef580f9e49f94c10be70acf5ce60b09d730ebf3d0dbbbedb18c732",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262116,
+        "speech_rms_before_gain": 0.15868112888076838,
+        "measured_speech_snr_db": 9.989399544355773,
+        "common_gain": 0.8215149618384147,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 11.9115,
+          "end_s": 12.8715,
+          "source": "M03_2_headMic_0248.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_04",
+      "condition": "clean",
+      "duration_s": 9.82075,
+      "processing_s": 2.1640557999999146,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.82075,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_04_clean.wav",
+      "wav_sha256": "b0782cf5379733a75504ea9b054cbb8ce2e50f7927d76b07a392048c8eec1f43",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.17823673357983333,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 0.0,
+          "end_s": 1.28,
+          "source": "M03_2_headMic_0290.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_04",
+      "condition": "gap_noise",
+      "duration_s": 9.82075,
+      "processing_s": 2.2016875940025784,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.82075,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_04_gap_noise.wav",
+      "wav_sha256": "eafefa12c5a9900abb8357c82ec15e4f676ce8b9506a143f8149f64924fa6d64",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.17823673357983333,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 0.0,
+          "end_s": 1.28,
+          "source": "M03_2_headMic_0290.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_04",
+      "condition": "background_20db",
+      "duration_s": 9.82075,
+      "processing_s": 2.303220418998535,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.82075,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_04_background_20db.wav",
+      "wav_sha256": "674e0d00414c89bf818cf0dac0aeee9ea519729e65ab5664af9235304bac1652",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.17823673357983333,
+        "measured_speech_snr_db": 20.00938882589502,
+        "common_gain": 0.9067016549264367,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 0.0,
+          "end_s": 1.28,
+          "source": "M03_2_headMic_0290.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_04",
+      "condition": "background_10db",
+      "duration_s": 9.82075,
+      "processing_s": 2.3604335320014798,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 9.82075,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_04_background_10db.wav",
+      "wav_sha256": "f33413063091b0a46791a654bcd2449dd0cfe48f2efb79e4032488e5bc3d41f7",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262117,
+        "speech_rms_before_gain": 0.17823673357983333,
+        "measured_speech_snr_db": 10.00938882589502,
+        "common_gain": 0.8145985937716098,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "SIGH",
+          "start_s": 0.0,
+          "end_s": 1.28,
+          "source": "M03_2_headMic_0290.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_05",
+      "condition": "clean",
+      "duration_s": 11.540875,
+      "processing_s": 2.797230693002348,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.540875,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_05_clean.wav",
+      "wav_sha256": "b15a9bc99cfb549d66fcd01bec7375872b242916d356dd1ea33793603ad9e115",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.07690860877579914,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 2.4926875,
+          "end_s": 4.5526875,
+          "source": "M03_2_headMic_0365.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_05",
+      "condition": "gap_noise",
+      "duration_s": 11.540875,
+      "processing_s": 2.7912738459999673,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.540875,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_05_gap_noise.wav",
+      "wav_sha256": "67c887136647263d2bc69b90b9331018175e2393dbbab5770a36c28617d4c22c",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.07690860877579914,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 2.4926875,
+          "end_s": 4.5526875,
+          "source": "M03_2_headMic_0365.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_05",
+      "condition": "background_20db",
+      "duration_s": 11.540875,
+      "processing_s": 2.9978044480012613,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.540875,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_05_background_20db.wav",
+      "wav_sha256": "31fba80d14efd91201fb2b247bcfb3921effb1f20dd8d84b90c653bc3678de45",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.07690860877579914,
+        "measured_speech_snr_db": 20.003138374182274,
+        "common_gain": 0.9405106437307368,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 2.4926875,
+          "end_s": 4.5526875,
+          "source": "M03_2_headMic_0365.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "target_05",
+      "condition": "background_10db",
+      "duration_s": 11.540875,
+      "processing_s": 2.9172031939997396,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 1,
+      "correct_events": 0,
+      "missed_events": 1,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.540875,
+      "detection_delay_s": [],
+      "file": "streams/M03/target_05_background_10db.wav",
+      "wav_sha256": "d775c8cb9418dac4f260c1bf97406af94c05fe12889d964f55719cfb70582885",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262118,
+        "speech_rms_before_gain": 0.07690860877579914,
+        "measured_speech_snr_db": 10.003138374182274,
+        "common_gain": 0.9115507511390761,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "LEAK",
+          "start_s": 2.4926875,
+          "end_s": 4.5526875,
+          "source": "M03_2_headMic_0365.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "repeated",
+      "condition": "clean",
+      "duration_s": 12.95425,
+      "processing_s": 3.0006262159986363,
+      "nearest_localized_before_rejection": 2,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 12.95425,
+      "detection_delay_s": [],
+      "file": "streams/M03/repeated_clean.wav",
+      "wav_sha256": "21d84b293851822fe55d444ae96b8f2db2f2387d41b4d7261d6dfefc21b2a5ff",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.15330144743241775,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 3.221,
+          "end_s": 5.441,
+          "source": "M03_2_headMic_0291.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 8.1589375,
+          "end_s": 10.3789375,
+          "source": "M03_2_headMic_0291.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "repeated",
+      "condition": "gap_noise",
+      "duration_s": 12.95425,
+      "processing_s": 3.0964869879971957,
+      "nearest_localized_before_rejection": 2,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 12.95425,
+      "detection_delay_s": [],
+      "file": "streams/M03/repeated_gap_noise.wav",
+      "wav_sha256": "2bcb280c7487d64f3b1e8e36242277f80b940cfe03e4056bf22e82b03f630509",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.15330144743241775,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 3.221,
+          "end_s": 5.441,
+          "source": "M03_2_headMic_0291.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 8.1589375,
+          "end_s": 10.3789375,
+          "source": "M03_2_headMic_0291.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "repeated",
+      "condition": "background_20db",
+      "duration_s": 12.95425,
+      "processing_s": 3.215855033002299,
+      "nearest_localized_before_rejection": 2,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 12.95425,
+      "detection_delay_s": [],
+      "file": "streams/M03/repeated_background_20db.wav",
+      "wav_sha256": "d18cdc50caa854312612f62906797b385629f911048315ba769cb162ecd8dd15",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.15330144743241775,
+        "measured_speech_snr_db": 19.99323274166884,
+        "common_gain": 0.9146369818751894,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 3.221,
+          "end_s": 5.441,
+          "source": "M03_2_headMic_0291.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 8.1589375,
+          "end_s": 10.3789375,
+          "source": "M03_2_headMic_0291.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "repeated",
+      "condition": "background_10db",
+      "duration_s": 12.95425,
+      "processing_s": 3.2253692990016134,
+      "nearest_localized_before_rejection": 1,
+      "truth_events": 2,
+      "correct_events": 0,
+      "missed_events": 2,
+      "event_recall": 0.0,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 12.95425,
+      "detection_delay_s": [],
+      "file": "streams/M03/repeated_background_10db.wav",
+      "wav_sha256": "ca7d1750f77de183d1e8c0f29d8c408c8f119339a5c2bd0495e6571c64b48770",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262119,
+        "speech_rms_before_gain": 0.15330144743241775,
+        "measured_speech_snr_db": 9.993232741668841,
+        "common_gain": 0.840326480037451,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": [
+        {
+          "intent": "YES",
+          "start_s": 3.221,
+          "end_s": 5.441,
+          "source": "M03_2_headMic_0291.wav"
+        },
+        {
+          "intent": "YES",
+          "start_s": 8.1589375,
+          "end_s": 10.3789375,
+          "source": "M03_2_headMic_0291.wav"
+        }
+      ]
+    },
+    {
+      "speaker": "M03",
+      "base_id": "no_target",
+      "condition": "clean",
+      "duration_s": 11.960625,
+      "processing_s": 2.7588222150006914,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.960625,
+      "detection_delay_s": [],
+      "file": "streams/M03/no_target_clean.wav",
+      "wav_sha256": "f3f7128e2dfb84a7cf32a1bb05ac24110c72cc4c8b006069b8c2c2cae307b22b",
+      "noise": {
+        "condition": "clean",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.13089755280324009,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M03",
+      "base_id": "no_target",
+      "condition": "gap_noise",
+      "duration_s": 11.960625,
+      "processing_s": 2.8369961569987936,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.960625,
+      "detection_delay_s": [],
+      "file": "streams/M03/no_target_gap_noise.wav",
+      "wav_sha256": "0301156ce1928b8eac1ca6b69cbe2604b596a28ffd201bfc1c5702d234282d58",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.13089755280324009,
+        "measured_speech_snr_db": null,
+        "common_gain": 0.9500289925840022,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M03",
+      "base_id": "no_target",
+      "condition": "background_20db",
+      "duration_s": 11.960625,
+      "processing_s": 2.8596012009984406,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.960625,
+      "detection_delay_s": [],
+      "file": "streams/M03/no_target_background_20db.wav",
+      "wav_sha256": "4baa0bc50eeece6e73f91ad67f1cb1b2dc77f18c53df30dcf92cf5ff410e5e89",
+      "noise": {
+        "condition": "background_20db",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.13089755280324009,
+        "measured_speech_snr_db": 20.001633679504835,
+        "common_gain": 0.926055341808066,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M03",
+      "base_id": "no_target",
+      "condition": "background_10db",
+      "duration_s": 11.960625,
+      "processing_s": 2.880917940001382,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 11.960625,
+      "detection_delay_s": [],
+      "file": "streams/M03/no_target_background_10db.wav",
+      "wav_sha256": "6adef2b168201a77eddbb6582271912242d11062c1fcd741f95c439ede32f15d",
+      "noise": {
+        "condition": "background_10db",
+        "seed": 20262120,
+        "speech_rms_before_gain": 0.13089755280324009,
+        "measured_speech_snr_db": 10.001633679504838,
+        "common_gain": 0.8721290177514721,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    },
+    {
+      "speaker": "M03",
+      "base_id": "noise_only",
+      "condition": "noise_only",
+      "duration_s": 8.0,
+      "processing_s": 1.9867728870012797,
+      "nearest_localized_before_rejection": 0,
+      "truth_events": 0,
+      "correct_events": 0,
+      "missed_events": 0,
+      "event_recall": null,
+      "precision": null,
+      "false_accepted_events": 0,
+      "duplicate_accepted_events": 0,
+      "false_accepted_events_per_hour": 0.0,
+      "audio_duration_s": 8.0,
+      "detection_delay_s": [],
+      "file": "streams/M03/noise_only.wav",
+      "wav_sha256": "09d7f55ab3f704a9dfa678ecdf96be3d6c434270c87a34188b1fdb646f66c8e0",
+      "noise": {
+        "condition": "gap_noise",
+        "seed": 20261113,
+        "speech_rms_before_gain": 0.03,
+        "measured_speech_snr_db": null,
+        "common_gain": 1.0,
+        "clipped_fraction": 0.0,
+        "noise": "synthetic hiss/correlated noise/50 Hz hum; extra gap noise; no disability simulation"
+      },
+      "truth": []
+    }
+  ],
+  "peak_process_rss_mib": 61.44921875,
+  "warning": "Repeated/noisy variants are not independent positives. Artificial sentence assembly; no threshold tuning; not clinical or WATER/PAIN validation.",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "python": "3.14.4",
+  "numpy": "2.5.4"
+}
