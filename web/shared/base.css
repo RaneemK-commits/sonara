@@ -1,38 +1,42 @@
+/* Sonara design tokens (branding handoff v1.0). Bundled: no web fonts, no CDN. */
 :root {
-  --bg: #f6f5f1;
-  --surface: #ffffff;
-  --ink: #1b1d21;
-  --muted: #5d6270;
-  --line: #dcdad3;
-  --accent: #2f5bd3;
-  --accent-ink: #ffffff;
-  --ok: #1f7a4d;
-  --ok-bg: #e3f3ea;
-  --warn: #9a5b00;
-  --warn-bg: #fff1d6;
-  --bad: #b3261e;
-  --bad-bg: #fde7e5;
-  --info-bg: #e7edfb;
-  --radius: 18px;
-  font-family: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111317; --surface: #1b1e24; --ink: #eef0f4; --muted: #a3a9b6; --line: #2d313a;
-    --accent: #7c9cff; --accent-ink: #0d1020;
-    --ok: #6fd3a0; --ok-bg: #15301f; --warn: #ffc36b; --warn-bg: #3a2a0d;
-    --bad: #ff8a80; --bad-bg: #3a1513; --info-bg: #1b2440;
-  }
+  --color-bg-deep: #061B18;
+  --color-bg: #082720;
+  --color-bg-2: #10382F;
+  --color-bg-mid: #1B5144;
+  --color-text: #F8FCFA;
+  --color-muted: #D1E5DC;
+  --color-mint: #C6F7DA;
+  --color-glass: rgba(230,255,244,.10);
+  --color-glass-strong: rgba(234,255,246,.15);
+  --color-stroke: rgba(231,255,244,.20);
+  --color-row: rgba(8,39,32,.92);
+  --color-success: #A7E8C3;
+  --color-attention: #F2CB85;
+  --color-error: #FFB7AC;
+  --radius-card: 16px;
+  --radius-control: 12px;
+  font-family: Inter, "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; background: var(--bg); color: var(--ink); }
-button { font: inherit; cursor: pointer; border: 0; }
-button:focus-visible { outline: 4px solid var(--accent); outline-offset: 3px; }
-.conn { display: inline-flex; align-items: center; gap: .5em; font-weight: 600; }
-.conn::before { content: ""; width: .7em; height: .7em; border-radius: 50%; background: var(--bad); }
-.conn.on::before { background: var(--ok); }
-.badge { display: inline-flex; align-items: center; gap: .4em; padding: .3em .8em;
-  border-radius: 999px; font-weight: 700; font-size: .9em; background: var(--info-bg); }
-.badge.ok { background: var(--ok-bg); color: var(--ok); }
-.badge.warn { background: var(--warn-bg); color: var(--warn); }
-.badge.bad { background: var(--bad-bg); color: var(--bad); }
+html, body { margin: 0; background: var(--color-bg-deep); color: var(--color-text); }
+button { font: inherit; cursor: pointer; border: 0; color: inherit; }
+button:focus-visible { outline: 3px solid var(--color-mint); outline-offset: 3px; }
+.tnum { font-variant-numeric: tabular-nums; }
+
+.logo { display: inline-flex; align-items: center; gap: .45em; font-weight: 650; letter-spacing: -.01em; }
+.logo svg { height: 1.05em; width: auto; }
+
+/* Connection pill: dot + label, never colour alone */
+.conn { display: inline-flex; align-items: center; gap: .5em; padding: .35em .85em; border-radius: 999px;
+  border: 1px solid var(--color-stroke); background: var(--color-glass); font-size: .85em; font-weight: 550;
+  color: var(--color-error); white-space: nowrap; }
+.conn::before { content: ""; width: .55em; height: .55em; border-radius: 50%; background: var(--color-error); }
+.conn.on { color: var(--color-muted); }
+.conn.on::before { background: var(--color-success); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; }
+}

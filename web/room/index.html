@@ -3,117 +3,192 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sonara Room</title>
+<title>Sonara</title>
 <link rel="stylesheet" href="/static/shared/base.css">
 <style>
-  body { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto auto; gap: 20px;
-         padding: 24px clamp(16px, 4vw, 48px); font-size: clamp(18px, 2.2vw, 26px); }
-  header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-  .bed { font-weight: 800; letter-spacing: .02em; }
-  .state { font-size: .9em; }
-  main { display: grid; align-content: center; gap: 24px; text-align: center; }
-  .phrase { font-size: clamp(40px, 7vw, 96px); font-weight: 800; line-height: 1.1; margin: 0;
-            text-wrap: balance; min-height: 1.2em; }
-  .phrase.muted { color: var(--muted); font-weight: 600; font-size: clamp(28px, 4vw, 56px); }
-  .ask { font-size: 1.1em; color: var(--muted); min-height: 1.4em; margin: 0; }
-  .status { justify-self: center; display: flex; align-items: center; gap: .6em; padding: .7em 1.2em;
-            border-radius: var(--radius); background: var(--surface); border: 2px solid var(--line);
-            font-weight: 700; max-width: 900px; }
-  .status .icon { font-size: 1.4em; width: 1.4em; text-align: center; }
-  .status.ok { border-color: var(--ok); background: var(--ok-bg); color: var(--ok); }
-  .status.warn { border-color: var(--warn); background: var(--warn-bg); color: var(--warn); }
-  .status[hidden] { display: none; }
-  .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .controls button { padding: 1em .5em; border-radius: var(--radius); font-size: 1.2em; font-weight: 800;
-                     background: var(--surface); color: var(--ink); border: 3px solid var(--line); }
-  .controls .talk { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-  .controls .talk.live { animation: pulse 1.2s ease-in-out infinite; }
-  .controls .confirm:not(:disabled) { border-color: var(--ok); color: var(--ok); }
-  .controls button:disabled { opacity: .4; cursor: default; }
-  @keyframes pulse { 50% { transform: scale(.97); filter: brightness(1.15); } }
-  @media (prefers-reduced-motion: reduce) { .controls .talk.live { animation: none; outline: 6px solid var(--ok); } }
-  .tiles { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-  .tiles span { width: 100%; text-align: center; color: var(--muted); font-size: .75em; }
-  .tiles button { padding: .5em 1em; border-radius: 999px; background: var(--surface);
-                  border: 2px solid var(--line); color: var(--ink); font-size: .85em; font-weight: 600; }
+  body { min-height: 100vh; overflow: hidden; display: grid; grid-template-rows: auto 1fr;
+    padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 48px);
+    background:
+      radial-gradient(ellipse 85% 65% at 60% 95%, rgba(87,166,133,.42), transparent 72%),
+      radial-gradient(ellipse 70% 75% at 80% 45%, rgba(51,119,96,.28), transparent 72%),
+      linear-gradient(135deg, #061B18 0%, #10382F 52%, #1B5144 100%) fixed; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    font-size: clamp(18px, 2vw, 24px); position: relative; z-index: 1; }
+  .wave { position: fixed; inset: auto 0 0 0; height: 28vh; pointer-events: none; opacity: .5; }
+
+  main { display: grid; grid-template-rows: 1fr auto auto 1fr; justify-items: center; text-align: center;
+    gap: clamp(12px, 2.4vh, 24px); position: relative; z-index: 1; transition: opacity .25s ease; }
+  main.swap { opacity: 0; }
+  .small { grid-row: 1; align-self: end; margin: 0; font-size: clamp(20px, 2.4vw, 30px); color: var(--color-muted); min-height: 1.3em; }
+  h1 { margin: 0; font-size: clamp(34px, 4.5vw, 58px); font-weight: 650; line-height: 1.07; max-width: 18ch; text-wrap: balance; }
+  .card { display: flex; align-items: center; gap: .5em; padding: .45em 1em; max-width: min(90vw, 22ch);
+    font-size: clamp(32px, 4vw, 52px); font-weight: 650; line-height: 1.1; text-wrap: balance;
+    background: var(--color-glass-strong); border: 1px solid var(--color-stroke); border-radius: var(--radius-card);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .sub { margin: 0; font-size: clamp(18px, 2vw, 26px); line-height: 1.3; color: var(--color-muted); max-width: 32ch; }
+  .tone-error h1, .tone-error .sub { color: var(--color-error); }
+  [hidden] { display: none !important; }
+
+  /* Sonara companion: original SVG blob, mode-driven, CSS transforms only */
+  .avatar { width: clamp(150px, 20vw, 240px); aspect-ratio: 1.15; position: relative; }
+  .avatar svg { width: 100%; height: 100%; overflow: visible; }
+  .body { transform-origin: 50% 90%; animation: breathe 4.5s ease-in-out infinite; }
+  @keyframes breathe { 50% { transform: scale(1.02, .985); } }
+  .eye { transition: transform .25s ease; transform-box: fill-box; transform-origin: center; }
+  .happy, .check { opacity: 0; transition: opacity .25s ease; }
+  .ring { fill: none; stroke: var(--color-mint); stroke-width: 1.5; opacity: 0; transform-origin: 100px 104px; }
+  [data-mode="listening"] .ring { animation: ripple 2s ease-out infinite; }
+  [data-mode="listening"] .ring.r2 { animation-delay: 1s; }
+  @keyframes ripple { from { opacity: .55; transform: scale(.9); } to { opacity: 0; transform: scale(1.35); } }
+  [data-mode="listening"] .eye { transform: scaleY(1.15); }
+  [data-mode="success"] .eye { opacity: 0; }
+  [data-mode="success"] .happy, [data-mode="success"] .check { opacity: 1; }
+  [data-mode="error"] .body { animation: none; }
+  [data-mode="error"] .eye { transform: scaleY(.55); }
+  [data-mode="thinking"] .eye { transform: translateY(-3px); }
+
+  /* Demo-only controls (?demo or key D): the bedside screen itself is not a touch workflow */
+  .demo { position: fixed; right: 16px; bottom: 16px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end;
+    max-width: 60vw; z-index: 2; font-size: 14px; }
+  .demo button { padding: .6em .9em; min-height: 44px; border-radius: var(--radius-control);
+    background: var(--color-row); border: 1px solid var(--color-stroke); font-weight: 600; }
+  .demo .tag { width: 100%; text-align: right; color: var(--color-muted); }
 </style>
 </head>
 <body>
 <header>
-  <span class="bed" id="bed">—</span>
-  <span class="badge state" id="state">Connecting…</span>
-  <span class="conn" id="conn">Offline</span>
+  <span class="logo"><img src="/static/shared/logo.svg" alt="" height="22">Sonara</span>
+  <span class="conn" id="conn">Connecting…</span>
 </header>
 
-<main aria-live="polite">
-  <p class="phrase muted" id="phrase">Press Talk and speak</p>
-  <p class="ask" id="ask"></p>
-  <div class="status" id="status" hidden><span class="icon" id="sicon"></span><span id="stext"></span></div>
+<svg class="wave" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0 140 C 250 80, 450 190, 700 130 S 1050 90, 1200 120 L1200 200 L0 200 Z" fill="rgba(198,247,218,.07)"/>
+</svg>
+
+<main id="main" aria-live="polite">
+  <p class="small" id="small"></p>
+  <div class="avatar" id="avatar" data-mode="idle" aria-hidden="true">
+    <svg viewBox="0 0 200 174">
+      <defs>
+        <radialGradient id="fill" cx="45%" cy="35%" r="70%">
+          <stop offset="0" stop-color="#E8FFF3" stop-opacity=".95"/>
+          <stop offset=".55" stop-color="#A7E8C3" stop-opacity=".75"/>
+          <stop offset="1" stop-color="#377563" stop-opacity=".85"/>
+        </radialGradient>
+        <radialGradient id="glow" cx="50%" cy="60%" r="50%">
+          <stop offset="0" stop-color="#C6F7DA" stop-opacity=".35"/><stop offset="1" stop-color="#C6F7DA" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="100" cy="110" rx="98" ry="64" fill="url(#glow)"/>
+      <circle class="ring" cx="100" cy="104" r="70"/><circle class="ring r2" cx="100" cy="104" r="70"/>
+      <g class="body">
+        <path d="M100 30 C 150 30, 172 78, 170 118 C 168 150, 140 160, 100 160 C 60 160, 32 150, 30 118 C 28 78, 50 30, 100 30 Z"
+              fill="url(#fill)" stroke="#E8FFF3" stroke-opacity=".6" stroke-width="1.5"/>
+        <rect class="eye" x="78" y="88" width="9" height="17" rx="4.5" fill="#082720"/>
+        <rect class="eye" x="113" y="88" width="9" height="17" rx="4.5" fill="#082720"/>
+        <path class="happy" d="M74 100 q8 -9 16 0 M110 100 q8 -9 16 0" stroke="#082720" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      </g>
+      <g class="check"><circle cx="160" cy="40" r="17" fill="#A7E8C3"/><path d="M152 40 l6 6 l11 -12" stroke="#082720" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+    </svg>
+  </div>
+  <h1 id="head">What do you need?</h1>
+  <div class="card" id="card" hidden></div>
+  <p class="sub" id="sub">I'm here to listen.</p>
 </main>
 
-<section class="controls">
-  <button class="talk" id="talk">🎙 Talk</button>
-  <button class="confirm" id="confirm" disabled>✔ Send</button>
-  <button class="cancel" id="cancel">✖ Cancel</button>
+<section class="demo" id="demo" hidden aria-label="Demo controls">
+  <span class="tag">Demo controls (simulated input)</span>
+  <button data-a="talk">Talk</button><button data-a="confirm">Yes</button><button data-a="cancel">No</button>
 </section>
-
-<section class="tiles" id="tiles" aria-label="Choose a phrase manually"></section>
 
 <script>
 const $ = id => document.getElementById(id);
-const STATE = { IDLE: ["Ready", ""], LISTENING: ["Listening…", "ok"], PROCESSING: ["Understanding…", ""],
-                AWAIT_CONFIRM: ["Send to caregiver?", "warn"] };
-// icon + text so status never relies on colour alone
-const REQ = {
-  QUEUED:        ["⏳", "Saved. Waiting for the caregiver screen…", ""],
-  DISPLAYED:     ["🖥", "Shown on the caregiver's screen. Not yet acknowledged.", ""],
-  NOT_DISPLAYED: ["⚠", "Not reached a caregiver yet. Use your call button if you need help now.", "warn"],
-  ACKNOWLEDGED:  ["✔", "A caregiver acknowledged your request.", "ok"],
-  COMPLETED:     ["✔", "Request completed.", "ok"],
-  CANCELLED:     ["✖", "Request cancelled.", ""],
-};
 const post = (action, intent) => fetch("/api/room/input", { method: "POST",
   headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action, intent }) });
-$("talk").onclick = () => post("talk");
-$("confirm").onclick = () => post("confirm");
-$("cancel").onclick = () => post("cancel");
 
-let tilesBuilt = false;
-function render(s) {
-  $("bed").textContent = s.bed_id;
-  const [label, tone] = STATE[s.state] || [s.state, ""];
-  $("state").textContent = label; $("state").className = "badge state " + tone;
-  $("talk").classList.toggle("live", s.state === "LISTENING");
-  $("talk").disabled = !s.has_mic;
-  $("confirm").disabled = s.state !== "AWAIT_CONFIRM";
-  const p = $("phrase");
-  if (s.last.understood === false) { p.textContent = "Sorry, I didn't understand. Please try again."; p.className = "phrase muted"; }
-  else if (s.last.text) { p.textContent = s.last.text; p.className = "phrase"; }
-  $("ask").textContent = s.state === "AWAIT_CONFIRM" ? "Send this to your caregiver? Press Send, or say yes." : "";
-  const r = s.request;
-  if (r && REQ[r.status]) {
-    const [icon, text, cls] = REQ[r.status];
-    $("status").hidden = false; $("status").className = "status " + cls;
-    $("sicon").textContent = icon; $("stext").textContent = `${r.label}: ${text}`;
-  } else $("status").hidden = true;
-  if (!tilesBuilt) {
-    tilesBuilt = true;
-    $("tiles").innerHTML = "<span>Or tap a phrase</span>";
-    for (const i of s.intents) {
-      const b = document.createElement("button"); b.textContent = i.label;
-      b.onclick = () => post("select", i.id); $("tiles").append(b);
-    }
-  }
+// Demo panel: hidden by default, ?demo or "D" key toggles it
+const demo = $("demo");
+demo.hidden = !new URLSearchParams(location.search).has("demo");
+addEventListener("keydown", e => { if (e.key === "d" || e.key === "D") demo.hidden = !demo.hidden; });
+demo.addEventListener("click", e => { const b = e.target.closest("button"); if (b) post(b.dataset.a, b.dataset.i); });
+let demoBuilt = false;
+
+// What the screen shows: [mode, small, headline, card, sub, tone]
+const VIEW = {
+  ready:      ["idle", "", "What do you need?", "", "I'm here to listen."],
+  listening:  ["listening", "", "I'm listening…", "", "Tell me what you need."],
+  processing: ["thinking", "", "One moment…", "", ""],
+  confirm:    ["listening", "Did you mean…", "", "{text}?", "Say ‘yes’ to confirm, or ‘no’ to try again."],
+  retry:      ["idle", "", "I didn't understand.", "", "Please try again."],
+  sending:    ["thinking", "", "Sending to your nurse…", "", ""],
+  notified:   ["success", "", "Your nurse has been notified.", "", ""],
+  acked:      ["success", "", "Your nurse acknowledged your request.", "", ""],
+  cancelled:  ["idle", "", "Okay, not sent.", "", ""],
+  failed:     ["error", "", "Unable to notify your nurse.", "", "Use the existing nurse-call system.", "error"],
+  offline:    ["error", "", "Not connected.", "", "Requests cannot be sent right now. Use the existing nurse-call system.", "error"],
+};
+const RECENT_MS = 60000;   // how long a delivered/cancelled status stays before returning to Ready
+let current = "", retryUntil = 0, lastKey = "", last = null, timer;
+
+function pick(s) {
+  if (!s) return "offline";
+  if (s.state === "LISTENING") return "listening";
+  if (s.state === "PROCESSING") return "processing";
+  if (s.state === "AWAIT_CONFIRM") return "confirm";
+  if (Date.now() < retryUntil) return "retry";
+  const r = s.request, fresh = r && Date.now() - Date.parse(r.updated_at) < RECENT_MS;
+  if (r && r.status === "NOT_DISPLAYED") return "failed";          // never auto-hide a failed delivery
+  if (r && r.status === "QUEUED") return "sending";
+  if (fresh && r.status === "DISPLAYED") return "notified";        // only after the caregiver screen's receipt
+  if (fresh && r.status === "ACKNOWLEDGED") return "acked";
+  if (fresh && r.status === "CANCELLED") return "cancelled";
+  return "ready";
 }
+
+function show(key, s) {
+  // show the short label ("Water?"), not the spoken sentence
+  const it = s && s.last && (s.intents || []).find(i => i.id === s.last.intent);
+  const text = it ? it.label : (s && s.last && s.last.text || "").replace(/[.!?]+$/, "");
+  const sig = key + text;
+  if (sig === current) return;
+  const [mode, small, head, card, sub, tone] = VIEW[key];
+  const apply = () => {
+    $("avatar").dataset.mode = mode;
+    $("small").textContent = small;
+    $("head").textContent = head; $("head").hidden = !head;
+    $("card").textContent = card.replace("{text}", text); $("card").hidden = !card;
+    $("sub").textContent = sub;
+    $("main").className = tone ? "tone-" + tone : "";
+  };
+  if (current) { $("main").classList.add("swap"); setTimeout(apply, 200); } else apply();
+  current = sig;
+}
+
+function render(s) {
+  last = s;
+  // a fresh rejection shows "try again" for a few seconds
+  const key = s.last && s.last.understood === false ? JSON.stringify(s.last) : "";
+  if (key && key !== lastKey && s.state === "IDLE") retryUntil = Date.now() + 5000;
+  lastKey = key;
+  if (!demoBuilt && s.intents) {
+    demoBuilt = true;
+    for (const i of s.intents) { const b = document.createElement("button");
+      b.textContent = i.label; b.dataset.a = "select"; b.dataset.i = i.id; demo.append(b); }
+  }
+  show(pick(s), s);
+}
+setInterval(() => last && show(pick(last), last), 1000);   // let timed views expire
 
 function connect() {
   const ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws?role=room`);
-  ws.onopen = () => { $("conn").textContent = "Device online"; $("conn").classList.add("on"); };
+  ws.onopen = () => { $("conn").textContent = "Connected"; $("conn").classList.add("on"); };
   ws.onmessage = e => { const m = JSON.parse(e.data); if (m.type === "room_state") render(m); };
-  ws.onclose = () => { $("conn").textContent = "Device offline"; $("conn").classList.remove("on");
-                       $("state").textContent = "Reconnecting…"; setTimeout(connect, 1500); };
+  ws.onclose = () => { $("conn").textContent = "Disconnected"; $("conn").classList.remove("on");
+    last = null; show("offline"); setTimeout(connect, 1500); };
 }
 connect();
+document.addEventListener("visibilitychange", () =>
+  document.querySelectorAll(".body,.ring").forEach(el => el.style.animationPlayState = document.hidden ? "paused" : ""));
 </script>
 </body>
 </html>

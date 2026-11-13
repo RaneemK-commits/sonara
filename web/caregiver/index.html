@@ -2,55 +2,74 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sonara Caregiver</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#082720">
+<title>Sonara · Nurse</title>
 <link rel="stylesheet" href="/static/shared/base.css">
 <style>
-  body { padding: 16px; max-width: 880px; margin: 0 auto; font-size: 17px; }
-  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
-           position: sticky; top: 0; background: var(--bg); padding: 8px 0 12px; z-index: 1; }
-  h1 { font-size: 1.3em; margin: 0; }
-  .tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .tools button { padding: .45em .9em; border-radius: 999px; background: var(--surface);
-                  border: 1px solid var(--line); color: var(--ink); font-size: .9em; }
-  .banner { padding: .8em 1em; border-radius: 12px; background: var(--bad-bg); color: var(--bad);
-            font-weight: 700; margin: 8px 0; }
-  .banner[hidden] { display: none; }
-  h2 { font-size: 1em; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 20px 0 8px; }
-  .card { background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 14px 16px;
-          display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin-bottom: 10px; }
-  .card.new { border-color: var(--warn); animation: flash 1s ease-in-out 3; }
-  @keyframes flash { 50% { background: var(--warn-bg); } }
-  @media (prefers-reduced-motion: reduce) { .card.new { animation: none; } }
-  .what { font-size: 1.5em; font-weight: 800; }
-  .meta { color: var(--muted); font-size: .9em; }
-  .actions { grid-row: 1 / span 3; grid-column: 2; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
-  .actions button { padding: .7em 1.1em; border-radius: 12px; font-weight: 700; min-width: 140px; }
-  .ack { background: var(--accent); color: var(--accent-ink); }
-  .done { background: var(--ok-bg); color: var(--ok); border: 2px solid var(--ok) !important; }
-  .empty { color: var(--muted); padding: 12px 0; }
-  table { width: 100%; border-collapse: collapse; font-size: .9em; }
-  td, th { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--line); }
-  th { color: var(--muted); font-weight: 600; }
-  @media (max-width: 520px) { .card { grid-template-columns: 1fr; } .actions { grid-row: auto; grid-column: 1; flex-direction: row; } }
+  body { min-height: 100vh; background: linear-gradient(180deg, #082720 0, #10382F 100%) fixed; font-size: 16px;
+    -webkit-tap-highlight-color: transparent; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px calc(24px + env(safe-area-inset-bottom)); }
+  header { position: sticky; top: 0; z-index: 2; background: #082720; padding: calc(12px + env(safe-area-inset-top)) 0 12px;
+    border-bottom: 1px solid var(--color-stroke); }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 18px; }
+  .tools { display: flex; gap: 8px; align-items: center; }
+  .icon-btn { min-width: 44px; min-height: 44px; padding: 0 12px; border-radius: var(--radius-control);
+    background: var(--color-glass); border: 1px solid var(--color-stroke); font-size: 14px; font-weight: 600; }
+  h1 { margin: 14px 0 2px; font-size: 26px; font-weight: 600; }
+  .count { margin: 0; color: var(--color-muted); font-size: 14px; }
+  .banner { margin: 12px 0 0; padding: 12px 14px; border-radius: var(--radius-control); font-weight: 600; font-size: 15px;
+    color: var(--color-error); background: rgba(255,183,172,.10); border: 1px solid rgba(255,183,172,.45); }
+  .banner::before { content: "⚠ "; }
+  [hidden] { display: none !important; }
+
+  .list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+  .row { position: relative; background: var(--color-row); border: 1px solid var(--color-stroke); border-radius: 12px;
+    padding: 12px 14px 12px 18px; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: center; }
+  .row::before { content: ""; position: absolute; left: 6px; top: 12px; bottom: 12px; width: 3px; border-radius: 2px;
+    background: var(--color-attention); }
+  .row.ack::before { background: var(--color-mint); }
+  .row.idle::before { background: var(--color-stroke); }
+  .row.flash { animation: flash 1.2s ease-out; }
+  @keyframes flash { from { background: rgba(242,203,133,.22); } }
+  .bed { font-size: 19px; font-weight: 700; }
+  .what { font-size: 16px; font-weight: 500; }
+  .state { font-size: 13px; font-weight: 500; color: var(--color-muted); }
+  .state.new { color: var(--color-attention); }
+  .wait { grid-column: 2; grid-row: 1; justify-self: end; font-size: 14px; color: var(--color-muted); }
+  .act { grid-column: 2; grid-row: 2 / span 2; justify-self: end; min-height: 44px; padding: 0 16px;
+    border-radius: var(--radius-control); font-size: 15px; font-weight: 600; }
+  .act.primary { background: var(--color-mint); color: #082720; }
+  .act.secondary { background: transparent; border: 1px solid var(--color-success); color: var(--color-success); }
+  .act:disabled { opacity: .5; }
+  .empty { color: var(--color-muted); padding: 16px 4px; }
+
+  details { margin-top: 24px; color: var(--color-muted); font-size: 14px; }
+  summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 6px 4px; border-bottom: 1px solid var(--color-stroke); }
 </style>
 </head>
 <body>
+<div class="wrap">
 <header>
-  <h1>Sonara · Caregiver</h1>
-  <div class="tools">
-    <span class="conn" id="conn">Offline</span>
-    <button id="sound">🔇 Enable sound</button>
-    <button id="tokenBtn">Token</button>
+  <div class="top">
+    <span class="logo"><img src="/static/shared/logo.svg" alt="" height="20">Sonara</span>
+    <div class="tools">
+      <span class="conn" id="conn">Connecting…</span>
+      <button class="icon-btn" id="sound" aria-label="Enable alert sound">🔇</button>
+      <button class="icon-btn" id="tokenBtn">Token</button>
+    </div>
   </div>
+  <h1>Requests</h1>
+  <p class="count tnum" id="count">—</p>
+  <p class="banner" id="banner" hidden>Disconnected from the bedside device. New requests cannot reach this screen.</p>
 </header>
-<div class="banner" id="banner" hidden>Bedside device disconnected. New requests cannot reach this screen.</div>
 
-<h2>Active requests</h2>
-<section id="active"><p class="empty">No active requests.</p></section>
+<ul class="list" id="list" aria-live="polite"></ul>
 
-<h2>Recent history</h2>
-<table><thead><tr><th>Time</th><th>Bed</th><th>Request</th><th>Status</th></tr></thead><tbody id="history"></tbody></table>
+<details><summary>Recent history</summary><table><tbody id="history"></tbody></table></details>
+</div>
 
 <script>
 const $ = id => document.getElementById(id);
@@ -59,15 +78,15 @@ const askToken = () => { const t = prompt("Caregiver access token", token); if (
 $("tokenBtn").onclick = askToken;
 if (!token) askToken();
 
-const STATUS = { QUEUED: ["New", "warn"], NOT_DISPLAYED: ["New", "warn"], DISPLAYED: ["Waiting", "warn"],
-                 ACKNOWLEDGED: ["Acknowledged", ""], COMPLETED: ["Completed", "ok"], CANCELLED: ["Cancelled by patient", ""] };
-const reqs = new Map();
-const receipted = new Set();
-let ws, audioCtx = null;
+const ACTIVE = ["QUEUED", "DISPLAYED", "NOT_DISPLAYED", "ACKNOWLEDGED"];
+const LABEL = { QUEUED: "New", DISPLAYED: "New", NOT_DISPLAYED: "New", ACKNOWLEDGED: "Acknowledged",
+                COMPLETED: "Resolved", CANCELLED: "Cancelled by patient" };
+const reqs = new Map(), receipted = new Set(), flashed = new Set(), busy = new Set();
+let ws, audioCtx = null, beds = new Set(), pressing = false, dirty = false;
 
 $("sound").onclick = () => {   // audio needs a user gesture (autoplay rules)
   audioCtx = audioCtx || new AudioContext(); audioCtx.resume(); beep();
-  $("sound").textContent = "🔔 Sound on";
+  $("sound").textContent = "🔔"; $("sound").setAttribute("aria-label", "Alert sound on");
 };
 function beep() {
   if (!audioCtx) return;
@@ -76,66 +95,84 @@ function beep() {
     g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + t + .2);
     o.connect(g).connect(audioCtx.destination); o.start(audioCtx.currentTime + t); o.stop(audioCtx.currentTime + t + .2); });
 }
-const ago = iso => { const s = Math.max(0, (Date.now() - Date.parse(iso)) / 1000 | 0);
-  return s < 60 ? `${s}s ago` : `${s / 60 | 0}m ${s % 60}s ago`; };
+const wait = iso => { const m = Math.max(0, (Date.now() - Date.parse(iso)) / 60000 | 0); return m < 1 ? "<1 min" : `${m} min`; };
 const time = iso => new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-async function act(id, what) {
-  const r = await fetch(`/api/requests/${id}/${what}`, { method: "POST", headers: { "X-Sonara-Token": token } });
-  if (r.status === 401) askToken();
+async function act(id, what, btn) {
+  busy.add(id); btn.disabled = true;
+  try {   // UI changes only when the server's broadcast confirms the new status
+    const r = await fetch(`/api/requests/${id}/${what}`, { method: "POST", headers: { "X-Sonara-Token": token } });
+    if (r.status === 401) askToken();
+  } finally { busy.delete(id); render(); }
 }
+
+// Don't reorder rows under a nurse's finger
+addEventListener("pointerdown", () => pressing = true);
+addEventListener("pointerup", () => { pressing = false; if (dirty) render(); });
 
 function render() {
-  const active = [...reqs.values()].filter(r => ["QUEUED", "DISPLAYED", "NOT_DISPLAYED", "ACKNOWLEDGED"].includes(r.status))
+  if (pressing) { dirty = true; return; } dirty = false;
+  const all = [...reqs.values()];
+  const active = all.filter(r => ACTIVE.includes(r.status))
     .sort((a, b) => (a.status === "ACKNOWLEDGED") - (b.status === "ACKNOWLEDGED") || a.created_at.localeCompare(b.created_at));
-  $("active").innerHTML = active.length ? "" : '<p class="empty">No active requests.</p>';
-  for (const r of active) {
-    const [label, tone] = STATUS[r.status];
-    const el = document.createElement("article");
-    el.className = "card" + (r.status !== "ACKNOWLEDGED" ? " new" : "");
-    el.innerHTML = `<div class="what">${r.bed_id} · ${r.label}</div>
-      <div class="actions">${r.status === "ACKNOWLEDGED"
-        ? `<button class="done">✔ Complete</button>` : `<button class="ack">Acknowledge</button>`}</div>
-      <div class="meta">Sent ${time(r.created_at)} · <span data-ago="${r.created_at}">${ago(r.created_at)}</span></div>
-      <div><span class="badge ${tone}">${label}</span></div>`;
-    el.querySelector("button").onclick = () => act(r.request_id, r.status === "ACKNOWLEDGED" ? "complete" : "acknowledge");
-    $("active").append(el);
-  }
-  const hist = [...reqs.values()].sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, 20);
-  $("history").innerHTML = hist.map(r => `<tr><td>${time(r.created_at)}</td><td>${r.bed_id}</td>
-    <td>${r.label}</td><td>${(STATUS[r.status] || [r.status])[0]}</td></tr>`).join("");
+  const busyBeds = new Set(active.map(r => r.bed_id));
+  const idle = [...beds].filter(b => !busyBeds.has(b)).sort();
+  const n = active.filter(r => r.status !== "ACKNOWLEDGED").length;
+  $("count").textContent = `${active.length} active · ${n} new`;
+
+  $("list").innerHTML = active.map(r => {
+    const ack = r.status === "ACKNOWLEDGED";
+    return `<li class="row ${ack ? "ack" : ""} ${flashed.has(r.request_id) ? "" : "flash"}">
+      <span class="bed tnum">${esc(r.bed_id)}</span>
+      <span class="wait tnum" data-since="${r.created_at}">${wait(r.created_at)}</span>
+      <span class="what">${esc(r.label)}</span>
+      <span class="state ${ack ? "" : "new"}">${ack ? "Acknowledged" : "New"}</span>
+      <button class="act ${ack ? "secondary" : "primary"}" data-id="${r.request_id}" data-do="${ack ? "complete" : "acknowledge"}"
+        ${busy.has(r.request_id) ? "disabled" : ""}>${ack ? "Resolve" : "Acknowledge"}</button></li>`;
+  }).join("") + idle.map(b => `<li class="row idle"><span class="bed tnum">${esc(b)}</span>
+      <span class="what" style="color:var(--color-muted)">No active request</span></li>`).join("")
+    || '<li class="empty">No active requests.</li>';
+  active.forEach(r => flashed.add(r.request_id));
+
+  const hist = all.filter(r => !ACTIVE.includes(r.status)).sort((a, b) => b.updated_at.localeCompare(a.updated_at)).slice(0, 20);
+  $("history").innerHTML = hist.map(r => `<tr><td class="tnum">${time(r.updated_at)}</td><td>${esc(r.bed_id)}</td>
+    <td>${esc(r.label)}</td><td>${LABEL[r.status] || esc(r.status)}</td></tr>`).join("") || "<tr><td>Nothing yet.</td></tr>";
   receiptVisible();
 }
+$("list").addEventListener("click", e => { const b = e.target.closest("button.act"); if (b) act(b.dataset.id, b.dataset.do, b); });
 
-// Tell the device this request is actually on screen (sets DISPLAYED, never ACKNOWLEDGED)
+// Tell the device a request is actually on screen (sets DISPLAYED, never ACKNOWLEDGED)
 function receiptVisible() {
   if (!ws || ws.readyState !== 1 || document.hidden) return;
-  for (const r of reqs.values()) {
+  for (const r of reqs.values())
     if ((r.status === "QUEUED" || r.status === "NOT_DISPLAYED") && !receipted.has(r.request_id + r.status)) {
       receipted.add(r.request_id + r.status);
       ws.send(JSON.stringify({ type: "receipt", request_id: r.request_id }));
     }
-  }
 }
 document.addEventListener("visibilitychange", receiptVisible);
-setInterval(() => document.querySelectorAll("[data-ago]").forEach(e => e.textContent = ago(e.dataset.ago)), 1000);
+setInterval(() => document.querySelectorAll("[data-since]").forEach(e => e.textContent = wait(e.dataset.since)), 15000);
+
+fetch("/api/health").then(r => r.json()).then(h => { if (h.bed_id) { beds.add(h.bed_id); render(); } }).catch(() => {});
 
 function connect() {
   ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws?role=caregiver&token=${encodeURIComponent(token)}`);
   ws.onopen = () => { $("conn").textContent = "Connected"; $("conn").classList.add("on"); $("banner").hidden = true; receipted.clear(); };
   ws.onmessage = e => {
     const m = JSON.parse(e.data);
-    if (m.type === "snapshot") { reqs.clear(); [...m.history, ...m.active].forEach(r => reqs.set(r.request_id, r)); }
+    if (m.type === "snapshot") { reqs.clear(); [...m.history, ...m.active].forEach(r => { reqs.set(r.request_id, r); flashed.add(r.request_id); }); }
     if (m.type === "request") {
       const isNew = !reqs.has(m.request.request_id) && m.request.status === "QUEUED";
       reqs.set(m.request.request_id, m.request);
-      if (isNew) { beep(); document.title = `🔔 ${m.request.bed_id} ${m.request.label} — Sonara`; }
+      if (isNew) { beep(); document.title = `New request · ${m.request.bed_id} — Sonara`; }
     }
+    for (const r of reqs.values()) beds.add(r.bed_id);
     render();
   };
   ws.onclose = e => {
     $("conn").textContent = "Disconnected"; $("conn").classList.remove("on"); $("banner").hidden = false;
-    if (e.code === 4401) { $("banner").textContent = "Wrong caregiver token."; return; }
+    if (e.code === 4401) { $("banner").textContent = "Wrong caregiver token. Tap Token to fix it."; return; }
     setTimeout(connect, 1500);
   };
 }
