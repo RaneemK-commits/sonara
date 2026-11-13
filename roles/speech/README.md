@@ -24,8 +24,12 @@ package owns any ONNX dependencies needed for output speech. Existing voice asse
 The user target is a personal WATER/PAIN sound inside a longer phrase. The existing pipeline
 above classifies a complete utterance; it does not provide keyword localization. The separate
 [experimental stream matcher and comparison](docs/KEYWORDS_IN_PHRASES.md) add bounded streaming
-subsequence matching. This path is not activated and real-speech candidates still reject; it
+subsequence matching. This path is not activated and most independent-source candidates still reject; it
 requires fresh keyword enrollment and natural phrase/continuous-negative validation.
+
+[Fast keyword enrollment, optional synthetic variants and measured limits](docs/FAST_KEYWORDS.md)
+provides the five-take CLI and latest speed/quality comparisons. Live keyword activation remains
+pending validation and device integration.
 
 ## Run locally
 

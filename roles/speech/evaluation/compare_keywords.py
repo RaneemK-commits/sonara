@@ -70,7 +70,7 @@ def run(bundle: Path, output: Path, stream: bool=False) -> dict:
             for entry in profile['references']:
                 clip=KeywordSpotter.audio(load(entry))
                 recordings.setdefault(entry['label'],[]).append(clip)
-            model=KeywordSpotter.enroll(recordings,trim_endpoints=False)  # bundle is already endpoint-trimmed
+            model=KeywordSpotter.enroll(recordings,trim_endpoints=False,allow_few_shot=True,alignment_stride=1,feature_weights=(1.,1.,1.),stride_s=.5,max_candidates=3,refine_boundaries=False)  # bundle is already endpoint-trimmed
         except ValueError as exc:
             failed.append({'speaker':profile['speaker'],'reason':str(exc)})
             continue

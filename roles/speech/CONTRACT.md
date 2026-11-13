@@ -44,6 +44,38 @@ Existing AudioCapture/Speaker method signatures remain. The ALSA adapter uses in
 `arecord`; Piper playback falls back to `aplay` without PortAudio. No sudo/libportaudio2 is needed
 for this explicit device path. The device worker must serialize capture with enrollment.
 
+### Additive Speaker playback lifecycle
+
+```python
+from sonara.tts import PlaybackEvent, Speaker
+spk = Speaker(cfg, on_playback=on_playback)  # optional keyword-only callback
+# on_playback(event: PlaybackEvent) runs on the speaker worker, not the device event loop.
+```
+
+Frozen events expose `utterance_id` (unique per say/say_now invocation), `key`, `state`
+(`started`, `finished`, `failed`, `cancelled`) and optional `reason`. Existing `say(key)` and
+`say_now(key)` signatures and None return values remain. `wait_idle(timeout=15.0)` now returns
+True when the queue, active playback and callbacks have drained, False on timeout. Existing
+callers can ignore the result; timeout neither cancels playback nor emits an event. Idle is
+not evidence of successful playback. A concurrent later enqueue can make it busy again.
+
+`started` follows successful `sounddevice.play()` or `aplay` process launch; it describes
+backend start, not proof that sound reached a patient. `finished` follows backend completion.
+Missing WAVs, unavailable backends, synthesis errors and nonzero aplay exits emit `failed`,
+never `finished`. Failure before backend start has no `started`. Disabled output emits only
+`cancelled` with reason `disabled`, so --no-audio never claims audible playback.
+
+`say_now` does not interrupt active playback. Each dropped pending utterance gets exactly one
+`cancelled` event with reason `superseded`, no start/finish. Cancellation delivery is serialized
+after the active utterance completes and before the replacement starts. All callbacks run on
+one worker outside speaker locks; they may enqueue speech. Callback exceptions are contained.
+Keep callbacks short and use e.g. `loop.call_soon_threadsafe(handle_playback, event)` to transfer
+to device's owning event loop. Do not mutate controller/UI state directly on the speaker thread.
+Calling `wait_idle` from a callback raises RuntimeError rather than deadlocking the worker.
+Device should match terminal events by utterance ID before clearing its active indicator.
+
+Verification: `pytest -q tests/test_speech_playback.py tests/test_speech_recognition.py`.
+
 Profiles now use `data/profiles/<profile_id>/{metadata.json,templates.npz}`, with `active.txt`
 in the parent directory. They contain MFCC templates, feature configuration, counts, matching
 parameters, thresholds and calibration diagnostics. Old embedding profiles require re-enrollment.
@@ -118,3 +150,32 @@ Fresh keyword enrollment trims only endpoints with 180 ms padding by default; ca
 `trim_endpoints=False` for manual word boundaries. Existing enrollment/Recognizer behavior is
 unchanged. `roles/speech/evaluation/evaluate_keyword_streams.py` measures annotated real WAV
 streams, including event misses/false alarms, duplicate accepts and processing real-time factor.
+
+## Fast keyword follow-up: version 2 and five real takes
+
+`KeywordSpotter.enroll()` now requires >=5 real takes per keyword by default. Optional
+`synthetic_per_intent=N` is off by default and bounded by ten total templates/intent;
+`allow_few_shot=True` is an explicitly labeled research exception. Parent IDs exclude synthetic
+siblings from calibration and prevent multiple votes. Version 2 persists parents, settings,
+augmentation info and calibration. Version 1 loads at its original matching settings.
+
+New-profile defaults: 30 ms effective matching / 0.75 s scans, two candidates, bounded local
+20 ms refinement and 64 cached crop decisions (no raw audio in cache). Old profiles retain
+stored settings. `reset()` clears audio, duplicate history and cache; threshold changes
+invalidate scores. The experimental keyword profiles remain separate from active profiles.
+
+CLI: `python scripts/enroll.py --keyword-profile --intents WATER PAIN --takes 5`.
+Optional `--synthetic-variants 2`, WAV import, explicit overwrite and raw-retention opt-in.
+Direct CLI mic capture refuses concurrent local server ownership. The existing regular
+CLI/enrollment service is unchanged. `/room` does not create these new keyword profiles yet.
+
+No runtime/endpoint/controller change is published. Device integration is still pending the
+single-owner/confirmation hooks above AND fresh personal validation: independent-source corpus
+recall remains very poor. See docs/FAST_KEYWORDS.md for commands and honest development results.
+
+For lower-CPU UNO Q testing, CLI `--keyword-scan-s 1.25` persists an explicit scan cadence;
+default new profiles remain 0.75 s and `--keyword-detail` uses 0.5 s. The two measured
+lower-cadence replay cases had RTF <1, but long per-call processing still exceeds 500 ms and
+independent-source recall is poor. These are test tools, not an instruction to activate the
+new keyword mode. The device capture-lifecycle FYI is parked separately at the user's request;
+this follow-up does not change AudioCapture or the running microphone owner.

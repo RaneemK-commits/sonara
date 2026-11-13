@@ -123,6 +123,7 @@ def preview(directory: Path, manifest: dict) -> None:
     page='<html><meta charset="utf-8"><title>Sonara composed noisy speech</title>'
     page+='<style>body{font:16px system-ui;max-width:950px;margin:2rem auto;padding:0 1rem}article{border-top:1px solid #ccc;padding:1rem 0}h2{font-size:1rem}audio{width:100%}</style>'
     page+='<h1>Composed TORGO streams</h1><p>Real recorded speech assembled with synthetic ambient noise. Brackets mark the target. These are not natural sentences or WATER/PAIN validation.</p>'
+    if manifest.get('notice'):page+='<p><strong>'+html.escape(manifest['notice'])+'</strong></p>'
     page+=''.join(cards)+'</html>'
     (directory/'preview.html').write_text(page,encoding='utf-8')
 
@@ -151,7 +152,7 @@ def prepare(directory: Path, original: Path) -> dict:
         try:
             for e in profile['references']:
                 recordings.setdefault(e['label'],[]).append(KeywordSpotter.audio(load(e)))
-            model=KeywordSpotter.enroll(recordings,trim_endpoints=False)
+            model=KeywordSpotter.enroll(recordings,trim_endpoints=False,allow_few_shot=True,alignment_stride=1,feature_weights=(1.,1.,1.),stride_s=.5,max_candidates=3,refine_boundaries=False)
         except ValueError as exc:
             failed.append({'speaker':speaker,'reason':str(exc)});continue
         model.save(directory/'profiles'/speaker)

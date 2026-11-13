@@ -67,7 +67,7 @@ def signal(frequencies, seed=0):
 def spotter():
     from sonara.models.keywords import KeywordSpotter
     return KeywordSpotter.enroll({label:[signal(freq,s) for s in range(3)]
-                                 for label,freq in {'WATER':(300,600),'PAIN':(900,1300)}.items()})
+                                 for label,freq in {'WATER':(300,600),'PAIN':(900,1300)}.items()},allow_few_shot=True,stride_s=.5)
 
 
 def test_shared_scaling_and_localization_inside_generated_phrase(tmp_path):
@@ -153,8 +153,8 @@ def test_word_enrollment_trims_padded_fixed_take_but_can_preserve_manual_boundar
     from sonara.models.keywords import KeywordSpotter
     recordings={name:[np.concatenate([np.zeros(16000,np.float32),signal(freq,i),np.zeros(16000,np.float32)])
                       for i in range(2)] for name,freq in {'WATER':(300,600),'PAIN':(900,1300)}.items()}
-    automatic=KeywordSpotter.enroll(recordings)
-    manual=KeywordSpotter.enroll(recordings,trim_endpoints=False)
+    automatic=KeywordSpotter.enroll(recordings,allow_few_shot=True)
+    manual=KeywordSpotter.enroll(recordings,trim_endpoints=False,allow_few_shot=True)
     assert max(map(len,automatic.references.seqs))<max(map(len,manual.references.seqs))/2
 
 

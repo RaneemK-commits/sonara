@@ -1,5 +1,50 @@
 # Speech STATUS
 
+## Parallel task: playback lifecycle for device display
+
+- Added optional `Speaker(..., on_playback=callback)` in `sonara/tts.py`, with immutable
+  started/finished/failed/cancelled events carrying key and unique per-call utterance ID.
+- `say`/`say_now` signatures unchanged. Queue replacement cancels pending phrases without
+  interrupting active playback. Disabled audio is cancelled; backend/missing-WAV failures
+  no longer claim success. `wait_idle` returns False on timeout without cancelling anything.
+- Callbacks are serialized on the speaker worker outside locks; device must forward events
+  to its owning event loop. See additive CONTRACT section for complete timing/semantics.
+- Full local suite: 141 passed in 5.11 s outside sandbox (sandbox run stalled).
+  No live audio/hardware validation. Local edits only; no board post, commit or push.
+- Decision: keep this task separate from concurrent keyword/model/enrollment work;
+  retain existing None returns from say/say_now and expose timeout information via wait_idle.
+
+## Synthetic enrollment and faster keyword testing
+
+- Five real takes per request are now required for normal keyword enrollment. Optional synthetic
+  gain/speed/noise variants are explicit, capped, tracked by real parent and excluded as siblings
+  from calibration. Two real + three synthetic remain two independent sources, not five.
+- New keyword profiles: weighted 39-D MFCC, exact bounded batched subsequence proposals, effective
+  30 ms matching, 0.75 s cadence, two coarse-to-fine proposals and 64 cached crop decisions.
+  Legacy keyword profiles preserve stored matching settings. Core utterance recognition unchanged.
+- Added `scripts/enroll.py --keyword-profile --intents WATER PAIN --takes 5`, WAV import, optional
+  variants, overwrite/raw-retention opt-ins, quiet/progress feedback and invalid-file skipping.
+  Saved profiles do not switch the active patient or activate live keyword recognition.
+- Added source-independent ablations, seen-parent synthetic demo, impostor checks and paired
+  laptop/UNO Q speed tests. Dataset remains a development set, not a fresh clinical estimate.
+- 138 recognition/integration tests pass locally and on the UNO Q. Pure batching matches scalar
+  references. The corrected fast matcher retains the generated WATER acceptance test; cache
+  reuse and threshold invalidation are tested. Device unit suite has one upstream warning.
+- Paired 20 ms processing is 3.24x/4.57x faster than old scalar, but long clips still lag. With
+  CLI `--keyword-scan-s 1.25`, the tested refined 30 ms cases have RTF 0.337/0.700; 25-reference
+  refined 40 ms cases have RTF 0.366/0.860. Fewer scans add delay. Long per-call times still miss
+  the 500 ms target; these two shared-board clips are not a worst-case/continuous guarantee.
+- Accuracy unresolved: 20 ms weighted arm gets 4/112 correlated target occurrences; optional
+  variants get 2–3/112. New default refined 30 ms gets 1/112; 1.25 s cadence gets 2/112. Zero
+  false accepted events does not imply reliable rejection while recall is this low.
+- Seen-parent synthetic diagnostic: 15/15 clean + 15/15 gap-noise successes, only 1/15 with
+  20 dB overlapping noise and 0/15 at 10 dB. This is NOT independent recognition accuracy.
+- Two refined modes each reject 60/60 corpus impostor trials; no speaker-authentication claim.
+- Read docs/FAST_KEYWORDS.md for commands, measured limits and validation JSONs. All audio stays
+  local/ignored. No live app, caregiver path, device config, recovery unit or hardware changed.
+- User asked to return to this task after the device capture FYI. On-demand capture draft is
+  parked separately at /tmp/sonara-on-demand-capture-draft; it is not part of this change.
+
 ## Expanded noisy-stream experiment
 
 - User requested more TORGO samples assembled into sentence-like streams with intervening noise.
