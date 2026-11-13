@@ -29,7 +29,8 @@ assumption from docs, not yet seen on our board.
 - [ ] Touch input works on the room tiles (fallback when there is no mic).
 
 ## 5. MCU + Modulino Buttons
-- [ ] `/dev/i2c-0`, `i2c-1`, `i2c-2` exist on Linux; `i2cdetect` is not installed (`sudo apt install i2c-tools`). `arduino-router` is running (Bridge). Open question: Qwiic connector wired to the STM32 or to Linux I2C? Check board docs +
+- [x] I2C scan (human ran it with sudo, 2026-11-13): bus 0 (Geni-I2C) empty; bus 1 (Geni-I2C) only kernel-owned `UU` addresses (0x2a 0x2c 0x38 0x39 0x3d 0x3f 0x42 0x58, board internals), nothing at 0x3E. A Modulino Buttons is therefore NOT visible to Linux, so the Qwiic connector belongs to the STM32: **buttons are read by the sketch via Arduino_Modulino**, as already written. Caveat: not confirmed that the Buttons module was plugged in during the scan; re-scan if in doubt. `i2cdetect` needs `sudo` and is in `/usr/sbin`.
+- [ ] (older note) `/dev/i2c-0`, `i2c-1`, `i2c-2` exist on Linux; `i2cdetect` is not installed (`sudo apt install i2c-tools`). `arduino-router` is running (Bridge). Open question: Qwiic connector wired to the STM32 or to Linux I2C? Check board docs +
       `i2cdetect -l` / `i2cdetect -y <bus>` on Linux. Write the answer in STATUS.md Decisions.
 - [ ] App Lab / `arduino-cli` (installed at `/usr/bin/arduino-cli`; `~/ArduinoApps` has `blink-from-mpu`, `reading-accelerometer-data`) can flash the sketch; an LED blink example runs.
 - [ ] Bridge round-trip: sketch `Bridge.notify` reaches Python; Python `Bridge.call` reaches sketch

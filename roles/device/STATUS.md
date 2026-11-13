@@ -73,4 +73,5 @@ Nothing has touched real hardware yet. Hardware checklist: [BRINGUP.md](BRINGUP.
   and **blinks fast while it is `NOT_DISPLAYED`** (keeps the honest "not reached anyone" signal at the hand).
 - 2026-11-13: Confirm LED blinks slow (400 ms), Cancel blinks fast (150 ms) so the two blinks are distinguishable.
 - 2026-11-13: Active requests ordered by `created_at, request_id` (second-resolution timestamps tie).
+- 2026-11-13: Qwiic/Modulino is on the STM32 side (no 0x3E on Linux I2C buses 0/1): MCU sketch reads the buttons, Python only gets Bridge events. Caveat: Buttons module may not have been plugged in during the scan.
 - 2026-11-13: Plan lives in this file plus `BRINGUP.md`; no new code modules until hardware forces them.
