@@ -11,6 +11,9 @@ speech, honestly measured, and cheap enough in energy to score well on SCI.
 3. Record team takes for the demo phrases (`enroll.py --keep-audio`, labelled simulated). Tune threshold and margin.
 4. TORGO evaluation per speaker on its command words: `oww-dtw` vs `mfcc-dtw` vs `asr` (Whisper-tiny). See [docs/DATASETS.md](../../docs/DATASETS.md).
 5. On-board latency benchmark (`scripts/benchmark.py`) and the per-stage numbers for SCI ([docs/SCI.md](../../docs/SCI.md)).
+6. Stretch: **Nicla Voice** always-on trigger (`nicla/`). It's a "vocalisation vs background" or
+   trigger-sound detector, **not** a wake word. Edge Impulse → NDP120. Upload consented team data only.
+   Agree the `talk` event format with `device`. See "Stretch: Arduino Nicla Voice" in [docs/DESIGN.md](../../docs/DESIGN.md).
 
 ## Never
 - Change `Prediction`, `Recognizer`, `Speaker` or `AudioCapture` signatures without a `CONTRACT` post.

@@ -52,6 +52,35 @@ Available: Knob, Buttons, Distance, Movement.
 Which side reads the Modulinos on the UNO Q, the MCU sketch (Arduino_Modulino library) or the Linux side
 (App Lab)? This decides whether `mcu/sonara_mcu.ino` or `sonara/hw/mcu.py` gets the change.
 
+## Stretch: Arduino Nicla Voice as an always-on voice trigger
+The Nicla Voice has a Syntiant NDP120 neural decision processor built for always-on audio
+detection, plus its own mic, an nRF52832 (BLE) and an IMU.
+
+**Idea:** the Nicla listens all the time at very low power. When the patient makes their **trigger
+sound**, it sends `talk` to the UNO Q. Only then does the UNO Q record and run the embedding model.
+This gives hands-free Talk for patients who can't press a button, and a strong SCI story: the big
+processor sleeps until called.
+
+**Design rules:**
+- **The trigger must not be a word.** A fixed wake word ("Hey Sonara") is exactly what impaired speakers
+  may fail to say. Train a **"vocalisation vs. background"** detector (speaker-independent) or a
+  short, easy trigger sound (e.g. a hum). The *phrase* recognition stays personalised on the UNO Q.
+- Flow: trigger sound → device says "Listening." → patient says the phrase → normal pipeline.
+  The trigger audio isn't reused, so the first sound is never lost mid-phrase.
+- Modulino Buttons stay the primary input. The Nicla is an additional trigger, never the only one.
+- False triggers only start listening, never a request (confirmation is still required).
+
+**Training (build time, not runtime):** Edge Impulse supports the Nicla Voice/NDP120 target. Training
+happens in their cloud, so upload **only consented team recordings and public data, never patient
+audio**. The deployed model runs fully offline on the Nicla. Known pitfall: models that score well in
+Edge Impulse Studio can underperform on-device; test on the board early.
+
+**Open (verify on hardware):** how the Nicla connects to the UNO Q (UART/I2C via its header, ESLOV,
+USB serial, or BLE), and its measured always-on power for the SCI report.
+
+**Ownership:** `speech` owns the Nicla model and firmware (`nicla/`). `device` owns the integration:
+a `talk` event into `sonara/hw/mcu.py` (same interface as the buttons).
+
 ## Honesty rules (unchanged, non-negotiable)
 - `DISPLAYED` only after the caregiver browser sends an explicit receipt for that request ID.
 - `ACKNOWLEDGED` only after an explicit caregiver click.
@@ -76,6 +105,7 @@ mic (USB) ─► ring buffer ─► energy VAD ─► utterance (≤5 s)
    ─► room display + spoken status
 MCU (Zephyr/Arduino): Modulino Buttons (Talk/Confirm/Cancel + per-button LEDs) via Arduino Bridge RPC
                       [stretch] Modulino Distance: caregiver-nearby / hands-free talk / energy gating
+[stretch] Nicla Voice (NDP120): always-on low-power trigger sound → "talk" event
 ```
 
 ## Resolved questions

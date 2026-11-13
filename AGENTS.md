@@ -21,7 +21,7 @@ You write only in the files your role owns. You may **read and run** anything.
 
 | GitHub user | Role | Writes only in | Builds |
 |---|---|---|---|
-| `Sommer-Lukas` | **speech** | `sonara/models/`, `sonara/audio/`, `sonara/recognizer.py`, `sonara/tts.py`, `scripts/{download_models,pregenerate_tts,enroll,evaluate,benchmark}.py`, `tests/test_speech*`, `results/`, `roles/speech/` | embedding model, DTW/prototypes, rejection, VAD, enrollment, TTS prompts, TORGO evaluation, latency/energy benchmark |
+| `Sommer-Lukas` | **speech** | `sonara/models/`, `sonara/audio/`, `sonara/recognizer.py`, `sonara/tts.py`, `scripts/{download_models,pregenerate_tts,enroll,evaluate,benchmark}.py`, `tests/test_speech*`, `results/`, `nicla/`, `roles/speech/` | embedding model, DTW/prototypes, rejection, VAD, enrollment, TTS prompts, TORGO evaluation, latency/energy benchmark; stretch: Nicla Voice trigger model + firmware |
 | `RaneemK-commits` | **device** | `sonara/controller.py`, `sonara/store.py`, `sonara/server/`, `sonara/hw/`, `sonara/__main__.py`, `sonara/__init__.py`, `sonara/config.py`, `sonara/metrics.py`, `config/sonara.toml`, `mcu/`, `tests/test_device*`, `roles/device/` | state machine, request store, server + WebSocket, Modulino Buttons (+ Distance stretch), UNO Q bring-up |
 | `RaneemK-commits` | **ui** | `web/`, `pitch/`, `assets/`, `README.md`, `config/intents.toml`, `roles/ui/` | room display (touchscreen), caregiver dashboard, spoken phrase texts, branding, pitch |
 | `RaneemK-commits` | **lead** (human coordinator session, not an agent loop) | `AGENTS.md`, `CLAUDE.md`, `docs/`, `tools/`, `roles/`, `.claude/`, `.github/`, `.gitignore`, `.gitattributes`, `pyproject.toml`, `LICENSE` | plans, setup, board tool; changes here are human decisions |

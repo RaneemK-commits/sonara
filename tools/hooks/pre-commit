@@ -10,7 +10,7 @@ role=${SONARA_ROLE:-$(git config hackathon.role)}
 case "$role" in
   speech) allowed="sonara/models/ sonara/audio/ sonara/recognizer.py sonara/tts.py
                    scripts/download_models.py scripts/pregenerate_tts.py scripts/enroll.py
-                   scripts/evaluate.py scripts/benchmark.py tests/test_speech results/ roles/speech/" ;;
+                   scripts/evaluate.py scripts/benchmark.py tests/test_speech results/ nicla/ roles/speech/" ;;
   device) allowed="sonara/controller.py sonara/store.py sonara/server/ sonara/hw/ sonara/__main__.py
                    sonara/__init__.py sonara/config.py sonara/metrics.py config/sonara.toml mcu/
                    tests/test_device roles/device/" ;;
