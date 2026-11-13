@@ -197,12 +197,14 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;",
 const bedHref = b => "#bed=" + encodeURIComponent(b);
 const openBed = () => location.hash.startsWith("#bed=") ? decodeURIComponent(location.hash.slice(5)) : null;
 
-async function act(id, what, btn) {
-  busy.add(id); btn.disabled = true;
+// ids: one request, or every request in a grouped card ("a,b,c")
+async function act(ids, what, btn) {
+  ids = ids.split(","); ids.forEach(id => busy.add(id)); btn.disabled = true;
   try {   // UI changes only when the server's broadcast confirms the new status
-    const r = await fetch(`/api/requests/${id}/${what}`, { method: "POST", headers: { "X-Sonara-Token": token } });
-    if (r.status === 401) askToken();
-  } finally { busy.delete(id); render(); }
+    const res = await Promise.all(ids.map(id =>
+      fetch(`/api/requests/${id}/${what}`, { method: "POST", headers: { "X-Sonara-Token": token } }).catch(() => null)));
+    if (res.some(r => r && r.status === 401)) askToken();
+  } finally { ids.forEach(id => busy.delete(id)); render(); }
 }
 
 // Don't reorder rows under a nurse's finger (a scroll ends in pointercancel, not pointerup)
@@ -224,6 +226,35 @@ function card(r, onBedPage) {   // on the patient page the card leads with the n
 }
 const byUrgency = (a, b) => (a.status === "ACKNOWLEDGED") - (b.status === "ACKNOWLEDGED") || a.created_at.localeCompare(b.created_at);
 
+// A bed that asks several times in a short span gets one card: each request within SPAN of the
+// previous one from that bed joins its group. The patient page still lists them one by one.
+const SPAN = 5 * 60000;
+function groupByBed(list) {
+  const groups = [], lastOf = new Map();
+  for (const r of [...list].sort((a, b) => a.created_at.localeCompare(b.created_at))) {
+    const g = lastOf.get(r.bed_id);
+    if (g && Date.parse(r.created_at) - Date.parse(g.items[g.items.length - 1].created_at) <= SPAN) g.items.push(r);
+    else { const n = { bed: r.bed_id, items: [r] }; groups.push(n); lastOf.set(r.bed_id, n); }
+  }
+  const fresh = g => g.items.some(r => r.status !== "ACKNOWLEDGED");
+  return groups.sort((a, b) => fresh(b) - fresh(a) || a.items[0].created_at.localeCompare(b.items[0].created_at));
+}
+function groupCard(g) {
+  if (g.items.length === 1) return card(g.items[0]);
+  const fresh = g.items.filter(r => r.status !== "ACKNOWLEDGED"), ack = !fresh.length;
+  const targets = ack ? g.items : fresh;            // acknowledge the new ones first, then resolve all
+  const counts = new Map();
+  g.items.forEach(r => counts.set(r.label, (counts.get(r.label) || 0) + 1));
+  const what = [...counts].map(([l, n]) => n > 1 ? `${esc(l)} ×${n}` : esc(l)).join(", ");
+  return `<li class="row ${ack ? "ack" : "new"} ${g.items.some(r => !flashed.has(r.request_id)) ? "flash" : ""}">
+    <a class="bed tnum" href="${bedHref(g.bed)}">${esc(g.bed)}<svg class="ico" aria-hidden="true"><use href="#i-next"/></svg></a>
+    <span class="wait tnum" data-since="${g.items[0].created_at}">${wait(g.items[0].created_at)}</span>
+    <span class="what">${what}</span>
+    <span class="state ${ack ? "" : "new"}"><svg class="ico" aria-hidden="true"><use href="#i-${ack ? "check" : "bell"}"/></svg>${ack ? `${g.items.length} acknowledged` : fresh.length === g.items.length ? `${fresh.length} new` : `${fresh.length} new of ${g.items.length}`}</span>
+    <button class="act ${ack ? "secondary" : "primary"}" type="button" data-id="${targets.map(r => r.request_id).join(",")}" data-do="${ack ? "complete" : "acknowledge"}"
+      ${targets.some(r => busy.has(r.request_id)) ? "disabled" : ""}>${ack ? "Resolve all" : "Acknowledge all"}</button></li>`;
+}
+
 let shown = new Set();   // request ids actually rendered right now (receipts only for these)
 function render() {
   if (pressing) { dirty = true; return; } dirty = false;
@@ -238,7 +269,7 @@ function render() {
     const n = active.filter(r => r.status !== "ACKNOWLEDGED").length;
     $("title").textContent = "Requests";
     $("count").textContent = `${active.length} active, ${n} new`;
-    $("list").innerHTML = active.map(r => card(r)).join("") + idle.map(b => `<li class="row idle">
+    $("list").innerHTML = groupByBed(active).map(groupCard).join("") + idle.map(b => `<li class="row idle">
         <a class="bed tnum" href="${bedHref(b)}">${esc(b)}<svg class="ico" aria-hidden="true"><use href="#i-next"/></svg></a>
         <span class="what">No active request</span></li>`).join("")
       || '<li class="empty">No active requests.</li>';

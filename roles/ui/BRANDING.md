@@ -196,6 +196,10 @@ Plain and fast. No character, no decoration.
   status badge (bell + "New" in orange, or tick + "Acknowledged" in green) and one action
   (**Acknowledge** filled ink, **Resolve** outlined). Beds with nothing active show
   "No active request".
+- **Grouping:** when one bed asks again within 5 minutes of its previous request, the requests
+  share one card: needs summed up ("Water ×2, Pain"), wait from the first, badge "3 new" (or
+  "1 new of 3"), and one action for the group: **Acknowledge all** (the new ones), then
+  **Resolve all**. The patient page still lists them one by one.
 - **Patient page (`/caregiver#bed=<id>`):** tap a patient card. "All patients" back link, bed
   as the title, "N active, N earlier", the patient's active requests (need and time first) with
   their actions, then **Earlier requests** newest first: need, date and time, and
