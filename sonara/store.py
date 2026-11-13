@@ -92,7 +92,7 @@ class RequestStore:
         return self.get(rid), True
 
     def active(self) -> list[dict]:
-        q = f"SELECT * FROM requests WHERE status IN ({','.join('?' * len(ACTIVE))}) ORDER BY created_at"
+        q = f"SELECT * FROM requests WHERE status IN ({','.join('?' * len(ACTIVE))}) ORDER BY created_at, request_id"
         return self._q(q, ACTIVE)
 
     def history(self, limit: int = 50) -> list[dict]:

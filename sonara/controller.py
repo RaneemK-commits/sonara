@@ -22,6 +22,17 @@ from .store import RequestStore, TransitionError
 
 IDLE, LISTENING, PROCESSING, AWAIT_CONFIRM = "IDLE", "LISTENING", "PROCESSING", "AWAIT_CONFIRM"
 
+# Modulino Buttons LEDs, each "off" | "on" | "blink" (see docs/DESIGN.md, roles/device/STATUS.md)
+CANCEL_LED = {"QUEUED": "on", "DISPLAYED": "on", "NOT_DISPLAYED": "blink"}  # blink = not reached anyone
+
+
+def led_state(state: str, request_status: str | None) -> tuple[str, str, str]:
+    """(talk, confirm, cancel) LEDs for a controller state and the latest request's status."""
+    return ("on" if state == LISTENING else "off",
+            "blink" if state == AWAIT_CONFIRM else "off",
+            CANCEL_LED.get(request_status, "off"))
+
+
 STATUS_PROMPTS = {"DISPLAYED": "displayed", "NOT_DISPLAYED": "not_displayed",
                   "ACKNOWLEDGED": "acknowledged", "COMPLETED": "completed",
                   "CANCELLED": "cancelled"}
@@ -40,9 +51,14 @@ class Controller:
         self.pending = None           # Intent awaiting confirmation
         self.pending_deadline = 0.0
         self.last = {"text": "", "intent": None, "score": None, "understood": None}
-        self.request_id: str | None = None   # latest request from this bed
+        self.request_id: str | None = self._recover_request_id()  # latest open request (survives reboot)
+        self._leds: tuple[str, str, str] | None = None
         self._q: queue.Queue[tuple[str, str | None]] = queue.Queue()
         self._stop = threading.Event()
+
+    def _recover_request_id(self) -> str | None:
+        mine = [r for r in self.store.active() if r["bed_id"] == self.cfg.bed_id]
+        return mine[-1]["request_id"] if mine else None
 
     # ---- inputs (any thread) ----------------------------------------------------------------
     def submit(self, action: str, arg: str | None = None) -> None:
@@ -67,9 +83,10 @@ class Controller:
     def _publish(self) -> None:
         self.hub.publish(self.room_state(), role="room")
         req = self.store.get(self.request_id) if self.request_id else None
-        status = req["status"] if req else None
-        pending = {"QUEUED": "on", "DISPLAYED": "on", "NOT_DISPLAYED": "blink"}.get(status, "off")
-        self.mcu.set_leds(self.state == LISTENING, pending, status == "ACKNOWLEDGED")
+        leds = led_state(self.state, req["status"] if req else None)
+        if leds != self._leds:           # only talk to the MCU when something changed
+            self._leds = leds
+            self.mcu.set_leds(*leds)
 
     def _set(self, state: str) -> None:
         self.state = state

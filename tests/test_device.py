@@ -4,7 +4,7 @@ import time
 from fastapi.testclient import TestClient
 
 from sonara.config import load_config
-from sonara.controller import Controller
+from sonara.controller import Controller, led_state
 from sonara.hw.mcu import NullMCU
 from sonara.server.app import create_app
 from sonara.server.hub import Hub
@@ -35,11 +35,19 @@ def wait_for(pred, timeout=3.0):
     return False
 
 
-def make():
+class RecordingMCU(NullMCU):
+    def __init__(self):
+        self.leds = []
+
+    def set_leds(self, talk, confirm, cancel):
+        self.leds.append((talk, confirm, cancel))
+
+
+def make(store=None, mcu=None):
     cfg = load_config()
     cfg.raw["server"]["caregiver_token"] = "t"
-    store, hub, spk = RequestStore(":memory:"), Hub(), SilentSpeaker()
-    ctl = Controller(cfg, store, hub, spk, NullMCU())
+    store, hub, spk = store or RequestStore(":memory:"), Hub(), SilentSpeaker()
+    ctl = Controller(cfg, store, hub, spk, mcu or NullMCU())
     return cfg, store, spk, ctl, create_app(cfg, store, hub, ctl)
 
 
@@ -104,3 +112,57 @@ def test_store_honest_transitions():
     assert [e["status"] for e in s.events(r["request_id"])] == [
         "QUEUED", "NOT_DISPLAYED", "DISPLAYED", "ACKNOWLEDGED", "COMPLETED"]
     assert s.active() == []
+
+
+def test_led_state():
+    assert led_state("LISTENING", None) == ("on", "off", "off")
+    assert led_state("AWAIT_CONFIRM", None) == ("off", "blink", "off")
+    assert led_state("IDLE", "QUEUED") == ("off", "off", "on")
+    assert led_state("IDLE", "NOT_DISPLAYED") == ("off", "off", "blink")   # honest: not reached anyone
+    assert led_state("IDLE", "ACKNOWLEDGED") == ("off", "off", "off")
+
+
+def test_leds_follow_flow_and_cancel_open_request():
+    mcu = RecordingMCU()
+    cfg, store, spk, ctl, app = make(mcu=mcu)
+    with TestClient(app) as c:
+        c.post("/api/room/input", json={"action": "select", "intent": "WATER"})
+        assert wait_for(lambda: mcu.leds and mcu.leds[-1] == ("off", "blink", "off"))
+        c.post("/api/room/input", json={"action": "confirm"})
+        assert wait_for(lambda: mcu.leds[-1] == ("off", "off", "on"))
+        c.post("/api/room/input", json={"action": "cancel"})   # no pending phrase → cancels the request
+        assert wait_for(lambda: store.history()[0]["status"] == "CANCELLED")
+        assert wait_for(lambda: mcu.leds[-1] == ("off", "off", "off"))
+    assert all(a != b for a, b in zip(mcu.leds, mcu.leds[1:]))  # MCU only told on change
+
+
+def test_reboot_recovers_open_request():
+    store = RequestStore(":memory:")
+    store.create("BED-99", "FOOD", "Food")                     # another bed: not ours
+    mine = store.create("BED-01", "WATER", "Water")
+    store.transition(mine["request_id"], "NOT_DISPLAYED", "system")
+    mcu = RecordingMCU()
+    cfg, store, spk, ctl, app = make(store, mcu)               # fresh controller = after reboot
+    assert ctl.request_id == mine["request_id"]
+    assert ctl.room_state()["request"]["status"] == "NOT_DISPLAYED"
+    with TestClient(app) as c:
+        assert wait_for(lambda: mcu.leds and mcu.leds[-1] == ("off", "off", "blink"))
+        c.post("/api/room/input", json={"action": "cancel"})
+        assert wait_for(lambda: store.get(mine["request_id"])["status"] == "CANCELLED")
+
+
+def test_receipt_after_not_displayed_reconnect():
+    cfg, store, spk, ctl, app = make()
+    cfg.raw["server"]["display_timeout_s"] = 0
+    app = create_app(cfg, store, ctl.hub, ctl)
+    with TestClient(app) as c:
+        c.post("/api/room/input", json={"action": "select", "intent": "HELP"})
+        assert wait_for(lambda: ctl.state == "AWAIT_CONFIRM")
+        c.post("/api/room/input", json={"action": "confirm"})
+        assert wait_for(lambda: store.history() and store.history()[0]["status"] == "NOT_DISPLAYED", 4)
+        with c.websocket_connect("/ws?role=caregiver&token=t") as cg:   # caregiver screen comes back
+            snap = cg.receive_json()
+            rid = snap["active"][0]["request_id"]
+            cg.send_json({"type": "receipt", "request_id": rid})
+            assert wait_for(lambda: store.get(rid)["status"] == "DISPLAYED")
+        assert "displayed" in spk.said
