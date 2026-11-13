@@ -196,6 +196,7 @@ document.addEventListener("click", e => { const b = e.target.closest("button[dat
 function pick(s) {
   if (preview) return preview;
   if (!s) return "offline";
+  if (s.display) return s.display.view;
   if (s.state === "LISTENING") return "listening";
   if (s.state === "PROCESSING") return "processing";
   if (s.state === "AWAIT_CONFIRM") return "confirm";
@@ -210,11 +211,12 @@ function pick(s) {
 }
 
 function show(key, s) {
-  const it = s && s.last && (s.intents || []).find(i => i.id === s.last.intent);
-  const sig = key + (it ? it.id : "");
-  if (key === "confirm") $("pill").hidden = Date.now() - confirmSince > PILL_MS;
+  const intent = s && (s.display ? s.display.intent : s.last && s.last.intent);
+  const it = s && (s.intents || []).find(i => i.id === intent);
+  const sig = key + (it ? it.id : "") + (s && s.display ? s.display.event_id : "");
+  if (key === "confirm") $("pill").hidden = !!(s && s.display) || Date.now() - confirmSince > PILL_MS;
   if (sig === current) return;
-  if (key === "confirm") { confirmSince = Date.now(); $("pill").hidden = false; }
+  if (key === "confirm") { confirmSince = Date.now(); $("pill").hidden = !!(s && s.display); }
   current = sig;
   document.body.dataset.view = key;
   $("orb").setAttribute("mode", DONE[key] ? DONE[key][0] : key === "listening" ? "listening" : key === "processing" ? "thinking" : key === "confirm" ? "card" : "idle");
@@ -226,7 +228,7 @@ function show(key, s) {
     const id = it && it.id, has = id && document.getElementById("i-" + id);
     $("cardIcon").innerHTML = has ? `<svg class="ico"><use href="#i-${id}"/></svg>` : "";
     $("cardSep").hidden = !has;
-    $("phrase").textContent = PHRASE[id] || ((it ? it.label : (s.last.text || "").replace(/[.!?]+$/, "")) + "?");
+    $("phrase").textContent = PHRASE[id] || ((it ? it.label : ((s.last && s.last.text) || "").replace(/[.!?]+$/, "")) + "?");
     fitPhrase();
   }
   if (DONE[key]) {
@@ -248,7 +250,7 @@ addEventListener("resize", fitPhrase);
 function render(s) {
   last = s;
   const k = s.last && s.last.understood === false ? JSON.stringify(s.last) : "";
-  if (k && k !== lastKey && s.state === "IDLE") retryUntil = Date.now() + 5000;   // fresh rejection
+  if (!s.display && k && k !== lastKey && s.state === "IDLE") retryUntil = Date.now() + 5000;   // fresh rejection
   lastKey = k;
   if (!demoBuilt && s.intents) {
     demoBuilt = true;

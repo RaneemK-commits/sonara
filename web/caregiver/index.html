@@ -59,18 +59,30 @@
   .act:hover:not(:disabled), .icon-btn:hover { opacity: .88; }
   .act:active:not(:disabled), .icon-btn:active { transform: scale(.97); }
   .act:disabled { opacity: .5; cursor: progress; }
-  button:focus-visible, summary:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  button:focus-visible, a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
   .empty { color: var(--ink-2); padding: var(--space-4) var(--space-1); }
 
-  details { margin-top: var(--space-6); color: var(--ink-2); font-size: 14px; }
-  summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; }
-  table { width: 100%; border-collapse: collapse; }
-  td { padding: var(--space-2) var(--space-1); border-bottom: 1px solid var(--divider); }
+  /* history: always visible under the active list (no expander to discover); the clock in the header jumps here */
+  html { scroll-behavior: smooth; }
+  .hist { margin-top: var(--space-8); scroll-margin-top: 160px; }
+  h2 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -.01em; }
+  .hsub { margin: var(--space-1) 0 0; color: var(--ink-2); font-size: 15px; }
+  .hlist { list-style: none; margin: var(--space-3) 0 0; padding: 0; border-top: 1px solid var(--divider); }
+  .hrow { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: var(--space-3); align-items: center;
+    padding: var(--space-3) var(--space-1); border-bottom: 1px solid var(--divider); font-size: 15px; }
+  .htime { color: var(--ink-2); }
+  .hwhat { min-width: 0; overflow-wrap: break-word; }
+  .hwhat b { font-weight: 700; margin-right: var(--space-2); white-space: nowrap; }
+  .hstate { display: inline-flex; align-items: center; gap: var(--space-1); font-size: 13px; font-weight: 600; color: var(--green-ink); white-space: nowrap; }
+  .hstate.off { color: var(--ink-2); }
+  .hstate .ico { width: 14px; height: 14px; stroke-width: 2.6; }
+  .hempty { padding: var(--space-3) var(--space-1); color: var(--ink-2); border-bottom: 1px solid var(--divider); }
   .foot { margin: var(--space-4) 0 var(--space-8); }
 
   @media (prefers-reduced-motion: reduce) {
     .row.flash { animation: none; }
     .act, .icon-btn { transition: none; }
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
@@ -82,6 +94,8 @@
   <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0v4l-2 3h16l-2-3zM10 19a2 2 0 0 0 4 0"/></symbol>
   <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19zM12 10v4.5M12 17.5v.01"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 7.8"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
   <symbol id="i-bell-off" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0v4l-2 3h16l-2-3zM10 19a2 2 0 0 0 4 0M3 3l18 18"/></symbol>
 </svg>
 <div class="wrap">
@@ -90,6 +104,7 @@
     <span class="logo"><svg class="ico" aria-hidden="true"><use href="#i-mark"/></svg>Sonara</span>
     <div class="tools">
       <span class="conn" id="conn"><svg class="ico" aria-hidden="true"><use href="#i-wifi-off" id="connIco"/></svg><span class="sr" id="connText">Connecting</span></span>
+      <a class="icon-btn bare" href="#hist" aria-label="History"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></a>
       <button class="icon-btn bare" id="sound" aria-label="Alert sound off"><svg class="ico" aria-hidden="true"><use href="#i-bell-off"/></svg></button>
     </div>
   </div>
@@ -100,7 +115,11 @@
 
 <ul class="list" id="list" aria-live="polite"></ul>
 
-<details><summary>Recent history</summary><table><tbody id="history"></tbody></table></details>
+<section class="hist" id="hist" aria-labelledby="histHead">
+  <h2 id="histHead">History</h2>
+  <p class="hsub">Resolved and cancelled requests, newest first.</p>
+  <ul class="hlist" id="history"></ul>
+</section>
 <p class="foot"><button class="icon-btn" id="tokenBtn">Change caregiver token</button></p>
 </div>
 
@@ -169,8 +188,11 @@ function render() {
   active.forEach(r => flashed.add(r.request_id));
 
   const hist = all.filter(r => !ACTIVE.includes(r.status)).sort((a, b) => b.updated_at.localeCompare(a.updated_at)).slice(0, 20);
-  $("history").innerHTML = hist.map(r => `<tr><td class="tnum">${time(r.updated_at)}</td><td>${esc(r.bed_id)}</td>
-    <td>${esc(r.label)}</td><td>${LABEL[r.status] || esc(r.status)}</td></tr>`).join("") || "<tr><td>Nothing yet.</td></tr>";
+  $("history").innerHTML = hist.map(r => { const done = r.status === "COMPLETED";
+    return `<li class="hrow"><span class="htime tnum">${time(r.updated_at)}</span>
+      <span class="hwhat"><b class="tnum">${esc(r.bed_id)}</b>${esc(r.label)}</span>
+      <span class="hstate ${done ? "" : "off"}"><svg class="ico" aria-hidden="true"><use href="#i-${done ? "check" : "x"}"/></svg>${LABEL[r.status] || esc(r.status)}</span></li>`;
+  }).join("") || '<li class="hempty">Nothing resolved yet.</li>';
   receiptVisible();
 }
 $("list").addEventListener("click", e => { const b = e.target.closest("button.act"); if (b) act(b.dataset.id, b.dataset.do, b); });

@@ -31,7 +31,7 @@ MCU (STM32): Talk / Confirm / Cancel buttons + 3 status LEDs over Arduino Bridge
 | `sonara/server/` | FastAPI + WebSocket server |
 | `web/room/` | patient-facing room display (external screen) |
 | `web/caregiver/` | caregiver dashboard (phone/laptop on local Wi-Fi) |
-| `mcu/sonara_mcu/` | STM32 sketch: buttons + LEDs |
+| `mcu/` | App Lab app; STM32 sketch in `mcu/sketch/sketch.ino`: Modulino Buttons + LEDs |
 | `scripts/` | model download, TTS pre-generation, enrollment, evaluation, benchmark |
 
 ## Quick start (laptop, UI only — no mic needed)
