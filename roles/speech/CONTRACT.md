@@ -44,6 +44,38 @@ Existing AudioCapture/Speaker method signatures remain. The ALSA adapter uses in
 `arecord`; Piper playback falls back to `aplay` without PortAudio. No sudo/libportaudio2 is needed
 for this explicit device path. The device worker must serialize capture with enrollment.
 
+### Additive Speaker playback lifecycle
+
+```python
+from sonara.tts import PlaybackEvent, Speaker
+spk = Speaker(cfg, on_playback=on_playback)  # optional keyword-only callback
+# on_playback(event: PlaybackEvent) runs on the speaker worker, not the device event loop.
+```
+
+Frozen events expose `utterance_id` (unique per say/say_now invocation), `key`, `state`
+(`started`, `finished`, `failed`, `cancelled`) and optional `reason`. Existing `say(key)` and
+`say_now(key)` signatures and None return values remain. `wait_idle(timeout=15.0)` now returns
+True when the queue, active playback and callbacks have drained, False on timeout. Existing
+callers can ignore the result; timeout neither cancels playback nor emits an event. Idle is
+not evidence of successful playback. A concurrent later enqueue can make it busy again.
+
+`started` follows successful `sounddevice.play()` or `aplay` process launch; it describes
+backend start, not proof that sound reached a patient. `finished` follows backend completion.
+Missing WAVs, unavailable backends, synthesis errors and nonzero aplay exits emit `failed`,
+never `finished`. Failure before backend start has no `started`. Disabled output emits only
+`cancelled` with reason `disabled`, so --no-audio never claims audible playback.
+
+`say_now` does not interrupt active playback. Each dropped pending utterance gets exactly one
+`cancelled` event with reason `superseded`, no start/finish. Cancellation delivery is serialized
+after the active utterance completes and before the replacement starts. All callbacks run on
+one worker outside speaker locks; they may enqueue speech. Callback exceptions are contained.
+Keep callbacks short and use e.g. `loop.call_soon_threadsafe(handle_playback, event)` to transfer
+to device's owning event loop. Do not mutate controller/UI state directly on the speaker thread.
+Calling `wait_idle` from a callback raises RuntimeError rather than deadlocking the worker.
+Device should match terminal events by utterance ID before clearing its active indicator.
+
+Verification: `pytest -q tests/test_speech_playback.py tests/test_speech_recognition.py`.
+
 Profiles now use `data/profiles/<profile_id>/{metadata.json,templates.npz}`, with `active.txt`
 in the parent directory. They contain MFCC templates, feature configuration, counts, matching
 parameters, thresholds and calibration diagnostics. Old embedding profiles require re-enrollment.

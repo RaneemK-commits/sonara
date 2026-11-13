@@ -249,7 +249,14 @@ def test_tts_alsa_fallback_without_portaudio(tmp_path, monkeypatch):
     monkeypatch.setattr(builtins,'__import__',without_portaudio)
     monkeypatch.setattr('sonara.tts.shutil.which',lambda _: '/usr/bin/aplay')
     played = []
-    monkeypatch.setattr('sonara.tts.subprocess.run',lambda argv, **kwargs: played.append(argv))
+    class Process:
+        def __init__(self, argv):
+            self.args = argv
+            played.append(argv)
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+        def wait(self): return 0
+    monkeypatch.setattr('sonara.tts.subprocess.Popen', Process)
     speaker = OutputSpeaker.__new__(OutputSpeaker)
     speaker.texts, speaker.enabled, speaker.live, speaker.dir = {'WATER':'Water'}, True, False, tmp_path
     write_wav(tmp_path/'WATER.wav',audio(),16000)

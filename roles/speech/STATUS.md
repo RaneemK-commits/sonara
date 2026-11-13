@@ -1,5 +1,21 @@
 # Speech STATUS
 
+## Parallel task: playback lifecycle for device display
+
+- Added optional `Speaker(..., on_playback=callback)` in `sonara/tts.py`, with immutable
+  started/finished/failed/cancelled events carrying key and unique per-call utterance ID.
+- `say`/`say_now` signatures unchanged. Queue replacement cancels pending phrases without
+  interrupting active playback. Disabled audio is cancelled; backend/missing-WAV failures
+  no longer claim success. `wait_idle` returns False on timeout without cancelling anything.
+- Callbacks are serialized on the speaker worker outside locks; device must forward events
+  to its owning event loop. See additive CONTRACT section for complete timing/semantics.
+- Isolated playback branch: 124 tests passed in 5.18 s outside sandbox. The shared working
+  tree also passed 141 tests in 5.11 s, including concurrent keyword changes (sandbox run stalled).
+  No live audio/hardware validation. Isolated playback branch requested by user; board message
+  will be copied by the user after push.
+- Decision: keep this task separate from concurrent keyword/model/enrollment work;
+  retain existing None returns from say/say_now and expose timeout information via wait_idle.
+
 ## Expanded noisy-stream experiment
 
 - User requested more TORGO samples assembled into sentence-like streams with intervening noise.
