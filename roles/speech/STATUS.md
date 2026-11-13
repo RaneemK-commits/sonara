@@ -12,15 +12,20 @@
   no controller/server/config/UI changes and no runtime activation.
 - Added artificial composed-TORGO comparison and generic annotated natural WAV-stream evaluator.
   Corpus compositions are not natural phrases and are not WATER/PAIN recordings.
-- 116 tests pass locally (6.09 s). Board passed 115 tests before the final chunk API test addition;
-  final board check/replay is pending. Initial replay was interrupted by a board reboot; restored
-  the isolated copy with the board's existing .venv. An omitted static-web test fixture was fixed,
-  then integration tests passed. No failing tests were deleted.
+- 116 tests pass locally (6.09 s) and on UNO Q (38.42 s; one upstream test-client warning).
+  Initial replay was interrupted by a board reboot; restored the isolated copy with the existing
+  board .venv. An omitted static-web test fixture was fixed and integration tests rerun unchanged.
+  No failing tests were deleted. Generated-audio checks accept an embedded WATER pattern and
+  reject noise; those are software checks, not real speech accuracy.
 - Laptop comparison: 15 composed positive clips and 30 negatives, all predictions rejected.
   Before rejection, stream proposals localize the correct best label in 12/15 clips; that is not
   recognition accuracy. Shared-scale whole-recording best labels also get 12/15; no measured
-  accuracy improvement from subsequence matching is established. Continuous false-acceptance
-  calibration, fresh natural phrase tests and real-time board feasibility remain unresolved.
+  accuracy improvement from subsequence matching is established. Board decisions and timestamps
+  agree with the laptop. Shared-board/lower-priority replay: 84.22 s input, streaming real-time
+  factor 3.442, mean total processing per clip 6.44 s, RSS 51 MiB. This cannot keep up in this
+  setup; do not activate it live. Incremental matching/feature extraction needs work in addition
+  to sensitivity and continuous-negative calibration. Reports and reproduction commands are
+  in docs/KEYWORDS_IN_PHRASES.md. Fresh WATER/PAIN natural phrases are still unavailable.
 - Current production pipeline remains untouched. NEED device/UI integration only after validation:
   single microphone owner, bounded worker, reset on drops/TTS/enrollment/profile reload, pause
   pending confirmation, request keywords only and mandatory patient confirmation.

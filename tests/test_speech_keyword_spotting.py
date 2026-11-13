@@ -80,6 +80,9 @@ def test_shared_scaling_and_localization_inside_generated_phrase(tmp_path):
     assert water
     found=min(water,key=lambda e:e.prediction.distance)
     assert abs(found.start_s-.5)<.15 and abs(found.end_s-1.)<.15
+    assert found.prediction.accepted
+    noise=np.random.default_rng(7).normal(0,.05,24000).astype(np.float32)
+    assert not any(e.prediction.accepted for e in model.scan(noise))
     model.save(tmp_path/'voice')
     restored=KeywordSpotter.load(tmp_path/'voice')
     again=restored.scan(phrase)

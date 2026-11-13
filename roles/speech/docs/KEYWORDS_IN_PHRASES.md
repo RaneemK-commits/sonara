@@ -106,6 +106,46 @@ not a fresh final test estimate. Shared scaling is fitted only on enrollment; qu
 never enter template fitting or threshold calibration. No threshold is tuned to make these
 queries pass. The two enrollment examples per keyword are insufficient for reliable calibration.
 
+## Executed results and deployment limit
+
+116 tests pass on both laptop (6.09 s full suite) and UNO Q (38.42 s, one upstream test-client
+warning). Subsequence DTW matches a simple reference implementation; generated audio checks
+accept an embedded WATER pattern and reject noise. Those are software checks, not human speech
+accuracy. Tests also cover repeated words, persistence, duplicate suppression and audio overruns.
+
+The corpus comparison uses 84.22 seconds total input across 45 clips, three completed profiles
+(two enrollment takes per word). Both machines return identical event decisions and timestamps.
+
+| Comparison | Whole-CMVN | Shared-scale whole | Subsequence window | Streaming replay |
+|---|---:|---:|---:|---:|
+| Correct accepted positives | 0/15 | 0/15 | 0/15 | 0/15 |
+| Correct best label before rejection | 11/15 | 12/15 | 10/15 localized | 12/15 localized |
+| Negative clips with acceptance | 0/30 | 0/30 | 0/30 | 0/30 |
+
+All real candidates reject. Zero false accepts here is not evidence of useful recognition or
+speaker verification. Neither localization nor accepted accuracy is demonstrated to improve by
+this experiment; the two whole-recording arms also cannot identify keyword timestamps.
+
+| Keyword processing (includes MFCC/proposals/rescoring) | Laptop | UNO Q |
+|---|---:|---:|
+| One bounded-window scan, mean per clip | 88.3 ms | 2249.6 ms |
+| Streaming replay, total processing mean per clip | 246.8 ms | 6442.8 ms |
+| Streaming processing p95 per clip | 612.6 ms | 16187.2 ms |
+| Streaming real-time factor | 0.132 | **3.442** |
+| Process peak RSS | 59.9 MiB | 51.0 MiB |
+
+Streaming clip time totals multiple scans, not latency of a single event. The board ran at
+`nice -n 10` alongside the existing app, Python 3.13.5 / NumPy 2.5.4. This is a shared-board
+measurement, not an isolated CPU capacity guarantee. It nevertheless fails to keep up in this
+setup: approximately 3.44 seconds of processing for one second of incoming audio. The current
+repeated-window implementation must not be enabled live. Incremental feature/DTW computation
+or a measured reduction in comparisons is needed, alongside the unresolved sensitivity issue.
+
+Reports: [laptop](validation/keyword_comparison_laptop.json) and
+[UNO Q](validation/keyword_comparison_board.json). An initial board replay was interrupted by a
+reboot; these results come from the completed rerun in `/tmp/sonara-keyword-validation`, using
+the existing board `.venv`. The live app, microphone and production profiles were not modified.
+
 ## What must happen before live integration
 
 - Collect fresh per-patient WATER/PAIN/HELP enrollment words, new natural phrases containing them,
@@ -158,6 +198,8 @@ python roles/speech/evaluation/evaluate_keyword_streams.py \
 
 The report includes event recall/misses, precision, false accepted events per hour, duplicate
 accepts, timestamps, detection delay relative to annotated keyword end, and real-time factor.
+Event times/delays use the input audio clock; they are not physical wall-clock notification
+latency. Processing time and real-time factor expose the additional computational lag.
 Wrong-label/out-of-span accepted events and duplicates count as false accepts. Silent/UNKNOWN
 streams have undefined recall, not a perfect accuracy score. Duplicate WAV files and truncated
 PCM are rejected. Independence from enrollment cannot be verified from feature-only profiles;
