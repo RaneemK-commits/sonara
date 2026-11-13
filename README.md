@@ -12,8 +12,9 @@ a replacement for a nurse-call system.
 - Design decisions: [docs/DESIGN.md](docs/DESIGN.md) · Original PDR: [docs/PDR_v1.0.md](docs/PDR_v1.0.md)
 
 > **Status: scaffold only.** The room display and caregiver dashboard in `web/` are functional
-> placeholders for wiring up the flow. **UI design and branding are not decided yet.** Model
-> download, on-board audio and the UNO Q Bridge have not been tested.
+> placeholders for wiring up the flow. **UI design and branding are not decided yet.** Full
+> speech/audio integration still needs verification. The Modulino Buttons → Bridge → Sonara path
+> has been verified on the UNO Q.
 
 ## How it works
 ```
@@ -31,7 +32,7 @@ MCU (STM32): Talk / Confirm / Cancel buttons + 3 status LEDs over Arduino Bridge
 | `sonara/server/` | FastAPI + WebSocket server |
 | `web/room/` | patient-facing room display (external screen) |
 | `web/caregiver/` | caregiver dashboard (phone/laptop on local Wi-Fi) |
-| `mcu/sonara_mcu/` | STM32 sketch: buttons + LEDs |
+| `mcu/` | Always-on App Lab app; STM32 buttons/LED sketch at `mcu/sketch/sketch.ino` |
 | `scripts/` | model download, TTS pre-generation, enrollment, evaluation, benchmark |
 
 ## Quick start (laptop, UI only — no mic needed)

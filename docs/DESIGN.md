@@ -28,7 +28,7 @@ the room, sends them the request and tells the patient honestly whether it was s
 Available: Knob, Buttons, Distance, Movement.
 
 ### Core: Modulino Buttons → Talk / Confirm / Cancel
-- Replaces the hand-wired buttons and LEDs (D2–D7) in `mcu/sonara_mcu/sonara_mcu.ino`. One cable to the Qwiic (I2C) connector.
+- Replaces the hand-wired buttons and LEDs (D2–D7) in `mcu/sketch/sketch.ino`. One cable to the Qwiic (I2C) connector.
 - Each button's own LED gives feedback right at the patient's hand:
   - Talk: on while listening
   - Confirm: blinking while a phrase waits to be sent
@@ -48,9 +48,12 @@ Available: Knob, Buttons, Distance, Movement.
 - Knob: volume control is nice-to-have only.
 - Movement: knock-to-talk would false-trigger when the patient moves in bed.
 
-### Check on the board first
-Which side reads the Modulinos on the UNO Q, the MCU sketch (Arduino_Modulino library) or the Linux side
-(App Lab)? This decides whether `mcu/sonara_mcu.ino` or `sonara/hw/mcu.py` gets the change.
+### Verified board connection
+The STM32 MCU reads the Modulino Buttons using Arduino_Modulino in `mcu/sketch/sketch.ino`;
+Linux receives button events over the Arduino Router Bridge through `sonara/hw/mcu.py`.
+`mcu/` is an always-on App Lab app that keeps the sketch and its Bridge link running. Its Python
+entry point does not register a button handler: standalone Sonara owns that route. Modulino
+Buttons now drive Sonara on the board.
 
 ## Stretch: Arduino Nicla Voice as an always-on voice trigger
 The Nicla Voice has a Syntiant NDP120 neural decision processor built for always-on audio
