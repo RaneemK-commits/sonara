@@ -16,9 +16,9 @@
   body[data-view="notified"], body[data-view="acked"] { --wash: var(--green-wash); }
   body[data-view="failed"], body[data-view="offline"] { --wash: var(--rose-wash); }
 
-  .screen { position: relative; overflow: hidden; width: calc(684 * var(--px)); height: calc(472 * var(--px));
-    border: calc(3 * var(--px)) solid var(--frame); border-radius: calc(22 * var(--px)); background: var(--canvas); }
-  .floor { position: absolute; inset: auto 0 0 0; height: calc(118 * var(--px)); pointer-events: none;
+  /* full-bleed: fills the whole display (1024x600 on the board), no frame */
+  .screen { position: fixed; inset: 0; overflow: hidden; background: var(--canvas); }
+  .floor { position: absolute; inset: auto 0 0 0; height: max(calc(118 * var(--px)), 20vh); pointer-events: none;
     background: linear-gradient(to bottom, color-mix(in srgb, var(--wash) 0%, transparent), var(--wash) 70%);
     clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 100%, 0 100%); transition: background .3s ease; }
 
@@ -30,7 +30,9 @@
   .conn .ico { width: calc(23 * var(--px)); height: calc(23 * var(--px)); }
 
   /* every screen is laid out absolutely to mockup coordinates, so states never reflow each other */
-  .view { position: absolute; inset: 0; display: none; }
+  /* the content box keeps the mockup's 690 x 478 proportions, centred on any screen shape */
+  .view { position: absolute; left: 50%; top: 50%; width: calc(690 * var(--px)); height: calc(478 * var(--px));
+    transform: translate(-50%, -50%); display: none; }
   body[data-view="ready"] #v-ready, body[data-view="retry"] #v-ready, body[data-view="cancelled"] #v-ready,
   body[data-view="listening"] #v-listen, body[data-view="processing"] #v-listen,
   body[data-view="confirm"] #v-confirm,
@@ -224,6 +226,7 @@ function show(key, s) {
     $("cardIcon").innerHTML = has ? `<svg class="ico"><use href="#i-${id}"/></svg>` : "";
     $("cardSep").hidden = !has;
     $("phrase").textContent = PHRASE[id] || ((it ? it.label : (s.last.text || "").replace(/[.!?]+$/, "")) + "?");
+    fitPhrase();
   }
   if (DONE[key]) {
     const [ico, cls, head, sub] = DONE[key];
@@ -231,6 +234,16 @@ function show(key, s) {
     $("doneHead").textContent = head; $("doneSub").textContent = sub;
   }
 }
+
+// shrink a long phrase until it fits inside the card (mockup size is the maximum)
+function fitPhrase() {
+  const card = document.querySelector(".card"), ph = $("phrase");
+  ph.style.fontSize = "";
+  const edge = () => card.getBoundingClientRect().right - card.clientWidth * 0.05;
+  let size = parseFloat(getComputedStyle(ph).fontSize);
+  while (ph.getBoundingClientRect().right > edge() && size > 12) { size -= 1; ph.style.fontSize = size + "px"; }
+}
+addEventListener("resize", fitPhrase);
 
 function render(s) {
   last = s;
