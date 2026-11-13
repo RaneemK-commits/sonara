@@ -6,37 +6,48 @@
 <title>Sonara</title>
 <link rel="stylesheet" href="/static/shared/base.css">
 <style>
-  body { min-height: 100vh; overflow: hidden; display: grid; grid-template-rows: auto 1fr;
-    padding: clamp(16px, 3vw, 32px) clamp(16px, 4vw, 48px); --accent: var(--sand); --wash: var(--sand-wash); }
+  html { background: var(--canvas); }
+  body { height: calc(100vh - 2 * clamp(8px, 1.4vw, 16px)); margin: clamp(8px, 1.4vw, 16px); overflow: hidden; position: relative;
+    display: grid; grid-template-rows: auto 1fr; border: 3px solid #1E1E1E; border-radius: clamp(16px, 2vw, 24px);
+    padding: clamp(20px, 3vw, 36px) clamp(24px, 4vw, 48px); background: #FBF8F4; --accent: var(--sand); --wash: var(--sand-wash); }
   body[data-view="listening"] { --accent: var(--lavender); --wash: var(--lavender-wash); }
   body[data-view="confirm"]   { --accent: var(--lilac); --wash: var(--lilac-wash); }
   body[data-view="notified"], body[data-view="acked"] { --accent: var(--green); --wash: var(--green-wash); }
   body[data-view="failed"], body[data-view="offline"] { --accent: #E9B4C2; --wash: var(--rose-wash); }
-  header { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: clamp(20px, 2.2vw, 28px);
+  header { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: clamp(26px, 2.8vw, 36px);
     position: relative; z-index: 1; }
-  .floor { position: fixed; inset: auto 0 0 0; height: 26vh; pointer-events: none; transition: fill .4s ease; }
+  header .logo img { height: 1.15em; }
+  header .conn { font-size: clamp(16px, 1.6vw, 20px); padding: .45em 1em; font-weight: 500; }
+  header .conn .ico { stroke-width: 2.4; }
+  .floor { position: absolute; inset: auto 0 0 0; height: 24%; pointer-events: none; z-index: 0;
+    background: linear-gradient(to bottom, transparent 0%, var(--wash) 55%);
+    clip-path: polygon(0 18%, 50% 70%, 100% 18%, 100% 100%, 0 100%); }
 
   main { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-    gap: clamp(10px, 2vh, 20px); position: relative; z-index: 1; padding-bottom: 6vh; transition: opacity .2s ease; }
+    gap: clamp(6px, 1.4vh, 14px); position: relative; z-index: 1; padding-bottom: 4%; transition: opacity .2s ease; }
   main.swap { opacity: 0; }
   [hidden] { display: none !important; }
-  h1 { margin: 0; font-size: clamp(40px, 4.6vw, 56px); font-weight: 800; line-height: 1.07; letter-spacing: -.02em;
+  h1 { margin: 0; font-size: clamp(48px, 6vw, 80px); font-weight: 800; line-height: 1.05; letter-spacing: -.025em;
     max-width: 20ch; text-wrap: balance; }
-  .sub { margin: 0; font-size: clamp(18px, 2vw, 24px); color: var(--ink-2); font-weight: 450; max-width: 36ch; }
-  .small { margin: 0; font-size: clamp(22px, 2.4vw, 30px); color: var(--ink-2); }
-  .hint { margin: 0; font-size: clamp(16px, 1.7vw, 20px); color: var(--ink-2); }
+  .sub { margin: 0; font-size: clamp(22px, 2.4vw, 32px); color: var(--ink-2); font-weight: 450; max-width: 36ch; }
+  .small { margin: 0; font-size: clamp(26px, 2.8vw, 36px); color: var(--ink-2); }
+  .hint { margin: 0; font-size: clamp(20px, 2vw, 26px); color: var(--ink-2); }
 
   /* focal row: one visual + the Sonara bot as companion */
-  .focal { display: flex; align-items: center; justify-content: center; gap: clamp(16px, 3vw, 40px); min-height: clamp(120px, 22vh, 200px); }
-  .mic { width: clamp(110px, 15vw, 170px); aspect-ratio: 1; border-radius: 50%; background: var(--ink); color: #fff;
-    display: grid; place-items: center; font-size: clamp(44px, 6vw, 68px); box-shadow: 0 0 0 clamp(14px, 2vw, 22px) var(--sand); }
-  .wave { display: flex; align-items: center; gap: clamp(5px, .8vw, 10px); height: clamp(100px, 16vh, 150px); }
-  .wave i { display: block; width: clamp(8px, 1vw, 12px); border-radius: 99px; background: var(--lavender);
+  .focal { order: 9; margin-top: clamp(12px, 3vh, 32px); display: flex; justify-content: center; }
+  body:not([data-view="ready"]):not([data-view="retry"]) .focal { order: -1; margin: 0 0 clamp(8px, 2vh, 20px); }
+  #small { order: -2; } .card, .hint, .controls { order: 10; }
+  .card { margin: clamp(4px, 1vh, 12px) 0; }
+  .mic { width: clamp(130px, 17vw, 210px); aspect-ratio: 1; border-radius: 50%; background: #1F1F1F; color: #fff;
+    display: grid; place-items: center; font-size: clamp(56px, 7vw, 88px); box-shadow: 0 0 0 clamp(16px, 2.4vw, 30px) #FBE9CF; }
+  .mic .ico { stroke-width: 1.6; }
+  .wave { display: flex; align-items: center; gap: clamp(5px, .8vw, 10px); height: clamp(120px, 22vh, 190px); }
+  .wave i { display: block; width: clamp(10px, 1.3vw, 16px); border-radius: 99px; background: var(--lavender);
     height: var(--h); animation: bar 1.1s ease-in-out infinite; animation-delay: var(--d); transform-origin: center; }
   .wave i:nth-child(odd) { background: #A97BF0; }
   @keyframes bar { 50% { transform: scaleY(.55); } }
-  .check { width: clamp(90px, 11vw, 120px); aspect-ratio: 1; border-radius: 50%; background: var(--green); color: #fff;
-    display: grid; place-items: center; font-size: clamp(48px, 6vw, 66px); }
+  .check { width: clamp(100px, 13vw, 150px); aspect-ratio: 1; border-radius: 50%; background: var(--green); color: #fff;
+    display: grid; place-items: center; font-size: clamp(60px, 8vw, 92px); }
   .check .ico { stroke-width: 3; }
   .alert { width: clamp(90px, 11vw, 120px); aspect-ratio: 1; border-radius: 50%; background: var(--rose-wash); color: var(--rose-ink);
     display: grid; place-items: center; font-size: clamp(48px, 6vw, 66px); }
@@ -52,7 +63,7 @@
   .controls .yes { background: var(--ink); border-color: var(--ink); color: #fff; min-width: 9em; justify-content: center; }
 
   /* Sonara bot: original cream orb, mode-driven, transforms/opacity only */
-  .bot { width: clamp(104px, 12vw, 150px); aspect-ratio: 1; flex: none; }
+  .bot { position: absolute; left: clamp(20px, 3vw, 40px); bottom: clamp(16px, 3vh, 32px); z-index: 1; width: clamp(72px, 8vw, 104px); aspect-ratio: 1; }
   .bot svg { width: 100%; height: 100%; overflow: visible; }
   .bot .float { animation: float 5s ease-in-out infinite; }
   .bot .orb { transform-origin: 60px 64px; animation: breathe 4s ease-in-out infinite; }
@@ -99,22 +110,8 @@
   <span class="conn" id="conn"><svg class="ico"><use href="#i-wifi"/></svg><span id="connText">Connecting…</span></span>
 </header>
 
-<svg class="floor" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
-  <path d="M0 70 L600 150 L1200 40 L1200 200 L0 200 Z"/>
-</svg>
-
-<main id="main" aria-live="polite">
-  <p class="small" id="small" hidden></p>
-  <h1 id="head">What do you need?</h1>
-  <p class="sub" id="sub">Just speak, and I’ll let your nurse know.</p>
-  <div class="card" id="card" hidden></div>
-  <p class="hint" id="hint" hidden>Say “yes” to confirm, or “no” to try again.</p>
-  <div class="focal">
-    <div class="mic" id="v-mic"><svg class="ico"><use href="#i-mic"/></svg></div>
-    <div class="wave" id="v-wave" hidden></div>
-    <div class="check" id="v-check" hidden><svg class="ico"><use href="#i-check"/></svg></div>
-    <div class="alert" id="v-alert" hidden><svg class="ico" style="stroke-width:3"><use href="#i-alert"/></svg></div>
-    <div class="bot" id="bot" data-mode="idle" aria-hidden="true">
+<div class="floor" aria-hidden="true"></div>
+  <div class="bot" id="bot" data-mode="idle" aria-hidden="true">
       <svg viewBox="0 0 120 120">
         <defs><radialGradient id="cream" cx="40%" cy="32%" r="75%">
           <stop offset="0" stop-color="#FFFFFF"/><stop offset=".6" stop-color="#FBF6EC"/><stop offset="1" stop-color="#EADFCB"/></radialGradient></defs>
@@ -129,6 +126,19 @@
         <g class="lines" stroke="#A97BF0" stroke-width="3" stroke-linecap="round"><path d="M108 52v20M115 57v10"/></g></g>
       </svg>
     </div>
+
+
+<main id="main" aria-live="polite">
+  <p class="small" id="small" hidden></p>
+  <h1 id="head">What do you need?</h1>
+  <p class="sub" id="sub">Just speak, and I’ll let your nurse know.</p>
+  <div class="card" id="card" hidden></div>
+  <p class="hint" id="hint" hidden>Say “yes” to confirm, or “no” to try again.</p>
+  <div class="focal">
+    <div class="mic" id="v-mic"><svg class="ico"><use href="#i-mic"/></svg></div>
+    <div class="wave" id="v-wave" hidden></div>
+    <div class="check" id="v-check" hidden><svg class="ico"><use href="#i-check"/></svg></div>
+    <div class="alert" id="v-alert" hidden><svg class="ico" style="stroke-width:3"><use href="#i-alert"/></svg></div>
   </div>
   <div class="controls" id="controls" hidden>
     <button data-a="retry"><svg class="ico"><use href="#i-retry"/></svg>Try again</button>
@@ -201,7 +211,6 @@ function show(key, s) {
     document.body.dataset.view = key;
     // SVG fills don't reliably repaint on custom-property changes, so set them directly
     const cs = getComputedStyle(document.body);
-    document.querySelector(".floor path").setAttribute("fill", cs.getPropertyValue("--wash").trim());
     document.querySelector(".bot .halo").setAttribute("fill", cs.getPropertyValue("--accent").trim());
     for (const v of ["mic", "wave", "check", "alert"]) $("v-" + v).hidden = vis !== v;
     $("bot").dataset.mode = mode;
