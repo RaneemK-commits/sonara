@@ -8,7 +8,7 @@
 // Theme with CSS: --intro-bg, --intro-size (mark height in px), --ink, --orb-idle.
 (() => {
   const BARS = [10, 20, 32, 22, 12];          // soundmark bar lengths, 8 units apart (same as #i-mark)
-  const T = { slide: 1100, hold: 1350, word: 1850, morph: 2650, fly: 3150, end: 3850 };   // ms
+  const T = { slide: 1100, hold: 1350, word: 1850, morph: 2950, fly: 3450, end: 4150 };   // ms
   const clamp = v => Math.max(0, Math.min(1, v));
   const seg = (t, a, b) => clamp((t - a) / (b - a));
   const lerp = (a, b, k) => a + (b - a) * k;
@@ -34,14 +34,19 @@
         </style>
         <div class="bg"></div>
         <svg class="mark" viewBox="-20 -20 40 40" aria-hidden="true">
-          <defs><clipPath id="round"><circle r="30"/></clipPath></defs>
-          <g clip-path="url(#round)">${BARS.map(() => "<rect/>").join("")}</g>
+          <defs><filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="b"/>
+            <feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10" result="goo"/>
+            <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+          </filter>
+          <clipPath id="blob">${BARS.map(() => "<rect/>").join("")}</clipPath></defs>
+          <g>${BARS.map(() => "<rect/>").join("")}<circle class="glow" r="0" clip-path="url(#blob)"/></g>
         </svg>
         <p class="word" aria-hidden="true">Sonara</p>
         <sonara-orb mode="idle" aria-hidden="true"></sonara-orb>`;
       const q = s => root.querySelector(s);
       this.el = { bg: q(".bg"), mark: q(".mark"), word: q(".word"), orb: q("sonara-orb"),
-                  bars: root.querySelectorAll("rect"), clip: q("clipPath circle"), g: q("g") };
+                  bars: root.querySelectorAll("svg > g rect"), shape: root.querySelectorAll("clipPath rect"), glow: q(".glow"), blur: q("feGaussianBlur"), g: q("svg > g") };
     }
     connectedCallback() {
       this.setAttribute("role", "img");
@@ -88,21 +93,27 @@
       el.word.style.clipPath = `inset(-20% ${(wde * 100).toFixed(2)}% -20% 0)`;
       el.word.style.opacity = 1 - smooth(seg(t, T.hold + 200, T.word));
 
-      // 3. morph: bars stand up, widen until they touch, a shrinking circle rounds them into the orb's body
+      // 3. morph, liquid: each bar swells into a circle of the orb's size and drifts to the centre
+      //    (middle bar first, outer bars last); a gooey filter melts them together on the way,
+      //    so the five bars pour into one round body with no hard step
       const m = seg(t, T.word - 150, T.morph);
-      const hg = smooth(clamp(m / .6)), wg = smooth(clamp((m - .2) / .7)), cg = smooth(clamp((m - .15) / .85));
       const talk = 1 - sl;                              // bars bounce like a level meter while sliding
       el.bars.forEach((r, i) => {
+        const p = inOut(clamp((m - Math.abs(i - 2) * .08) / .84));
         const base = Math.max(2, BARS[i] * (1 + talk * .55 * Math.sin(t / 85 + i * 1.9))) + 2.6;
-        const len = lerp(base, 42, hg), w = lerp(2.6, 9.6, wg);
-        r.setAttribute("x", (-16 + 8 * i - w / 2).toFixed(2)); r.setAttribute("width", w.toFixed(2));
+        const x = lerp(-16 + 8 * i, 0, p), w = lerp(2.6, 40, p * p * p), len = lerp(base, 40, p * p);   // gather first, swell last
+        r.setAttribute("x", (x - w / 2).toFixed(2)); r.setAttribute("width", w.toFixed(2));
         r.setAttribute("y", (-len / 2).toFixed(2)); r.setAttribute("height", len.toFixed(2));
-        r.setAttribute("rx", 1.3);
+        r.setAttribute("rx", (Math.min(w, len) / 2).toFixed(2));
+        for (const a of ["x", "y", "width", "height", "rx"]) el.shape[i].setAttribute(a, r.getAttribute(a));
       });
-      el.clip.setAttribute("r", lerp(30, 20, cg).toFixed(2));
-      // quick colour change: a slow ink→orange blend reads as brown
-      const k = smooth(seg(m, .5, .75)), c = g.ink.map((v, j) => Math.round(lerp(v, g.orange[j], k)));
-      el.g.setAttribute("fill", `rgb(${c})`);
+      const goo = 2.6 * Math.sin(Math.PI * m);         // only while melting: the logo and the final circle stay crisp
+      el.blur.setAttribute("stdDeviation", goo.toFixed(2));
+      if (goo > .05) el.g.setAttribute("filter", "url(#goo)"); else el.g.removeAttribute("filter");
+      // colour: orange spreads out from the centre of the ink blob (it lights up), never a muddy ink/orange blend
+      el.g.setAttribute("fill", `rgb(${g.ink})`);
+      el.glow.setAttribute("fill", `rgb(${g.orange})`);
+      el.glow.setAttribute("r", (24 * inOut(seg(m, .45, .85))).toFixed(2));
       const s = lerp(1, g.D / H, inOut(m));
       el.mark.style.transform = `translate(${cx - H / 2}px, ${cy - H / 2}px) scale(${s.toFixed(4)})`;
 
@@ -113,7 +124,7 @@
       o.style.transform = `translate(${cx - o.offsetWidth / 2}px, ${cy - o.offsetHeight / 2}px)`;
       if (awake && !this.woke && o.s) {
         this.woke = true;
-        o.s.blink = 1; o.s.squish = .8; o.s.lookT = [.45, -.35]; o.lastLook = performance.now();
+        o.s.blink = 1; o.s.squish = .45; o.s.lookT = [.45, -.35]; o.lastLook = performance.now();
       }
 
       if (g.land) el.bg.style.opacity = 1 - smooth(seg(t, T.fly + 100, T.end));
