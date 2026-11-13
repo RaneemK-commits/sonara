@@ -1,0 +1,11 @@
+{
+    admin off
+    auto_https disable_redirects
+    skip_install_trust
+}
+
+# LAN-only demo HTTPS. Update the IP if the DHCP lease changes.
+https://192.168.1.242:8443 {
+    tls internal
+    reverse_proxy 127.0.0.1:8000
+}

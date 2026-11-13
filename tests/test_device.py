@@ -231,3 +231,20 @@ def test_busy_input_cannot_queue_another_recording_or_confirm():
     assert ctl._q.empty()
     ctl.submit("cancel")
     assert ctl._q.get_nowait()[0] == "cancel"
+
+
+def test_invalid_caregiver_token_reports_auth_close_without_registering():
+    from starlette.websockets import WebSocketDisconnect
+
+    cfg, store, spk, ctl, app = make()
+    with TestClient(app) as client:
+        with client.websocket_connect("/ws?role=caregiver&token=wrong") as ws:
+            with pytest.raises(WebSocketDisconnect) as exc:
+                ws.receive_json()
+            assert exc.value.code == 4401
+        assert ctl.hub.count("caregiver") == 0
+        with client.websocket_connect("/ws?role=caregiver&token=t") as first:
+            assert first.receive_json()["type"] == "snapshot"
+            with client.websocket_connect("/ws?role=caregiver&token=t") as second:
+                assert second.receive_json()["type"] == "snapshot"
+                assert ctl.hub.count("caregiver") == 2

@@ -1,0 +1,15 @@
+[Unit]
+Description=Sonara local HTTPS for the caregiver Home Screen app
+After=network-online.target sonara.service
+Wants=sonara.service
+
+[Service]
+Environment=XDG_DATA_HOME=%h/sonara/data/tls
+Environment=XDG_CONFIG_HOME=%h/sonara/data/tls-config
+ExecStart=%h/sonara/data/caddy/usr/bin/caddy run --config %h/sonara/roles/device/deploy/Caddyfile
+Restart=on-failure
+RestartSec=3
+UMask=0077
+
+[Install]
+WantedBy=default.target
