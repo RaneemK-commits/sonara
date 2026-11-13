@@ -1,0 +1,56 @@
+# Sonara — Design v1.1 (changes from PDR v1.0)
+
+The original PDR is kept in [PDR_v1.0.md](PDR_v1.0.md). This file records what changed and why.
+
+## One-line pitch
+A bedside **personal speech translator**: the patient speaks in their own way, Sonara recognises
+the phrase on-device and speaks it out loud in clear English — and, if the caregiver is not in
+the room, sends them the request and tells the patient honestly whether it was seen.
+
+## Decisions (hackathon day, 2026-11-13)
+
+| Topic | Decision | Why |
+|---|---|---|
+| Board | Arduino UNO Q **4GB** (Linux MPU + STM32 MCU) | Classic UNO cannot run a speech model |
+| Main speech model | **Frozen pretrained speech-embedding network + few-shot per-patient prototypes** | A real neural speech model, personalised with 3–5 examples per phrase, no training run needed |
+| Embedding network | openWakeWord's melspectrogram + Google speech-embedding ONNX models (~1–2 MB, 96-d embeddings every 80 ms) | Tiny, runs on Cortex-A53 CPU, trained on large speech corpora so it generalises to unseen sounds |
+| Matching | DTW over embedding sequences (default) or cosine over mean-pooled embeddings | DTW keeps temporal structure of multi-syllable phrases |
+| Baselines | (a) classical MFCC + DTW, (b) standard ASR (Whisper-tiny via faster-whisper) + keyword match | The three-way comparison is the technical story: standard ASR fails on atypical speech, personalised neural embeddings succeed |
+| Rejection | Distance threshold (auto-calibrated from enrollment, leave-one-out) **and** margin between best and 2nd-best intent | Graceful uncertainty: ask to repeat instead of guessing |
+| Output speech | Piper TTS (English, `en_US-lessac-medium`), **all prompts pre-synthesised to WAV** | Every output sentence is fixed, so live synthesis only adds latency/thermal risk; still 100% offline neural TTS |
+| Language | Input: any language/dialect/vocalisation (templates are personal). Output: English | Language-agnostic input is an impact point |
+| Interaction flow | Phrase is **spoken aloud immediately** in the room; **remote caregiver notification requires confirmation** (button, room screen, or voice "yes") | Fast for in-room communication, safe for remote dispatch |
+| UIs | **Room display** (external screen on UNO Q, kiosk browser on `localhost/room`) + **Caregiver dashboard** (phone/laptop browser on LAN, `/caregiver`) | Organisers supplied an external display |
+| Status model | `QUEUED → DISPLAYED → ACKNOWLEDGED → COMPLETED`, plus `CANCELLED`, `NOT_DISPLAYED` | Simplified from 9 states; honesty rules kept |
+| Energy | VAD gates the model (model runs only on speech), pre-synthesised TTS, energy/interaction reported from a USB power meter (or labelled estimate) | Environmental judging criterion |
+
+## Honesty rules (unchanged, non-negotiable)
+- `DISPLAYED` only after the caregiver browser sends an explicit receipt for that request ID.
+- `ACKNOWLEDGED` only after an explicit caregiver click.
+- If no caregiver screen receipt within the timeout → `NOT_DISPLAYED`, and the patient is told
+  the request **has not reached a caregiver yet**. Never claim help is coming.
+- No raw audio leaves the board. Enrollment stores embeddings/features only; WAVs are kept only
+  with explicit `--keep-audio` for local evaluation.
+- No urgency inferred from voice; `PAIN` is a phrase, not an assessment.
+
+## Intents (MVP)
+`HELP`, `WATER`, `FOOD`, `PAIN`, `BATHROOM` (+ control words `YES`, `NO`). Defined in
+[`config/intents.toml`](../config/intents.toml) — adding a phrase needs only new enrollment takes.
+
+## Pipeline
+```
+mic (USB) ─► ring buffer ─► energy VAD ─► utterance (≤5 s)
+   ─► log-mel ─► speech-embedding CNN (ONNX) ─► (T × 96) sequence
+   ─► DTW vs patient prototypes ─► best intent + distance + margin
+   ─► accept/reject ─► play pre-synthesised WAV ("I would like some water, please.")
+   ─► [confirm] ─► SQLite request ─► WebSocket ─► caregiver dashboard
+                                 ◄─ receipt / acknowledge / complete
+   ─► room display + spoken status
+MCU (Zephyr/Arduino): Talk/Confirm/Cancel buttons, 3 status LEDs, via Arduino Bridge RPC
+```
+
+## Open questions
+1. Organisers: is structured request metadata on the local Wi-Fi allowed? (assumed yes)
+2. Do we have a USB power meter for real energy numbers?
+3. Is the external display touch-capable? (room UI works with mouse/touch either way)
+4. Can we obtain TORGO (public dysarthric speech corpus) for a stretch validation?

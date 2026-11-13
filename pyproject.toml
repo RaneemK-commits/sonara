@@ -1,0 +1,26 @@
+[project]
+name = "sonara"
+version = "0.1.0"
+description = "Offline bedside personal speech translator and caregiver request loop for the Arduino UNO Q"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "websockets>=12",
+]
+
+[project.optional-dependencies]
+audio = ["sounddevice>=0.4.6"]
+model = ["onnxruntime>=1.17"]
+tts = ["piper-tts>=1.2"]
+asr-baseline = ["faster-whisper>=1.0"]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[tool.setuptools.packages.find]
+include = ["sonara*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

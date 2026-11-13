@@ -1,0 +1,59 @@
+# Each intent: id, short label for screens, the sentence spoken aloud, and whether it can be
+# sent to the remote caregiver. Control intents (YES/NO) are used for voice confirmation only.
+# These are requests, not medical assessments: no urgency is inferred.
+
+[[intent]]
+id = "HELP"
+label = "Help"
+speak = "I need help, please."
+notify = true
+
+[[intent]]
+id = "WATER"
+label = "Water"
+speak = "I would like some water, please."
+notify = true
+
+[[intent]]
+id = "FOOD"
+label = "Food"
+speak = "I am hungry. I would like something to eat, please."
+notify = true
+
+[[intent]]
+id = "PAIN"
+label = "Pain"
+speak = "I am in pain."
+notify = true
+
+[[intent]]
+id = "BATHROOM"
+label = "Bathroom"
+speak = "I need to use the bathroom, please."
+notify = true
+
+[[intent]]
+id = "YES"
+label = "Yes"
+speak = "Yes."
+notify = false
+control = true
+
+[[intent]]
+id = "NO"
+label = "No"
+speak = "No."
+notify = false
+control = true
+
+# Fixed system prompts, all pre-synthesised to assets/tts/<key>.wav
+[prompts]
+didnt_understand = "Sorry, I didn't understand. Please try again."
+ask_send = "Should I send this to your caregiver? Press confirm, or say yes."
+sending = "Sending to your caregiver."
+cancelled = "Okay, not sent."
+displayed = "Your request is now on the caregiver's screen."
+acknowledged = "A caregiver has acknowledged your request."
+completed = "Your request has been marked as complete."
+not_displayed = "Your request has not reached a caregiver yet. Please use your call button if you need help now."
+listening = "Listening."

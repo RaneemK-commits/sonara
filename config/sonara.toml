@@ -1,0 +1,41 @@
+# Sonara runtime configuration. Paths are relative to the repo root.
+
+bed_id = "BED-01"
+
+[audio]
+sample_rate = 16000
+device = ""                 # "" = system default; on UNO Q set to the USB mic name or index
+block_ms = 30
+max_utterance_s = 5.0
+silence_end_ms = 700        # stop recording after this much trailing silence
+speech_start_factor = 3.0   # speech when RMS > noise_floor * factor
+min_speech_ms = 200
+listen_mode = "push_to_talk" # "push_to_talk" | "always_on" (VAD-gated)
+push_to_talk_wait_s = 4.0    # how long to wait for speech after Talk is pressed
+
+[recognition]
+backend = "oww"             # "oww" (neural speech embeddings, ONNX) | "mfcc" (classical baseline)
+matcher = "dtw"             # "dtw" | "mean"
+profile_dir = "data/profiles"
+oww_melspec_model = "models/melspectrogram.onnx"
+oww_embedding_model = "models/embedding_model.onnx"
+threshold = 0.0             # 0 = use auto-calibrated threshold stored in the profile
+margin = 0.05               # min distance gap between best and 2nd-best intent
+
+[tts]
+voice_model = "models/en_US-lessac-medium.onnx"
+prompt_dir = "assets/tts"
+allow_live_synthesis = false   # true = synthesise missing prompts at runtime with Piper
+
+[flow]
+confirm_timeout_s = 15     # pending remote request auto-cancels (never auto-sends)
+
+[server]
+host = "0.0.0.0"
+port = 8000
+caregiver_token = "change-me-before-demo"
+db_path = "data/sonara.db"
+display_timeout_s = 10     # no caregiver receipt within this → NOT_DISPLAYED
+
+[hardware]
+mcu = "keyboard"           # "keyboard" (laptop dev) | "unoq" (Arduino Bridge) | "none"

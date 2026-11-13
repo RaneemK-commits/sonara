@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sonara Caregiver</title>
+<link rel="stylesheet" href="/static/shared/base.css">
+<style>
+  body { padding: 16px; max-width: 880px; margin: 0 auto; font-size: 17px; }
+  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
+           position: sticky; top: 0; background: var(--bg); padding: 8px 0 12px; z-index: 1; }
+  h1 { font-size: 1.3em; margin: 0; }
+  .tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .tools button { padding: .45em .9em; border-radius: 999px; background: var(--surface);
+                  border: 1px solid var(--line); color: var(--ink); font-size: .9em; }
+  .banner { padding: .8em 1em; border-radius: 12px; background: var(--bad-bg); color: var(--bad);
+            font-weight: 700; margin: 8px 0; }
+  .banner[hidden] { display: none; }
+  h2 { font-size: 1em; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 20px 0 8px; }
+  .card { background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 14px 16px;
+          display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin-bottom: 10px; }
+  .card.new { border-color: var(--warn); animation: flash 1s ease-in-out 3; }
+  @keyframes flash { 50% { background: var(--warn-bg); } }
+  @media (prefers-reduced-motion: reduce) { .card.new { animation: none; } }
+  .what { font-size: 1.5em; font-weight: 800; }
+  .meta { color: var(--muted); font-size: .9em; }
+  .actions { grid-row: 1 / span 3; grid-column: 2; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+  .actions button { padding: .7em 1.1em; border-radius: 12px; font-weight: 700; min-width: 140px; }
+  .ack { background: var(--accent); color: var(--accent-ink); }
+  .done { background: var(--ok-bg); color: var(--ok); border: 2px solid var(--ok) !important; }
+  .empty { color: var(--muted); padding: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: .9em; }
+  td, th { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; }
+  @media (max-width: 520px) { .card { grid-template-columns: 1fr; } .actions { grid-row: auto; grid-column: 1; flex-direction: row; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sonara · Caregiver</h1>
+  <div class="tools">
+    <span class="conn" id="conn">Offline</span>
+    <button id="sound">🔇 Enable sound</button>
+    <button id="tokenBtn">Token</button>
+  </div>
+</header>
+<div class="banner" id="banner" hidden>Bedside device disconnected. New requests cannot reach this screen.</div>
+
+<h2>Active requests</h2>
+<section id="active"><p class="empty">No active requests.</p></section>
+
+<h2>Recent history</h2>
+<table><thead><tr><th>Time</th><th>Bed</th><th>Request</th><th>Status</th></tr></thead><tbody id="history"></tbody></table>
+
+<script>
+const $ = id => document.getElementById(id);
+let token = localStorage.getItem("sonara_token") || "";
+const askToken = () => { const t = prompt("Caregiver access token", token); if (t !== null) { token = t; localStorage.setItem("sonara_token", t); location.reload(); } };
+$("tokenBtn").onclick = askToken;
+if (!token) askToken();
+
+const STATUS = { QUEUED: ["New", "warn"], NOT_DISPLAYED: ["New", "warn"], DISPLAYED: ["Waiting", "warn"],
+                 ACKNOWLEDGED: ["Acknowledged", ""], COMPLETED: ["Completed", "ok"], CANCELLED: ["Cancelled by patient", ""] };
+const reqs = new Map();
+const receipted = new Set();
+let ws, audioCtx = null;
+
+$("sound").onclick = () => {   // audio needs a user gesture (autoplay rules)
+  audioCtx = audioCtx || new AudioContext(); audioCtx.resume(); beep();
+  $("sound").textContent = "🔔 Sound on";
+};
+function beep() {
+  if (!audioCtx) return;
+  [0, .25].forEach(t => { const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.frequency.value = 880; g.gain.setValueAtTime(.2, audioCtx.currentTime + t);
+    g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + t + .2);
+    o.connect(g).connect(audioCtx.destination); o.start(audioCtx.currentTime + t); o.stop(audioCtx.currentTime + t + .2); });
+}
+const ago = iso => { const s = Math.max(0, (Date.now() - Date.parse(iso)) / 1000 | 0);
+  return s < 60 ? `${s}s ago` : `${s / 60 | 0}m ${s % 60}s ago`; };
+const time = iso => new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+async function act(id, what) {
+  const r = await fetch(`/api/requests/${id}/${what}`, { method: "POST", headers: { "X-Sonara-Token": token } });
+  if (r.status === 401) askToken();
+}
+
+function render() {
+  const active = [...reqs.values()].filter(r => ["QUEUED", "DISPLAYED", "NOT_DISPLAYED", "ACKNOWLEDGED"].includes(r.status))
+    .sort((a, b) => (a.status === "ACKNOWLEDGED") - (b.status === "ACKNOWLEDGED") || a.created_at.localeCompare(b.created_at));
+  $("active").innerHTML = active.length ? "" : '<p class="empty">No active requests.</p>';
+  for (const r of active) {
+    const [label, tone] = STATUS[r.status];
+    const el = document.createElement("article");
+    el.className = "card" + (r.status !== "ACKNOWLEDGED" ? " new" : "");
+    el.innerHTML = `<div class="what">${r.bed_id} · ${r.label}</div>
+      <div class="actions">${r.status === "ACKNOWLEDGED"
+        ? `<button class="done">✔ Complete</button>` : `<button class="ack">Acknowledge</button>`}</div>
+      <div class="meta">Sent ${time(r.created_at)} · <span data-ago="${r.created_at}">${ago(r.created_at)}</span></div>
+      <div><span class="badge ${tone}">${label}</span></div>`;
+    el.querySelector("button").onclick = () => act(r.request_id, r.status === "ACKNOWLEDGED" ? "complete" : "acknowledge");
+    $("active").append(el);
+  }
+  const hist = [...reqs.values()].sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, 20);
+  $("history").innerHTML = hist.map(r => `<tr><td>${time(r.created_at)}</td><td>${r.bed_id}</td>
+    <td>${r.label}</td><td>${(STATUS[r.status] || [r.status])[0]}</td></tr>`).join("");
+  receiptVisible();
+}
+
+// Tell the device this request is actually on screen (sets DISPLAYED, never ACKNOWLEDGED)
+function receiptVisible() {
+  if (!ws || ws.readyState !== 1 || document.hidden) return;
+  for (const r of reqs.values()) {
+    if ((r.status === "QUEUED" || r.status === "NOT_DISPLAYED") && !receipted.has(r.request_id + r.status)) {
+      receipted.add(r.request_id + r.status);
+      ws.send(JSON.stringify({ type: "receipt", request_id: r.request_id }));
+    }
+  }
+}
+document.addEventListener("visibilitychange", receiptVisible);
+setInterval(() => document.querySelectorAll("[data-ago]").forEach(e => e.textContent = ago(e.dataset.ago)), 1000);
+
+function connect() {
+  ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws?role=caregiver&token=${encodeURIComponent(token)}`);
+  ws.onopen = () => { $("conn").textContent = "Connected"; $("conn").classList.add("on"); $("banner").hidden = true; receipted.clear(); };
+  ws.onmessage = e => {
+    const m = JSON.parse(e.data);
+    if (m.type === "snapshot") { reqs.clear(); [...m.history, ...m.active].forEach(r => reqs.set(r.request_id, r)); }
+    if (m.type === "request") {
+      const isNew = !reqs.has(m.request.request_id) && m.request.status === "QUEUED";
+      reqs.set(m.request.request_id, m.request);
+      if (isNew) { beep(); document.title = `🔔 ${m.request.bed_id} ${m.request.label} — Sonara`; }
+    }
+    render();
+  };
+  ws.onclose = e => {
+    $("conn").textContent = "Disconnected"; $("conn").classList.remove("on"); $("banner").hidden = false;
+    if (e.code === 4401) { $("banner").textContent = "Wrong caregiver token."; return; }
+    setTimeout(connect, 1500);
+  };
+}
+connect();
+</script>
+</body>
+</html>
