@@ -1,40 +1,38 @@
-/* Sonara design tokens (branding handoff v1.0). Bundled: no web fonts, no CDN. */
+/* Sonara design tokens (branding v2: light clinical). Bundled: no web fonts, no CDN. */
 :root {
-  --color-bg-deep: #061B18;
-  --color-bg: #082720;
-  --color-bg-2: #10382F;
-  --color-bg-mid: #1B5144;
-  --color-text: #F8FCFA;
-  --color-muted: #D1E5DC;
-  --color-mint: #C6F7DA;
-  --color-glass: rgba(230,255,244,.10);
-  --color-glass-strong: rgba(234,255,246,.15);
-  --color-stroke: rgba(231,255,244,.20);
-  --color-row: rgba(8,39,32,.92);
-  --color-success: #A7E8C3;
-  --color-attention: #F2CB85;
-  --color-error: #FFB7AC;
+  --canvas: #FAF8F3;
+  --surface: #FFFFFF;
+  --ink: #171717;
+  --ink-2: #6F6A64;
+  --line: #D8D2CA;
+  --divider: #ECE7E0;
+  --sand: #F4E8D5;        --sand-wash: #F8EFE3;
+  --lavender: #C8A9FF;    --lavender-wash: #EFE3FF;
+  --lilac: #CFAEEF;       --lilac-wash: #EEDFF8;
+  --green: #78C83F;       --green-wash: #EAF4DF;
+  --green-ink: #2F6B12;   /* dark green for text on green wash (contrast) */
+  --rose-wash: #F6DEE7;   --rose-ink: #9B2C3D;
+  --amber-ink: #8A5A00;   --amber-wash: #FBEBCB;
   --radius-card: 16px;
+  --radius-chip: 12px;
   --radius-control: 12px;
-  font-family: Inter, "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
-  color-scheme: dark;
+  font-family: Inter, Geist, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; background: var(--color-bg-deep); color: var(--color-text); }
-button { font: inherit; cursor: pointer; border: 0; color: inherit; }
-button:focus-visible { outline: 3px solid var(--color-mint); outline-offset: 3px; }
+html, body { margin: 0; background: var(--canvas); color: var(--ink); }
+button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
+button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .tnum { font-variant-numeric: tabular-nums; }
+.ico { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 
-.logo { display: inline-flex; align-items: center; gap: .45em; font-weight: 650; letter-spacing: -.01em; }
-.logo svg { height: 1.05em; width: auto; }
+.logo { display: inline-flex; align-items: center; gap: .45em; font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
+.logo img { height: 1.1em; width: auto; }
 
-/* Connection pill: dot + label, never colour alone */
-.conn { display: inline-flex; align-items: center; gap: .5em; padding: .35em .85em; border-radius: 999px;
-  border: 1px solid var(--color-stroke); background: var(--color-glass); font-size: .85em; font-weight: 550;
-  color: var(--color-error); white-space: nowrap; }
-.conn::before { content: ""; width: .55em; height: .55em; border-radius: 50%; background: var(--color-error); }
-.conn.on { color: var(--color-muted); }
-.conn.on::before { background: var(--color-success); }
+/* Connection chip: wifi icon + label, never colour alone */
+.conn { display: inline-flex; align-items: center; gap: .5em; padding: .4em .85em; border-radius: var(--radius-chip);
+  font-size: 16px; font-weight: 550; white-space: nowrap; background: var(--rose-wash); color: var(--rose-ink); }
+.conn.on { background: var(--green-wash); color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important;

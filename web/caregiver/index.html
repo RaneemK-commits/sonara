@@ -3,58 +3,57 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#082720">
+<meta name="theme-color" content="#FAF8F3">
 <title>Sonara · Nurse</title>
 <link rel="stylesheet" href="/static/shared/base.css">
 <style>
-  body { min-height: 100vh; background: linear-gradient(180deg, #082720 0, #10382F 100%) fixed; font-size: 16px;
-    -webkit-tap-highlight-color: transparent; }
+  body { min-height: 100vh; font-size: 16px; -webkit-tap-highlight-color: transparent; }
   .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px calc(24px + env(safe-area-inset-bottom)); }
-  header { position: sticky; top: 0; z-index: 2; background: #082720; padding: calc(12px + env(safe-area-inset-top)) 0 12px;
-    border-bottom: 1px solid var(--color-stroke); }
-  .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 18px; }
+  header { position: sticky; top: 0; z-index: 2; background: var(--canvas); padding: calc(12px + env(safe-area-inset-top)) 0 12px;
+    border-bottom: 1px solid var(--divider); }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 20px; }
   .tools { display: flex; gap: 8px; align-items: center; }
+  .conn { font-size: 14px; }
   .icon-btn { min-width: 44px; min-height: 44px; padding: 0 12px; border-radius: var(--radius-control);
-    background: var(--color-glass); border: 1px solid var(--color-stroke); font-size: 14px; font-weight: 600; }
-  h1 { margin: 14px 0 2px; font-size: 26px; font-weight: 600; }
-  .count { margin: 0; color: var(--color-muted); font-size: 14px; }
+    background: var(--surface); border: 1px solid var(--line); font-size: 14px; font-weight: 600; }
+  h1 { margin: 14px 0 2px; font-size: 28px; font-weight: 700; letter-spacing: -.01em; }
+  .count { margin: 0; color: var(--ink-2); font-size: 15px; }
   .banner { margin: 12px 0 0; padding: 12px 14px; border-radius: var(--radius-control); font-weight: 600; font-size: 15px;
-    color: var(--color-error); background: rgba(255,183,172,.10); border: 1px solid rgba(255,183,172,.45); }
+    color: var(--rose-ink); background: var(--rose-wash); }
   .banner::before { content: "⚠ "; }
   [hidden] { display: none !important; }
 
   .list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
-  .row { position: relative; background: var(--color-row); border: 1px solid var(--color-stroke); border-radius: 12px;
-    padding: 12px 14px 12px 18px; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: center; }
-  .row::before { content: ""; position: absolute; left: 6px; top: 12px; bottom: 12px; width: 3px; border-radius: 2px;
-    background: var(--color-attention); }
-  .row.ack::before { background: var(--color-mint); }
-  .row.idle::before { background: var(--color-stroke); }
+  .row { position: relative; background: var(--surface); border: 1px solid var(--divider); border-radius: 14px;
+    padding: 14px 14px 14px 20px; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: center; }
+  .row::before { content: ""; position: absolute; left: 7px; top: 14px; bottom: 14px; width: 4px; border-radius: 2px; background: var(--lavender); }
+  .row.ack::before { background: var(--green); }
+  .row.idle::before { background: var(--divider); }
   .row.flash { animation: flash 1.2s ease-out; }
-  @keyframes flash { from { background: rgba(242,203,133,.22); } }
-  .bed { font-size: 19px; font-weight: 700; }
-  .what { font-size: 16px; font-weight: 500; }
-  .state { font-size: 13px; font-weight: 500; color: var(--color-muted); }
-  .state.new { color: var(--color-attention); }
-  .wait { grid-column: 2; grid-row: 1; justify-self: end; font-size: 14px; color: var(--color-muted); }
+  @keyframes flash { from { background: var(--lavender-wash); } }
+  .bed { font-size: 21px; font-weight: 700; }
+  .what { font-size: 16px; font-weight: 500; color: var(--ink); }
+  .state { justify-self: start; font-size: 13px; font-weight: 600; padding: .2em .6em; border-radius: 8px; background: var(--green-wash); color: var(--green-ink); }
+  .state.new { background: var(--lavender-wash); color: #5B2FA6; }
+  .wait { grid-column: 2; grid-row: 1; justify-self: end; font-size: 15px; color: var(--ink-2); }
   .act { grid-column: 2; grid-row: 2 / span 2; justify-self: end; min-height: 44px; padding: 0 16px;
     border-radius: var(--radius-control); font-size: 15px; font-weight: 600; }
-  .act.primary { background: var(--color-mint); color: #082720; }
-  .act.secondary { background: transparent; border: 1px solid var(--color-success); color: var(--color-success); }
+  .act.primary { background: var(--ink); color: #fff; }
+  .act.secondary { background: var(--surface); border: 1.5px solid var(--line); }
   .act:disabled { opacity: .5; }
-  .empty { color: var(--color-muted); padding: 16px 4px; }
+  .empty { color: var(--ink-2); padding: 16px 4px; }
 
-  details { margin-top: 24px; color: var(--color-muted); font-size: 14px; }
+  details { margin-top: 24px; color: var(--ink-2); font-size: 14px; }
   summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
   table { width: 100%; border-collapse: collapse; }
-  td { padding: 6px 4px; border-bottom: 1px solid var(--color-stroke); }
+  td { padding: 6px 4px; border-bottom: 1px solid var(--divider); }
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
   <div class="top">
-    <span class="logo"><img src="/static/shared/logo.svg" alt="" height="20">Sonara</span>
+    <span class="logo"><img src="/static/shared/logo.svg" alt="">Sonara</span>
     <div class="tools">
       <span class="conn" id="conn">Connecting…</span>
       <button class="icon-btn" id="sound" aria-label="Enable alert sound">🔇</button>
@@ -131,7 +130,7 @@ function render() {
       <button class="act ${ack ? "secondary" : "primary"}" data-id="${r.request_id}" data-do="${ack ? "complete" : "acknowledge"}"
         ${busy.has(r.request_id) ? "disabled" : ""}>${ack ? "Resolve" : "Acknowledge"}</button></li>`;
   }).join("") + idle.map(b => `<li class="row idle"><span class="bed tnum">${esc(b)}</span>
-      <span class="what" style="color:var(--color-muted)">No active request</span></li>`).join("")
+      <span class="what" style="color:var(--ink-2)">No active request</span></li>`).join("")
     || '<li class="empty">No active requests.</li>';
   active.forEach(r => flashed.add(r.request_id));
 
