@@ -10,6 +10,7 @@ CANCELLED     patient cancelled after sending
 from __future__ import annotations
 
 import sqlite3
+import json
 import threading
 from datetime import datetime, timezone
 from pathlib import Path
@@ -50,6 +51,11 @@ class RequestStore:
                 CREATE TABLE IF NOT EXISTS events (
                     id INTEGER PRIMARY KEY AUTOINCREMENT, request_id TEXT NOT NULL,
                     status TEXT NOT NULL, actor TEXT NOT NULL, at TEXT NOT NULL);
+                CREATE TABLE IF NOT EXISTS push_subscriptions (
+                    endpoint TEXT PRIMARY KEY, subscription TEXT NOT NULL);
+                CREATE TABLE IF NOT EXISTS push_attempts (
+                    request_id TEXT NOT NULL, endpoint TEXT NOT NULL,
+                    PRIMARY KEY (request_id, endpoint));
             """)
 
     def _next_id(self) -> str:
@@ -107,3 +113,27 @@ class RequestStore:
         with self._lock, self._db:
             self._db.execute("DELETE FROM events")
             self._db.execute("DELETE FROM requests")
+            self._db.execute("DELETE FROM push_attempts")
+
+    def subscribe_push(self, subscription: dict) -> None:
+        with self._lock, self._db:
+            endpoint = subscription["endpoint"]
+            exists = self._db.execute("SELECT 1 FROM push_subscriptions WHERE endpoint=?", (endpoint,)).fetchone()
+            if not exists and self._db.execute("SELECT COUNT(*) FROM push_subscriptions").fetchone()[0] >= 16:
+                raise ValueError("maximum of 16 subscribed phones reached")
+            self._db.execute("INSERT OR REPLACE INTO push_subscriptions VALUES (?,?)",
+                             (endpoint, json.dumps(subscription)))
+
+    def unsubscribe_push(self, endpoint: str) -> None:
+        with self._lock, self._db:
+            self._db.execute("DELETE FROM push_subscriptions WHERE endpoint=?", (endpoint,))
+            self._db.execute("DELETE FROM push_attempts WHERE endpoint=?", (endpoint,))
+
+    def push_subscriptions(self) -> list[dict]:
+        return [json.loads(r["subscription"]) for r in self._q("SELECT subscription FROM push_subscriptions")]
+
+    def claim_push(self, request_id: str, endpoint: str) -> bool:
+        """At most one network attempt per request/phone, including after restart."""
+        with self._lock, self._db:
+            return self._db.execute("INSERT OR IGNORE INTO push_attempts VALUES (?,?)",
+                                    (request_id, endpoint)).rowcount == 1

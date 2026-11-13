@@ -23,6 +23,7 @@ from ..config import Config
 from ..metrics import METRICS
 from ..store import RequestStore, TransitionError
 from .hub import Hub
+from .push import PushService, validate_subscription
 
 
 class RoomInput(BaseModel):
@@ -44,12 +45,22 @@ class CaptureSample(BaseModel):
     seconds: float = Field(default=3., ge=.3, le=5.)
 
 
+class PushSubscription(BaseModel):
+    endpoint: str = Field(max_length=2048)
+    keys: dict[str, str]
+
+
+class PushEndpoint(BaseModel):
+    endpoint: str = Field(max_length=2048)
+
+
 def create_app(cfg: Config, store: RequestStore, hub: Hub, controller) -> FastAPI:
     enrollment = EnrollmentService(cfg, controller)
     srv = cfg.section("server")
     token = srv.get("caregiver_token", "")
     display_timeout = srv.get("display_timeout_s", 10)
     web = cfg.path("web")
+    push = PushService(cfg, store)
 
     def check(tok: str | None) -> None:
         if token and tok != token:
@@ -86,15 +97,60 @@ def create_app(cfg: Config, store: RequestStore, hub: Hub, controller) -> FastAP
     async def lifespan(app):
         hub.attach_loop(asyncio.get_running_loop())
         controller.start()
+        push.start()
         task = asyncio.create_task(watchdog())
         yield
         task.cancel()
+        await asyncio.to_thread(push.stop)
         controller.stop()
         if controller.capture is not None:
             controller.capture.close()
 
     app = FastAPI(title="Sonara", lifespan=lifespan)
     app.mount("/static", StaticFiles(directory=web), name="static")
+
+    @app.get("/sw.js")
+    def service_worker():
+        if not (web / "sw.js").is_file():
+            raise HTTPException(404, "Push UI has not been installed")
+        return FileResponse(web / "sw.js", media_type="application/javascript",
+                            headers={"Service-Worker-Allowed": "/", "Cache-Control": "no-cache"})
+
+    @app.get("/manifest.webmanifest")
+    def manifest():
+        if not (web / "manifest.webmanifest").is_file():
+            raise HTTPException(404, "Push UI has not been installed")
+        return FileResponse(web / "manifest.webmanifest", media_type="application/manifest+json")
+
+    @app.get("/sonara-demo-ca.crt")
+    def demo_certificate():
+        # Public CA certificate only; never serve its adjacent private key or directory.
+        cert = cfg.path("data/tls/caddy/pki/authorities/local/root.crt")
+        if not cert.is_file():
+            raise HTTPException(404, "Local demo HTTPS is not installed")
+        return FileResponse(cert, media_type="application/x-x509-ca-cert", filename="sonara-demo-ca.crt")
+
+    @app.get("/api/push/config")
+    def push_config(x_sonara_token: str | None = Header(None)):
+        check(x_sonara_token)
+        return {"enabled": push.enabled, "public_key": push.public_key, "error": push.error}
+
+    @app.post("/api/push/subscriptions")
+    def subscribe_push(body: PushSubscription, x_sonara_token: str | None = Header(None)):
+        check(x_sonara_token)
+        if not push.enabled:
+            raise HTTPException(503, "Web Push is not configured on this device")
+        try:
+            store.subscribe_push(validate_subscription(body.model_dump()))
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        return {"ok": True}
+
+    @app.delete("/api/push/subscriptions")
+    def unsubscribe_push(body: PushEndpoint, x_sonara_token: str | None = Header(None)):
+        check(x_sonara_token)
+        store.unsubscribe_push(body.endpoint)
+        return {"ok": True}
 
     @app.get("/")
     def index():
@@ -224,6 +280,10 @@ def create_app(cfg: Config, store: RequestStore, hub: Hub, controller) -> FastAP
     async def ws(sock: WebSocket, role: str = "room"):
         tok = sock.query_params.get("token")
         if role == "caregiver" and token and tok != token:
+            # Complete only the transport handshake so browsers receive close code 4401.
+            # Closing before accept becomes HTTP 403 and hides the actionable reason.
+            # Never register this socket or send request data.
+            await sock.accept()
             await sock.close(code=4401)
             return
         await sock.accept()
