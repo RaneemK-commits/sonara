@@ -136,11 +136,14 @@ def test_leds_follow_flow_and_cancel_open_request():
     assert all(a != b for a, b in zip(mcu.leds, mcu.leds[1:]))  # MCU only told on change
 
 
-def test_reboot_recovers_open_request():
-    store = RequestStore(":memory:")
+def test_reboot_recovers_open_request(tmp_path):
+    db_path = tmp_path / "requests.db"
+    store = RequestStore(db_path)
     store.create("BED-99", "FOOD", "Food")                     # another bed: not ours
     mine = store.create("BED-01", "WATER", "Water")
     store.transition(mine["request_id"], "NOT_DISPLAYED", "system")
+    store._db.close()
+    store = RequestStore(db_path)  # Reopen durable state, not the original in-memory store.
     mcu = RecordingMCU()
     cfg, store, spk, ctl, app = make(store, mcu)               # fresh controller = after reboot
     assert ctl.request_id == mine["request_id"]

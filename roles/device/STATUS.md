@@ -2,73 +2,54 @@
 
 Live backlog for the `device` agent. Update before you stop so a fresh session can resume.
 
-## Where things stand (2026-11-13)
-The software slice exists and runs on a laptop: `python -m sonara --no-audio` → room tiles →
-confirm → caregiver ack/complete. `pytest -q` = 12 passed (8 device).
-Nothing has touched real hardware yet. Hardware checklist: [BRINGUP.md](BRINGUP.md).
+## New device agent intake (2026-11-13)
+- Read role instructions, STATUS, CONTRACT, BRINGUP, device runtime and board history through the prior handoff; posted online FYI (issue comment 6864076740).
+- Checkout is main at 57d0280. Use session-local `SONARA_ROLE=device`: clone git role is still lead. Existing `.claude/launch.json` and `learning/` changes belong to the human and were left untouched.
+- Speech branch d0e2810 keyword detector is explicitly not ready to enable; fresh enrollment and recognition reliability remain speech work.
+- Intake validation: `python -m pytest -q tests/test_device.py` under system Python 3.14 produced no output and was interrupted; no passing result claimed. Diagnose test environment before implementation/push.
+- No runtime changes or board deployment during intake. Next work remains the ordered backlog below.
 
-| Piece | File | State |
-|---|---|---|
-| State machine | `sonara/controller.py` | works (IDLE/LISTENING/PROCESSING/AWAIT_CONFIRM, confirm timeout, cancel) |
-| Request store | `sonara/store.py` | works (SQLite, honest transitions, event log) |
-| Server + WS | `sonara/server/app.py`, `hub.py` | works (API per CONTRACT.md, NOT_DISPLAYED watchdog, snapshot replay) |
-| MCU bridge (Linux) | `sonara/hw/mcu.py` | keyboard + null work; `UnoQBridgeMCU` **unverified** |
-| MCU app | `mcu/` (App Lab app: `sketch/sketch.ino`, empty `python/main.py`) | **works on board**: presses → Sonara, LEDs ← Sonara; deployed as default app `user:sonara-mcu` |
-| Entry point / config | `sonara/__main__.py`, `config.py`, `config/sonara.toml` | works |
+## Where things stand (2026-11-13, 19:55 UTC, handoff)
+Full system runs on the UNO Q at `ssh arduino@192.168.1.242` (DHCP; fallback `OhmNoobsBoard-3.local`), main @ 78bd032.
+Details, commands and pitfalls: [BRINGUP.md](BRINGUP.md). Deploy files: [deploy/](deploy/). `pytest -q` passes (Windows: skip the two speech files that `import resource`).
 
-## Plan (in order; top open item = what to do next)
+| Piece | State on the board |
+|---|---|
+| State machine, store, server/WS (`sonara/controller.py`, `store.py`, `server/`) | works; speech enrollment hooks + CONTRACT integrated (f4ca596, f157554) |
+| Modulino Buttons A=Talk B=Confirm C=Cancel + LEDs (`mcu/` App Lab app, `sonara/hw/mcu.py`) | **works**; `user:sonara-mcu` is the default app (starts on boot); Sonara owns the Bridge `button` route via `arduino-router-bridge` |
+| Speaker: Creative Pebble on the display's 3.5 mm jack via HDMI/DP audio | **works**; PipeWire HDMI profile pinned by `deploy/51-sonara-hdmi.conf`, `pipewire-alsa` installed, volume 0.8 |
+| Start on boot | `deploy/sonara.service` (user unit, enabled, linger on), `deploy/sonara-room.desktop` (kiosk), `deploy/sonara-audio-check.service` (root, enabled) |
+| Mic | USB mic `alsa:plughw:CARD=Set,DEV=0` works for capture |
+| Voice recognition | **rejects everything** live; handed to speech (board NEED, 2026-11-13) |
+| Caregiver token | random, board-local `config/sonara.toml` only |
 
-### Phase 0 — laptop, no hardware — DONE (uncommitted until pushed)
-- [x] Reboot recovery: `Controller` restores `request_id` from the newest active request for this
-      bed at construction, so room screen, LEDs and Cancel survive a restart.
-- [x] LED model → Modulino semantics: `led_state(state, status)` in `controller.py`;
-      `set_leds(talk, confirm, cancel)` each `"off"|"on"|"blink"`, sent to the MCU only on change.
-      `mcu.py` (all three classes) and the sketch (now Modulino Buttons, codes 0/1/2) updated together.
-- [x] Tests: LED mapping, LEDs through select→confirm→cancel, reboot recovery (other beds ignored),
-      receipt after `NOT_DISPLAYED` on caregiver reconnect. `pytest -q` = 12 passed.
-- [ ] `ACK` the speech contract once speech posts its embedder `DONE`; use `--no-audio` until then.
+Board-local edits to `~/sonara/config/sonara.toml` (re-apply after every sync, since `git archive` overwrites them):
+`device = "alsa:plughw:CARD=Set,DEV=0"`, `manual_duration_s = 3.0`, `caregiver_token = <board value>`.
+Sync code to the board: `git archive --format=tar HEAD | ssh arduino@192.168.1.242 'tar -xf - -C ~/sonara'`, then re-apply the above, then `systemctl --user restart sonara`.
 
-### Phase 1 — UNO Q bring-up (as soon as the board is on the desk) — see BRINGUP.md
-- [ ] Board on Wi-Fi, SSH in, note IP + hostname; Python ≥3.11 venv; `pip install -e ".[audio,model]"`.
-- [ ] `python -m sonara --no-audio --mcu none` on the board; open `/room` on the external display
-      and `/caregiver` from a phone on the same Wi-Fi. **First end-to-end on hardware.**
-- [ ] USB mic + speaker visible to ALSA (`arecord -l`, `aplay -l`); set `audio.device`.
-- [ ] Kiosk browser on the external display pointing at `http://localhost:8000/room`.
-- [ ] Autostart (systemd unit or App Lab app, whichever the board supports) + restart on crash.
-- [ ] `FYI` to speech: board is up, how to SSH/run `scripts/benchmark.py` there.
+## Next (in order)
+1. Install updated `deploy/sonara-audio-check.service`: staged and systemd-verified at `/tmp/sonara-audio-check.service`; needs human sudo (board DECISION 6864212920). Adds PipeWire restart after ADSP recovery and ELD warning. Do not run recovery unnecessarily against live audio.
+2. DONE: default config loading merges git-ignored `data/local.toml`; explicit `--config` stays self-contained. Deployed loader and migrated board mic/device duration/token to mode-0600 local file. Verified tracked defaults + overrides exactly equal existing settings; no token logged. Live service not restarted.
+3. Phase 3 reliability, live: caregiver phone drop/reconnect → DISPLAYED; no caregiver → NOT_DISPLAYED + C fast blink (never seen by eye: every test pressed C before 10 s); power-cut mid-request.
+4. Watch the USB mic overrun storm (CPU0 98% IRQ, stalls audio): restart Sonara clears it; root fix is speech opening capture only on Talk.
+5. Stretch: Modulino Distance; Nicla trigger (with speech).
 
-### Phase 2 — Modulino Buttons (core challenge requirement)
-- [ ] **Answer the open question:** does the Qwiic connector reach the STM32 (sketch reads via
-      `Arduino_Modulino`) or Linux (`/dev/i2c-*`)? Check with an App Lab example + `i2cdetect`.
-- [ ] MCU path (expected): sketch uses `ModulinoButtons`, sends `Bridge.notify("button", name)`,
-      provides `set_leds(talk, confirm, cancel)`; blink timing done on the MCU.
-- [ ] Verify `UnoQBridgeMCU` against the real Bridge API names; reconnect if the router restarts.
-- [ ] Debounce + ignore holds (one press = one event); measure button → LISTENING latency.
-
-### Phase 3 — reliability (what makes the demo "run without luck")
-- [ ] Caregiver phone drops Wi-Fi → reconnect → snapshot replay → receipt → `DISPLAYED` (test it live).
-- [ ] No caregiver screen → `NOT_DISPLAYED` spoken + Cancel LED blinking within `display_timeout_s`.
-- [ ] Mic unplugged / no recognizer → fall back to room tiles, never crash the loop.
-- [ ] Pull the power mid-request → reboot → request still listed and still honest.
-- [ ] `caregiver_token` set only in the board's local config (not in git).
-- [ ] Per-stage latency in `/api/metrics` (button, record, recognize, TTS start, dispatch).
-
-### Phase 4 — stretch (only after 1–3 are solid)
-- [ ] Modulino **Distance**: presence for N ms → `caregiver_nearby` (skip "Send to caregiver?"),
-      hand-wave → `talk`, display dim / model idle when nobody near (measured SCI comparison).
-- [ ] Nicla Voice integration: its trigger arrives as a `talk` event in `sonara/hw/mcu.py`
-      (speech owns `nicla/`; agree the transport — UART/USB serial — with speech first).
-- [ ] USB power meter readings for SCI (labelled measured), with speech.
+## Known pitfalls (see BRINGUP.md)
+- ADSP sometimes publishes no audio services at boot → no sound card. ADSP restart fixes it, but then PipeWire must restart and the **HDMI cable must be replugged** (ELD lost). Never toggle the display with `xrandr --off`: screen stays dark until a replug.
+- `pkill -f <pattern>` over ssh kills its own shell if the pattern appears later in the same command: run kills in a separate ssh call.
+- `arduino-app-cli app stop` kills the MCU's Bridge link; keep `user:sonara-mcu` running.
+- ALSA card numbers swap between boots: use card names.
 
 ## Needs from others
-- speech (posted 2026-11-13): live recognition on the board rejects every attempt (data in the board post); speech owns the fix. Board-local now: `manual_duration_s = 3.0`, mic `alsa:plughw:CARD=Set,DEV=0`, profile `patient_001`.
-- speech: `DONE` when `Recognizer` + `AudioCapture` + `Speaker` work, so the mic path can be tested on the board.
-- ui: nothing yet. Will post `CONTRACT` if `room_state` gains fields (e.g. `caregiver_nearby`).
+- speech: live recognition rejects every attempt (numbers in the board NEED); open the mic only on Talk (USB overrun storm).
+- ui: apply speech's `roles/speech/integration/ui.patch` (voice-setup screen) against device CONTRACT; enrollment is CLI-only until then.
 
 ## Published
-- (commits other roles can rely on)
+- c1482f4 `mcu/` App Lab app; f4ca596 + f157554 speech integration + CONTRACT (enrollment endpoints, `room_state.enrollment_active`); ad4fec2 + 78bd032 deploy files.
 
 ## Decisions
+- 2026-11-13 (new device agent): use already ignored `data/local.toml` for scalar/top-level section overrides; malformed TOML fails instead of silently reverting credentials. Local-only backup is `data/config-before-local.toml` (0600).
+- 2026-11-13 validation: full suite on UNO Q isolated `/tmp/sonara-device-validation`: 55 passed, one Starlette deprecation warning; no-audio startup health passed on port 8019. Device reboot test now reopens an on-disk SQLite DB. Physical phone reconnect/LED observation/power cut remain unverified. Windows test hang traced to Python 3.14 asyncio socketpair creation before app startup; config-only test passes locally.
 - 2026-11-13: LEDs follow the Modulino plan in DESIGN.md — Talk on while listening; Confirm blinks
   while a phrase waits for confirmation; Cancel on while a sent request can still be cancelled,
   and **blinks fast while it is `NOT_DISPLAYED`** (keeps the honest "not reached anyone" signal at the hand).
@@ -77,3 +58,6 @@ Nothing has touched real hardware yet. Hardware checklist: [BRINGUP.md](BRINGUP.
 - 2026-11-13: Qwiic/Modulino is on the STM32 side (no 0x3E on Linux I2C buses 0/1): MCU sketch reads the buttons, Python only gets Bridge events. Caveat: Buttons module may not have been plugged in during the scan.
 - 2026-11-13: `arduino-app-cli app stop` kills the sketch's Bridge link (sketch keeps looping, no RPC either way). So `mcu/` is an App Lab app that stays running as the board's default app; its Python is empty and Sonara (outside App Lab, `arduino-router-bridge`) owns the `button` route.
 - 2026-11-13: Plan lives in this file plus `BRINGUP.md`; no new code modules until hardware forces them.
+- 2026-11-13: Sonara runs as a systemd user unit (PipeWire lives in the user session); kiosk via XDG autostart.
+- 2026-11-13: Speaker path = PipeWire HDMI profile → DP → display jack. `SEC_MI2S_RX Audio Mixer MultiMedia4` is the real route; `DISPLAY_PORT_RX` is wrong.
+- 2026-11-13: xfwm4 compositing off on the board (saved 18% of a core).
