@@ -1,0 +1,67 @@
+/* Hallmark · shape: app screen · genre: modern-minimal · theme: custom
+ * paper: #FAF8F3 · accent: #78C83F · display: Atkinson Hyperlegible · body: Atkinson Hyperlegible
+ * nav: top bar, wordmark + connection · signature: the line-drawn Sonara face that changes with state · states: ready, listening, thinking, confirm, retry, sending, notified, acknowledged, cancelled, failed, offline
+ * axes: light/grotesk-sans/chromatic-green · posture: centred single message · contrast: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P2 H2 E2 S2 R1 V2 · weakest: R, one face and one green carry every state; words and the face's expression carry meaning, not colour */
+@import url("../shared/tokens.css");
+@import url("../shared/base.css");
+
+body { height: 100vh; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; }
+
+.bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);
+  padding: var(--space-2) var(--space-4); background: var(--color-paper-2); border-bottom: var(--rule-hair) solid var(--color-rule);
+  font-size: var(--text-xl); }
+.bar .conn { font-size: var(--text-lg); }
+
+.stage { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  gap: var(--space-3); padding: var(--space-4); transition: opacity var(--dur-short) var(--ease-out); }
+.stage.swap { opacity: 0; }
+
+.head { font-size: clamp(3rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -0.01em; max-width: 18ch; }
+.sub { font-size: clamp(1.25rem, 2.2vw, 1.75rem); color: var(--color-ink-2); max-width: 36ch; }
+.ask { font-size: clamp(1.5rem, 2.6vw, 2rem); color: var(--color-ink-2); }
+.hint { font-size: clamp(1.125rem, 1.8vw, 1.375rem); color: var(--color-ink-2); }
+
+/* the face: flat line drawing, no glow */
+.face { width: clamp(112px, 14vw, 160px); color: var(--color-ink); }
+.face svg { width: 100%; height: auto; overflow: visible; }
+.face .shell { fill: var(--color-paper-2); stroke: currentColor; stroke-width: 3; }
+.face .part { fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; opacity: 0; transition: opacity var(--dur-micro) var(--ease-out); }
+.face .eyes-open { fill: currentColor; stroke: none; }
+.face[data-mode="idle"] .eyes-open, .face[data-mode="idle"] .mouth-flat,
+.face[data-mode="listening"] .eyes-open, .face[data-mode="listening"] .mouth-o,
+.face[data-mode="thinking"] .eyes-up, .face[data-mode="thinking"] .mouth-flat,
+.face[data-mode="speaking"] .eyes-open, .face[data-mode="speaking"] .mouth-talk,
+.face[data-mode="success"] .eyes-happy, .face[data-mode="success"] .mouth-smile,
+.face[data-mode="error"] .eyes-open, .face[data-mode="error"] .mouth-worry { opacity: 1; }
+.face[data-mode="speaking"] .mouth-talk { transform-box: fill-box; transform-origin: center; animation: talk 480ms ease-in-out infinite; }
+@keyframes talk { 50% { transform: scaleY(0.4); } }
+
+/* listening meter: the one moving thing on screen while the mic is open */
+.meter { display: flex; align-items: center; gap: var(--space-1); height: var(--space-6); }
+.meter i { width: var(--space-1); height: 100%; border-radius: var(--radius); background: var(--color-ink);
+  transform-origin: center; animation: level 1s ease-in-out infinite; }
+.meter i:nth-child(2), .meter i:nth-child(4) { animation-delay: -0.3s; }
+.meter i:nth-child(3) { animation-delay: -0.6s; }
+@keyframes level { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+@media (prefers-reduced-motion: reduce) { .meter i { transform: scaleY(0.7); } }
+
+.request { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-6);
+  background: var(--color-paper-2); border: 2px solid var(--color-ink); border-radius: var(--radius-lg);
+  font-size: clamp(2.25rem, 4.4vw, 3.5rem); font-weight: 700; line-height: 1.1; }
+.request .ico { stroke-width: 1.75; }
+
+.badge { width: var(--space-12); height: var(--space-12); border-radius: 50%; display: grid; place-items: center; font-size: var(--space-6); }
+.badge .ico { stroke-width: 3; }
+.badge-ok { background: var(--color-accent); color: var(--color-accent-ink); }
+.badge-bad { background: var(--color-error-wash); color: var(--color-error); }
+.stage[data-tone="error"] .head { color: var(--color-error); }
+
+.controls { display: flex; gap: var(--space-2); }
+.controls .btn { min-height: 64px; padding: 0 var(--space-4); font-size: var(--text-xl); }
+
+/* demo strip: off unless ?demo or key D; labelled as simulated */
+.demo { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: var(--space-1);
+  padding: var(--space-1) var(--space-4); font-size: var(--text-sm); background: var(--color-paper-2); border-top: var(--rule-hair) solid var(--color-rule); }
+.demo .btn { min-height: 44px; padding: 0 var(--space-2); font-size: var(--text-sm); border-width: 1px; }
+.demo span { margin-right: auto; color: var(--color-ink-2); }

@@ -1,0 +1,35 @@
+/* Sonara tokens. Palette sampled from the v2 reference mockup (the user's own), minus purple.
+   60 paper · 30 paper-2 structure · 10 accent (primary action, current state). Strict 8pt spacing. */
+@font-face { font-family: "Atkinson Hyperlegible"; src: url("/static/shared/fonts/AtkinsonHyperlegible-Regular.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Atkinson Hyperlegible"; src: url("/static/shared/fonts/AtkinsonHyperlegible-Bold.ttf") format("truetype");
+  font-weight: 700; font-style: normal; font-display: swap; }
+
+:root {
+  /* colour */
+  --color-paper: #FAF8F3;     /* 60: canvas */
+  --color-paper-2: #F0EBE2;   /* 30: bars, panels, rows */
+  --color-ink: #171717;
+  --color-ink-2: #57524C;     /* secondary text, 7:1 on paper */
+  --color-rule: #D8D2CA;
+  --color-accent: #78C83F;    /* 10: delivered / acknowledged state only */
+  --color-primary: #171717;   /* primary action fill */
+  --color-primary-ink: #FAF8F3;
+  --color-accent-ink: #171717;
+  --color-accent-text: #2F6B12; /* accent as text on paper, 6.4:1 */
+  --color-error: #A3271B;
+  --color-error-wash: #F8E3DF;
+  --color-focus: #171717;
+
+  /* type: one family */
+  --font-display: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+  --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.125rem; --text-xl: 1.35rem; --text-2xl: 1.62rem; --text-3xl: 1.944rem;
+
+  /* 8-point spacing (4 only for hairline nudges) */
+  --space-half: 4px; --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px;
+  --space-6: 48px; --space-8: 64px; --space-12: 96px;
+
+  --radius: 8px; --radius-lg: 16px; --rule-hair: 1px;
+  --dur-micro: 120ms; --dur-short: 240ms; --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
