@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sonara intro</title>
+<meta name="description" content="Sonara start-up animation preview.">
+<link rel="stylesheet" href="/static/shared/base.css">
+<script src="/static/shared/orb.js"></script>
+<script src="/static/shared/intro.js"></script>
+<style>
+  html, body { height: 100%; overflow: hidden; }
+  sonara-intro { --orb-idle: #F0A868; --intro-bg: var(--canvas); }
+  .replay { position: fixed; right: 16px; bottom: 16px; z-index: 60; padding: 8px 16px; min-height: 40px; border-radius: var(--radius-control);
+    background: var(--surface); border: 1px solid var(--line); font-weight: 600; }
+</style>
+</head>
+<body>
+<!-- Preview of the reusable start-up animation. Add ?size=120 to set the mark height in px. -->
+<sonara-intro id="intro" autoplay></sonara-intro>
+<button class="replay" id="replay">Replay</button>
+<script>
+  const intro = document.getElementById("intro"), size = new URLSearchParams(location.search).get("size");
+  if (size) intro.style.setProperty("--intro-size", size + "px");
+  document.getElementById("replay").onclick = () => intro.play();
+</script>
+</body>
+</html>

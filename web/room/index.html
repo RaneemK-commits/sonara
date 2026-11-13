@@ -7,6 +7,7 @@
 <link rel="preload" href="/static/shared/fonts/Inter.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="/static/shared/base.css">
 <script src="/static/shared/orb.js"></script>
+<script src="/static/shared/intro.js"></script>
 <style>
   /* Sized in mockup pixels: the v2 mockup panel is 690 x 478, so 1 mock px = --px at any screen size. */
   :root { --px: min(calc(100vw / 690), calc(100vh / 478)); }
@@ -88,13 +89,17 @@
   /* confirm: the orb stretches into the 576 x 103 phrase card (box size in orb viewBox units, 260 units = element width) */
   body[data-view="confirm"] .orb { --s: 599; --orb-box-w: 125; --orb-box-h: 22.3; --orb-box-r: 2.6; }
 
+  /* boot: the start-up animation covers the screen and lands its orb on #orb (web/shared/intro.js) */
+  sonara-intro { --orb-idle: #F0A868; --intro-bg: var(--canvas); }
+  body.booting #orb { visibility: hidden; }
+
   body.paused * { animation-play-state: paused !important; }
   .demo { position: fixed; right: 8px; bottom: 8px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 60vw; z-index: 3; font-size: 13px; }
   .demo button { padding: 6px 10px; min-height: 36px; border-radius: 4px; background: var(--surface); border: 1px solid var(--line); font-weight: 600; }
   .demo span { width: 100%; text-align: right; color: var(--ink-2); }
 </style>
 </head>
-<body data-view="ready">
+<body data-view="ready" class="booting">
 <svg hidden aria-hidden="true">
   <symbol id="i-mark" viewBox="0 0 42 40"><path d="M3 15v10M11 10v20M19 4v32M27 9v22M35 14v12"/></symbol>
   <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2.5 9.5a14 14 0 0 1 19 0M5.8 13a9.3 9.3 0 0 1 12.4 0M9 16.4a4.6 4.6 0 0 1 6 0"/><circle cx="12" cy="19.6" r="1" fill="currentColor" stroke="none"/></symbol>
@@ -120,6 +125,7 @@
   </header>
 
   <sonara-orb class="orb" id="orb" mode="idle" aria-hidden="true"></sonara-orb>
+  <sonara-intro id="intro" land="#orb"></sonara-intro>
 
   <section class="view" id="v-ready" aria-live="polite">
     <div class="txt">
@@ -172,6 +178,16 @@ document.addEventListener("click", e => { const b = e.target.closest("button[dat
 
 // what the patient sees on the confirm card, in their words (ui owns these texts)
 const PHRASE = { WATER: "I need water?", HELP: "I need help?", FOOD: "I’m hungry?", PAIN: "I’m in pain?", BATHROOM: "I need the bathroom?" };
+
+// boot: logo slides in, becomes the orb, orb lands in its spot; ?nointro skips it
+const intro = $("intro");
+if (new URLSearchParams(location.search).has("nointro")) { intro.remove(); document.body.classList.remove("booting"); }
+else {
+  const finish = () => { if (!intro.isConnected) return; intro.handOff($("orb")); document.body.classList.remove("booting"); intro.remove(); };
+  intro.addEventListener("done", finish);
+  intro.play();
+  setTimeout(finish, 8000);   // failsafe: never leave the patient screen covered
+}
 
 const demo = $("demo");
 demo.hidden = !new URLSearchParams(location.search).has("demo");
