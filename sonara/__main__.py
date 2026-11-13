@@ -1,4 +1,4 @@
-"""Run the Sonara bedside device: `python -m sonara [--no-audio] [--backend mfcc]`."""
+"""Run the Sonara bedside device: `python -m sonara [--no-audio]`."""
 from __future__ import annotations
 
 import argparse
@@ -17,7 +17,6 @@ from .tts import Speaker
 def main() -> None:
     ap = argparse.ArgumentParser(prog="sonara")
     ap.add_argument("--config", default=None)
-    ap.add_argument("--backend", choices=["oww", "mfcc"], help="override recognition backend")
     ap.add_argument("--no-audio", action="store_true",
                     help="no mic/speaker: drive the flow from the room screen tiles (UI dev)")
     ap.add_argument("--mcu", choices=["keyboard", "unoq", "none"])
@@ -31,19 +30,19 @@ def main() -> None:
     speaker = Speaker(cfg, enabled=not args.no_audio)
     mcu = make_mcu(args.mcu or cfg.section("hardware").get("mcu", "keyboard"))
 
-    recognizer = capture = None
+    from .recognizer import Recognizer
+    recognizer, capture = Recognizer(cfg), None
+    if not recognizer.ready:
+        print("[recognition] enroll a voice profile in /room; phrase tiles are available")
     if not args.no_audio:
         from .audio.capture import AudioCapture
-        from .recognizer import Recognizer
-
-        recognizer = Recognizer(cfg, args.backend)
-        if not recognizer.ready:
-            print(f"[warn] no enrolled profile for backend '{recognizer.backend}' — "
-                  "run scripts/enroll.py (room-screen tiles still work)")
         a = cfg.section("audio")
-        capture = AudioCapture(a.get("sample_rate", 16000), a.get("block_ms", 30), a.get("device"),
+        try:
+            capture = AudioCapture(a.get("sample_rate", 16000), a.get("block_ms", 30), a.get("device"),
                                a.get("max_utterance_s", 5.0), a.get("silence_end_ms", 700),
                                a.get("speech_start_factor", 3.0), a.get("min_speech_ms", 200))
+        except Exception as exc:  # Includes device-specific PortAudio errors.
+            print(f"[audio] microphone unavailable: {exc}; phrase tiles remain available")
 
     controller = Controller(cfg, store, hub, speaker, mcu, recognizer, capture)
     app = create_app(cfg, store, hub, controller)

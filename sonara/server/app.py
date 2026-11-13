@@ -15,7 +15,9 @@ from datetime import datetime, timezone
 from fastapi import FastAPI, Header, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+
+from ..models.enrollment import EnrollmentService
 
 from ..config import Config
 from ..metrics import METRICS
@@ -28,7 +30,22 @@ class RoomInput(BaseModel):
     intent: str | None = None
 
 
+class StartEnrollment(BaseModel):
+    profile_id: str = Field(min_length=1, max_length=64)
+    keep_audio: bool = False
+
+
+class SelectIntent(BaseModel):
+    intent: str
+
+
+class CaptureSample(BaseModel):
+    manual: bool = True
+    seconds: float = Field(default=3., ge=.3, le=5.)
+
+
 def create_app(cfg: Config, store: RequestStore, hub: Hub, controller) -> FastAPI:
+    enrollment = EnrollmentService(cfg, controller)
     srv = cfg.section("server")
     token = srv.get("caregiver_token", "")
     display_timeout = srv.get("display_timeout_s", 10)
@@ -73,6 +90,8 @@ def create_app(cfg: Config, store: RequestStore, hub: Hub, controller) -> FastAP
         yield
         task.cancel()
         controller.stop()
+        if controller.capture is not None:
+            controller.capture.close()
 
     app = FastAPI(title="Sonara", lifespan=lifespan)
     app.mount("/static", StaticFiles(directory=web), name="static")
@@ -117,8 +136,75 @@ def create_app(cfg: Config, store: RequestStore, hub: Hub, controller) -> FastAP
     def room_input(body: RoomInput):
         if body.action not in ("talk", "confirm", "cancel", "select"):
             raise HTTPException(400, "bad action")
+        if controller.enrollment_active and body.action in ("talk", "select"):
+            raise HTTPException(409, "finish or close voice setup first")
         controller.submit(body.action, body.intent)
         return {"ok": True}
+
+    # Regular def endpoints execute in FastAPI's worker threadpool, including capture/DTW.
+    def enroll_call(method, *args, **kwargs):
+        if not controller.audio_lock.acquire(blocking=False):
+            raise HTTPException(409, "microphone or profile operation busy; retry shortly")
+        try:
+            return method(*args, **kwargs)
+        except (ValueError, OSError, KeyError) as exc:
+            raise HTTPException(422, str(exc)) from exc
+        except RuntimeError as exc:
+            raise HTTPException(503, str(exc)) from exc
+        finally:
+            controller.audio_lock.release()
+
+    @app.get("/api/profiles")
+    def profiles():
+        return enroll_call(enrollment.status)
+
+    @app.post("/api/enrollment/start")
+    def start_enrollment(body: StartEnrollment):
+        return enroll_call(enrollment.start, body.profile_id, body.keep_audio)
+
+    @app.post("/api/enrollment/intent")
+    def select_enrollment_intent(body: SelectIntent):
+        return enroll_call(enrollment.select, body.intent)
+
+    @app.post("/api/enrollment/capture")
+    def capture_enrollment(body: CaptureSample):
+        return enroll_call(enrollment.capture, body.manual, body.seconds)
+
+    @app.post("/api/enrollment/sample")
+    def save_enrollment_sample():
+        return enroll_call(enrollment.save_sample)
+
+    @app.delete("/api/enrollment/intents/{intent}")
+    def delete_enrollment_intent(intent: str):
+        return enroll_call(enrollment.remove, intent)
+
+    @app.delete("/api/enrollment/intents/{intent}/samples/{index}")
+    def delete_enrollment_sample(intent: str, index: int):
+        return enroll_call(enrollment.remove, intent, index)
+
+    @app.post("/api/enrollment/calibrate")
+    def calibrate_enrollment():
+        return enroll_call(enrollment.calibrate)
+
+    @app.post("/api/enrollment/test")
+    def test_enrollment(body: CaptureSample):
+        return enroll_call(enrollment.capture, body.manual, body.seconds, test=True)
+
+    @app.post("/api/enrollment/finish")
+    def finish_enrollment():
+        return enroll_call(enrollment.finish)
+
+    @app.post("/api/enrollment/cancel")
+    def cancel_enrollment():
+        return enroll_call(enrollment.cancel)
+
+    @app.post("/api/profiles/{profile_id}/load")
+    def load_profile(profile_id: str):
+        return enroll_call(enrollment.load, profile_id)
+
+    @app.delete("/api/profiles/{profile_id}")
+    def delete_profile(profile_id: str):
+        return enroll_call(enrollment.delete, profile_id)
 
     @app.get("/api/metrics")
     def metrics():

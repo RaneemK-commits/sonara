@@ -53,8 +53,11 @@ class Controller:
         self.last = {"text": "", "intent": None, "score": None, "understood": None}
         self.request_id: str | None = self._recover_request_id()  # latest open request (survives reboot)
         self._leds: tuple[str, str, str] | None = None
-        self._q: queue.Queue[tuple[str, str | None]] = queue.Queue()
+        self._q: queue.Queue[tuple[str, str | None]] = queue.Queue(maxsize=32)
         self._stop = threading.Event()
+        self.audio_lock = threading.RLock()
+        self.enrollment_active = False
+        self._thread = None
 
     def _recover_request_id(self) -> str | None:
         mine = [r for r in self.store.active() if r["bed_id"] == self.cfg.bed_id]
@@ -62,22 +65,33 @@ class Controller:
 
     # ---- inputs (any thread) ----------------------------------------------------------------
     def submit(self, action: str, arg: str | None = None) -> None:
-        self._q.put((action, arg))
+        if action == "confirm":
+            if self.state != AWAIT_CONFIRM or self.pending is None:
+                return  # A press before recognition cannot confirm a future request.
+            arg = str(self.pending_deadline)
+        try:
+            self._q.put_nowait((action, arg))
+        except queue.Full:
+            return
 
     def start(self) -> None:
         self.mcu.start(lambda name: self.submit(name))
-        threading.Thread(target=self._run, daemon=True, name="controller").start()
+        self._thread = threading.Thread(target=self._run, daemon=True, name="controller")
+        self._thread.start()
         self._publish()
 
     def stop(self) -> None:
         self._stop.set()
+        if self._thread:
+            self._thread.join(timeout=12)
 
     # ---- room display state -----------------------------------------------------------------
     def room_state(self) -> dict:
         req = self.store.get(self.request_id) if self.request_id else None
         return {"type": "room_state", "bed_id": self.cfg.bed_id, "state": self.state,
                 "pending": self.pending.label if self.pending else None,
-                "last": self.last, "request": req, "has_mic": self.capture is not None,
+                "last": self.last, "request": req, "has_mic": self.capture is not None and not self.enrollment_active,
+                "enrollment_active": self.enrollment_active,
                 "intents": [{"id": i.id, "label": i.label} for i in self.cfg.request_intents]}
 
     def _publish(self) -> None:
@@ -100,10 +114,18 @@ class Controller:
             except queue.Empty:
                 self._check_timeout()
                 if self.always_on and self.state in (IDLE, AWAIT_CONFIRM):
-                    self.speaker.wait_idle()
-                    audio = self.capture.record_utterance(wait_s=0.3)
-                    if audio is not None:
-                        self._handle_audio(audio)
+                    if self.audio_lock.acquire(blocking=False):
+                        try:
+                            if not self.enrollment_active:
+                                self.speaker.wait_idle()
+                                audio = self.capture.record_utterance(wait_s=0.3)
+                                if audio is not None:
+                                    self._handle_audio(audio)
+                        except Exception as exc:
+                            print(f"[audio] {exc}")
+                            self._set(AWAIT_CONFIRM if self.pending else IDLE)
+                        finally:
+                            self.audio_lock.release()
                 continue
             try:
                 getattr(self, f"_on_{action}")(arg)
@@ -119,6 +141,15 @@ class Controller:
 
     # ---- actions ----------------------------------------------------------------------------
     def _on_talk(self, _=None) -> None:
+        if not self.audio_lock.acquire(blocking=False):
+            return
+        try:
+            if not self.enrollment_active:
+                self._record_talk()
+        finally:
+            self.audio_lock.release()
+
+    def _record_talk(self) -> None:
         if self.capture is None or self.recognizer is None:
             print("[controller] no microphone/recognizer — use the room screen tiles")
             return
@@ -128,7 +159,9 @@ class Controller:
         self.capture.flush()
         prev = self.state
         self._set(LISTENING)
-        audio = self.capture.record_utterance(wait_s=self.ptt_wait)
+        manual = self.cfg.section("audio").get("manual_duration_s", 0)
+        audio = (self.capture.record_manual(manual) if manual else
+                 self.capture.record_utterance(wait_s=self.ptt_wait))
         if audio is None:
             self.last = {"text": "", "intent": None, "score": None, "understood": False}
             self.speaker.say("didnt_understand")
@@ -139,7 +172,8 @@ class Controller:
     def _handle_audio(self, audio) -> None:
         self._set(PROCESSING)
         t0 = time.perf_counter()
-        pred = self.recognizer.recognize(audio)
+        pred = self.recognizer.recognize(audio, manual=bool(
+            self.cfg.section("audio").get("manual_duration_s", 0)))
         METRICS.record("recognize_total", (time.perf_counter() - t0) * 1000)
         if pred is None or not pred.accepted:
             self.last = {"text": "", "intent": None, "understood": False,
@@ -157,6 +191,8 @@ class Controller:
 
     def _accept(self, intent_id: str, score) -> None:
         intent = self.cfg.intent(intent_id)
+        if intent is None:
+            return
         if intent.control:
             if self.pending:
                 return self._on_confirm() if intent.id == "YES" else self._on_cancel()
@@ -174,6 +210,8 @@ class Controller:
             self._set(IDLE)
 
     def _on_confirm(self, _=None) -> None:
+        if _ is not None and _ != str(self.pending_deadline):
+            return  # stale confirmation for a replaced interaction
         if not self.pending:
             return
         intent, self.pending = self.pending, None
