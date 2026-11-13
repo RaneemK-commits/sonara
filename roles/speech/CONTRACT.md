@@ -129,6 +129,10 @@ spotter.feed(chunk)         # <=1 s chunks, bounded rolling buffer, synchronous 
 spotter.reset()             # drop buffered audio / duplicate history on pause or dropped input
 ```
 
+`feed` runs every due scan at an audio-clock boundary, independently of delivery chunk size;
+one call can synchronously execute several scans. Invalid input resets stream state before
+raising `ValueError`, including nonnumeric input. Invalid standalone `scan` input returns `[]`.
+
 KeywordEvent has `start_s`, `end_s`, `observed_until_s`, `prediction` and `to_dict()`.
 This requires fresh raw-MFCC references and shared enrollment scaling; existing CMVN templates
 are rejected. Keyword profiles use keyword.json/references/, separate from active production

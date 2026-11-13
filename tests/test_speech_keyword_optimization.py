@@ -137,3 +137,65 @@ def test_crop_score_cache_reuses_identical_audio_and_invalidates_threshold_chang
     assert not any(e.prediction.accepted for e in model.scan(phrase))
     assert len(calls)>n
     model.reset();assert not model._score_cache
+
+
+@pytest.mark.parametrize('stride_s',[.25,.33,.75,1.25])
+def test_scan_cadence_is_independent_of_audio_chunk_size(monkeypatch,stride_s):
+    from sonara.models.keywords import KeywordSpotter
+    model=KeywordSpotter.enroll(recordings(5),stride_s=stride_s)
+    audio=np.random.default_rng(42).normal(0,.01,128000).astype(np.float32)
+    schedules=[]
+    for chunk_samples in (480,800,16000):
+        model.reset();calls=[]
+        def scan(samples,*,offset_s):
+            import hashlib
+            calls.append((round(offset_s+len(samples)/16000,6),len(samples),hashlib.sha256(samples.tobytes()).hexdigest()))
+            return []
+        monkeypatch.setattr(model,'scan',scan)
+        for i in range(0,len(audio),chunk_samples):model.feed(audio[i:i+chunk_samples])
+        assert model._samples_seen==len(audio) and len(model._buffer)<=80000
+        schedules.append(calls)
+    assert schedules[0]==schedules[1]==schedules[2]
+    first=max(.3,stride_s)
+    assert schedules[0][0][0]==pytest.approx(first)
+
+
+def test_invalid_chunk_is_rejected_before_any_partial_scans(monkeypatch):
+    from sonara.models.keywords import KeywordSpotter
+    model=KeywordSpotter.enroll(recordings(5),stride_s=.25)
+    calls=[]
+    monkeypatch.setattr(model,'scan',lambda *args,**kwargs:calls.append(1) or [])
+    audio=np.ones(16000,np.float32)*.01;audio[-1]=np.nan
+    with pytest.raises(ValueError):model.feed(audio)
+    assert not calls and model._samples_seen==0 and not len(model._buffer)
+
+
+def test_real_matcher_events_do_not_depend_on_chunk_delivery_size():
+    from sonara.models.keywords import KeywordSpotter
+    clips=recordings(5)
+    model=KeywordSpotter.enroll(clips)
+    t=np.arange(8000)/16000
+    frequencies=np.where(t<.25,1700,1900)
+    filler=(.15*np.sin(2*np.pi*frequencies*t)).astype(np.float32)
+    # One target among out-of-vocabulary sounds; dense known-keyword streams
+    # exceed the documented two-proposal-per-window budget.
+    phrase=np.concatenate([filler,clips['WATER'][1],filler,np.zeros(16000,np.float32)])
+    signatures=[]
+    for chunk_samples in (480,16000):
+        model.reset();events=[]
+        for i in range(0,len(phrase),chunk_samples):events.extend(model.feed(phrase[i:i+chunk_samples]))
+        signatures.append([(e.prediction.intent,e.prediction.best,e.start_s,e.end_s,e.observed_until_s)
+                           for e in events])
+    assert signatures[0]==signatures[1]
+    assert any(intent=='WATER' for intent,_,_,_,_ in signatures[0])
+
+
+@pytest.mark.parametrize('bad',[['not audio'],object(),[np.zeros(2),np.zeros(3)]])
+def test_non_numeric_chunk_resets_prior_stream_state(bad):
+    from sonara.models.keywords import KeywordSpotter
+    model=KeywordSpotter.enroll(recordings(5))
+    model.feed(np.ones(3200,np.float32)*.01)
+    assert model._samples_seen==3200
+    with pytest.raises(ValueError,match='numeric mono'):model.feed(bad)
+    assert model._samples_seen==0 and not len(model._buffer) and not model._score_cache
+    assert model.scan(object())==[]

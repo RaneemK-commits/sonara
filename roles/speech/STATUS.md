@@ -1,5 +1,21 @@
 # Speech STATUS
 
+## Keyword review after device handoff
+
+- Fixed `KeywordSpotter.feed`: every scheduled scan runs at the same audio-clock position
+  for 30 ms, 50 ms or 1 s delivery chunks, including after the five-second buffer rolls.
+  Previously a large chunk could skip scans and change recognition results.
+- Invalid nonnumeric input now resets streaming state; invalid standalone windows return no
+  events. Whole chunks are validated before processing, so a corrupt tail cannot emit a match.
+- Isolated speech snapshot: 147 passed. Combined snapshot using pushed device branch
+  `codex/device-room-state` at 4aac904: 152 passed. These exclude concurrent uncommitted TTS
+  edits. Nine new streaming tests also pass on the UNO Q (7.17 s), using only its isolated
+  validation copy; live service, microphone and device-owned files remain untouched.
+- No new accuracy/latency claim: earlier corpus measurements used 50 ms chunks with aligned
+  scan cadences. Keyword mode remains experimental and disabled pending useful independent
+  recognition results and fresh personal enrollment. The two-proposal budget can miss dense
+  sequences of known keywords; this fix only makes delivery chunk size deterministic.
+
 ## Parallel task: playback lifecycle for device display
 
 - Added optional `Speaker(..., on_playback=callback)` in `sonara/tts.py`, with immutable

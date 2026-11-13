@@ -69,6 +69,13 @@ buffer. `--keyword-detail` selects 20 ms matching / 0.5 s scans for a faster CPU
 Use `--keyword-scan-s 1.25` for the tested lower-CPU UNO Q cadence. The public API can select
 other strides/cadences; fewer scans/coarser alignment have recall and reaction-delay costs.
 
+Streaming input accepts 1 sample to 1 second per `feed` call. Scans follow the audio clock,
+starting once both the configured cadence and the minimum 0.3 s feature window are available.
+Large chunks run every due scan; splitting identical audio into different chunk sizes preserves
+scan windows and detection events. This is synchronous: a large chunk may require multiple
+scans before returning. Invalid chunks reset the stream before any partial processing. The
+two-proposal budget can still miss densely packed known keywords within one window.
+
 No extra runtime dependency was added: NumPy and the existing optional capture/TTS components
 remain sufficient. Blocking matching belongs on the shared audio worker. Existing `always_on`
 still uses the original utterance recognizer; it does not silently enable this new detector.

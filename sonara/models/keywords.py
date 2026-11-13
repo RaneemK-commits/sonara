@@ -161,7 +161,7 @@ class KeywordSpotter:
         started = time.perf_counter()
         try:
             samples = self.audio(audio)
-        except ValueError:
+        except (ValueError,TypeError):
             return []
         full_features = self.normalize(mfcc(samples, config=self.feature_config))
         features = full_features[::self.alignment_stride]
@@ -246,28 +246,39 @@ class KeywordSpotter:
         Processing is synchronous and may exceed real time on the UNO Q. Measure
         real-time factor before connecting this experimental path to a live mic.
         """
-        chunk = np.asarray(chunk, dtype=np.float32)
+        try:
+            chunk = np.asarray(chunk, dtype=np.float32)
+        except (TypeError,ValueError) as exc:
+            self.reset()
+            raise ValueError('feed needs numeric mono audio; stream state was reset') from exc
         if (chunk.ndim != 1 or not 0 < len(chunk) <= 16000 or not np.isfinite(chunk).all()
                 or np.max(np.abs(chunk), initial=0) > 1.001):
             self.reset()
             raise ValueError('feed needs 1 sample–1 second of finite mono audio')
-        self._buffer = np.concatenate((self._buffer, chunk))[-self.window_samples:]
-        self._samples_seen += len(chunk)
-        self._since_scan += len(chunk)
-        if self._since_scan < self.stride_samples or len(self._buffer) < 4800:
-            return []
-        self._since_scan %= self.stride_samples
-        offset = (self._samples_seen-len(self._buffer))/16000
-        self._emitted = [(a,b) for a,b in self._emitted if b > offset]
-        events = self.scan(self._buffer, offset_s=offset)
-        result = []
-        for event in events:
-            if event.prediction.accepted:
-                if any(max(0,min(event.end_s,b)-max(event.start_s,a))
-                       / min(event.end_s-event.start_s,b-a) > .5 for a,b in self._emitted):
-                    continue
-                self._emitted.append((event.start_s,event.end_s))
-            result.append(event)
+        result=[]
+        consumed=0
+        while consumed<len(chunk):
+            # Honor audio-clock scan boundaries even when a caller supplies a whole
+            # second at once. The initial 0.3 s is needed for valid MFCC input.
+            until_scan=max(self.stride_samples-self._since_scan,4800-len(self._buffer),1)
+            count=min(len(chunk)-consumed,until_scan)
+            part=chunk[consumed:consumed+count]
+            consumed+=count
+            self._buffer=np.concatenate((self._buffer,part))[-self.window_samples:]
+            self._samples_seen+=count
+            self._since_scan+=count
+            if self._since_scan<self.stride_samples or len(self._buffer)<4800:
+                continue
+            self._since_scan%=self.stride_samples
+            offset=(self._samples_seen-len(self._buffer))/16000
+            self._emitted=[(a,b) for a,b in self._emitted if b>offset]
+            for event in self.scan(self._buffer,offset_s=offset):
+                if event.prediction.accepted:
+                    if any(max(0,min(event.end_s,b)-max(event.start_s,a))
+                           /min(event.end_s-event.start_s,b-a)>.5 for a,b in self._emitted):
+                        continue
+                    self._emitted.append((event.start_s,event.end_s))
+                result.append(event)
         return result
 
     def save(self, directory: Path) -> None:
