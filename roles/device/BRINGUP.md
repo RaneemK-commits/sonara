@@ -81,3 +81,16 @@ sudo usermod -aG arduino-router arduino                                 # then l
 - Done on board: xfwm4 compositing off (`DISPLAY=:0 xfconf-query -c xfwm4 -p /general/use_compositing -s false`, persists): xfwm4 18% -> 0%.
 - Second, intermittent load: USB mic `xhci-hcd: WARN: buffer overrun event for slot 5 ep 4` ~10/s, CPU0 98% IRQ. Gone when Sonara's continuous `arecord` stops; did not reappear after restart (trigger unknown, FYI to speech). Kernel console loglevel is 7; lowering it (`kernel.printk = 3 4 1 3` in /etc/sysctl.d, sudo) is a possible mitigation, not yet tested.
 - Boot race: sometimes the ADSP publishes no APR services, sound card missing ("deferred probe pending", lpass-lpi-pinctrl clk 'audio'). ADSP restart fixes it: `roles/device/deploy/sonara-audio-check.service` (needs sudo install).
+
+## Speaker recovery notes (2026-11-13, 19:50, working again)
+- After an ADSP restart the sound card is re-created: PipeWire's HDMI node goes to `error (Start error: Operation not supported)`
+  -> `systemctl --user restart pipewire pipewire-pulse wireplumber` (the boot check does this).
+- The re-created HDMI codec also loses the display's ELD (`/proc/asound/card*/eld*` monitor_name empty, kernel
+  `hdmi-audio-codec: Unknown ELD version 0`): stream RUNS at 48 kHz but the anx7625 passes no audio. Fix: **replug the HDMI
+  cable** (real hotplug resends ELD). The boot check logs a WARNING when the ELD is empty.
+- **Never** toggle the output in software (`xrandr --output DP-1 --off/--auto`): the anx7625 fails `Configure crtc 0` and the
+  screen stays dark until a physical replug.
+- USB mic overrun storm (CPU0 98% IRQ) stalls PipeWire too (prompts took 12-17 s); restarting Sonara clears it for a while.
+  Done: kernel console loglevel 3 (`deploy/90-sonara-quiet-console.conf`, installed). Root fix (open mic only on Talk) is speech's.
+- Room UI after ui's fix (cfa704e): chromium ~8%, Xorg <1% of one core (was ~1.4 cores).
+- Installed by the human with sudo: `sonara-audio-check.service` (enabled), `90-sonara-quiet-console.conf`.
