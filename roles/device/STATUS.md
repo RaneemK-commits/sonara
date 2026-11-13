@@ -3,6 +3,7 @@
 Live backlog for the `device` agent. Update before you stop so a fresh session can resume.
 
 ## New device agent intake (2026-11-13)
+- Implementation commit `5add73c` pushed to main after explicit human approval. Human installed the replacement audio-check from `/home/arduino/sonara-audio-check.service`. Verified installed file matches, systemd validation passes, unit enabled, `NeedDaemonReload=no`, Sonara active. Recovery behavior on the next boot remains untested.
 - Read role instructions, STATUS, CONTRACT, BRINGUP, device runtime and board history through the prior handoff; posted online FYI (issue comment 6864076740).
 - Checkout is main at 57d0280. Use session-local `SONARA_ROLE=device`: clone git role is still lead. Existing `.claude/launch.json` and `learning/` changes belong to the human and were left untouched.
 - Speech branch d0e2810 keyword detector is explicitly not ready to enable; fresh enrollment and recognition reliability remain speech work.
@@ -28,9 +29,9 @@ Board-local edits to `~/sonara/config/sonara.toml` (re-apply after every sync, s
 Sync code to the board: `git archive --format=tar HEAD | ssh arduino@192.168.1.242 'tar -xf - -C ~/sonara'`, then re-apply the above, then `systemctl --user restart sonara`.
 
 ## Next (in order)
-1. Install updated `deploy/sonara-audio-check.service`: staged and systemd-verified at `/tmp/sonara-audio-check.service`; needs human sudo (board DECISION 6864212920). Adds PipeWire restart after ADSP recovery and ELD warning. Do not run recovery unnecessarily against live audio.
+1. DONE: human installed updated `deploy/sonara-audio-check.service`; file match, systemd validation, enabled state and daemon reload verified. Adds PipeWire restart after ADSP recovery and ELD warning. Actual recovery on next boot remains untested; do not run recovery unnecessarily against live audio.
 2. DONE: default config loading merges git-ignored `data/local.toml`; explicit `--config` stays self-contained. Deployed loader and migrated board mic/device duration/token to mode-0600 local file. Verified tracked defaults + overrides exactly equal existing settings; no token logged. Live service not restarted.
-3. Phase 3 reliability, live: caregiver phone drop/reconnect → DISPLAYED; no caregiver → NOT_DISPLAYED + C fast blink (never seen by eye: every test pressed C before 10 s); power-cut mid-request.
+3. Phase 3 reliability: live no-caregiver test PASSED on 2026-11-13: human pressed B for WATER, req-0004 QUEUED at 20:44:44 UTC → NOT_DISPLAYED at 20:44:54 UTC; human verified C fast blink and not-reached feedback. Phone reconnect pending (first phone view address uncertain, server still had zero caregiver connections); power-cut mid-request remains untested.
 4. Watch the USB mic overrun storm (CPU0 98% IRQ, stalls audio): restart Sonara clears it; root fix is speech opening capture only on Talk.
 5. Stretch: Modulino Distance; Nicla trigger (with speech).
 
@@ -48,6 +49,7 @@ Sync code to the board: `git archive --format=tar HEAD | ssh arduino@192.168.1.2
 - c1482f4 `mcu/` App Lab app; f4ca596 + f157554 speech integration + CONTRACT (enrollment endpoints, `room_state.enrollment_active`); ad4fec2 + 78bd032 deploy files.
 
 ## Decisions
+- 2026-11-13: live board ELD exposes `monitor_name`, not `eld_valid`; corrected staged audio-check predicate accordingly (present/empty/missing fixtures pass), added TimeoutStartSec=150 for three recovery attempts. Corrected unit staged at `~/sonara-audio-check.service`, systemd validation passes; requires reinstall after earlier version. Recent boot brought Sonara and local overrides back; five-minute kernel sample had zero USB overruns.
 - 2026-11-13 (new device agent): use already ignored `data/local.toml` for scalar/top-level section overrides; malformed TOML fails instead of silently reverting credentials. Local-only backup is `data/config-before-local.toml` (0600).
 - 2026-11-13 validation: full suite on UNO Q isolated `/tmp/sonara-device-validation`: 55 passed, one Starlette deprecation warning; no-audio startup health passed on port 8019. Device reboot test now reopens an on-disk SQLite DB. Physical phone reconnect/LED observation/power cut remain unverified. Windows test hang traced to Python 3.14 asyncio socketpair creation before app startup; config-only test passes locally.
 - 2026-11-13: LEDs follow the Modulino plan in DESIGN.md — Talk on while listening; Confirm blinks
