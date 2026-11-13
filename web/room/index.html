@@ -12,7 +12,7 @@
   :root { --px: min(calc(100vw / 690), calc(100vh / 478)); }
   html, body { height: 100%; overflow: hidden; background: var(--canvas); }
   body { display: grid; place-items: center; --wash: var(--sand-wash); }
-  body[data-view="listening"], body[data-view="processing"] { --wash: var(--lavender-wash); }
+  body[data-view="listening"] { --wash: var(--lavender-wash); }   /* processing keeps the sand wash: the orb thinks in peach */
   body[data-view="confirm"] { --wash: var(--lilac-wash); }
   body[data-view="notified"], body[data-view="acked"] { --wash: var(--green-wash); }
   body[data-view="failed"], body[data-view="offline"] { --wash: var(--rose-wash); }
