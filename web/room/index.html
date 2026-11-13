@@ -6,6 +6,7 @@
 <title>Sonara</title>
 <link rel="preload" href="/static/shared/fonts/Inter.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="/static/shared/base.css">
+<script src="/static/shared/orb.js"></script>
 <style>
   /* Sized in mockup pixels: the v2 mockup panel is 690 x 478, so 1 mock px = --px at any screen size. */
   :root { --px: min(calc(100vw / 690), calc(100vh / 478)); }
@@ -47,17 +48,7 @@
   /* ready */
   #v-ready h1 { top: calc(110 * var(--px)); font-size: calc(54 * var(--px)); }
   #v-ready .sub { top: calc(174 * var(--px)); font-size: calc(24.5 * var(--px)); }
-  .mic { position: absolute; left: 50%; top: calc(332 * var(--px)); width: calc(168 * var(--px)); height: calc(168 * var(--px));
-    transform: translate(-50%, -50%); border-radius: 50%; background: #1E1E1E; color: #fff; display: grid; place-items: center;
-    box-shadow: 0 0 0 calc(22 * var(--px)) var(--peach-ring); }
-  .mic .ico { width: calc(66 * var(--px)); height: calc(66 * var(--px)); stroke-width: 1.5; }
-
   /* listening */
-  .wave { position: absolute; left: 50%; top: calc(180 * var(--px)); transform: translate(-50%, -50%);
-    display: flex; align-items: center; gap: calc(13 * var(--px)); }
-  .wave i { width: calc(10 * var(--px)); height: calc(var(--h) * var(--px)); border-radius: 99px; background: var(--c);
-    animation: bar 1.2s ease-in-out infinite; animation-delay: var(--d); }
-  @keyframes bar { 50% { transform: scaleY(.6); } }
   #v-listen h1 { top: calc(270 * var(--px)); font-size: calc(56 * var(--px)); }
   #v-listen .sub { top: calc(337 * var(--px)); font-size: calc(26 * var(--px)); }
 
@@ -81,17 +72,21 @@
   .btns .yes { background: #161616; border-color: #161616; color: #fff; }
 
   /* sending / notified / acknowledged / failed / offline */
-  .badge { position: absolute; left: 50%; top: calc(176 * var(--px)); width: calc(108 * var(--px)); height: calc(108 * var(--px));
-    transform: translate(-50%, -50%); border-radius: 50%; display: grid; place-items: center; color: #fff;
-    background: radial-gradient(circle at 35% 30%, #86D35A, var(--green) 70%); }
-  .badge .ico { width: calc(58 * var(--px)); height: calc(58 * var(--px)); stroke-width: 3.2; }
-  .badge.wait { background: var(--sand); color: var(--ink); }
-  .badge.wait .ico { animation: spin 1.6s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .badge.bad { background: var(--rose-wash); color: var(--rose-ink); }
   #v-done h1 { top: calc(245 * var(--px)); font-size: calc(42 * var(--px)); }
   #v-done .sub { top: calc(306 * var(--px)); font-size: calc(24 * var(--px)); }
   body[data-view="failed"] #v-done h1, body[data-view="offline"] #v-done h1 { color: var(--rose-ink); }
+
+  /* Sonara orb (web/shared/orb.js): one character for every view; glides to where the mockup's mic / wave / badge were */
+  .orb { position: absolute; left: 50%; top: calc(50% + (var(--y) - 239) * var(--px)); width: calc(var(--s) * var(--px));
+    aspect-ratio: 260 / 230; transform: translate(-50%, -50%); z-index: 1; --y: 332; --s: 303;
+    /* orb colours follow each view's background wash */
+    --orb-idle: #F0A868; --orb-thinking: #F0A868; --orb-speaking: #F0A868;
+    --orb-listening: var(--violet); --orb-success: var(--green); --orb-error: #E0697B;
+    transition: top .45s cubic-bezier(.3,.7,.2,1), width .45s cubic-bezier(.3,.7,.2,1), opacity .2s ease; }
+  body[data-view="listening"] .orb, body[data-view="processing"] .orb { --y: 180; }
+  body[data-view="sending"] .orb, body[data-view="notified"] .orb, body[data-view="acked"] .orb,
+  body[data-view="failed"] .orb, body[data-view="offline"] .orb { --y: 176; --s: 195; }
+  body[data-view="confirm"] .orb { opacity: 0; }
 
   body.paused * { animation-play-state: paused !important; }
   .demo { position: fixed; right: 8px; bottom: 8px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 60vw; z-index: 3; font-size: 13px; }
@@ -125,14 +120,14 @@
     <span class="conn" id="conn"><svg class="ico"><use href="#i-wifi-off" id="connIco"/></svg><span id="connText">Connecting</span></span>
   </header>
 
+  <sonara-orb class="orb" id="orb" mode="idle" aria-hidden="true"></sonara-orb>
+
   <section class="view" id="v-ready" aria-live="polite">
     <h1 class="t" id="readyHead">What do you need?</h1>
     <p class="t gray sub" id="readySub">Just speak, and I’ll let your nurse know.</p>
-    <div class="mic" aria-hidden="true"><svg class="ico"><use href="#i-mic"/></svg></div>
   </section>
 
   <section class="view" id="v-listen" aria-live="polite">
-    <div class="wave" id="wave" aria-hidden="true"></div>
     <h1 class="t" id="listenHead">I’m listening…</h1>
     <p class="t gray sub" id="listenSub">Tell me what you need.</p>
   </section>
@@ -150,7 +145,6 @@
   </section>
 
   <section class="view" id="v-done" aria-live="polite">
-    <div class="badge" id="badge"><svg class="ico"><use href="#i-check" id="badgeIco"/></svg></div>
     <h1 class="t" id="doneHead"></h1>
     <p class="t gray sub" id="doneSub"></p>
   </section>
@@ -159,6 +153,9 @@
 <section class="demo" id="demo" hidden aria-label="Demo controls">
   <span>Demo controls (simulated input)</span>
   <button data-a="talk">Talk</button>
+  <span>Orb preview (screen only, nothing is sent)</span>
+  <button data-p="ready">Idle</button><button data-p="listening">Listening</button><button data-p="processing">Thinking</button>
+  <button data-p="notified">Success</button><button data-p="failed">Failure</button><button data-p="">Live</button>
 </section>
 
 <script>
@@ -168,13 +165,6 @@ const post = (action, intent) => fetch("/api/room/input", { method: "POST",
 const act = (a, i) => a === "retry" ? post("cancel").then(() => post("talk")) : post(a, i);
 document.addEventListener("click", e => { const b = e.target.closest("button[data-a]"); if (b) act(b.dataset.a, b.dataset.i); });
 
-// listening waveform: 15 bars, tallest in the middle, lavender to violet
-[14, 20, 30, 42, 56, 74, 104, 136, 104, 74, 56, 42, 30, 20, 14].forEach((h, k) => {
-  const t = 1 - Math.abs(k - 7) / 7;
-  $("wave").insertAdjacentHTML("beforeend",
-    `<i style="--h:${h};--d:${-(k % 5) * .17}s;--c:color-mix(in srgb, var(--violet) ${Math.round(35 + t * 65)}%, var(--lavender-wash))"></i>`);
-});
-
 // what the patient sees on the confirm card, in their words (ui owns these texts)
 const PHRASE = { WATER: "I need water?", HELP: "I need help?", FOOD: "I’m hungry?", PAIN: "I’m in pain?", BATHROOM: "I need the bathroom?" };
 
@@ -183,18 +173,23 @@ demo.hidden = !new URLSearchParams(location.search).has("demo");
 addEventListener("keydown", e => { if (e.key === "d" || e.key === "D") demo.hidden = !demo.hidden; });
 let demoBuilt = false;
 
-// done-view texts: [icon, badge style, headline, subline]. Never "they'll be with you soon": nobody has promised that.
+// done-view texts: [orb mode, headline, subline]. Never "they'll be with you soon": nobody has promised that.
 const DONE = {
-  sending:  ["clock", "wait", "Sending to your nurse…", ""],
-  notified: ["check", "", "Your nurse has been notified.", ""],
-  acked:    ["check", "", "Your nurse acknowledged your request.", ""],
-  failed:   ["alert", "bad", "Unable to notify your nurse.", "Use the existing nurse-call system."],
-  offline:  ["alert", "bad", "Not connected.", "Use the existing nurse-call system."],
+  sending:  ["thinking", "Sending to your nurse…", ""],
+  notified: ["success", "Your nurse has been notified.", ""],
+  acked:    ["success", "Your nurse acknowledged your request.", ""],
+  failed:   ["error", "Unable to notify your nurse.", "Use the existing nurse-call system."],
+  offline:  ["error", "Not connected.", "Use the existing nurse-call system."],
 };
 const RECENT_MS = 60000, PILL_MS = 4000;
 let current = "", retryUntil = 0, lastKey = "", last = null, confirmSince = 0;
 
+let preview = "";   // demo-only: force a view to check the orb; "" = follow the device
+document.addEventListener("click", e => { const b = e.target.closest("button[data-p]");
+  if (b) { preview = b.dataset.p; show(pick(last), last); } });
+
 function pick(s) {
+  if (preview) return preview;
   if (!s) return "offline";
   if (s.state === "LISTENING") return "listening";
   if (s.state === "PROCESSING") return "processing";
@@ -217,6 +212,7 @@ function show(key, s) {
   if (key === "confirm") { confirmSince = Date.now(); $("pill").hidden = false; }
   current = sig;
   document.body.dataset.view = key;
+  $("orb").setAttribute("mode", DONE[key] ? DONE[key][0] : key === "listening" ? "listening" : key === "processing" ? "thinking" : "idle");
   $("readyHead").textContent = key === "retry" ? "I didn’t understand." : key === "cancelled" ? "Okay, not sent." : "What do you need?";
   $("readySub").textContent = key === "retry" ? "Please try again." : key === "cancelled" ? "Say something whenever you’re ready." : "Just speak, and I’ll let your nurse know.";
   $("listenHead").textContent = key === "processing" ? "One moment…" : "I’m listening…";
@@ -229,8 +225,7 @@ function show(key, s) {
     fitPhrase();
   }
   if (DONE[key]) {
-    const [ico, cls, head, sub] = DONE[key];
-    $("badge").className = "badge " + cls; $("badgeIco").setAttribute("href", "#i-" + ico);
+    const [, head, sub] = DONE[key];
     $("doneHead").textContent = head; $("doneSub").textContent = sub;
   }
 }
