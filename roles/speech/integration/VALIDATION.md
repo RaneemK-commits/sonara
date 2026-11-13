@@ -1,6 +1,8 @@
 # Handoff verification
 
-Base: `ac496e6` from origin/main, including the device reboot recovery and Modulino string LED model.
+Final branch base: `1abda6f` from origin/main, including device reboot recovery, Modulino string
+LEDs and the standalone Arduino Router Bridge implementation. Proposal context base: `ac496e6`;
+all three proposals still pass apply checks after the rebase.
 
 - Speech-only branch: **54 passed in 5.04 s** (`pytest -q`). Current main's device tests are included.
 - Disposable combined checkout with device.patch, ui.patch and lead-dependencies.patch applied:

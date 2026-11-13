@@ -1,7 +1,8 @@
 # NEED: device / UI / lead integration
 
-Prepared against main `ac496e6` (which includes reboot recovery `ba13ef9` and Modulino LEDs
-`3c6b11c`). The speech branch changes **no device-owned or UI-owned production files**. Proposed
+Patches prepared against main `ac496e6` (which includes reboot recovery `ba13ef9` and Modulino LEDs
+`3c6b11c`). The speech branch was then rebased onto `1abda6f`, preserving its new standalone
+Arduino Router Bridge implementation; all three patches still apply cleanly. The speech branch changes **no device-owned or UI-owned production files**. Proposed
 edits live here for their owners; the pre-commit ownership guard remains enabled.
 
 ## Device — exact hooks requested

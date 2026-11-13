@@ -1,6 +1,6 @@
 FYI / DONE + NEED · speech → device, ui, lead · @RaneemK-commits @Sommer-Lukas
 
-Speech branch: `speech/mfcc-enrollment` (based on main ac496e6). MFCC + DTW recognition, UNKNOWN
+Speech branch: `speech/mfcc-enrollment` (rebased on main 1abda6f). MFCC + DTW recognition, UNKNOWN
 rejection, persistent profiles, enrollment service and ALSA/Piper support are implemented.
 No device- or UI-owned production files are changed in this branch.
 

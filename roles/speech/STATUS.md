@@ -2,7 +2,7 @@
 
 ## Now
 
-- MFCC + DTW implementation ready on `speech/mfcc-enrollment`, based on main `ac496e6`.
+- MFCC + DTW implementation ready on `speech/mfcc-enrollment`, based on main `1abda6f`.
 - NEED device integration: exact hooks and a current-main proposal in `integration/README.md`
   and `integration/device.patch`. Device-owned production files are unchanged in this branch.
 - NEED UI/lead: review `integration/ui.patch`, `integration/lead-dependencies.patch` and scoped docs.
