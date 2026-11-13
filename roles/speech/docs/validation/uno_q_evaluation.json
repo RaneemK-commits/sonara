@@ -1,0 +1,803 @@
+{
+  "dataset": "/tmp/sonara-mfcc-validation/fixtures",
+  "synthetic": true,
+  "simulated": false,
+  "validation": "software only",
+  "hardware": "Linux-7.0.0-g122c2c22d838-aarch64-with-glibc2.41",
+  "machine": "aarch64",
+  "feature_config": {
+    "sample_rate": 16000,
+    "window_length_ms": 25,
+    "hop_length_ms": 10,
+    "n_fft": 512,
+    "n_mels": 40,
+    "n_mfcc": 13,
+    "pre_emphasis": 0.97,
+    "normalization": "cmvn",
+    "variance_floor": 0.01
+  },
+  "manifest": [
+    {
+      "split": "enrollment",
+      "label": "BATHROOM",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/BATHROOM/00.wav",
+      "audio_sha256": "e254bf3ed32b624e6967ec56f3a503b8c64ecdfe3add7111b2ede9e88c58e261"
+    },
+    {
+      "split": "enrollment",
+      "label": "BATHROOM",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/BATHROOM/01.wav",
+      "audio_sha256": "f55083bfb7eae30a03d05a284978341daf78251228441dd52490479af0686a39"
+    },
+    {
+      "split": "enrollment",
+      "label": "BATHROOM",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/BATHROOM/02.wav",
+      "audio_sha256": "8793949bc24a30c2d876a876b95bc51fe7f98c3703cc7f496a35a3fb06942899"
+    },
+    {
+      "split": "enrollment",
+      "label": "BATHROOM",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/BATHROOM/03.wav",
+      "audio_sha256": "d4dc821f79b5271d1bfdaeb975e030150b2cb9431fb75b6630fe1d36e0998073"
+    },
+    {
+      "split": "enrollment",
+      "label": "BATHROOM",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/BATHROOM/04.wav",
+      "audio_sha256": "da45a2c07f4b344bd59f12a4838594092cc41cfade1f485a931f2e617036f58f"
+    },
+    {
+      "split": "enrollment",
+      "label": "FOOD",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/FOOD/00.wav",
+      "audio_sha256": "c388bd67b6ff439df9b06396c0833f89dbab390c79bfbf9448d1fe61305d9819"
+    },
+    {
+      "split": "enrollment",
+      "label": "FOOD",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/FOOD/01.wav",
+      "audio_sha256": "855104821ce741464347fa3ce8cb8f17d7bac990f41def8e07c63bdb5f5fead7"
+    },
+    {
+      "split": "enrollment",
+      "label": "FOOD",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/FOOD/02.wav",
+      "audio_sha256": "29d2a9e97347b8ef2ce1028cb2698fcf267db4eb49ad795e5ec1c823270a7969"
+    },
+    {
+      "split": "enrollment",
+      "label": "FOOD",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/FOOD/03.wav",
+      "audio_sha256": "4f92333c6253066ea8ef4ca8061d57b51aabf24a6efe9cf5dd404d989584f387"
+    },
+    {
+      "split": "enrollment",
+      "label": "FOOD",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/FOOD/04.wav",
+      "audio_sha256": "01ee8b3abd30ab7b2603d75bbb25af57220d5763559f263e9d71c2c55c62d25f"
+    },
+    {
+      "split": "enrollment",
+      "label": "HELP",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/HELP/00.wav",
+      "audio_sha256": "48b39af5861b8023db868982269b795815d1aa24eaf8ada7a08b0e65379ea72b"
+    },
+    {
+      "split": "enrollment",
+      "label": "HELP",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/HELP/01.wav",
+      "audio_sha256": "f4befa91a3d8d996b0e789ca73fe723d58c265f0b535167e3287c226bc34aa43"
+    },
+    {
+      "split": "enrollment",
+      "label": "HELP",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/HELP/02.wav",
+      "audio_sha256": "0e4d2229b0d52585299d9149c1511b55714393edbb72bdfb66ee32f1f1436b05"
+    },
+    {
+      "split": "enrollment",
+      "label": "HELP",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/HELP/03.wav",
+      "audio_sha256": "dda3f6182e09e20c0608599c5889389c4ac60ad0e3e70b9fb540b94dadee6f7c"
+    },
+    {
+      "split": "enrollment",
+      "label": "HELP",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/HELP/04.wav",
+      "audio_sha256": "119a30b094d70ccf081ca4efdcaff4759fec270f139205876c4d6e379b2c93c4"
+    },
+    {
+      "split": "enrollment",
+      "label": "PAIN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/PAIN/00.wav",
+      "audio_sha256": "61e5ddfe6a5e0e45e4b99fba4e4d36ca2fd392aff1a9000398f2bede23594368"
+    },
+    {
+      "split": "enrollment",
+      "label": "PAIN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/PAIN/01.wav",
+      "audio_sha256": "fa7ebf80300138b4d37697f313f298da51d2c2b7fe6c6f10226b0c2b5721e642"
+    },
+    {
+      "split": "enrollment",
+      "label": "PAIN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/PAIN/02.wav",
+      "audio_sha256": "b821c6844d76fc74a6b8f2a01673629240d39f8fea6ff2b33d46372d7c6c53eb"
+    },
+    {
+      "split": "enrollment",
+      "label": "PAIN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/PAIN/03.wav",
+      "audio_sha256": "21c3920835a3b6df07a0daa7c5c51e325a5a003c79a1b02bdbe6ace59b3fe58e"
+    },
+    {
+      "split": "enrollment",
+      "label": "PAIN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/PAIN/04.wav",
+      "audio_sha256": "541420bb6921adbef8adf6b5f29b27108baee99400b9ac5546e30b07aa951a79"
+    },
+    {
+      "split": "enrollment",
+      "label": "WATER",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/WATER/00.wav",
+      "audio_sha256": "2642c5be338c1388ced6c34049a2c271331f3e6d43b635bcd8e3be8cb6d15da0"
+    },
+    {
+      "split": "enrollment",
+      "label": "WATER",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/WATER/01.wav",
+      "audio_sha256": "aa1573cb2fd453bee35697537370247864c22328330fb6745ff6ef6bab92c13c"
+    },
+    {
+      "split": "enrollment",
+      "label": "WATER",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/WATER/02.wav",
+      "audio_sha256": "6eada803a1a75f93d00e8356d74742542ff46af39dc25691e8d56741186776c0"
+    },
+    {
+      "split": "enrollment",
+      "label": "WATER",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/WATER/03.wav",
+      "audio_sha256": "977531c33094c281ad752328b33ab7567fdf952fd56955025840795e109c56d2"
+    },
+    {
+      "split": "enrollment",
+      "label": "WATER",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/enrollment/WATER/04.wav",
+      "audio_sha256": "a6a1ba0db4e1131419f225b3ebd37512a3d9fc677c8c6bb27af5397aad229b23"
+    },
+    {
+      "split": "test",
+      "label": "BATHROOM",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/BATHROOM/10.wav",
+      "audio_sha256": "074c48e23617d4201774bfed4926760f7131708ebb1515cedcb13e92cd17d507"
+    },
+    {
+      "split": "test",
+      "label": "BATHROOM",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/BATHROOM/11.wav",
+      "audio_sha256": "f6664ac270562a46f8a7a99e6207f9080d53511ddcbaef6faab627f394ae712a"
+    },
+    {
+      "split": "test",
+      "label": "BATHROOM",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/BATHROOM/12.wav",
+      "audio_sha256": "91cf320c37bb92eac544ee506d2a104c614ffbc8206e3765d8ed7eaa2e443c2b"
+    },
+    {
+      "split": "test",
+      "label": "FOOD",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/FOOD/10.wav",
+      "audio_sha256": "ea1c5a750df67ad574e48cc4c69aabdf990dc7857a52593d7ab96b6620179e7e"
+    },
+    {
+      "split": "test",
+      "label": "FOOD",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/FOOD/11.wav",
+      "audio_sha256": "5c80ce16890e856ca0249a948bff2795da8eb418f8e97ef755ad926d7cfcaca8"
+    },
+    {
+      "split": "test",
+      "label": "FOOD",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/FOOD/12.wav",
+      "audio_sha256": "62268483279148f6939ed2629e67c39d2ddc2628e0818373e8ed511247ffb743"
+    },
+    {
+      "split": "test",
+      "label": "HELP",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/HELP/10.wav",
+      "audio_sha256": "43d2b997be1c39f126660f6b115a592060f140d9ad44069632e455910ade368e"
+    },
+    {
+      "split": "test",
+      "label": "HELP",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/HELP/11.wav",
+      "audio_sha256": "772e8dd2085e46d4e2c6a4d49f663eb6dadabdaa4bb3ed769faee45054eb38f3"
+    },
+    {
+      "split": "test",
+      "label": "HELP",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/HELP/12.wav",
+      "audio_sha256": "33d9fee604191cd95b69720263f3b218bfca041fb7abda6779d5699c82ce1f87"
+    },
+    {
+      "split": "test",
+      "label": "PAIN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/PAIN/10.wav",
+      "audio_sha256": "596c7b888e76412d9298714733bc89dd7f156b626aec1bfa472388c197de1c67"
+    },
+    {
+      "split": "test",
+      "label": "PAIN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/PAIN/11.wav",
+      "audio_sha256": "8513e3879442539f7149f067e286bce7f05fafc27c08a8c0f78ef1bca5a0f014"
+    },
+    {
+      "split": "test",
+      "label": "PAIN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/PAIN/12.wav",
+      "audio_sha256": "3d58b7f24aaecc0acab9025d048f01823849fddde25f956a62e3978c7b45de7a"
+    },
+    {
+      "split": "test",
+      "label": "WATER",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/WATER/10.wav",
+      "audio_sha256": "f5111afc9e7461f36c49e679ffc92fba645a4d6ff5648b1a52605d518aea08ab"
+    },
+    {
+      "split": "test",
+      "label": "WATER",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/WATER/11.wav",
+      "audio_sha256": "95e0cdb96ccf742e471ac66a53511d41c5c8d8b9fbd84a9b3dab17189df503bb"
+    },
+    {
+      "split": "test",
+      "label": "WATER",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/WATER/12.wav",
+      "audio_sha256": "0f72d34f8c5dd0058e67e30d85e0cd2684987cb92ab3912b1630805bb7e23826"
+    },
+    {
+      "split": "test",
+      "label": "_UNKNOWN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/_UNKNOWN/00.wav",
+      "audio_sha256": "f37ec51a6e5b58e32b78e53d3cffe423b692ef8693c157196ffd6d11b80c7dcb"
+    },
+    {
+      "split": "test",
+      "label": "_UNKNOWN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/_UNKNOWN/01.wav",
+      "audio_sha256": "3de7ca404bccebd9f3ce1c489b67dc44cc06193a356e7711cc36d603b6e0849d"
+    },
+    {
+      "split": "test",
+      "label": "_UNKNOWN",
+      "path": "/tmp/sonara-mfcc-validation/fixtures/test/_UNKNOWN/02.wav",
+      "audio_sha256": "16de60733d3dc723555700601d195f086c341c85b6c697fb49cb64072d0f619b"
+    }
+  ],
+  "systems": {
+    "mfcc-dtw-k3-band0.1": {
+      "known_test_count": 15,
+      "unknown_test_count": 3,
+      "correct_intent_rate": 1.0,
+      "accuracy_among_accepted_known": 1.0,
+      "accuracy_among_all_accepted": 1.0,
+      "known_rejection_rate": 0.0,
+      "overall_rejection_rate": 0.16666666666666666,
+      "false_accept_other_known": 0.0,
+      "false_accept_unknown": 0.0,
+      "confusion_matrix": {
+        "BATHROOM": {
+          "BATHROOM": 3
+        },
+        "FOOD": {
+          "FOOD": 3
+        },
+        "HELP": {
+          "HELP": 3
+        },
+        "PAIN": {
+          "PAIN": 3
+        },
+        "WATER": {
+          "WATER": 3
+        },
+        "UNKNOWN": {
+          "UNKNOWN": 3
+        }
+      },
+      "latency_ms": {
+        "mean": 184.52937277773648,
+        "p50": 177.7810144999421,
+        "p95": 209.60089704992697,
+        "max": 216.2039410000034
+      },
+      "peak_process_rss_mib": 37.6484375,
+      "template_mib": 0.13166427612304688,
+      "calibration_ms": 2371.2837309999486,
+      "calibration": {
+        "method": "leave-one-out positives and cross-intent negatives",
+        "requires_more_recordings": false,
+        "intents": {
+          "BATHROOM": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.7040187542190036,
+            "negative_p10": 1.0511735255540404,
+            "threshold": 0.8,
+            "requires_more_recordings": false
+          },
+          "FOOD": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.5149139784766605,
+            "negative_p10": 0.7743959640749072,
+            "threshold": 0.5921510752481596,
+            "requires_more_recordings": false
+          },
+          "HELP": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.5821978697300516,
+            "negative_p10": 1.0510494731140951,
+            "threshold": 0.6695275501895593,
+            "requires_more_recordings": false
+          },
+          "PAIN": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.6225195349427004,
+            "negative_p10": 0.7792458513242005,
+            "threshold": 0.6233966810593605,
+            "requires_more_recordings": false
+          },
+          "WATER": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.5643501798810135,
+            "negative_p10": 0.9799129947981638,
+            "threshold": 0.6490027068631655,
+            "requires_more_recordings": false
+          }
+        },
+        "warning": "Enrollment calibration does not guarantee UNKNOWN rejection."
+      }
+    },
+    "mfcc-dtw-k3-band0.2": {
+      "known_test_count": 15,
+      "unknown_test_count": 3,
+      "correct_intent_rate": 1.0,
+      "accuracy_among_accepted_known": 1.0,
+      "accuracy_among_all_accepted": 1.0,
+      "known_rejection_rate": 0.0,
+      "overall_rejection_rate": 0.16666666666666666,
+      "false_accept_other_known": 0.0,
+      "false_accept_unknown": 0.0,
+      "confusion_matrix": {
+        "BATHROOM": {
+          "BATHROOM": 3
+        },
+        "FOOD": {
+          "FOOD": 3
+        },
+        "HELP": {
+          "HELP": 3
+        },
+        "PAIN": {
+          "PAIN": 3
+        },
+        "WATER": {
+          "WATER": 3
+        },
+        "UNKNOWN": {
+          "UNKNOWN": 3
+        }
+      },
+      "latency_ms": {
+        "mean": 186.23155777779883,
+        "p50": 181.68307500013725,
+        "p95": 209.5429626001305,
+        "max": 221.1929639997834
+      },
+      "peak_process_rss_mib": 37.6484375,
+      "template_mib": 0.13166427612304688,
+      "calibration_ms": 2524.8162619996037,
+      "calibration": {
+        "method": "leave-one-out positives and cross-intent negatives",
+        "requires_more_recordings": false,
+        "intents": {
+          "BATHROOM": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.7040187542190036,
+            "negative_p10": 1.0511735255540406,
+            "threshold": 0.8,
+            "requires_more_recordings": false
+          },
+          "FOOD": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.5149139784766603,
+            "negative_p10": 0.7743959640749074,
+            "threshold": 0.5921510752481594,
+            "requires_more_recordings": false
+          },
+          "HELP": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.5821978697300518,
+            "negative_p10": 1.0510494731140951,
+            "threshold": 0.6695275501895596,
+            "requires_more_recordings": false
+          },
+          "PAIN": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.6225195349427004,
+            "negative_p10": 0.7792458513242008,
+            "threshold": 0.6233966810593606,
+            "requires_more_recordings": false
+          },
+          "WATER": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.5643501798810135,
+            "negative_p10": 0.9799129947981638,
+            "threshold": 0.6490027068631655,
+            "requires_more_recordings": false
+          }
+        },
+        "warning": "Enrollment calibration does not guarantee UNKNOWN rejection."
+      }
+    },
+    "mfcc-dtw-k3-band0.35": {
+      "known_test_count": 15,
+      "unknown_test_count": 3,
+      "correct_intent_rate": 1.0,
+      "accuracy_among_accepted_known": 1.0,
+      "accuracy_among_all_accepted": 1.0,
+      "known_rejection_rate": 0.0,
+      "overall_rejection_rate": 0.16666666666666666,
+      "false_accept_other_known": 0.0,
+      "false_accept_unknown": 0.0,
+      "confusion_matrix": {
+        "BATHROOM": {
+          "BATHROOM": 3
+        },
+        "FOOD": {
+          "FOOD": 3
+        },
+        "HELP": {
+          "HELP": 3
+        },
+        "PAIN": {
+          "PAIN": 3
+        },
+        "WATER": {
+          "WATER": 3
+        },
+        "UNKNOWN": {
+          "UNKNOWN": 3
+        }
+      },
+      "latency_ms": {
+        "mean": 200.59094538891662,
+        "p50": 194.2959794998842,
+        "p95": 234.73775535032925,
+        "max": 243.60169900000983
+      },
+      "peak_process_rss_mib": 37.65234375,
+      "template_mib": 0.13166427612304688,
+      "calibration_ms": 2565.6340619998446,
+      "calibration": {
+        "method": "leave-one-out positives and cross-intent negatives",
+        "requires_more_recordings": false,
+        "intents": {
+          "BATHROOM": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.7040187542190038,
+            "negative_p10": 1.0511735255540406,
+            "threshold": 0.8,
+            "requires_more_recordings": false
+          },
+          "FOOD": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.5149139784766603,
+            "negative_p10": 0.7743959640749072,
+            "threshold": 0.5921510752481594,
+            "requires_more_recordings": false
+          },
+          "HELP": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.5821978697300516,
+            "negative_p10": 1.0510494731140947,
+            "threshold": 0.6695275501895593,
+            "requires_more_recordings": false
+          },
+          "PAIN": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.6225195349427004,
+            "negative_p10": 0.7792458513242005,
+            "threshold": 0.6233966810593605,
+            "requires_more_recordings": false
+          },
+          "WATER": {
+            "positive_loo": 3,
+            "negative": 12,
+            "positive_p90": 0.5643501798810137,
+            "negative_p10": 0.9799129947981643,
+            "threshold": 0.6490027068631656,
+            "requires_more_recordings": false
+          }
+        },
+        "warning": "Enrollment calibration does not guarantee UNKNOWN rejection."
+      }
+    },
+    "mfcc-dtw-k5-band0.1": {
+      "known_test_count": 15,
+      "unknown_test_count": 3,
+      "correct_intent_rate": 1.0,
+      "accuracy_among_accepted_known": 1.0,
+      "accuracy_among_all_accepted": 1.0,
+      "known_rejection_rate": 0.0,
+      "overall_rejection_rate": 0.16666666666666666,
+      "false_accept_other_known": 0.0,
+      "false_accept_unknown": 0.0,
+      "confusion_matrix": {
+        "BATHROOM": {
+          "BATHROOM": 3
+        },
+        "FOOD": {
+          "FOOD": 3
+        },
+        "HELP": {
+          "HELP": 3
+        },
+        "PAIN": {
+          "PAIN": 3
+        },
+        "WATER": {
+          "WATER": 3
+        },
+        "UNKNOWN": {
+          "UNKNOWN": 3
+        }
+      },
+      "latency_ms": {
+        "mean": 289.33264572222265,
+        "p50": 281.78709000007984,
+        "p95": 325.93945089997754,
+        "max": 365.15704499970525
+      },
+      "peak_process_rss_mib": 37.76171875,
+      "template_mib": 0.21944046020507812,
+      "calibration_ms": 7112.717306999912,
+      "calibration": {
+        "method": "leave-one-out positives and cross-intent negatives",
+        "requires_more_recordings": false,
+        "intents": {
+          "BATHROOM": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.7019214823692003,
+            "negative_p10": 1.0498723851179679,
+            "threshold": 0.8,
+            "requires_more_recordings": false
+          },
+          "FOOD": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.5155630500470209,
+            "negative_p10": 0.779382258905318,
+            "threshold": 0.5928975075540739,
+            "requires_more_recordings": false
+          },
+          "HELP": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.5753761124247527,
+            "negative_p10": 1.0402810603151695,
+            "threshold": 0.6616825292884656,
+            "requires_more_recordings": false
+          },
+          "PAIN": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.6139380289405747,
+            "negative_p10": 0.7766158847604953,
+            "threshold": 0.6212927078083963,
+            "requires_more_recordings": false
+          },
+          "WATER": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.5854626134261206,
+            "negative_p10": 0.9673924731530166,
+            "threshold": 0.6732820054400387,
+            "requires_more_recordings": false
+          }
+        },
+        "warning": "Enrollment calibration does not guarantee UNKNOWN rejection."
+      }
+    },
+    "mfcc-dtw-k5-band0.2": {
+      "known_test_count": 15,
+      "unknown_test_count": 3,
+      "correct_intent_rate": 1.0,
+      "accuracy_among_accepted_known": 1.0,
+      "accuracy_among_all_accepted": 1.0,
+      "known_rejection_rate": 0.0,
+      "overall_rejection_rate": 0.16666666666666666,
+      "false_accept_other_known": 0.0,
+      "false_accept_unknown": 0.0,
+      "confusion_matrix": {
+        "BATHROOM": {
+          "BATHROOM": 3
+        },
+        "FOOD": {
+          "FOOD": 3
+        },
+        "HELP": {
+          "HELP": 3
+        },
+        "PAIN": {
+          "PAIN": 3
+        },
+        "WATER": {
+          "WATER": 3
+        },
+        "UNKNOWN": {
+          "UNKNOWN": 3
+        }
+      },
+      "latency_ms": {
+        "mean": 307.1814119999898,
+        "p50": 292.3378150001099,
+        "p95": 408.00379840011374,
+        "max": 409.80763100014883
+      },
+      "peak_process_rss_mib": 37.78515625,
+      "template_mib": 0.21944046020507812,
+      "calibration_ms": 7155.065841000123,
+      "calibration": {
+        "method": "leave-one-out positives and cross-intent negatives",
+        "requires_more_recordings": false,
+        "intents": {
+          "BATHROOM": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.7019214823692003,
+            "negative_p10": 1.049872385117968,
+            "threshold": 0.8,
+            "requires_more_recordings": false
+          },
+          "FOOD": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.5155630500470207,
+            "negative_p10": 0.779382258905318,
+            "threshold": 0.5928975075540738,
+            "requires_more_recordings": false
+          },
+          "HELP": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.5753761124247528,
+            "negative_p10": 1.0402810603151695,
+            "threshold": 0.6616825292884657,
+            "requires_more_recordings": false
+          },
+          "PAIN": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.6139380289405748,
+            "negative_p10": 0.7766158847604951,
+            "threshold": 0.6212927078083962,
+            "requires_more_recordings": false
+          },
+          "WATER": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.5854626134261207,
+            "negative_p10": 0.9673924731530168,
+            "threshold": 0.6732820054400388,
+            "requires_more_recordings": false
+          }
+        },
+        "warning": "Enrollment calibration does not guarantee UNKNOWN rejection."
+      }
+    },
+    "mfcc-dtw-k5-band0.35": {
+      "known_test_count": 15,
+      "unknown_test_count": 3,
+      "correct_intent_rate": 1.0,
+      "accuracy_among_accepted_known": 1.0,
+      "accuracy_among_all_accepted": 1.0,
+      "known_rejection_rate": 0.0,
+      "overall_rejection_rate": 0.16666666666666666,
+      "false_accept_other_known": 0.0,
+      "false_accept_unknown": 0.0,
+      "confusion_matrix": {
+        "BATHROOM": {
+          "BATHROOM": 3
+        },
+        "FOOD": {
+          "FOOD": 3
+        },
+        "HELP": {
+          "HELP": 3
+        },
+        "PAIN": {
+          "PAIN": 3
+        },
+        "WATER": {
+          "WATER": 3
+        },
+        "UNKNOWN": {
+          "UNKNOWN": 3
+        }
+      },
+      "latency_ms": {
+        "mean": 319.0899144999296,
+        "p50": 305.47761299999365,
+        "p95": 392.3792785496743,
+        "max": 421.40099600010217
+      },
+      "peak_process_rss_mib": 37.8203125,
+      "template_mib": 0.21944046020507812,
+      "calibration_ms": 7534.291028000098,
+      "calibration": {
+        "method": "leave-one-out positives and cross-intent negatives",
+        "requires_more_recordings": false,
+        "intents": {
+          "BATHROOM": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.7019214823692004,
+            "negative_p10": 1.049872385117968,
+            "threshold": 0.8,
+            "requires_more_recordings": false
+          },
+          "FOOD": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.5155630500470206,
+            "negative_p10": 0.7793822589053182,
+            "threshold": 0.5928975075540737,
+            "requires_more_recordings": false
+          },
+          "HELP": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.5753761124247527,
+            "negative_p10": 1.0402810603151698,
+            "threshold": 0.6616825292884656,
+            "requires_more_recordings": false
+          },
+          "PAIN": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.6139380289405748,
+            "negative_p10": 0.7766158847604953,
+            "threshold": 0.6212927078083963,
+            "requires_more_recordings": false
+          },
+          "WATER": {
+            "positive_loo": 5,
+            "negative": 20,
+            "positive_p90": 0.5854626134261208,
+            "negative_p10": 0.9673924731530167,
+            "threshold": 0.6732820054400389,
+            "requires_more_recordings": false
+          }
+        },
+        "warning": "Enrollment calibration does not guarantee UNKNOWN rejection."
+      }
+    }
+  }
+}

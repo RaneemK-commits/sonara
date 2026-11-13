@@ -92,9 +92,9 @@ class Speaker:
         try:
             import sounddevice as sd
 
-            audio, sr = read_wav(wav)
+            audio, sr = read_wav(wav, max_seconds=None)
             sd.play(audio, sr)
             sd.wait()
-        except ImportError:
+        except (ImportError, OSError):  # Minimal Debian may lack the PortAudio shared library.
             if shutil.which("aplay"):
                 subprocess.run(["aplay", "-q", str(wav)], check=False)

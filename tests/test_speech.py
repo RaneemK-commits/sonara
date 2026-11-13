@@ -41,7 +41,7 @@ def test_trim_and_vad():
 
 def test_classifier_few_shot_and_reject(tmp_path):
     words = {"WATER": [300, 600], "HELP": [900, 450], "PAIN": [200, 1200]}
-    clf = PrototypeClassifier("mfcc", "dtw")
+    clf = PrototypeClassifier()
     for lab, fr in words.items():
         for s in range(3):
             clf.add(lab, mfcc(tone(fr, seed=s), SR))

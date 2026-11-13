@@ -1,0 +1,1347 @@
+{
+  "repository": "B-Czarnetzki/dysarthric_german",
+  "revision": "f7af95b7d3a71164499592411e31c4bb019acdfe",
+  "protocol": "single-template real-speech rejection/latency diagnostic",
+  "hardware": "Linux-7.0.0-g122c2c22d838-aarch64-with-glibc2.41",
+  "machine": "aarch64",
+  "python": "3.13.5",
+  "numpy": "2.2.6",
+  "reference_count": 4,
+  "takes_per_phrase": 1,
+  "band": 0.2,
+  "held_out_known_accuracy": null,
+  "speaker_dependent_validation": false,
+  "warning": "One example per phrase, undocumented speakers, no independent repeated positives. Not Sonara intent accuracy or clinical validation.",
+  "audit": {
+    "repository": "B-Czarnetzki/dysarthric_german",
+    "revision": "f7af95b7d3a71164499592411e31c4bb019acdfe",
+    "rows": 1272,
+    "unique_transcripts": 1270,
+    "transcript_repetition_histogram": {
+      "1": 1268,
+      "2": 2
+    },
+    "speaker_id_available": false,
+    "license_declared": null,
+    "supports_five_enrollment_three_heldout": false
+  },
+  "selection": {
+    "train_candidates": 64,
+    "reference_rule": "shortest transcript then source path; first complete valid utterances",
+    "official_test_rows_considered": 40,
+    "unknown_rule": "first official test rows; one complete utterance or first 5s voiced-span window per source"
+  },
+  "calibration": {
+    "method": "leave-one-out positives and cross-intent negatives",
+    "requires_more_recordings": true,
+    "intents": {
+      "PHRASE_01": {
+        "positive_loo": 0,
+        "negative": 3,
+        "positive_p90": null,
+        "negative_p10": 1.112641111905249,
+        "threshold": 0.6,
+        "requires_more_recordings": true
+      },
+      "PHRASE_02": {
+        "positive_loo": 0,
+        "negative": 3,
+        "positive_p90": null,
+        "negative_p10": 1.1366912828083513,
+        "threshold": 0.6,
+        "requires_more_recordings": true
+      },
+      "PHRASE_03": {
+        "positive_loo": 0,
+        "negative": 3,
+        "positive_p90": null,
+        "negative_p10": 1.1083874031093668,
+        "threshold": 0.6,
+        "requires_more_recordings": true
+      },
+      "PHRASE_04": {
+        "positive_loo": 0,
+        "negative": 3,
+        "positive_p90": null,
+        "negative_p10": 1.1955664835937132,
+        "threshold": 0.6,
+        "requires_more_recordings": true
+      }
+    },
+    "warning": "Enrollment calibration does not guarantee UNKNOWN rejection."
+  },
+  "enrollment_self_match_sanity": [
+    {
+      "reference": "PHRASE_01",
+      "is_enrollment_recording": true,
+      "intent": "PHRASE_01",
+      "accepted": true,
+      "best": "PHRASE_01",
+      "distance": 0.0,
+      "margin": 1.1024,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 0.0,
+        "PHRASE_02": 1.1537,
+        "PHRASE_03": 1.1024,
+        "PHRASE_04": 1.2337
+      },
+      "latency_ms": 1310.91,
+      "reason": "",
+      "score": 1.0
+    },
+    {
+      "reference": "PHRASE_02",
+      "is_enrollment_recording": true,
+      "intent": "PHRASE_02",
+      "accepted": true,
+      "best": "PHRASE_02",
+      "distance": 0.0,
+      "margin": 1.1324,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1537,
+        "PHRASE_02": 0.0,
+        "PHRASE_03": 1.1324,
+        "PHRASE_04": 1.1948
+      },
+      "latency_ms": 985.12,
+      "reason": "",
+      "score": 1.0
+    },
+    {
+      "reference": "PHRASE_03",
+      "is_enrollment_recording": true,
+      "intent": "PHRASE_03",
+      "accepted": true,
+      "best": "PHRASE_03",
+      "distance": 0.0,
+      "margin": 1.1024,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1024,
+        "PHRASE_02": 1.1324,
+        "PHRASE_03": 0.0,
+        "PHRASE_04": 1.1988
+      },
+      "latency_ms": 823.58,
+      "reason": "",
+      "score": 1.0
+    },
+    {
+      "reference": "PHRASE_04",
+      "is_enrollment_recording": true,
+      "intent": "PHRASE_04",
+      "accepted": true,
+      "best": "PHRASE_04",
+      "distance": 0.0,
+      "margin": 1.1948,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2337,
+        "PHRASE_02": 1.1948,
+        "PHRASE_03": 1.1988,
+        "PHRASE_04": 0.0
+      },
+      "latency_ms": 1118.43,
+      "reason": "",
+      "score": 1.0
+    }
+  ],
+  "unknown": {
+    "total_sources": 40,
+    "valid_audio_count": 40,
+    "invalid_audio_count": 0,
+    "false_accept_count": 0,
+    "false_accept_rate": 0.0,
+    "rejection_rate": 1.0,
+    "confusion": {
+      "UNKNOWN": 40
+    }
+  },
+  "per_input_kind": {
+    "five_second_unknown_window": {
+      "valid_unknown_count": 40,
+      "accepted": 0,
+      "false_accept_rate": 0.0,
+      "latency_ms": {
+        "mean": 1191.72175,
+        "p50": 1238.1950000000002,
+        "p95": 1422.2935,
+        "max": 1434.24
+      }
+    }
+  },
+  "processing_latency_ms": {
+    "mean": 1191.72175,
+    "p50": 1238.1950000000002,
+    "p95": 1422.2935,
+    "max": 1434.24
+  },
+  "peak_process_rss_mib": 43.078125,
+  "template_mib": 0.24488067626953125,
+  "rows": [
+    {
+      "source": "dysarthric_speech_368.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.035851,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1077,
+      "margin": 0.0385,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1462,
+        "PHRASE_02": 1.1736,
+        "PHRASE_03": 1.1077,
+        "PHRASE_04": 1.2529
+      },
+      "latency_ms": 1366.71,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_224.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.027076,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_01",
+      "distance": 1.142,
+      "margin": 0.0029,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.142,
+        "PHRASE_02": 1.1449,
+        "PHRASE_03": 1.1622,
+        "PHRASE_04": 1.22
+      },
+      "latency_ms": 1028.26,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_247.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.023545,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1271,
+      "margin": 0.0329,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1855,
+        "PHRASE_02": 1.1601,
+        "PHRASE_03": 1.1271,
+        "PHRASE_04": 1.2284
+      },
+      "latency_ms": 994.27,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_202.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.019335,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_01",
+      "distance": 1.1486,
+      "margin": 0.0192,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1486,
+        "PHRASE_02": 1.2021,
+        "PHRASE_03": 1.1678,
+        "PHRASE_04": 1.2049
+      },
+      "latency_ms": 1222.05,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_192.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.028501,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1379,
+      "margin": 0.0137,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1849,
+        "PHRASE_02": 1.1516,
+        "PHRASE_03": 1.1379,
+        "PHRASE_04": 1.2081
+      },
+      "latency_ms": 1012.83,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_357.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.029262,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.0491,
+      "margin": 0.0714,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1204,
+        "PHRASE_02": 1.1214,
+        "PHRASE_03": 1.0491,
+        "PHRASE_04": 1.212
+      },
+      "latency_ms": 996.94,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_182.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.028928,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_02",
+      "distance": 1.178,
+      "margin": 0.0193,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2399,
+        "PHRASE_02": 1.178,
+        "PHRASE_03": 1.1973,
+        "PHRASE_04": 1.2562
+      },
+      "latency_ms": 1012.2,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_364.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.040917,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.0964,
+      "margin": 0.0189,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1153,
+        "PHRASE_02": 1.1664,
+        "PHRASE_03": 1.0964,
+        "PHRASE_04": 1.183
+      },
+      "latency_ms": 1201.73,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_245.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.01977,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1576,
+      "margin": 0.0228,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1926,
+        "PHRASE_02": 1.1804,
+        "PHRASE_03": 1.1576,
+        "PHRASE_04": 1.2068
+      },
+      "latency_ms": 982.9,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_332.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.046237,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1115,
+      "margin": 0.0457,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1784,
+        "PHRASE_02": 1.1572,
+        "PHRASE_03": 1.1115,
+        "PHRASE_04": 1.2191
+      },
+      "latency_ms": 940.84,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_240.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.043688,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_01",
+      "distance": 1.1125,
+      "margin": 0.0093,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1125,
+        "PHRASE_02": 1.1982,
+        "PHRASE_03": 1.1218,
+        "PHRASE_04": 1.2118
+      },
+      "latency_ms": 917.97,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_371.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.034024,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_01",
+      "distance": 1.063,
+      "margin": 0.0714,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.063,
+        "PHRASE_02": 1.189,
+        "PHRASE_03": 1.1344,
+        "PHRASE_04": 1.1782
+      },
+      "latency_ms": 1222.28,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_328.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.038976,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1355,
+      "margin": 0.0366,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1721,
+        "PHRASE_02": 1.1812,
+        "PHRASE_03": 1.1355,
+        "PHRASE_04": 1.2675
+      },
+      "latency_ms": 1086.78,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_360.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.028852,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.137,
+      "margin": 0.0332,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2237,
+        "PHRASE_02": 1.1703,
+        "PHRASE_03": 1.137,
+        "PHRASE_04": 1.2447
+      },
+      "latency_ms": 973.53,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_379.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.032685,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1292,
+      "margin": 0.0527,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1983,
+        "PHRASE_02": 1.182,
+        "PHRASE_03": 1.1292,
+        "PHRASE_04": 1.1978
+      },
+      "latency_ms": 1090.37,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_299.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.026308,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1141,
+      "margin": 0.0603,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2311,
+        "PHRASE_02": 1.1744,
+        "PHRASE_03": 1.1141,
+        "PHRASE_04": 1.2058
+      },
+      "latency_ms": 1092.14,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_286.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.029205,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_04",
+      "distance": 1.1994,
+      "margin": 0.0168,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2677,
+        "PHRASE_02": 1.2431,
+        "PHRASE_03": 1.2162,
+        "PHRASE_04": 1.1994
+      },
+      "latency_ms": 1241.22,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_211.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.024409,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_02",
+      "distance": 1.1259,
+      "margin": 0.0035,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1688,
+        "PHRASE_02": 1.1259,
+        "PHRASE_03": 1.1294,
+        "PHRASE_04": 1.1668
+      },
+      "latency_ms": 1282.44,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_183.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.022127,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_01",
+      "distance": 1.1357,
+      "margin": 0.0069,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1357,
+        "PHRASE_02": 1.1426,
+        "PHRASE_03": 1.1472,
+        "PHRASE_04": 1.1808
+      },
+      "latency_ms": 1296.09,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_384.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.040562,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_04",
+      "distance": 1.1343,
+      "margin": 0.0162,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1618,
+        "PHRASE_02": 1.1526,
+        "PHRASE_03": 1.1505,
+        "PHRASE_04": 1.1343
+      },
+      "latency_ms": 1236.98,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_590.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.052376,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.137,
+      "margin": 0.0776,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2206,
+        "PHRASE_02": 1.2146,
+        "PHRASE_03": 1.137,
+        "PHRASE_04": 1.2777
+      },
+      "latency_ms": 1328.34,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_29.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.01517,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1453,
+      "margin": 0.0276,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1729,
+        "PHRASE_02": 1.187,
+        "PHRASE_03": 1.1453,
+        "PHRASE_04": 1.1813
+      },
+      "latency_ms": 1253.81,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_595.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.025274,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.137,
+      "margin": 0.0129,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1499,
+        "PHRASE_02": 1.1885,
+        "PHRASE_03": 1.137,
+        "PHRASE_04": 1.2393
+      },
+      "latency_ms": 1275.78,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_60.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.030169,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1069,
+      "margin": 0.0055,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1429,
+        "PHRASE_02": 1.1123,
+        "PHRASE_03": 1.1069,
+        "PHRASE_04": 1.2329
+      },
+      "latency_ms": 1371.4,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_77.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.021254,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1857,
+      "margin": 0.0131,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2285,
+        "PHRASE_02": 1.2192,
+        "PHRASE_03": 1.1857,
+        "PHRASE_04": 1.1988
+      },
+      "latency_ms": 1286.47,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_529.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.024293,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_01",
+      "distance": 1.1241,
+      "margin": 0.0194,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1241,
+        "PHRASE_02": 1.1719,
+        "PHRASE_03": 1.1435,
+        "PHRASE_04": 1.2212
+      },
+      "latency_ms": 1434.24,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_564.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.029346,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1424,
+      "margin": 0.0236,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.166,
+        "PHRASE_02": 1.1822,
+        "PHRASE_03": 1.1424,
+        "PHRASE_04": 1.2209
+      },
+      "latency_ms": 1291.69,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_73.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.012841,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1457,
+      "margin": 0.0835,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2292,
+        "PHRASE_02": 1.2302,
+        "PHRASE_03": 1.1457,
+        "PHRASE_04": 1.2507
+      },
+      "latency_ms": 1239.41,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_24.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.015322,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_01",
+      "distance": 1.1533,
+      "margin": 0.0035,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1533,
+        "PHRASE_02": 1.1785,
+        "PHRASE_03": 1.1842,
+        "PHRASE_04": 1.1568
+      },
+      "latency_ms": 1421.96,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_34.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.014525,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1651,
+      "margin": 0.0039,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1896,
+        "PHRASE_02": 1.169,
+        "PHRASE_03": 1.1651,
+        "PHRASE_04": 1.1761
+      },
+      "latency_ms": 1039.34,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_526.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.015268,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.163,
+      "margin": 0.012,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2101,
+        "PHRASE_02": 1.1749,
+        "PHRASE_03": 1.163,
+        "PHRASE_04": 1.2191
+      },
+      "latency_ms": 979.66,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_15.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.028093,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.0972,
+      "margin": 0.076,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2352,
+        "PHRASE_02": 1.1731,
+        "PHRASE_03": 1.0972,
+        "PHRASE_04": 1.2282
+      },
+      "latency_ms": 1046.68,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_49.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.02325,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1219,
+      "margin": 0.046,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1689,
+        "PHRASE_02": 1.1756,
+        "PHRASE_03": 1.1219,
+        "PHRASE_04": 1.1679
+      },
+      "latency_ms": 1194.66,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_42.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.023371,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1453,
+      "margin": 0.0231,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1819,
+        "PHRASE_02": 1.1684,
+        "PHRASE_03": 1.1453,
+        "PHRASE_04": 1.2859
+      },
+      "latency_ms": 1333.24,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_559.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.032525,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_04",
+      "distance": 1.1544,
+      "margin": 0.0035,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1695,
+        "PHRASE_02": 1.1719,
+        "PHRASE_03": 1.1579,
+        "PHRASE_04": 1.1544
+      },
+      "latency_ms": 1372.31,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_16.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.023899,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1525,
+      "margin": 0.0243,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1767,
+        "PHRASE_02": 1.2262,
+        "PHRASE_03": 1.1525,
+        "PHRASE_04": 1.2093
+      },
+      "latency_ms": 1336.39,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_525.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.016233,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1788,
+      "margin": 0.0201,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.214,
+        "PHRASE_02": 1.1989,
+        "PHRASE_03": 1.1788,
+        "PHRASE_04": 1.2175
+      },
+      "latency_ms": 1240.57,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_30.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.016305,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.137,
+      "margin": 0.0611,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2428,
+        "PHRASE_02": 1.1985,
+        "PHRASE_03": 1.137,
+        "PHRASE_04": 1.1982
+      },
+      "latency_ms": 1428.63,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_31.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.019696,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1637,
+      "margin": 0.0044,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.1681,
+        "PHRASE_02": 1.1831,
+        "PHRASE_03": 1.1637,
+        "PHRASE_04": 1.2599
+      },
+      "latency_ms": 1292.53,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    },
+    {
+      "source": "dysarthric_speech_601.wav",
+      "kind": "five_second_unknown_window",
+      "audio_s": 5.0,
+      "truth": "UNKNOWN",
+      "valid_audio": true,
+      "quality": {
+        "duration_s": 5.0,
+        "speech_s": 5.0,
+        "rms": 0.036732,
+        "clipped_fraction": 0.0,
+        "feedback": "Recording valid"
+      },
+      "intent": null,
+      "accepted": false,
+      "best": "PHRASE_03",
+      "distance": 1.1751,
+      "margin": 0.0203,
+      "threshold": 0.6,
+      "scores": {
+        "PHRASE_01": 1.2277,
+        "PHRASE_02": 1.1954,
+        "PHRASE_03": 1.1751,
+        "PHRASE_04": 1.2029
+      },
+      "latency_ms": 1303.23,
+      "reason": "distant or ambiguous",
+      "score": 0.0
+    }
+  ],
+  "isolated_from_running_service": true,
+  "caregiver_requests_created": 0
+}

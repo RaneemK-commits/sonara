@@ -1,80 +1,61 @@
-"""On-device latency + energy benchmark. Run ON THE UNO Q for numbers you can quote.
-
-  python scripts/benchmark.py --wav data/recordings/alice/WATER/xxx.wav --runs 30 \
-      --idle-watts 2.1 --active-watts 3.4      # watts read from a USB power meter
-
-Without measured watts it prints latency only; never present estimated watts as measured.
-Energy per interaction = active_watts × active_seconds + idle_watts × (remaining seconds).
-"""
+"""CPU-only recognition benchmark. Run on UNO Q to obtain board-specific measurements."""
 from __future__ import annotations
-
 import argparse
 import json
-import os
-import statistics
+import platform
+import resource
 import sys
 import time
 from pathlib import Path
-
+import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-from sonara.audio.vad import trim_silence  # noqa: E402
-from sonara.audio.wavio import read_wav, resample_linear  # noqa: E402
-from sonara.config import load_config  # noqa: E402
-from sonara.recognizer import Recognizer  # noqa: E402
-
-
-def stats(xs):
-    xs = sorted(xs)
-    return {"mean_ms": round(statistics.fmean(xs), 1), "p50_ms": round(xs[len(xs) // 2], 1),
-            "p95_ms": round(xs[min(len(xs) - 1, int(len(xs) * .95))], 1)}
+from sonara.audio.wavio import read_wav, resample_linear
+from sonara.config import load_config
+from sonara.recognizer import Recognizer
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--wav", type=Path, required=True)
-    ap.add_argument("--runs", type=int, default=30)
-    ap.add_argument("--backend", choices=["oww", "mfcc"])
-    ap.add_argument("--idle-watts", type=float)
-    ap.add_argument("--active-watts", type=float)
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--wav', type=Path, required=True)
+    ap.add_argument('--profile', default=None)
+    ap.add_argument('--runs', type=int, default=30)
+    ap.add_argument('--synthetic', action='store_true')
+    ap.add_argument('--output', type=Path, default=Path('results/benchmark.json'))
+    ap.add_argument("--config", type=Path)
     args = ap.parse_args()
-
-    cfg = load_config()
-    sr = cfg.section("audio").get("sample_rate", 16000)
-    rec = Recognizer(cfg, args.backend)
-    audio, fsr = read_wav(args.wav)
-    audio = resample_linear(audio, fsr, sr)
-    stages = {"vad_trim": [], "embed": [], "classify": [], "total": []}
-    cpu0 = time.process_time()
-    wall0 = time.perf_counter()
+    if not 1 <= args.runs <= 1000:
+        ap.error('runs must be 1–1000')
+    rec = Recognizer(load_config(args.config))
+    if args.profile:
+        rec.reload(args.profile)
+    if not rec.ready:
+        ap.error('enroll and load a profile before benchmarking')
+    audio, sr = read_wav(args.wav)
+    audio = resample_linear(audio, sr, 16000)
+    try:
+        rec.prepare(audio)
+    except ValueError as exc:
+        ap.error(str(exc))
+    rec.recognize(audio)  # warm caches; capture is excluded from every timing
+    elapsed = []
+    cpu_start = time.process_time()
     for _ in range(args.runs):
-        t0 = time.perf_counter()
-        sp = trim_silence(audio, sr)
-        t1 = time.perf_counter()
-        seq = rec.embedder(sp)
-        t2 = time.perf_counter()
-        if rec.ready:
-            rec.clf.predict(seq, rec.threshold, rec.margin)
-        t3 = time.perf_counter()
-        for k, dt in zip(stages, (t1 - t0, t2 - t1, t3 - t2, t3 - t0)):
-            stages[k].append(dt * 1000)
-    wall = time.perf_counter() - wall0
-    cpu_util = (time.process_time() - cpu0) / wall / (os.cpu_count() or 1)
-    out = {"backend": rec.backend, "audio_s": round(audio.size / sr, 2), "runs": args.runs,
-           "cpu_count": os.cpu_count(), "avg_cpu_util_all_cores": round(cpu_util, 3),
-           "stages": {k: stats(v) for k, v in stages.items()}}
-    active_s = statistics.fmean(stages["total"]) / 1000
-    if args.idle_watts and args.active_watts:
-        out["energy_per_recognition_J"] = round(args.active_watts * active_s, 3)
-        out["energy_source"] = "measured (USB power meter readings supplied)"
-        out["idle_power_W"] = args.idle_watts
-        out["idle_energy_per_day_Wh"] = round(args.idle_watts * 24, 1)
-    else:
-        out["energy_source"] = "not measured — supply --idle-watts/--active-watts"
+        start = time.perf_counter()
+        result = rec.recognize(audio)
+        elapsed.append((time.perf_counter()-start)*1000)
+    out = {'hardware': platform.platform(), 'machine': platform.machine(), 'python': platform.python_version(),
+           'synthetic': args.synthetic, 'profile': rec.profile_id, 'counts': rec.clf.counts(),
+           'runs': args.runs, 'audio_s': audio.size/16000,
+           'processing_ms': {'mean': float(np.mean(elapsed)), 'p50': float(np.percentile(elapsed, 50)),
+                             'p95': float(np.percentile(elapsed, 95)), 'max': max(elapsed)},
+           'cpu_ms_per_run': (time.process_time()-cpu_start)*1000/args.runs,
+           'peak_process_rss_mib': resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024,
+           'template_mib': sum(s.nbytes for s in rec.clf.seqs)/1024**2,
+           'last_prediction': result.to_dict(), 'note': 'Processing only; no capture or TTS. RSS is process high-water mark.'}
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(out, indent=2, allow_nan=False))
     print(json.dumps(out, indent=2))
-    Path("results").mkdir(exist_ok=True)
-    (Path("results") / f"bench_{rec.backend}_{time.strftime('%H%M%S')}.json").write_text(json.dumps(out, indent=2))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -1,0 +1,31 @@
+{
+  "server": "http://192.168.1.242:8012",
+  "device_microphone": true,
+  "recording_kind": "ambient room sound; not labeled speech",
+  "health_during_capture_ms": 112.41737000091234,
+  "quality": {
+    "duration_s": 1.0,
+    "speech_s": 1.0,
+    "rms": 0.026019,
+    "clipped_fraction": 0.0,
+    "feedback": "Recording valid"
+  },
+  "saved_feature_samples": 1,
+  "test_prediction": {
+    "intent": null,
+    "accepted": false,
+    "best": "WATER",
+    "distance": 1.3542,
+    "margin": null,
+    "threshold": 0.6,
+    "scores": {
+      "WATER": 1.3542
+    },
+    "latency_ms": 30.87,
+    "reason": "distant or ambiguous",
+    "score": 0.0
+  },
+  "caregiver_requests_created": 0,
+  "temporary_profile_deleted": true,
+  "raw_audio_retained": false
+}

@@ -1,0 +1,44 @@
+{
+  "hardware": "Linux-7.0.0-g122c2c22d838-aarch64-with-glibc2.41",
+  "machine": "aarch64",
+  "python": "3.13.5",
+  "synthetic": true,
+  "profile": "synthetic_short",
+  "counts": {
+    "BATHROOM": 5,
+    "FOOD": 5,
+    "HELP": 5,
+    "PAIN": 5,
+    "WATER": 5
+  },
+  "runs": 30,
+  "audio_s": 0.6,
+  "processing_ms": {
+    "mean": 298.1480261999877,
+    "p50": 288.688470499892,
+    "p95": 351.16375119991966,
+    "max": 360.37083800010805
+  },
+  "cpu_ms_per_run": 295.3532742,
+  "peak_process_rss_mib": 37.27734375,
+  "template_mib": 0.21944046020507812,
+  "last_prediction": {
+    "intent": "WATER",
+    "accepted": true,
+    "best": "WATER",
+    "distance": 0.5592,
+    "margin": 0.4814,
+    "threshold": 0.6733,
+    "scores": {
+      "HELP": 1.2089,
+      "WATER": 0.5592,
+      "FOOD": 1.2324,
+      "PAIN": 1.0406,
+      "BATHROOM": 1.3827
+    },
+    "latency_ms": 282.82,
+    "reason": "",
+    "score": 0.44629700278800555
+  },
+  "note": "Processing only; no capture or TTS. RSS is process high-water mark."
+}

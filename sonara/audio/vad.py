@@ -1,7 +1,6 @@
 """Energy-based voice activity detection.
 
-Deliberately cheap: it runs continuously in always-on mode so the neural model only wakes up
-when there is speech (the main energy-saving mechanism of the pipeline).
+Preserves internal pauses; trims only the utterance endpoints.
 """
 from __future__ import annotations
 
@@ -12,8 +11,8 @@ def rms(block: np.ndarray) -> float:
     return float(np.sqrt(np.mean(np.square(block, dtype=np.float64)) + 1e-12))
 
 
-def trim_silence(audio: np.ndarray, sr: int, frame_ms: int = 20, factor: float = 3.0,
-                 pad_ms: int = 100) -> np.ndarray:
+def trim_silence(audio: np.ndarray, sr: int, frame_ms: int = 20, factor: float = 2.0,
+                 pad_ms: int = 180) -> np.ndarray:
     """Trim leading/trailing silence using a noise floor estimated from the quietest frames."""
     if audio.size == 0:
         return audio
@@ -23,12 +22,14 @@ def trim_silence(audio: np.ndarray, sr: int, frame_ms: int = 20, factor: float =
         return audio
     energies = np.sqrt(np.mean(audio[: n * frame].reshape(n, frame) ** 2, axis=1) + 1e-12)
     floor = np.percentile(energies, 10)
-    voiced = np.where(energies > max(floor * factor, 1e-4))[0]
+    # Cap the relative threshold to preserve continuous quiet vocalizations.
+    threshold = max(1e-5, min(floor * factor, float(energies.max()) * .2))
+    voiced = np.where(energies > threshold)[0]
     if voiced.size == 0:
         return audio[:0]
     pad = int(pad_ms / frame_ms)
     start = max(0, voiced[0] - pad) * frame
-    end = min(n, voiced[-1] + 1 + pad) * frame
+    end = min(audio.size, (voiced[-1] + 1 + pad) * frame)
     return audio[start:end]
 
 
@@ -45,7 +46,7 @@ class StreamingVAD:
         self.start_factor = start_factor
         self.end_blocks = max(1, silence_end_ms // block_ms)
         self.min_blocks = max(1, min_speech_ms // block_ms)
-        self.noise_floor = 1e-3
+        self.noise_floor = 1e-5
         self.reset()
 
     def reset(self) -> None:
@@ -55,7 +56,7 @@ class StreamingVAD:
 
     def update(self, block: np.ndarray) -> str | None:
         e = rms(block)
-        is_voiced = e > max(self.noise_floor * self.start_factor, 2e-3)
+        is_voiced = e > max(self.noise_floor * self.start_factor, 3e-5)
         if not self.in_speech:
             if is_voiced:
                 self.speech_blocks += 1

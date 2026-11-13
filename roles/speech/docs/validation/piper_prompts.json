@@ -1,0 +1,88 @@
+{
+  "voice": "en_US-lessac-medium",
+  "generator": "piper-tts 1.8.0 on x86-64; pregenerated playback on board",
+  "prompts": {
+    "HELP": {
+      "sample_rate": 22050,
+      "duration_s": 1.509297052154195,
+      "sha256": "ddaa60c241c7853b8ede3731396984ca727643d7b2c4ecdebb7639e11cf685c4"
+    },
+    "WATER": {
+      "sample_rate": 22050,
+      "duration_s": 1.8459863945578232,
+      "sha256": "a69f67334e32b070d2e318d87cb30ecfe892da90f3b23ba91d895b566a43a9ae"
+    },
+    "FOOD": {
+      "sample_rate": 22050,
+      "duration_s": 2.8908843537414968,
+      "sha256": "dca67700fa67af05739ebbed7704b30c47529d12fa061f570a10625b9c11bf0c"
+    },
+    "PAIN": {
+      "sample_rate": 22050,
+      "duration_s": 0.9171882086167801,
+      "sha256": "2e4e80058f826003e5838bce3b6547e90168eebf39ad53d9bedc3595cd800cf6"
+    },
+    "BATHROOM": {
+      "sample_rate": 22050,
+      "duration_s": 2.2523356009070294,
+      "sha256": "c296ad8d999ecac75e461926632656d96839284f05e8ae2c67f29e4e4b0ee12b"
+    },
+    "YES": {
+      "sample_rate": 22050,
+      "duration_s": 0.6385487528344671,
+      "sha256": "a303e6d8a4c93aae9346d48ff2ab369bfe94230c02aa3a7cf410b2f6c4824d5d"
+    },
+    "NO": {
+      "sample_rate": 22050,
+      "duration_s": 0.5688888888888889,
+      "sha256": "04af1f865895908ca171e07234e6004a30f153dc02c9a4ee37dfb9f82c2c7615"
+    },
+    "didnt_understand": {
+      "sample_rate": 22050,
+      "duration_s": 3.01859410430839,
+      "sha256": "433cfc645ff406da5506480af8c24314350a26024db0f2837a0fff8de6feb73c"
+    },
+    "ask_send": {
+      "sample_rate": 22050,
+      "duration_s": 3.2624036281179136,
+      "sha256": "f727b5eeed17e283c76eb66330ab792d0fe079a5b6b368310eed23f50e9ea405"
+    },
+    "sending": {
+      "sample_rate": 22050,
+      "duration_s": 1.242267573696145,
+      "sha256": "e3f03cb1e56966b1f7041d12ba1aea876b89c74c002be9dfdbc5dc55876a428b"
+    },
+    "cancelled": {
+      "sample_rate": 22050,
+      "duration_s": 1.3351473922902495,
+      "sha256": "4877ed17b95ff9a683e21ab2f2741a3287425a93d32931ce002711dafcecd334"
+    },
+    "displayed": {
+      "sample_rate": 22050,
+      "duration_s": 2.2987755102040817,
+      "sha256": "f1e89f599d697af3f8bb92e5ca72efd46e4d4a892b78c92549ed550d8ecf973e"
+    },
+    "acknowledged": {
+      "sample_rate": 22050,
+      "duration_s": 2.182675736961451,
+      "sha256": "57de696ca73d07a7a1f6d1e1664761a405e2de47af3b6fd08578be2462245b79"
+    },
+    "completed": {
+      "sample_rate": 22050,
+      "duration_s": 1.9736961451247166,
+      "sha256": "d5627cdaed00b240f688f96ac8c5b1d3db7d6267d8549d751d75afe4096b1c58"
+    },
+    "not_displayed": {
+      "sample_rate": 22050,
+      "duration_s": 4.899410430839002,
+      "sha256": "056576c42775bd89b1c228e2f14eb0f2112ade7b50a6d2d8ed5d762050f397d3"
+    },
+    "listening": {
+      "sample_rate": 22050,
+      "duration_s": 0.6385487528344671,
+      "sha256": "78d8f167fc8366261d1d7ec5cd15138821463436ead03652573bf8418ee9946b"
+    }
+  },
+  "voice_sha256": "5efe09e69902187827af646e1a6e9d269dee769f9877d17b16b1b46eeaaf019f",
+  "voice_config_sha256": "efe19c417bed055f2d69908248c6ba650fa135bc868b0e6abb3da181dab690a0"
+}

@@ -1,0 +1,25 @@
+{
+  "device": "alsa:plughw:CARD=Set,DEV=0",
+  "sample_rate": 16000,
+  "shape": [
+    16000
+  ],
+  "dtype": "float32",
+  "finite": true,
+  "peak": 0.02056884765625,
+  "rms": 0.004931156057864428,
+  "startup_capture_close_ms": 1343.274565999991,
+  "raw_audio_retained": false,
+  "recognition": {
+    "intent": null,
+    "accepted": false,
+    "best": null,
+    "distance": null,
+    "margin": 0.0,
+    "threshold": 0.8,
+    "scores": {},
+    "latency_ms": 30.27,
+    "reason": "invalid input or empty profile",
+    "score": 0.0
+  }
+}

@@ -1,0 +1,507 @@
+--- a/web/room/index.html
++++ b/web/room/index.html
+@@ -9,6 +9,8 @@
+   body { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto auto; gap: 20px;
+          padding: 24px clamp(16px, 4vw, 48px); font-size: clamp(18px, 2.2vw, 26px); }
+   header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
++  #voice-open { font: inherit; padding: .6em; border-radius: var(--radius);
++                border: 2px solid var(--line); background: var(--surface); color: var(--ink); }
+   .bed { font-weight: 800; letter-spacing: .02em; }
+   .state { font-size: .9em; }
+   main { display: grid; align-content: center; gap: 24px; text-align: center; }
+@@ -33,6 +35,15 @@
+   @keyframes pulse { 50% { transform: scale(.97); filter: brightness(1.15); } }
+   @media (prefers-reduced-motion: reduce) { .controls .talk.live { animation: none; outline: 6px solid var(--ok); } }
+   .tiles { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
++  dialog { color: var(--ink); background: var(--surface); border: 2px solid var(--line);
++           border-radius: var(--radius); width: min(960px, 95vw); max-height: 95vh; overflow: auto; }
++  dialog::backdrop { background: #0009; }
++  dialog button, dialog select, dialog input { font: inherit; padding: .65em; margin: .25em;
++      border: 2px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--surface); }
++  dialog button { cursor: pointer; } dialog button:disabled { opacity: .4; }
++  #voice-feedback { min-height: 3em; white-space: pre-wrap; }
++  #voice-progress { display: flex; flex-wrap: wrap; gap: 12px; }
++  #voice-phrase { font-weight: 800; font-size: 1.2em; }
+   .tiles span { width: 100%; text-align: center; color: var(--muted); font-size: .75em; }
+   .tiles button { padding: .5em 1em; border-radius: 999px; background: var(--surface);
+                   border: 2px solid var(--line); color: var(--ink); font-size: .85em; font-weight: 600; }
+@@ -43,6 +54,7 @@
+   <span class="bed" id="bed">—</span>
+   <span class="badge state" id="state">Connecting…</span>
+   <span class="conn" id="conn">Offline</span>
++  <button id="voice-open">Set up my voice</button>
+ </header>
+ 
+ <main aria-live="polite">
+@@ -59,6 +71,35 @@
+ 
+ <section class="tiles" id="tiles" aria-label="Choose a phrase manually"></section>
+ 
++<dialog id="voice-dialog" aria-labelledby="voice-title">
++  <h2 id="voice-title">Welcome to your personal voice setup</h2>
++  <p>Use your natural voice. Record each request five times using the microphone attached to Sonara.</p>
++  <div id="voice-profile-controls">
++    <label>Profile <input id="voice-id" value="patient_001" maxlength="64" pattern="[A-Za-z0-9][A-Za-z0-9_-]*"></label>
++    <button id="voice-start">Create / edit profile</button><br>
++    <label>Saved profiles <select id="voice-profiles"></select></label>
++    <button id="voice-load">Use selected profile</button>
++    <button id="voice-delete">Delete selected profile</button>
++    <p><label><input type="checkbox" id="voice-keep"> Keep recordings locally for development / evaluation (optional)</label></p>
++  </div>
++  <div id="voice-session" hidden>
++    <p id="voice-progress"></p>
++    <label>Choose request <select id="voice-intent"></select></label>
++    <p id="voice-phrase"></p>
++    <label><input type="checkbox" id="voice-manual" checked> Use a fixed recording time (preserves pauses)</label>
++    <label>Seconds <input type="number" id="voice-seconds" value="3" min="0.3" max="5" step="0.1"></label>
++    <p><button id="voice-record">Record pronunciation</button>
++       <button id="voice-save" disabled>Keep this recording</button>
++       <button id="voice-repeat" disabled>Discard / repeat</button></p>
++    <p><button id="voice-remove">Delete last saved recording</button>
++       <button id="voice-clear">Redo this request</button></p>
++    <p><button id="voice-calibrate">Save / recalibrate</button>
++       <button id="voice-test">Test recognition</button>
++       <button id="voice-finish">Finish and use profile</button></p>
++  </div>
++  <p id="voice-feedback" role="status" aria-live="polite"></p>
++  <button id="voice-close">Close voice setup</button>
++</dialog>
+ <script>
+ const $ = id => document.getElementById(id);
+ const STATE = { IDLE: ["Ready", ""], LISTENING: ["Listening…", "ok"], PROCESSING: ["Understanding…", ""],
+@@ -114,6 +155,136 @@
+                        $("state").textContent = "Reconnecting…"; setTimeout(connect, 1500); };
+ }
+ connect();
++
++let voiceState = null, voiceBusy = false;
++const voiceFeedback = text => { $("voice-feedback").textContent = text; };
++async function voiceApi(path, method = "POST", body) {
++  const response = await fetch(path, {method, headers: {"Content-Type": "application/json"},
++    body: body === undefined ? undefined : JSON.stringify(body)});
++  const data = await response.json();
++  if (!response.ok) throw Error(data.detail || "Voice setup failed");
++  return data;
++}
++function renderVoice(state) {
++  voiceState = state;
++  $("voice-session").hidden = !state.enrolling;
++  $("voice-profile-controls").hidden = state.enrolling;
++  $("voice-id").value = state.profile_id || state.active_profile;
++  $("voice-profiles").replaceChildren(...state.profiles.map(id => new Option(id, id)));
++  $("voice-intent").replaceChildren(new Option("Choose a request", ""), ...state.intents.map(i => new Option(i.label, i.id)));
++  if (state.intent) $("voice-intent").value = state.intent;
++  const intent = state.intents.find(i => i.id === state.intent);
++  $("voice-phrase").textContent = intent ? intent.speak : "Choose a request to begin.";
++  $("voice-progress").textContent = state.intents.filter(i => !["YES", "NO"].includes(i.id))
++    .map(i => `${i.label}: ${state.counts[i.id] || 0}/5`).join(" · ");
++  $("voice-record").disabled = !state.has_mic || !state.intent;
++  $("voice-save").disabled = true;
++  $("voice-repeat").disabled = true;
++  const complete = state.intents.filter(i => !["YES", "NO"].includes(i.id))
++    .every(i => (state.counts[i.id] || 0) >= 5);
++  $("voice-finish").disabled = !complete;
++  if (!state.has_mic) voiceFeedback("No device microphone. Connect one and restart Sonara. Phrase tiles remain available.");
++}
++async function voiceAction(fn) {
++  if (voiceBusy) return;
++  voiceBusy = true;
++  // Disable controls while a device capture or profile write is running.
++  const controls = [...$("voice-dialog").querySelectorAll("button, input, select")];
++  const disabled = controls.map(el => el.disabled);
++  controls.forEach(el => { el.disabled = true; });
++  try { await fn(); } catch (err) { voiceFeedback(err.message); }
++  finally {
++    controls.forEach((el, i) => { el.disabled = disabled[i]; });
++    voiceBusy = false;
++    if (voiceState) {
++      const savePending = $("voice-save").dataset.pending === "yes";
++      renderVoice(voiceState);
++      $("voice-save").disabled = !savePending;
++      $("voice-repeat").disabled = !savePending;
++    }
++  }
++}
++$("voice-open").onclick = () => {
++  $("voice-dialog").showModal();
++  voiceAction(async () => {
++    renderVoice(await voiceApi("/api/profiles", "GET"));
++    voiceFeedback("Create or select your profile. Voice setup pauses Talk; it never sends caregiver requests.");
++  });
++};
++$("voice-start").onclick = () => voiceAction(async () => {
++  renderVoice(await voiceApi("/api/enrollment/start", "POST", {
++    profile_id: $("voice-id").value, keep_audio: $("voice-keep").checked}));
++  voiceFeedback("Choose a request, then record your own pronunciation five times. Yes and No are optional.");
++});
++$("voice-intent").onchange = () => voiceAction(async () => {
++  $("voice-save").dataset.pending = "no";
++  renderVoice(await voiceApi("/api/enrollment/intent", "POST", {intent: $("voice-intent").value}));
++  voiceFeedback("Press Record, then speak when Recording appears. Keep or repeat each take.");
++});
++async function recordVoice(test) {
++  const body = {manual: $("voice-manual").checked, seconds: Number($("voice-seconds").value)};
++  $("voice-save").dataset.pending = "no";
++  voiceFeedback(`Recording on Sonara… ${body.manual ? body.seconds + " seconds; speak now." : "Speak now; pauses end the recording."}`);
++  const data = await voiceApi(`/api/enrollment/${test ? "test" : "capture"}`, "POST", body);
++  if (test) {
++    const p = data.prediction;
++    voiceFeedback(`${p.accepted ? "Recognized: " + p.intent : "UNKNOWN — please repeat"}\nDistance: ${p.distance}; margin: ${p.margin}; matching: ${p.latency_ms} ms.\n${data.quality.feedback}. No request sent.`);
++  } else {
++    $("voice-save").dataset.pending = "yes";
++    voiceFeedback(`${data.quality.feedback}. ${data.quality.duration_s} seconds. Keep this take or repeat it.`);
++  }
++}
++$("voice-record").onclick = () => voiceAction(() => recordVoice(false));
++$("voice-test").onclick = () => voiceAction(() => recordVoice(true));
++$("voice-repeat").onclick = () => voiceAction(() => recordVoice(false));
++$("voice-save").onclick = () => voiceAction(async () => {
++  renderVoice(await voiceApi("/api/enrollment/sample"));
++  $("voice-save").dataset.pending = "no";
++  voiceFeedback("Recording saved as acoustic features. Record another take or choose the next request.");
++});
++$("voice-remove").onclick = () => voiceAction(async () => {
++  const count = voiceState.counts[voiceState.intent] || 0;
++  if (!count) throw Error("No saved recordings for this request.");
++  renderVoice(await voiceApi(`/api/enrollment/intents/${voiceState.intent}/samples/${count-1}`, "DELETE"));
++  voiceFeedback("Last saved recording deleted.");
++});
++$("voice-clear").onclick = () => voiceAction(async () => {
++  if (!confirm("Delete all saved recordings for this request?")) return;
++  renderVoice(await voiceApi(`/api/enrollment/intents/${voiceState.intent}`, "DELETE"));
++  voiceFeedback("Request cleared. Record five new takes.");
++});
++$("voice-calibrate").onclick = () => voiceAction(async () => {
++  renderVoice(await voiceApi("/api/enrollment/calibrate"));
++  voiceFeedback(voiceState.calibration.requires_more_recordings
++    ? "Calibration needs more varied recordings or better separation between requests. Test carefully and redo confusing takes."
++    : "Enrollment calibration saved. Test with new recordings, including unrelated speech. Rejection is not guaranteed.");
++});
++$("voice-finish").onclick = () => voiceAction(async () => {
++  renderVoice(await voiceApi("/api/enrollment/finish"));
++  $("voice-dialog").close();
++});
++$("voice-load").onclick = () => voiceAction(async () => {
++  renderVoice(await voiceApi(`/api/profiles/${encodeURIComponent($("voice-profiles").value)}/load`));
++  voiceFeedback("Profile loaded. Close setup to use Talk.");
++});
++$("voice-delete").onclick = () => voiceAction(async () => {
++  const id = $("voice-profiles").value;
++  if (!id || !confirm(`Delete voice profile ${id} and its saved recordings?`)) return;
++  renderVoice(await voiceApi(`/api/profiles/${encodeURIComponent(id)}`, "DELETE"));
++  voiceFeedback("Profile deleted.");
++});
++async function closeVoice() {
++  if (voiceBusy) return;
++  await voiceAction(async () => {
++    renderVoice(await voiceApi("/api/enrollment/cancel"));
++    $("voice-save").dataset.pending = "no";
++    $("voice-dialog").close();
++  });
++}
++$("voice-close").onclick = closeVoice;
++$("voice-dialog").addEventListener("cancel", event => { event.preventDefault(); closeVoice(); });
++// New devices open the welcome flow; existing profiles retain the normal bedside view.
++voiceApi("/api/profiles", "GET").then(state => { if (!state.ready) $("voice-open").click(); }).catch(() => {});
+ </script>
+ </body>
+ </html>
+--- a/README.md
++++ b/README.md
+@@ -1,93 +1,206 @@
+ # Sonara — giving every voice a way through
+ 
+-An **offline bedside personal speech translator** on the Arduino UNO Q. A patient with a speech
+-impairment says a phrase *in their own way*. Sonara recognises it on the device with a
+-personalised neural speech model and **speaks it aloud in clear English**. If the caregiver isn't
+-in the room, Sonara sends the request to their phone and tells the patient honestly whether it was
+-seen, acknowledged and completed.
+-
+-No cloud, no LLM, no raw audio leaves the board. Prototype only, **not a medical device** and not
+-a replacement for a nurse-call system.
+-
+-- Design decisions: [docs/DESIGN.md](docs/DESIGN.md) · Original PDR: [docs/PDR_v1.0.md](docs/PDR_v1.0.md)
+-
+-> **Status: scaffold only.** The room display and caregiver dashboard in `web/` are functional
+-> placeholders for wiring up the flow. **UI design and branding are not decided yet.** Model
+-> download, on-board audio and the UNO Q Bridge have not been tested.
+-
+-## How it works
+-```
+-USB mic → VAD → log-mel → speech-embedding CNN (ONNX, frozen) → DTW vs patient's prototypes
+-       → accept / reject → Piper voice (pre-synthesised) → room speaker + room display
+-       → [confirm] → SQLite → WebSocket → caregiver dashboard → ack/complete → spoken back
+-MCU (STM32): Talk / Confirm / Cancel buttons + 3 status LEDs over Arduino Bridge
+-```
+-| Path | What |
++Sonara is an offline bedside communication MVP for the Arduino UNO Q (4 GB, ARM64 Debian).
++It recognizes a small vocabulary of **one person's enrolled acoustic patterns**, including
++nonstandard pronunciations. It does not transcribe unrestricted speech or train a neural network.
++Piper speaks the selected phrase; a separate patient confirmation is required before a caregiver
++request enters SQLite and the existing WebSocket acknowledgment/completion flow.
++
++```
++Device microphone / WAV (16 kHz mono float32)
++  → energy VAD or manual recording boundaries → DC removal / audio validation
++  → MFCC + delta + acceleration (T × 39) → CMVN
++  → banded DTW against personal templates → mean of two nearest per intent
++  → absolute/per-intent threshold AND runner-up margin → intent or UNKNOWN
++  → existing controller → Piper → patient confirmation → caregiver request
++```
++
++Recognition requires NumPy, CPU and personal templates only. No speech model weights, neural
++embedding runtime, cloud service, or model selection switches are used. Piper's optional TTS
++package owns any ONNX dependencies needed for output speech. Existing voice assets are preserved.
++
++## Run locally
++
++Python 3.11+ is required. From the repository root:
++
++```bash
++python3 -m venv .venv
++source .venv/bin/activate
++pip install -e '.[dev,audio]'
++python -m sonara --no-audio --mcu none
++```
++
++Open `http://localhost:8000/room` and `/caregiver`. The no-audio mode supports phrase tiles,
++confirmation, cancellation and caregiver status updates. Voice setup reports that no microphone
++is attached. The caregiver token is configured in `config/sonara.toml`.
++
++For audio and offline output speech:
++
++```bash
++pip install -e '.[audio,tts]'
++python scripts/download_models.py       # Piper voice only; requires internet once
++python scripts/pregenerate_tts.py       # produces local playback WAVs
++python -m sonara --mcu none
++```
++
++No download happens during recognition. Missing microphone support leaves phrase tiles usable.
++Missing Piper prompt WAVs are reported rather than replaced with a cloud voice.
++
++## Touchscreen enrollment
++
++1. Open `/room` and choose **Set up my voice** (opens automatically without an enrolled profile).
++2. Create a profile ID or edit an existing profile. Saved profiles can also be loaded or deleted.
++3. Choose an intent. The intended sentence is displayed; say it in your own natural way.
++4. Press **Record pronunciation**. Speak when the recording message appears. The default is a
++   fixed three-second recording using the **Sonara device's attached microphone**, not the browser's.
++   Change the duration up to five seconds, or uncheck fixed duration to use automatic VAD.
++5. Keep each valid take or discard/repeat it. Capture five takes for each of the five request intents.
++   `YES` and `NO` are optional; the Send and Cancel buttons always remain available.
++6. Delete the last poor take or redo an intent as needed. Save/recalibrate and **Test recognition**
++   using new takes and unrelated speech. Tests never create caregiver requests.
++7. Finish to activate the profile and return to normal Talk / Send / Cancel operation.
++
++Audio validation rejects empty, nonfinite, silent/DC-only, overlong or heavily clipped recordings.
++Quiet valid audio gets feedback. Automatic energy VAD preserves internal pauses in an utterance,
++with 180 ms endpoint padding; capture ends after 1.2 s of silence by default. Longer pauses may
++require fixed boundaries. `[audio] manual_duration_s = 3.0` also enables fixed recording for Talk.
++
++A single persistent microphone stream serves enrollment and recognition. Minimal Debian images can
++use the built-in `arecord` adapter by setting a device such as
++`device = "alsa:plughw:CARD=Set,DEV=0"`; this needs `alsa-utils` and NumPy, without PortAudio. Enrollment pauses Talk
++and always-on recognition, and a shared lock prevents concurrent capture. Blocking work runs in
++FastAPI's worker threads or the controller worker, with bounded audio and command queues.
++Closing voice setup resumes normal operation; closing the browser while enrolling leaves Talk
++paused until setup is reopened and closed or finished. Manual phrase tiles require closing setup.
++
++## Profiles and calibration
++
++```
++data/profiles/<profile_id>/
++  metadata.json
++  templates.npz
++  recordings/             # only with explicit local retention opt-in
++```
++
++Metadata contains version, profile ID, timestamps, feature configuration, counts, DTW parameters,
++thresholds and calibration diagnostics. NPZ contains float32 feature sequences, not raw audio.
++A checksum and metadata-last replacement detect incomplete saves; corrupt profiles fail closed.
++Profiles reload on changes and can be switched while the server runs. `active.txt` remembers the
++selected profile. Older embedding profiles must be re-enrolled; they are never silently converted.
++
++Default scoring uses the mean of each intent's two closest templates. Acceptance requires both
++an absolute distance limit (initial cap 0.8) and a runner-up margin (0.12). Per-intent limits are
++calibrated using leave-one-out positives, cross-intent negatives, and optional enrollment-only
++UNKNOWN examples. A positive 90th percentile plus slack is capped by a negative 10th percentile
++minus a safety factor and the conservative fallback. No template is compared to itself.
++Missing calibration never implies an infinite threshold. An explicit threshold of zero rejects all.
++
++Small or poorly separated datasets report `requires_more_recordings`. Even a satisfactory
++calibration diagnostic **does not guarantee UNKNOWN rejection**. Distances and display closeness
++are not probabilities. Record additional varied examples and verify with held-out human audio;
++confirmation remains mandatory. Repeated identical samples are refused.
++
++CLI enrollment remains available (stop the running server before independent CLI mic capture):
++
++```bash
++python scripts/enroll.py --profile patient_001 --takes 5
++python scripts/enroll.py --profile patient_001 --intents WATER --replace
++python scripts/enroll.py --profile patient_001 --from-dir data/enrollment --takes 5
++python scripts/enroll.py --profile patient_001 --delete-intent WATER
++```
++
++Import directories contain `INTENT/*.wav`. Use `--keep-audio` only for consented local development
++or evaluation. The UI has a separate explicit retention checkbox. Profile deletion removes retained
++audio too; UI sample/intent deletion removes its retained WAV. WAVs are never served to browsers.
++
++## Run on the UNO Q
++
++Copy the repository to the board, then use the same virtual environment installation as above.
++On Debian, the audio environment may require `python3-venv`, `libportaudio2`, and `alsa-utils`.
++Use `arecord -l` to identify the attached capture device. The tested board USB headset uses
++`[audio] device = "alsa:plughw:CARD=Set,DEV=0"`. With PortAudio installed, use
++`python -m sounddevice` and set `device` to its PortAudio index/name in `config/sonara.toml`; use `sample_rate = 16000`.
++
++Set `[hardware] mcu = "unoq"` for the Arduino Bridge controls, or `--mcu none` to test without the
++MCU. Change `caregiver_token`. Generate Piper prompts before disconnecting the network. Run:
++
++```bash
++python -m sonara
++```
++
++Open `http://localhost:8000/room` in the board's kiosk browser, and
++`http://<board-ip>:8000/caregiver` on the trusted local network. Do not expose the demo server
++on the public internet. Onboard through the touchscreen before using Talk.
++
++## Evaluate real recognition
++
++Keep enrollment and held-out recordings physically separate:
++
++```
++data/evaluation/person/
++  enrollment/WATER/*.wav          # five independent examples per enrolled intent
++  enrollment/HELP/*.wav          # also FOOD, PAIN, BATHROOM
++  test/WATER/*.wav                # at least three NEW examples per enrolled intent
++  test/HELP/*.wav
++  test/_UNKNOWN/*.wav             # unrelated speech and background noises
++  calibration_unknown/*.wav       # optional separate enrollment-only negative examples
++```
++
++```bash
++python scripts/evaluate.py data/evaluation/person --enroll-counts 5
++python scripts/evaluate.py data/evaluation/person --enroll-counts 3 5 --bands 0.1 0.2 0.35
++python scripts/benchmark.py --profile patient_001 --wav data/evaluation/person/test/WATER/01.wav --runs 30
++pytest -q
++```
++
++Evaluation uses deterministic sorted enrollment prefixes and an unchanged test set, checks decoded
++audio hashes for duplicates across splits, and never tunes thresholds on test audio. It reports
++correct intent rate, precision among accepted predictions, rejection, wrong-known and UNKNOWN
++false acceptance, a confusion matrix, processing latency, template memory and peak process RSS.
++Ablations vary enrollment count and DTW band; the deployment defaults remain fixed. Mean-vector
++matching is omitted because CMVN makes each feature's mean nearly zero, discarding the sequence
++information needed here. PCM 16-bit WAVs are supported; 16 kHz mono is recommended.
++Use `--simulated` for acted speech. Human recordings are still not clinical validation.
++
++A reproducible **non-speech** fixture generator is included for software checks only:
++
++```bash
++python roles/speech/evaluation/synthetic_dataset.py /tmp/sonara-fixtures
++python scripts/evaluate.py /tmp/sonara-fixtures --synthetic
++```
++
++A streamed public German corpus diagnostic is also available:
++
++```bash
++pip install -e '.[corpus-eval]'                 # optional laptop tools; not needed on the board
++python roles/speech/evaluation/prepare_real_corpus.py --queries 40
++python roles/speech/evaluation/evaluate_real_corpus.py data/evaluation/dysarthric_german/bundle --output results/corpus.json
++```
++
++This corpus lacks speaker IDs and enough repeated phrases for personalized accuracy evaluation.
++The diagnostic uses four complete single-take reference phrases and separate real-speech UNKNOWN
++windows, with no synthetic enrollment copies. Results and protocol are in
++[roles/speech/docs/CORPUS_EVALUATION.md](roles/speech/docs/CORPUS_EVALUATION.md).
++
++See [roles/speech/docs/VALIDATION.md](roles/speech/docs/VALIDATION.md) for executed results and board verification status,
++and [roles/speech/docs/DESIGN.md](roles/speech/docs/DESIGN.md) for algorithm and integration details.
++
++## Main files
++
++| Files | Responsibility |
+ |---|---|
+-| `sonara/models/` | MFCC features, neural embedder, DTW, few-shot prototype classifier |
+-| `sonara/audio/` | mic capture, VAD, WAV I/O |
+-| `sonara/controller.py` | bedside state machine (listen → speak → confirm → dispatch) |
+-| `sonara/store.py` | request status machine with honesty rules (SQLite) |
+-| `sonara/server/` | FastAPI + WebSocket server |
+-| `web/room/` | patient-facing room display (external screen) |
+-| `web/caregiver/` | caregiver dashboard (phone/laptop on local Wi-Fi) |
+-| `mcu/sonara_mcu/` | STM32 sketch: buttons + LEDs |
+-| `scripts/` | model download, TTS pre-generation, enrollment, evaluation, benchmark |
+-
+-## Quick start (laptop, UI only — no mic needed)
+-```bash
+-python -m venv .venv && .venv/Scripts/activate      # Linux/UNO Q: source .venv/bin/activate
+-pip install -e ".[dev,audio,model]"
+-python -m sonara --no-audio --mcu none
+-```
+-Open http://localhost:8000/room and http://localhost:8000/caregiver (token: `caregiver_token`
+-in `config/sonara.toml`). Tap a phrase tile → Send → acknowledge on the dashboard.
+-
+-## Full pipeline
+-```bash
+-python scripts/download_models.py                 # once, while online: embedding net + Piper voice
+-pip install piper-tts && python scripts/pregenerate_tts.py
+-python scripts/enroll.py --takes 5 --keep-audio --speaker alice   # 5 takes per phrase
+-python -m sonara                                  # t / c / x + Enter = Talk / Confirm / Cancel
+-```
+-On the UNO Q: set `[hardware] mcu = "unoq"`, the audio `device`, change `caregiver_token`, then open
+-`localhost:8000/room` full-screen on the external display.
+-
+-## Evaluation (the numbers for the pitch)
+-```bash
+-python scripts/evaluate.py data/recordings/alice --enroll 3 --systems oww-dtw oww-mean mfcc-dtw asr --simulated
+-python scripts/benchmark.py --wav data/recordings/alice/WATER/<file>.wav --idle-watts X --active-watts Y
+-```
+-`asr` = Whisper-tiny + keyword matching (`pip install faster-whisper`): what a standard
+-recogniser does with the same atypical speech. Put `_UNKNOWN/*.wav` (other speech, coughs,
+-noise) in the dataset to measure false accepts. Label acted recordings `--simulated`.
+-
+-## Tests
+-```bash
+-pytest -q
+-```
+-
+-## Team split (24 h)
+-| Who | Owns |
+-|---|---|
+-| Speech | `sonara/models`, `scripts/enroll.py`, `scripts/evaluate.py`: recordings, thresholds, results table |
+-| Backend | `sonara/store.py`, `sonara/server`, `sonara/controller.py`: reliability, reconnect, reset |
+-| Frontend | `web/room`, `web/caregiver`: kiosk mode, alerts, error states |
+-| Hardware | `mcu/`, `sonara/hw/mcu.py`, USB audio on UNO Q, power meter, `scripts/benchmark.py` |
+-
+-## Model provenance
+-- Speech embedding: Google `speech_embedding` model as exported by openWakeWord v0.5.1 (Apache-2.0)
+-- Mel front-end: openWakeWord `melspectrogram.onnx` v0.5.1
+-- TTS voice: Piper `en_US-lessac-medium` (rhasspy/piper-voices; check its model card for license)
+-
+-Record the SHA256 values printed by `download_models.py` here.
+-
+-## Privacy and safety
+-- Enrollment stores embeddings only. WAVs are kept only with `--keep-audio`, locally, for consented evaluation.
+-- Only `{request_id, bed_id, intent, status, timestamps}` crosses the LAN.
+-- `DISPLAYED` requires a caregiver-screen receipt. `ACKNOWLEDGED` requires a caregiver click.
+-  No receipt → patient is told the request has **not** reached anyone.
+-- Reset: `POST /api/reset` (token) deletes request history. Delete `data/profiles/` to remove templates.
+-
+-## License
+-MIT
++| `sonara/models/features.py`, `embedder.py` | MFCC frontend and configuration |
++| `sonara/models/dtw.py`, `classifier.py` | bounded sequence matching, rejection, calibration, persistence |
++| `sonara/recognizer.py`, `audio/` | audio validation, segmentation, microphone/WAV handling, live reload |
++| `sonara/models/enrollment.py`, `server/app.py`, `web/room/` | device-side onboarding service, API and touchscreen flow |
++| `sonara/controller.py` | deterministic speech/confirmation/request integration |
++| `scripts/enroll.py`, `evaluate.py`, `benchmark.py` | import/CLI enrollment and reproducible measurements |
++| `tests/` | numerical reference, profile, enrollment, controller and caregiver regressions |
++
++SQLite persistence, caregiver WebSockets, receipt/acknowledgment/completion, notification behavior
++and Piper output are retained. `DISPLAYED` still needs a caregiver-screen receipt;
++`ACKNOWLEDGED` still needs a caregiver click. A successful recognition never means help is coming.
++This prototype is not a medical device or a replacement for a nurse-call system.
++
++Piper voice provenance: `en_US-lessac-medium` from `rhasspy/piper-voices`; inspect its model card
++for licensing. `download_models.py` prints source URLs and checksums. License: MIT.

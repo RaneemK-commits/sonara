@@ -1,0 +1,342 @@
+--- a/sonara/controller.py
++++ b/sonara/controller.py
+@@ -53,8 +53,11 @@
+         self.last = {"text": "", "intent": None, "score": None, "understood": None}
+         self.request_id: str | None = self._recover_request_id()  # latest open request (survives reboot)
+         self._leds: tuple[str, str, str] | None = None
+-        self._q: queue.Queue[tuple[str, str | None]] = queue.Queue()
++        self._q: queue.Queue[tuple[str, str | None]] = queue.Queue(maxsize=32)
+         self._stop = threading.Event()
++        self.audio_lock = threading.RLock()
++        self.enrollment_active = False
++        self._thread = None
+ 
+     def _recover_request_id(self) -> str | None:
+         mine = [r for r in self.store.active() if r["bed_id"] == self.cfg.bed_id]
+@@ -62,22 +65,33 @@
+ 
+     # ---- inputs (any thread) ----------------------------------------------------------------
+     def submit(self, action: str, arg: str | None = None) -> None:
+-        self._q.put((action, arg))
++        if action == "confirm":
++            if self.state != AWAIT_CONFIRM or self.pending is None:
++                return  # A press before recognition cannot confirm a future request.
++            arg = str(self.pending_deadline)
++        try:
++            self._q.put_nowait((action, arg))
++        except queue.Full:
++            return
+ 
+     def start(self) -> None:
+         self.mcu.start(lambda name: self.submit(name))
+-        threading.Thread(target=self._run, daemon=True, name="controller").start()
++        self._thread = threading.Thread(target=self._run, daemon=True, name="controller")
++        self._thread.start()
+         self._publish()
+ 
+     def stop(self) -> None:
+         self._stop.set()
++        if self._thread:
++            self._thread.join(timeout=12)
+ 
+     # ---- room display state -----------------------------------------------------------------
+     def room_state(self) -> dict:
+         req = self.store.get(self.request_id) if self.request_id else None
+         return {"type": "room_state", "bed_id": self.cfg.bed_id, "state": self.state,
+                 "pending": self.pending.label if self.pending else None,
+-                "last": self.last, "request": req, "has_mic": self.capture is not None,
++                "last": self.last, "request": req, "has_mic": self.capture is not None and not self.enrollment_active,
++                "enrollment_active": self.enrollment_active,
+                 "intents": [{"id": i.id, "label": i.label} for i in self.cfg.request_intents]}
+ 
+     def _publish(self) -> None:
+@@ -100,10 +114,18 @@
+             except queue.Empty:
+                 self._check_timeout()
+                 if self.always_on and self.state in (IDLE, AWAIT_CONFIRM):
+-                    self.speaker.wait_idle()
+-                    audio = self.capture.record_utterance(wait_s=0.3)
+-                    if audio is not None:
+-                        self._handle_audio(audio)
++                    if self.audio_lock.acquire(blocking=False):
++                        try:
++                            if not self.enrollment_active:
++                                self.speaker.wait_idle()
++                                audio = self.capture.record_utterance(wait_s=0.3)
++                                if audio is not None:
++                                    self._handle_audio(audio)
++                        except Exception as exc:
++                            print(f"[audio] {exc}")
++                            self._set(AWAIT_CONFIRM if self.pending else IDLE)
++                        finally:
++                            self.audio_lock.release()
+                 continue
+             try:
+                 getattr(self, f"_on_{action}")(arg)
+@@ -119,6 +141,15 @@
+ 
+     # ---- actions ----------------------------------------------------------------------------
+     def _on_talk(self, _=None) -> None:
++        if not self.audio_lock.acquire(blocking=False):
++            return
++        try:
++            if not self.enrollment_active:
++                self._record_talk()
++        finally:
++            self.audio_lock.release()
++
++    def _record_talk(self) -> None:
+         if self.capture is None or self.recognizer is None:
+             print("[controller] no microphone/recognizer — use the room screen tiles")
+             return
+@@ -128,7 +159,9 @@
+         self.capture.flush()
+         prev = self.state
+         self._set(LISTENING)
+-        audio = self.capture.record_utterance(wait_s=self.ptt_wait)
++        manual = self.cfg.section("audio").get("manual_duration_s", 0)
++        audio = (self.capture.record_manual(manual) if manual else
++                 self.capture.record_utterance(wait_s=self.ptt_wait))
+         if audio is None:
+             self.last = {"text": "", "intent": None, "score": None, "understood": False}
+             self.speaker.say("didnt_understand")
+@@ -139,7 +172,8 @@
+     def _handle_audio(self, audio) -> None:
+         self._set(PROCESSING)
+         t0 = time.perf_counter()
+-        pred = self.recognizer.recognize(audio)
++        pred = self.recognizer.recognize(audio, manual=bool(
++            self.cfg.section("audio").get("manual_duration_s", 0)))
+         METRICS.record("recognize_total", (time.perf_counter() - t0) * 1000)
+         if pred is None or not pred.accepted:
+             self.last = {"text": "", "intent": None, "understood": False,
+@@ -157,6 +191,8 @@
+ 
+     def _accept(self, intent_id: str, score) -> None:
+         intent = self.cfg.intent(intent_id)
++        if intent is None:
++            return
+         if intent.control:
+             if self.pending:
+                 return self._on_confirm() if intent.id == "YES" else self._on_cancel()
+@@ -174,6 +210,8 @@
+             self._set(IDLE)
+ 
+     def _on_confirm(self, _=None) -> None:
++        if _ is not None and _ != str(self.pending_deadline):
++            return  # stale confirmation for a replaced interaction
+         if not self.pending:
+             return
+         intent, self.pending = self.pending, None
+--- a/sonara/server/app.py
++++ b/sonara/server/app.py
+@@ -15,7 +15,9 @@
+ from fastapi import FastAPI, Header, HTTPException, WebSocket, WebSocketDisconnect
+ from fastapi.responses import FileResponse, RedirectResponse
+ from fastapi.staticfiles import StaticFiles
+-from pydantic import BaseModel
++from pydantic import BaseModel, Field
++
++from ..models.enrollment import EnrollmentService
+ 
+ from ..config import Config
+ from ..metrics import METRICS
+@@ -28,7 +30,22 @@
+     intent: str | None = None
+ 
+ 
++class StartEnrollment(BaseModel):
++    profile_id: str = Field(min_length=1, max_length=64)
++    keep_audio: bool = False
++
++
++class SelectIntent(BaseModel):
++    intent: str
++
++
++class CaptureSample(BaseModel):
++    manual: bool = True
++    seconds: float = Field(default=3., ge=.3, le=5.)
++
++
+ def create_app(cfg: Config, store: RequestStore, hub: Hub, controller) -> FastAPI:
++    enrollment = EnrollmentService(cfg, controller)
+     srv = cfg.section("server")
+     token = srv.get("caregiver_token", "")
+     display_timeout = srv.get("display_timeout_s", 10)
+@@ -73,6 +90,8 @@
+         yield
+         task.cancel()
+         controller.stop()
++        if controller.capture is not None:
++            controller.capture.close()
+ 
+     app = FastAPI(title="Sonara", lifespan=lifespan)
+     app.mount("/static", StaticFiles(directory=web), name="static")
+@@ -117,8 +136,75 @@
+     def room_input(body: RoomInput):
+         if body.action not in ("talk", "confirm", "cancel", "select"):
+             raise HTTPException(400, "bad action")
++        if controller.enrollment_active and body.action in ("talk", "select"):
++            raise HTTPException(409, "finish or close voice setup first")
+         controller.submit(body.action, body.intent)
+         return {"ok": True}
++
++    # Regular def endpoints execute in FastAPI's worker threadpool, including capture/DTW.
++    def enroll_call(method, *args, **kwargs):
++        if not controller.audio_lock.acquire(blocking=False):
++            raise HTTPException(409, "microphone or profile operation busy; retry shortly")
++        try:
++            return method(*args, **kwargs)
++        except (ValueError, OSError, KeyError) as exc:
++            raise HTTPException(422, str(exc)) from exc
++        except RuntimeError as exc:
++            raise HTTPException(503, str(exc)) from exc
++        finally:
++            controller.audio_lock.release()
++
++    @app.get("/api/profiles")
++    def profiles():
++        return enroll_call(enrollment.status)
++
++    @app.post("/api/enrollment/start")
++    def start_enrollment(body: StartEnrollment):
++        return enroll_call(enrollment.start, body.profile_id, body.keep_audio)
++
++    @app.post("/api/enrollment/intent")
++    def select_enrollment_intent(body: SelectIntent):
++        return enroll_call(enrollment.select, body.intent)
++
++    @app.post("/api/enrollment/capture")
++    def capture_enrollment(body: CaptureSample):
++        return enroll_call(enrollment.capture, body.manual, body.seconds)
++
++    @app.post("/api/enrollment/sample")
++    def save_enrollment_sample():
++        return enroll_call(enrollment.save_sample)
++
++    @app.delete("/api/enrollment/intents/{intent}")
++    def delete_enrollment_intent(intent: str):
++        return enroll_call(enrollment.remove, intent)
++
++    @app.delete("/api/enrollment/intents/{intent}/samples/{index}")
++    def delete_enrollment_sample(intent: str, index: int):
++        return enroll_call(enrollment.remove, intent, index)
++
++    @app.post("/api/enrollment/calibrate")
++    def calibrate_enrollment():
++        return enroll_call(enrollment.calibrate)
++
++    @app.post("/api/enrollment/test")
++    def test_enrollment(body: CaptureSample):
++        return enroll_call(enrollment.capture, body.manual, body.seconds, test=True)
++
++    @app.post("/api/enrollment/finish")
++    def finish_enrollment():
++        return enroll_call(enrollment.finish)
++
++    @app.post("/api/enrollment/cancel")
++    def cancel_enrollment():
++        return enroll_call(enrollment.cancel)
++
++    @app.post("/api/profiles/{profile_id}/load")
++    def load_profile(profile_id: str):
++        return enroll_call(enrollment.load, profile_id)
++
++    @app.delete("/api/profiles/{profile_id}")
++    def delete_profile(profile_id: str):
++        return enroll_call(enrollment.delete, profile_id)
+ 
+     @app.get("/api/metrics")
+     def metrics():
+--- a/sonara/__main__.py
++++ b/sonara/__main__.py
+@@ -1,4 +1,4 @@
+-"""Run the Sonara bedside device: `python -m sonara [--no-audio] [--backend mfcc]`."""
++"""Run the Sonara bedside device: `python -m sonara [--no-audio]`."""
+ from __future__ import annotations
+ 
+ import argparse
+@@ -17,7 +17,6 @@
+ def main() -> None:
+     ap = argparse.ArgumentParser(prog="sonara")
+     ap.add_argument("--config", default=None)
+-    ap.add_argument("--backend", choices=["oww", "mfcc"], help="override recognition backend")
+     ap.add_argument("--no-audio", action="store_true",
+                     help="no mic/speaker: drive the flow from the room screen tiles (UI dev)")
+     ap.add_argument("--mcu", choices=["keyboard", "unoq", "none"])
+@@ -31,19 +30,19 @@
+     speaker = Speaker(cfg, enabled=not args.no_audio)
+     mcu = make_mcu(args.mcu or cfg.section("hardware").get("mcu", "keyboard"))
+ 
+-    recognizer = capture = None
++    from .recognizer import Recognizer
++    recognizer, capture = Recognizer(cfg), None
++    if not recognizer.ready:
++        print("[recognition] enroll a voice profile in /room; phrase tiles are available")
+     if not args.no_audio:
+         from .audio.capture import AudioCapture
+-        from .recognizer import Recognizer
+-
+-        recognizer = Recognizer(cfg, args.backend)
+-        if not recognizer.ready:
+-            print(f"[warn] no enrolled profile for backend '{recognizer.backend}' — "
+-                  "run scripts/enroll.py (room-screen tiles still work)")
+         a = cfg.section("audio")
+-        capture = AudioCapture(a.get("sample_rate", 16000), a.get("block_ms", 30), a.get("device"),
++        try:
++            capture = AudioCapture(a.get("sample_rate", 16000), a.get("block_ms", 30), a.get("device"),
+                                a.get("max_utterance_s", 5.0), a.get("silence_end_ms", 700),
+                                a.get("speech_start_factor", 3.0), a.get("min_speech_ms", 200))
++        except Exception as exc:  # Includes device-specific PortAudio errors.
++            print(f"[audio] microphone unavailable: {exc}; phrase tiles remain available")
+ 
+     controller = Controller(cfg, store, hub, speaker, mcu, recognizer, capture)
+     app = create_app(cfg, store, hub, controller)
+--- a/config/sonara.toml
++++ b/config/sonara.toml
+@@ -4,23 +4,36 @@
+ 
+ [audio]
+ sample_rate = 16000
+-device = ""                 # "" = system default; on UNO Q set to the USB mic name or index
++device = ""                 # default PortAudio device, or "alsa:plughw:CARD=Set,DEV=0" on UNO Q
+ block_ms = 30
+ max_utterance_s = 5.0
+-silence_end_ms = 700        # stop recording after this much trailing silence
++silence_end_ms = 1200        # stop recording after this much trailing silence
+ speech_start_factor = 3.0   # speech when RMS > noise_floor * factor
+ min_speech_ms = 200
++min_rms = 0.00003
++trim_factor = 2.0
++trim_pad_ms = 180
++manual_duration_s = 0       # 0 = VAD; set 0.3–5 for fixed Talk recording boundaries
+ listen_mode = "push_to_talk" # "push_to_talk" | "always_on" (VAD-gated)
+ push_to_talk_wait_s = 4.0    # how long to wait for speech after Talk is pressed
+ 
+ [recognition]
+-backend = "oww"             # "oww" (neural speech embeddings, ONNX) | "mfcc" (classical baseline)
+-matcher = "dtw"             # "dtw" | "mean"
+ profile_dir = "data/profiles"
+-oww_melspec_model = "models/melspectrogram.onnx"
+-oww_embedding_model = "models/embedding_model.onnx"
+-threshold = 0.0             # 0 = use auto-calibrated threshold stored in the profile
+-margin = 0.05               # min distance gap between best and 2nd-best intent
++profile_id = "patient_001"
++band = 0.2                 # fraction of the longer sequence; 0 means narrowest feasible path
++margin = 0.12              # minimum runner-up distance minus best distance
++# threshold = 0.6          # optional stricter absolute cap; zero rejects everything
++
++[features]
++sample_rate = 16000
++window_length_ms = 25
++hop_length_ms = 10
++n_fft = 512
++n_mels = 40
++n_mfcc = 13
++pre_emphasis = 0.97
++normalization = "cmvn"
++variance_floor = 0.01
+ 
+ [tts]
+ voice_model = "models/en_US-lessac-medium.onnx"

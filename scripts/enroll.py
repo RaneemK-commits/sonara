@@ -1,91 +1,85 @@
-"""Enroll a patient's personal phrases (few-shot), from the mic or from a folder of WAVs.
-
-Live (records N takes per intent, stores ONLY embeddings):
-  python scripts/enroll.py --takes 5
-  python scripts/enroll.py --intents WATER PAIN --takes 3          # add/redo some phrases
-
-Also keep the WAVs locally for evaluation (consented recordings only; never leave the board):
-  python scripts/enroll.py --takes 8 --keep-audio --speaker alice
-
-From a dataset folder  data/recordings/<speaker>/<INTENT>/*.wav :
-  python scripts/enroll.py --from-dir data/recordings/alice --backend oww
-"""
+"""Enroll on the device mic or import consented WAVs. Prefer /room for touchscreen setup."""
 from __future__ import annotations
-
 import argparse
 import sys
-import time
+import hashlib
 from pathlib import Path
-
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-from sonara.audio.wavio import read_wav, resample_linear, write_wav  # noqa: E402
-from sonara.config import load_config  # noqa: E402
-from sonara.models.classifier import PrototypeClassifier  # noqa: E402
-from sonara.recognizer import Recognizer, profile_path  # noqa: E402
-
-
-def iter_dir(root: Path, sr: int):
-    for intent_dir in sorted(p for p in root.iterdir() if p.is_dir()):
-        for wav in sorted(intent_dir.glob("*.wav")):
-            audio, file_sr = read_wav(wav)
-            yield intent_dir.name.upper(), resample_linear(audio, file_sr, sr), wav
+from sonara.audio.wavio import read_wav, resample_linear, write_wav
+from sonara.config import load_config
+from sonara.models.classifier import PrototypeClassifier
+from sonara.recognizer import Recognizer, profile_path
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--backend", choices=["oww", "mfcc"])
-    ap.add_argument("--intents", nargs="*", help="subset of intent IDs (default: all)")
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--profile", default="patient_001")
+    ap.add_argument("--intents", nargs="+")
     ap.add_argument("--takes", type=int, default=5)
-    ap.add_argument("--seconds", type=float, default=3.0, help="max seconds per take")
+    ap.add_argument("--seconds", type=float, default=3.)
+    ap.add_argument("--automatic", action="store_true", help="VAD boundaries instead of fixed capture")
     ap.add_argument("--keep-audio", action="store_true")
-    ap.add_argument("--speaker", default="patient")
     ap.add_argument("--from-dir", type=Path)
-    ap.add_argument("--fresh", action="store_true", help="discard existing profile")
+    ap.add_argument("--replace", action="store_true", help="replace selected intents, preserving others")
+    ap.add_argument("--delete-intent")
+    ap.add_argument("--config", type=Path)
     args = ap.parse_args()
+    if not 1 <= args.takes <= 10 or not .3 <= args.seconds <= 5:
+        ap.error("takes must be 1–10; seconds must be 0.3–5")
+    cfg = load_config(args.config)
+    rec = Recognizer(cfg)
+    path = profile_path(cfg, args.profile)
+    clf = PrototypeClassifier.load(path) if path.exists() else rec.new_classifier()
+    clf.profile_id = args.profile
+    rec.feature_config, rec.embedder.config = clf.feature_config, clf.feature_config
+    wanted = args.intents or [i.id for i in cfg.request_intents]
+    if any(cfg.intent(i) is None for i in wanted):
+        ap.error("intent is not defined in config/intents.toml")
+    if args.delete_intent:
+        clf.remove_label(args.delete_intent)
+        wanted = []
+    if args.replace:
+        for label in wanted:
+            clf.remove_label(label)
 
-    cfg = load_config()
-    sr = cfg.section("audio").get("sample_rate", 16000)
-    rec = Recognizer(cfg, args.backend)
-    clf = rec.clf if not args.fresh else PrototypeClassifier(rec.backend, rec.clf.matcher)
-    wanted = [i.upper() for i in args.intents] if args.intents else [i.id for i in cfg.intents]
+    def add(label, audio):
+        seq = rec.embed(audio, manual=not args.automatic)
+        if seq is None:
+            print(f"Rejected {label}: invalid, silent, clipped or too short. Repeat recording.")
+            return False
+        clf.add(label, seq)
+        if args.keep_audio:
+            write_wav(path / "recordings" / label / f"{hashlib.sha256(seq.tobytes()).hexdigest()}.wav", audio, 16000)
+        return True
 
     if args.from_dir:
-        for intent, audio, wav in iter_dir(args.from_dir, sr):
-            if intent in wanted and (seq := rec.embed(audio)) is not None:
-                clf.add(intent, seq)
-    else:
+        for label in wanted:
+            files = sorted((args.from_dir / label).glob("*.wav"))[:args.takes]
+            for wav in files:
+                audio, sr = read_wav(wav)
+                add(label, resample_linear(audio, sr, 16000))
+    elif wanted:
         from sonara.audio.capture import AudioCapture
-
-        a = cfg.section("audio")
-        cap = AudioCapture(sr, a.get("block_ms", 30), a.get("device"), args.seconds,
-                           a.get("silence_end_ms", 700), a.get("speech_start_factor", 3.0))
-        time.sleep(0.5)  # let the noise floor settle
-        for intent_id in wanted:
-            intent = cfg.intent(intent_id)
-            clf.remove_label(intent_id)  # re-enrolling replaces old takes
-            print(f"\n=== {intent_id}: say your phrase for “{intent.speak}” ===")
-            n = 0
-            while n < args.takes:
-                input(f"  take {n + 1}/{args.takes} — press Enter, then speak… ")
-                cap.flush()
-                audio = cap.record_utterance(wait_s=4.0)
-                seq = rec.embed(audio) if audio is not None else None
-                if seq is None:
-                    print("  (no speech detected, try again)")
-                    continue
-                clf.add(intent_id, seq)
-                if args.keep_audio:
-                    out = cfg.path("data/recordings") / args.speaker / intent_id / f"{int(time.time()*1000)}.wav"
-                    write_wav(out, audio, sr)
-                n += 1
-        cap.close()
-
-    thr = clf.calibrate()
-    path = profile_path(cfg, rec.backend)
+        cap = AudioCapture(device=cfg.section("audio").get("device"), silence_end_ms=1200)
+        try:
+            for label in wanted:
+                print(f"{label}: {cfg.intent(label).speak} — use your natural voice")
+                count = 0
+                while count < args.takes:
+                    input(f"Take {count+1}/{args.takes}: Enter, then speak…")
+                    cap.flush()
+                    audio = cap.record_utterance(4.) if args.automatic else cap.record_manual(args.seconds)
+                    if audio is not None and add(label, audio):
+                        count += 1
+        finally:
+            cap.close()
+    if wanted and not any(clf.counts().get(label, 0) for label in wanted):
+        ap.error("no valid enrollment recordings were saved")
+    clf.calibrate()
     clf.save(path)
-    print(f"\nsaved {path}.npz — counts {clf.counts()} — auto threshold {thr:.4f}")
-    print("(no raw audio stored in the profile)")
+    rec.reload(args.profile)
+    print(f"Saved {path}: {clf.counts()}")
+    print(clf.calibration)
 
 
 if __name__ == "__main__":

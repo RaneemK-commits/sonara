@@ -1,28 +1,68 @@
-# speech CONTRACT: what device may rely on
+# Speech contract: MFCC + DTW
 
-Change only with a `CONTRACT` post to `device`.
+User-authorized replacement: MFCC is the only production frontend. No recognition model download,
+ONNX embedding runtime, unrestricted ASR or cloud service is used. The device owner must apply
+[the integration handoff](integration/README.md) before enabling touchscreen enrollment.
 
 ```python
 from sonara.recognizer import Recognizer
-rec = Recognizer(cfg, backend=None)        # backend from config: "oww" | "mfcc"
-rec.ready -> bool                          # a profile is enrolled
-rec.recognize(audio: np.ndarray[float32, 16 kHz mono, -1..1]) -> Prediction | None
-    # None = no usable speech in the clip
-
-from sonara.models.classifier import Prediction
-p.intent   -> str | None      # None = rejected (below threshold or ambiguous); device must not dispatch
-p.accepted -> bool
-p.best     -> str             # best guess even if rejected (logs/metrics only, never shown as a result)
-p.score    -> float 0..1      # display score, NOT a calibrated probability
-p.distance, p.margin, p.threshold -> float
-
-from sonara.audio.capture import AudioCapture
-cap.flush(); cap.record_utterance(wait_s) -> np.ndarray | None; cap.close()
-
-from sonara.tts import Speaker
-spk.say(key) / spk.say_now(key) / spk.wait_idle(timeout)
-    # key = intent id ("WATER") or prompt name ("acknowledged") from config/intents.toml
+rec = Recognizer(cfg)                     # production constructor
+rec = Recognizer(cfg, None)               # temporary calling compatibility with main's entry point
+rec.backend == "mfcc"                     # fixed identifier, not a model selector
+rec.ready                                # bool; false for absent/corrupt/empty selected profiles
+rec.recognize(audio, manual=False)        # Prediction; invalid audio returns a rejected Prediction
+rec.reload(profile_id)                    # atomic live load, remembers active profile
+rec.embed(audio, manual=False)            # float32 (T, 39) or None for invalid audio
 ```
 
-Intent IDs come from `config/intents.toml` (owned by ui). Profiles are stored as
-`data/profiles/<bed_id>_<backend>.{npz,json}` (embeddings only).
+The optional legacy constructor argument accepts only `None` or `"mfcc"`; selecting `"oww"`
+raises a descriptive ValueError. The device entry-point patch removes its obsolete backend CLI.
+No neural compatibility path remains. Remove this temporary argument once device callers migrate.
+
+`Prediction.intent` is an intent ID or None. `accepted` is false for UNKNOWN. `best` can be None
+on invalid input/empty profiles and is for diagnostics only. Existing `score`, `distance`,
+`margin`, `threshold` and `scores` remain; `latency_ms` and `reason` are additive. Display closeness
+is not probability. `to_dict()` maps nonfinite diagnostic values to JSON null.
+
+Input: 16 kHz mono finite float32, nominal range [-1, 1], 0.3–5 seconds. Heavy clipping, silence,
+DC-only and invalid recordings reject. `manual=True` preserves explicit recording boundaries;
+it does not bypass recording-quality checks. PCM WAV conversion helpers live in `sonara/audio/`.
+
+```python
+from sonara.audio.capture import AudioCapture
+cap = AudioCapture(device="alsa:plughw:CARD=Set,DEV=0")  # verified USB headset on UNO Q
+cap.flush()
+cap.record_utterance(wait_s=4.0)           # float32 mono or None
+cap.record_manual(seconds=3.0)            # bounded 0.3–5 s capture on the same stream
+cap.close()
+
+from sonara.tts import Speaker
+spk.say(key); spk.say_now(key); spk.wait_idle(timeout=15.0)
+```
+
+Existing AudioCapture/Speaker method signatures remain. The ALSA adapter uses installed
+`arecord`; Piper playback falls back to `aplay` without PortAudio. No sudo/libportaudio2 is needed
+for this explicit device path. The device worker must serialize capture with enrollment.
+
+Profiles now use `data/profiles/<profile_id>/{metadata.json,templates.npz}`, with `active.txt`
+in the parent directory. They contain MFCC templates, feature configuration, counts, matching
+parameters, thresholds and calibration diagnostics. Old embedding profiles require re-enrollment.
+Raw retention is an explicit opt-in; deletion removes retained recordings as well.
+
+## Enrollment service and required device hooks
+
+```python
+from sonara.models.enrollment import EnrollmentService
+service = EnrollmentService(cfg, controller)
+```
+
+The controller supplies `recognizer`, `capture`, `speaker`, `state`, `enrollment_active`, and
+`_publish()`. The device/API adapter owns a shared `audio_lock` and calls service operations
+under it. The service publishes profile/progress/test data only; it never dispatches a request.
+All endpoints and the proposed additive `room_state.enrollment_active` field are described in
+[integration/README.md](integration/README.md). Existing Talk/Confirm/Cancel meanings remain.
+The device owner publishes the HTTP/WebSocket contract after integrating its owned files.
+
+**Threshold migration:** remove legacy `threshold = 0.0` from sonara.toml to use profile limits.
+An explicitly configured zero now safely rejects all; it never disables rejection. The current
+old config therefore remains fail-closed until the device config proposal is integrated.

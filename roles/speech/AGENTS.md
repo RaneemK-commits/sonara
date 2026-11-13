@@ -1,21 +1,32 @@
 # Role brief: speech (Sommer-Lukas)
 
-You own turning audio into an intent, and playing fixed sentences back. Files: see the ownership table in [../../AGENTS.md](../../AGENTS.md).
+Own the files in the speech row of [../../AGENTS.md](../../AGENTS.md). The user explicitly
+replaced the original neural-embedding plan with MFCC + DTW; do not restore OWW/Google embedding
+weights, unrestricted ASR or recognition model selection.
 
-**Goal:** a personalised, on-device recogniser that is *visibly better than standard ASR* on impaired
-speech, honestly measured, and cheap enough in energy to score well on SCI.
+## Current priorities
 
-## Priorities
-1. Run `scripts/download_models.py` and get `OWWEmbedder` working (it's untested). Check the ONNX input/output shapes.
-2. Pre-generate TTS WAVs with Piper (`scripts/pregenerate_tts.py`).
-3. Record team takes for the demo phrases (`enroll.py --keep-audio`, labelled simulated). Tune threshold and margin.
-4. TORGO evaluation per speaker on its command words: `oww-dtw` vs `mfcc-dtw` vs `asr` (Whisper-tiny). See [docs/DATASETS.md](../../docs/DATASETS.md).
-5. On-board latency benchmark (`scripts/benchmark.py`) and the per-stage numbers for SCI ([docs/SCI.md](../../docs/SCI.md)).
-6. Stretch: **Nicla Voice** always-on trigger (`nicla/`). It's a "vocalisation vs background" or
-   trigger-sound detector, **not** a wake word. Edge Impulse → NDP120. Upload consented team data only.
-   Agree the `talk` event format with `device`. See "Stretch: Arduino Nicla Voice" in [docs/DESIGN.md](../../docs/DESIGN.md).
+1. Maintain the NumPy MFCC frontend, banded DTW, conservative UNKNOWN rejection and versioned
+   feature-only profiles in `sonara/models/`, `sonara/recognizer.py` and `sonara/audio/`.
+2. Deliver the enrollment service and owner-scoped device/UI proposals in `roles/speech/integration/`.
+   Do not edit device-owned controller/server/config/entry-point files; their owner integrates hooks.
+3. Preserve Piper output and both PortAudio/explicit ALSA capture. The tested UNO Q USB headset is
+   `alsa:plughw:CARD=Set,DEV=0`; `arecord`/`aplay` avoid the system PortAudio/sudo blocker.
+4. Collect independent personal enrollment and held-out recordings when available. Never count
+   enrollment self-matches or copies/augmentations as independent recognition accuracy.
+5. Keep latency/rejection/memory measurements reproducible and label synthetic/corpus limitations.
+   Public corpus helpers live in `roles/speech/evaluation/`; no corpus audio/weights are committed.
+
+Current status, evidence and handoff: [STATUS.md](STATUS.md), [CONTRACT.md](CONTRACT.md),
+[integration/README.md](integration/README.md), [README.md](README.md).
+
+Nicla Voice remains a separately coordinated stretch trigger, not a replacement recognizer.
+Defer it until the main MFCC + DTW workflow and device/UI integration are complete.
 
 ## Never
-- Change `Prediction`, `Recognizer`, `Speaker` or `AudioCapture` signatures without a `CONTRACT` post.
-- Commit audio, model weights or TORGO files.
-- Return a guessed intent when below threshold. Rejection is a feature.
+
+- Bypass the ownership hook or push changes to main.
+- Change published interfaces without a CONTRACT update to the device owner.
+- Commit raw user/corpus audio, model weights or credentials.
+- Treat similarity as probability or report this small corpus diagnostic as patient accuracy.
+- Dispatch a request from speech/enrollment; device confirmation remains mandatory.

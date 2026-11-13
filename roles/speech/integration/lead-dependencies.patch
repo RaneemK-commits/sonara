@@ -1,0 +1,18 @@
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -14,13 +14,13 @@
+ 
+ [project.optional-dependencies]
+ audio = ["sounddevice>=0.4.6"]
+-model = ["onnxruntime>=1.17"]
+ tts = ["piper-tts>=1.2"]
+-asr-baseline = ["faster-whisper>=1.0"]
+ dev = ["pytest>=8", "httpx>=0.27"]
++corpus-eval = ["datasets>=3.6", "soundfile>=0.13", "scipy>=1.13"]
+ 
+ [tool.setuptools.packages.find]
+ include = ["sonara*"]
+ 
+ [tool.pytest.ini_options]
+ testpaths = ["tests"]
++pythonpath = ["."]
