@@ -1,5 +1,21 @@
 # Speech STATUS
 
+## SCI study (separate branch only)
+
+- sci/measurement-and-plots contains the completed isolated ARM64 experiment, calculator and
+  five PNG/SVG plots: roles/speech/sci/results/REPORT.md. Main/live app were not changed.
+- 22 cases × 5 paired repetitions × 2 engines = 220 timing observations. All paired decisions
+  and raw distances match. Median known-word latency 4928 ms -> 494 ms (9.97x); median CPU
+  time falls about 90%. Quality counts unique recordings, not timing repetitions.
+- Electricity/carbon are modelled scenarios, not measured: no meter or usable power telemetry.
+  Germany factor 406 gCO2e/kWh (UBA estimated 2025, upstream included). Full daily standby and
+  allocated embodied hardware are included; hardware/power assumptions and exclusions disclosed.
+- Central model at 100 Talk attempts/day: ~120.64 -> ~120.56 gCO2e/bed-day. Whole-system change
+  is small because standby/display/embodied dominate. Do not equate 10x speedup to 10x lower SCI.
+- Sensor-heavy idle probe overran and was rejected as clean baseline; raw trace kept for audit.
+  Follow-up was not retrieved. No clean idle-power/CPU baseline is claimed. 210 tests passed,
+  4 skipped; 11 SCI tests pass. Private WAVs/templates/binaries are not committed.
+
 ## Native DTW and idle/FOOD guards — live and human verified
 
 - Preserved all 225 request templates; smaller/coarser sets were benchmarked but rejected after
