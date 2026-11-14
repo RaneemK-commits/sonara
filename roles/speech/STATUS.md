@@ -1,5 +1,29 @@
 # Speech STATUS
 
+## Native DTW and idle/FOOD guards — live and human verified
+
+- Preserved all 225 request templates; smaller/coarser sets were benchmarked but rejected after
+  actual USB-mic WATER clips became FOOD. Added optional exact native C DTW with explicit ABI,
+  bounded buffers, numerical parity tests and no runtime compilation/download. NumPy default
+  remains available with no compiler or native library.
+- ARM64 same-WAV paired timing: NumPy 7412.8 ms; native 731.4/721.3/810.7 ms. Scores agree to
+  1e-9 and both known board WATER clips still match. Subsequent ten-clip native replay roughly
+  0.56–0.74 s. This excludes capture and playback, and is not a worst-case guarantee.
+- Added profile-v2 speech gate and per-intent minimum gaps. Ratio-only gate admitted real idle
+  HELP (distance .787); strengthened policy to RMS >=.003 and distance <=.75, with gaps .01
+  normally / .025 FOOD. All 75 earlier request development distances remain under .75; final
+  gap policy accepts 73/75 nearest-correct request scores. Reused development, not fresh accuracy.
+- Human confirmed fresh silence is rejected and words work after stronger update. Physical/touch
+  confirmation remains mandatory; voice YES/NO disabled. Quiet speech and soundalike/other-speaker
+  rejection remain limitations; do not describe this as reliable speaker identification.
+- Live API confirms guarded_closest, native engine, 225 references, level .003 and above gaps.
+  Profile: /home/arduino/sonara-native-final-guards/candidate; native library in the separate
+  sonara-native-guarded-v2-package directory. 95-native-guarded.conf is the active override.
+- Final isolated local release: 186 passed (7.98 s); board: 34 related tests passed (8.00 s).
+  Build/benchmark/policy commands and rollback: docs/NATIVE_DTW.md. Private WAVs/templates and
+  architecture-specific binary stay ignored. Controller/server/capture and other-agent edits
+  were preserved, including a concurrent service restart during staging.
+
 ## Supervised closest-label MVP mode (human requested)
 
 - Human explicitly requested closest-label matching to stop repeated FOOD/WATER margin rejects.

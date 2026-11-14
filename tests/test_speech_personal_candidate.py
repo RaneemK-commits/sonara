@@ -161,3 +161,39 @@ def test_closest_label_demo_uses_one_pass_even_when_distance_rejects(monkeypatch
     audio=np.concatenate([np.zeros(16000,np.float32),tone(202),np.zeros(16000,np.float32)])
     assert not model.predict(audio,threshold=.85,required_margin=0).accepted
     assert len(calls)==1
+
+
+def test_compact_model_balanced_real_sources_and_persistent_policy(tmp_path):
+    from roles.speech.evaluation.compact_personal import compact
+    model=compact(candidate(),per_intent=2)
+    assert model.speech_gate and model.intent_margins=={'FOOD':.025}
+    assert len(model.sequences)==10 and len(set(model.families))==10
+    assert set(model.labels)==set(CONTEXTS['requests'])
+    path=tmp_path/'compact';model.save(path)
+    loaded=PersonalWordCandidate.load(path)
+    assert loaded.speech_gate and loaded.intent_margins==model.intent_margins
+    assert loaded.predict(np.random.default_rng(5).normal(0,.002,48000).astype(np.float32),required_margin=0).reason=='no clear speech activity'
+
+
+def test_speech_gate_skips_matching_stationary_noise(monkeypatch):
+    model=candidate();model.speech_gate=True
+    monkeypatch.setattr(model,'_match',lambda *args:pytest.fail('idle noise must not run DTW'))
+    noise=np.random.default_rng(17).normal(0,.001,48000).astype(np.float32)
+    assert not model.predict(noise,required_margin=0).accepted
+
+
+def test_food_guard_rejects_near_tie_in_closest_mode(monkeypatch):
+    model=candidate();model.intent_margins={'FOOD':.025}
+    monkeypatch.setattr('sonara.models.personal.dtw_distances',
+                        lambda *args,**kwargs:[.65,.65,.7,.7,.64,.64,.72,.72,.73,.73])
+    result=model.predict(tone(202),threshold=.85,required_margin=0)
+    assert result.best=='FOOD' and not result.accepted
+
+
+def test_speech_gate_rejects_variable_low_level_noise(tmp_path):
+    model=candidate();model.speech_gate=True;model.min_rms=.003
+    t=np.arange(48000)/16000
+    noise=(.0004*np.sin(2*np.pi*180*t)*(1+3*np.sin(2*np.pi*2*t)**2)).astype(np.float32)
+    assert not model.predict(noise,required_margin=0).accepted
+    path=tmp_path/'floor';model.save(path)
+    assert PersonalWordCandidate.load(path).min_rms==.003
