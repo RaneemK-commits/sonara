@@ -210,3 +210,11 @@ The live override optionally accepts `SONARA_PERSONAL_REQUEST_THRESHOLD` (defaul
 negative/nonfinite margins fail startup. `/api/profiles.calibration` reports effective
 `distance_threshold` and `required_margin`. UNO Q currently uses 0.85/0.10 at human request.
 These settings affect request predictions only; no voice confirmation path is added.
+
+
+Personal request predictions can retry one focused endpoint crop after rejection. The retry
+must agree with the original nearest label and meet the same distance/margin limits. Accepted
+retry reason is `accepted after word-boundary retry`; Prediction/controller interfaces unchanged.
+`SONARA_SPEECH_DIAGNOSTICS=/private/directory` explicitly opts into <=10 local WAV/JSON diagnostic
+pairs. Default remains no raw retention. Human authorized this temporarily on UNO Q. No extra
+microphone access or server endpoints are introduced. Full two-pass matching may exceed 10 s.

@@ -21,6 +21,36 @@ CONTEXTS = {'requests': ('WATER', 'HELP', 'FOOD', 'PAIN', 'BATHROOM'),
             'confirmation': ('YES', 'NO')}
 
 
+def focused_word(audio: np.ndarray) -> np.ndarray:
+    """Candidate-only retry: ignore isolated energy spikes; retain internal pauses."""
+    audio = np.asarray(audio,dtype=np.float32)
+    audio = audio-audio.mean()
+    frame=320
+    n=len(audio)//frame
+    if n<3:
+        return audio
+    energy=np.sqrt(np.mean(audio[:n*frame].reshape(n,frame).astype(float)**2,axis=1))
+    peak=float(energy.max()); floor=float(np.percentile(energy,10))
+    threshold=max(1e-5,min(max(floor*3,peak*.1),peak*.3))
+    active=energy>threshold
+    retained=np.zeros(n,bool)
+    start=0
+    while start<n:
+        if not active[start]:
+            start+=1
+            continue
+        end=start+1
+        while end<n and active[end]:
+            end+=1
+        if end-start>=3:
+            retained[start:end]=True
+        start=end
+    indices=np.flatnonzero(retained)
+    if not len(indices):
+        return audio[:0]
+    return audio[max(0,indices[0]-4)*frame:min(len(audio),(indices[-1]+5)*frame)]
+
+
 class PersonalWordCandidate:
     def __init__(self):
         self.sequences: list[np.ndarray] = []
@@ -66,6 +96,22 @@ class PersonalWordCandidate:
             query = self.features(audio)
         except (ValueError, TypeError) as exc:
             return Prediction(None,None,float('inf'),0.,threshold,{},reason=str(exc))
+        result = self._match(query,context,threshold,required_margin)
+        if not result.accepted and context=='requests':
+            cropped=focused_word(audio)
+            # Retry only a substantial endpoint reduction, preserving a meaningful word span.
+            if 2400<=len(cropped)<=.75*len(audio):
+                weights=np.repeat([1.,.5,.25],13)
+                retry_query=(mfcc(cropped,config=FeatureConfig())*weights).astype(np.float32)[::2]
+                retry=self._match(retry_query,context,threshold,required_margin)
+                if retry.accepted and retry.best==result.best:
+                    result=retry
+                    result.reason='accepted after word-boundary retry'
+        result.latency_ms=(time.perf_counter()-started)*1000
+        return result
+
+    def _match(self, query: np.ndarray, context: str, threshold: float,
+               required_margin: float) -> Prediction:
         indices = [i for i,label in enumerate(self.labels) if label in CONTEXTS[context]]
         if len({self.labels[i] for i in indices}) != len(CONTEXTS[context]):
             return Prediction(None,None,float('inf'),0.,threshold,{},reason='Incomplete context')
@@ -83,7 +129,7 @@ class PersonalWordCandidate:
         best = ranked[0]; distance = scores[best]; margin = scores[ranked[1]]-distance
         accepted = distance <= threshold and margin >= required_margin
         return Prediction(best if accepted else None,best,distance,margin,threshold,scores,
-                          (time.perf_counter()-started)*1000,
+                          0.,
                           '' if accepted else 'distant or ambiguous')
 
     def save(self, directory: Path) -> None:

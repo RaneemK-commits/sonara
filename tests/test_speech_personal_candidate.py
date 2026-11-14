@@ -94,3 +94,43 @@ def test_relaxed_limits_accept_only_when_both_distance_and_margin_pass(monkeypat
     assert not model.predict(audio,threshold=.85).accepted
     assert not model.predict(audio,required_margin=.10).accepted
     assert model.predict(audio,threshold=.85,required_margin=.10).intent=='WATER'
+
+
+def test_diagnostic_audio_is_explicit_opt_in(tmp_path,monkeypatch):
+    from sonara.config import load_config
+    from sonara.recognizer import Recognizer
+    path=tmp_path/'candidate'; candidate().save(path)
+    monkeypatch.setenv('SONARA_PERSONAL_CANDIDATE',str(path))
+    cfg=load_config();cfg.root=tmp_path
+    rec=Recognizer(cfg)
+    directory=tmp_path/'diagnostics'
+    monkeypatch.delenv('SONARA_SPEECH_DIAGNOSTICS',raising=False)
+    rec.recognize(tone(202))
+    assert not directory.exists()
+    monkeypatch.setenv('SONARA_SPEECH_DIAGNOSTICS',str(directory))
+    rec.recognize(tone(202))
+    assert len(list(directory.glob('*.wav')))==1
+    assert len(list(directory.glob('*.json')))==1
+
+
+def test_focused_boundaries_remove_spikes_preserve_internal_pause():
+    from sonara.models.personal import focused_word
+    audio=np.zeros(48000,np.float32)
+    audio[1600:1920]=.1  # isolated 20 ms click
+    audio[24000:28000]=.1
+    audio[30000:34000]=.08  # internal pause remains inside word
+    crop=focused_word(audio)
+    assert 10000<len(crop)<16000
+    assert np.max(crop)>.05 and np.min(crop)<0
+
+
+def test_boundary_retry_requires_agreement(monkeypatch):
+    from sonara.models.classifier import Prediction
+    model=candidate()
+    audio=np.concatenate([np.zeros(16000,np.float32),tone(202),np.zeros(16000,np.float32)])
+    for retry_label in ('WATER','HELP'):
+        results=iter([Prediction(None,'WATER',.7,.01,.85,{}),
+                      Prediction(retry_label,retry_label,.6,.08,.85,{})])
+        monkeypatch.setattr(model,'_match',lambda *args:next(results))
+        result=model.predict(audio,threshold=.85,required_margin=.05)
+        assert result.accepted == (retry_label=='WATER')

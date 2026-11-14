@@ -214,4 +214,24 @@ class Recognizer:
             result.accepted, result.best, result.distance, result.threshold, result.margin,
             self.margin, 0 if seq is None else len(seq), len(self.clf.seqs), result.latency_ms,
             result.reason or "accepted")
+        diagnostics = os.environ.get('SONARA_SPEECH_DIAGNOSTICS')
+        if diagnostics:
+            # Explicit development opt-in only. Bound retained clips to 10 per directory.
+            try:
+                import json
+                from uuid import uuid4
+                from .audio.wavio import write_wav
+                directory = Path(diagnostics)
+                directory.mkdir(parents=True,exist_ok=True,mode=0o700)
+                if len(list(directory.glob('*.wav'))) < 10:
+                    name = f'{time.time_ns()}-{uuid4().hex[:6]}'
+                    samples = np.asarray(audio,dtype=np.float32)
+                    write_wav(directory/f'{name}.wav',samples,self.sr)
+                    details = {'prediction':result.to_dict(),'duration_s':len(samples)/self.sr,
+                               'rms':float(np.sqrt(np.mean(samples.astype(np.float64)**2))),
+                               'peak':float(np.max(np.abs(samples),initial=0))}
+                    (directory/f'{name}.json').write_text(json.dumps(details,indent=2))
+                    LOG.warning('Diagnostic recording saved: %s',directory/f'{name}.wav')
+            except (OSError,ValueError,TypeError) as exc:
+                LOG.warning('Diagnostic recording failed: %s',exc)
         return result
