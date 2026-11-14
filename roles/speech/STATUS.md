@@ -1,5 +1,21 @@
 # Speech STATUS
 
+## Live rejection limits adjusted at human request
+
+- Added explicit SONARA_PERSONAL_REQUEST_THRESHOLD / SONARA_PERSONAL_REQUEST_MARGIN environment
+  overrides, validated at startup and exposed in /api/profiles calibration diagnostics. Defaults
+  remain 0.8/0.12; board service override now uses 0.85/0.10 for request context only.
+- Development rescore of augmented candidate: correct accepted requests rise from 1/75 to 4/75;
+  no wrong accepted request labels; 0/14 similar-word false accepts at both settings. Choosing
+  settings on these recordings makes this development tuning, not an independent accuracy claim.
+  Looser 0.90/0.08 admits walker; 0.95/0.06 admits two negatives. Calibration remains unresolved.
+- Deployed adapter update and restarted live app from IDLE. Health and /api/profiles verify
+  personal_requests_demo ready, distance_threshold=0.85, required_margin=0.1, mic available.
+  Voice YES/NO stays disabled; physical/touch confirmation and existing timeout remain intact.
+- Five integration tests passed on board before restart (2.58 s). Local regression verifies
+  accepting requires both limits, invalid settings fail startup, and default behavior is preserved.
+- Prior code and service drop-in backed up at /home/arduino/sonara-personal-limits-backup-20261114.
+
 ## Live personal request integration (human authorized)
 
 - Added explicit SONARA_PERSONAL_CANDIDATE override to Recognizer. Request-only scoring;

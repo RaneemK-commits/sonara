@@ -203,3 +203,10 @@ Normal Prediction semantics and mandatory confirmation remain intact. Profile AP
 `personal_requests_demo`; calibration still reports requires_more_recordings. Corrupt/missing
 candidate files fail closed. Remove the service override and restart to use the original
 standard profile selector again. Enrollment/profile switching is not supported while pinned.
+
+
+The live override optionally accepts `SONARA_PERSONAL_REQUEST_THRESHOLD` (default 0.8) and
+`SONARA_PERSONAL_REQUEST_MARGIN` (default 0.12). Nonfinite/nonpositive distance limits and
+negative/nonfinite margins fail startup. `/api/profiles.calibration` reports effective
+`distance_threshold` and `required_margin`. UNO Q currently uses 0.85/0.10 at human request.
+These settings affect request predictions only; no voice confirmation path is added.

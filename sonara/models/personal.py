@@ -55,17 +55,20 @@ class PersonalWordCandidate:
         self.labels.append(label)
         self.families.append(family)
 
-    def predict(self, audio: np.ndarray, context: str = 'requests') -> Prediction:
+    def predict(self, audio: np.ndarray, context: str = 'requests', *,
+                threshold: float = .8, required_margin: float = .12) -> Prediction:
         if context not in CONTEXTS:
             raise ValueError('Context must be requests or confirmation')
+        if not np.isfinite(threshold) or threshold <= 0 or not np.isfinite(required_margin) or required_margin < 0:
+            raise ValueError('Invalid rejection limits')
         started = time.perf_counter()
         try:
             query = self.features(audio)
         except (ValueError, TypeError) as exc:
-            return Prediction(None,None,float('inf'),0.,.8,{},reason=str(exc))
+            return Prediction(None,None,float('inf'),0.,threshold,{},reason=str(exc))
         indices = [i for i,label in enumerate(self.labels) if label in CONTEXTS[context]]
         if len({self.labels[i] for i in indices}) != len(CONTEXTS[context]):
-            return Prediction(None,None,float('inf'),0.,.8,{},reason='Incomplete context')
+            return Prediction(None,None,float('inf'),0.,threshold,{},reason='Incomplete context')
         groups: dict[str,dict[str,float]] = {}
         for start in range(0,len(indices),16):
             selected = indices[start:start+16]
@@ -74,12 +77,12 @@ class PersonalWordCandidate:
                 family = groups.setdefault(self.labels[i],{})
                 family[self.families[i]] = min(family.get(self.families[i],float('inf')),float(distance))
         if any(len(families)<2 for families in groups.values()):
-            return Prediction(None,None,float('inf'),0.,.8,{},reason='Need two independent sources per label')
+            return Prediction(None,None,float('inf'),0.,threshold,{},reason='Need two independent sources per label')
         scores = {label:float(np.mean(sorted(families.values())[:2])) for label,families in groups.items()}
         ranked = sorted(scores,key=scores.get)
         best = ranked[0]; distance = scores[best]; margin = scores[ranked[1]]-distance
-        accepted = distance <= .8 and margin >= .12
-        return Prediction(best if accepted else None,best,distance,margin,.8,scores,
+        accepted = distance <= threshold and margin >= required_margin
+        return Prediction(best if accepted else None,best,distance,margin,threshold,scores,
                           (time.perf_counter()-started)*1000,
                           '' if accepted else 'distant or ambiguous')
 
