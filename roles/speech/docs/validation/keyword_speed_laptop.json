@@ -1,0 +1,85 @@
+{
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "python": "3.14.4",
+  "numpy": "2.5.4",
+  "runs": 2,
+  "cases": [
+    {
+      "speaker": "F03",
+      "source": "streams/F03/target_02_clean.wav",
+      "audio_s": 5.56425,
+      "exact_batch_decisions_unchanged": true,
+      "methods": {
+        "scalar_10ms": {
+          "processing_s_mean": 0.8886389120016247,
+          "real_time_factor": 0.1597050657324212,
+          "scan_ms_mean": 80.61243431819258,
+          "scan_ms_p95": 98.80418329994427,
+          "template_count": 10
+        },
+        "batched_10ms": {
+          "processing_s_mean": 0.9672287524990679,
+          "real_time_factor": 0.17382913285691115,
+          "scan_ms_mean": 87.75109577254625,
+          "scan_ms_p95": 125.72567525021441,
+          "template_count": 10
+        },
+        "fast_weighted_20ms": {
+          "processing_s_mean": 0.3322034494995023,
+          "real_time_factor": 0.05970318542472072,
+          "scan_ms_mean": 30.046200727486973,
+          "scan_ms_p95": 42.405836750913295,
+          "template_count": 10
+        },
+        "augmented_20ms": {
+          "processing_s_mean": 0.5648110885013011,
+          "real_time_factor": 0.10150713726042164,
+          "scan_ms_mean": 51.17457572735227,
+          "scan_ms_p95": 72.25617020103527,
+          "template_count": 25
+        }
+      },
+      "fast_vs_scalar_speedup": 2.6749839995353693
+    },
+    {
+      "speaker": "M02",
+      "source": "streams/M02/target_00_background_20db.wav",
+      "audio_s": 11.8914375,
+      "exact_batch_decisions_unchanged": true,
+      "methods": {
+        "scalar_10ms": {
+          "processing_s_mean": 4.400331024999105,
+          "real_time_factor": 0.3700419755810939,
+          "scan_ms_mean": 203.2570537140557,
+          "scan_ms_p95": 227.44978009995975,
+          "template_count": 10
+        },
+        "batched_10ms": {
+          "processing_s_mean": 3.8661344884985738,
+          "real_time_factor": 0.32511918668357576,
+          "scan_ms_mean": 181.30034721399994,
+          "scan_ms_p95": 211.21379139949568,
+          "template_count": 10
+        },
+        "fast_weighted_20ms": {
+          "processing_s_mean": 1.2128636989982624,
+          "real_time_factor": 0.10199470829311111,
+          "scan_ms_mean": 56.611450261438485,
+          "scan_ms_p95": 65.036913948461,
+          "template_count": 10
+        },
+        "augmented_20ms": {
+          "processing_s_mean": 2.770011329997942,
+          "real_time_factor": 0.23294167168586152,
+          "scan_ms_mean": 129.70938428606175,
+          "scan_ms_p95": 149.6535723010311,
+          "template_count": 25
+        }
+      },
+      "fast_vs_scalar_speedup": 3.6280507270796045
+    }
+  ],
+  "note": "Whole-stream processing excludes profile fitting/capture/TTS. Scan timing distributions cover calls returning proposals, not empty scans; all feed work is included in total processing and real-time factor. Shared machine.",
+  "peak_process_rss_mib": 67.08984375
+}

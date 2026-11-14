@@ -1,0 +1,55 @@
+{
+  "platform": "Linux-7.0.0-g122c2c22d838-aarch64-with-glibc2.41",
+  "machine": "aarch64",
+  "python": "3.13.5",
+  "numpy": "2.5.4",
+  "runs": 2,
+  "cases": [
+    {
+      "speaker": "F03",
+      "source": "streams/F03/target_02_clean.wav",
+      "audio_s": 5.56425,
+      "exact_batch_decisions_unchanged": null,
+      "methods": {
+        "refined_30ms": {
+          "processing_s_mean": 3.154632398500013,
+          "real_time_factor": 0.5669465603630341,
+          "scan_ms_mean": 441.6930742857233,
+          "scan_ms_p95": 516.3775949500149,
+          "template_count": 10
+        },
+        "refined_augmented_40ms": {
+          "processing_s_mean": 3.4250633869999945,
+          "real_time_factor": 0.6155480769196198,
+          "scan_ms_mean": 481.15922271428855,
+          "scan_ms_p95": 608.9676373500225,
+          "template_count": 25
+        }
+      }
+    },
+    {
+      "speaker": "M02",
+      "source": "streams/M02/target_00_background_20db.wav",
+      "audio_s": 11.8914375,
+      "exact_batch_decisions_unchanged": null,
+      "methods": {
+        "refined_30ms": {
+          "processing_s_mean": 13.59966368900001,
+          "real_time_factor": 1.1436517821331533,
+          "scan_ms_mean": 943.6279064285702,
+          "scan_ms_p95": 1186.1350678499973,
+          "template_count": 10
+        },
+        "refined_augmented_40ms": {
+          "processing_s_mean": 17.151956925000007,
+          "real_time_factor": 1.4423787641317551,
+          "scan_ms_mean": 1194.2716045714303,
+          "scan_ms_p95": 1615.7175628500027,
+          "template_count": 25
+        }
+      }
+    }
+  ],
+  "note": "Whole-stream processing excludes profile fitting/capture/TTS. Scan timing distributions cover calls returning proposals, not empty scans; all feed work is included in total processing and real-time factor. Shared machine.",
+  "peak_process_rss_mib": 56.4296875
+}

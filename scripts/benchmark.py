@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import json
 import platform
-import resource
 import sys
 import time
 from pathlib import Path
@@ -12,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from sonara.audio.wavio import read_wav, resample_linear
 from sonara.config import load_config
 from sonara.recognizer import Recognizer
+from roles.speech.evaluation.memory import peak_process_rss_mib
 
 
 def main():
@@ -49,7 +49,7 @@ def main():
            'processing_ms': {'mean': float(np.mean(elapsed)), 'p50': float(np.percentile(elapsed, 50)),
                              'p95': float(np.percentile(elapsed, 95)), 'max': max(elapsed)},
            'cpu_ms_per_run': (time.process_time()-cpu_start)*1000/args.runs,
-           'peak_process_rss_mib': resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024,
+           'peak_process_rss_mib': peak_process_rss_mib(),
            'template_mib': sum(s.nbytes for s in rec.clf.seqs)/1024**2,
            'last_prediction': result.to_dict(), 'note': 'Processing only; no capture or TTS. RSS is process high-water mark.'}
     args.output.parent.mkdir(parents=True, exist_ok=True)

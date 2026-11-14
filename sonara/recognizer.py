@@ -1,6 +1,8 @@
 """Validated audio → conservative trim → MFCC → personalized DTW → intent/UNKNOWN."""
 from __future__ import annotations
 
+import logging
+import os
 import re
 import threading
 import time
@@ -16,6 +18,8 @@ from .models.classifier import Prediction, PrototypeClassifier
 from .models.embedder import MFCCEmbedder
 from .models.features import FeatureConfig
 
+
+LOG = logging.getLogger(__name__)
 
 def profile_path(cfg: Config, profile_id: str | None = None) -> Path:
     profile_id = profile_id or cfg.section("recognition").get("profile_id", "patient_001")
@@ -37,15 +41,28 @@ class Recognizer:
         self.feature_config = FeatureConfig(**cfg.section("features"))
         self.embedder = MFCCEmbedder(self.feature_config)
         rec = cfg.section("recognition")
+        self._candidate_path = os.environ.get("SONARA_PERSONAL_CANDIDATE")
+        self._candidate = None
         self.threshold = rec.get("threshold")
         self.margin = rec.get("margin", .12)
         self.profile_id = profile_path(cfg).name
         self.clf = self.new_classifier()
         self._stamp = None
         self.profile_error = ""
+        self._selection_error = ""
         active = profile_path(cfg).parent / "active.txt"
-        if active.exists():
-            self.profile_id = profile_path(cfg, active.read_text().strip()).name
+        try:
+            if active.exists():
+                if active.stat().st_size > 256:
+                    raise ValueError("active profile selection is too large")
+                selection = active.read_text().strip()
+                if not selection:
+                    raise ValueError("active profile selection is empty")
+                self.profile_id = profile_path(cfg, selection).name
+        except (OSError, ValueError) as exc:
+            # A damaged patient selector must never silently activate a different patient.
+            self._selection_error = f"invalid active profile selection: {exc}"
+            self.profile_error = self._selection_error
         self.reload()
 
     def new_classifier(self) -> PrototypeClassifier:
@@ -60,45 +77,83 @@ class Recognizer:
 
     def reload(self, profile_id: str | None = None) -> None:
         with self._lock:
+            if self._candidate_path:
+                self._reload_candidate(profile_id)
+                return
+            if profile_id is None and self._selection_error:
+                return
             target = profile_path(self.cfg, profile_id or self.profile_id)
-            metadata = target / "metadata.json"
-            if not metadata.exists():
-                if profile_id is not None:
-                    raise ValueError("profile is missing or incomplete")
-                self.clf = self.new_classifier()
-                self._stamp = None
-                return
-            archive = target / "templates.npz"
-            if not archive.exists():
-                self.clf = self.new_classifier()
-                self.profile_error = "profile is missing templates.npz"
-                if profile_id is not None:
-                    raise ValueError(self.profile_error)
-                return
-            stamp = (target.name, metadata.stat().st_mtime_ns, metadata.stat().st_size,
-                     archive.stat().st_mtime_ns, archive.stat().st_size)
-            if profile_id is None and stamp == self._stamp:
-                return
+            metadata, archive = target / "metadata.json", target / "templates.npz"
             try:
+                if not metadata.exists():
+                    raise ValueError("profile is not enrolled or metadata.json is missing")
+                if not archive.exists():
+                    raise ValueError("profile is missing templates.npz")
+                stamp = (target.name, metadata.stat().st_mtime_ns, metadata.stat().st_size,
+                         archive.stat().st_mtime_ns, archive.stat().st_size)
+                if profile_id is None and stamp == self._stamp:
+                    return
                 clf = PrototypeClassifier.load(target)
+                if clf.profile_id != target.name:
+                    raise ValueError("profile ID does not match its directory; select or re-enroll the correct patient")
                 if any(self.cfg.intent(label) is None for label in clf.classes):
                     raise ValueError("profile contains intents missing from config/intents.toml")
-            except (ValueError, KeyError, OSError, EOFError, zipfile.BadZipFile) as exc:
-                self.profile_error = str(exc)
+                if profile_id is not None:
+                    # Persist selection before changing in-memory state; a failed write leaves
+                    # the previous patient active rather than reporting a half-applied switch.
+                    active = target.parent / "active.txt"
+                    tmp = active.with_suffix(".tmp")
+                    tmp.write_text(target.name)
+                    tmp.replace(active)
+            except (ValueError, KeyError, TypeError, OverflowError, OSError, EOFError,
+                    RuntimeError, zipfile.BadZipFile) as exc:
                 if profile_id is not None:
                     raise ValueError(f"cannot load profile: {exc}") from exc
-                # Fail closed if a selected profile becomes corrupt.
+                self.profile_error = str(exc)
                 self.clf = self.new_classifier()
+                self._stamp = None  # Restored files must be retried, even with their old timestamps.
                 return
             self.clf, self.profile_id, self._stamp = clf, target.name, stamp
             self.feature_config = clf.feature_config
             self.embedder = MFCCEmbedder(self.feature_config)
-            self.profile_error = ""
-            if profile_id is not None:
-                active = target.parent / "active.txt"
-                tmp = active.with_suffix(".tmp")
-                tmp.write_text(self.profile_id)
-                tmp.replace(active)
+            self.profile_error = self._selection_error = ""
+
+    def _reload_candidate(self, profile_id: str | None) -> None:
+        """Explicit device override; never mix weighted references with standard profiles."""
+        from .models.personal import PersonalWordCandidate, CONTEXTS
+        target = Path(self._candidate_path)
+        selected = 'personal_requests_demo'
+        if profile_id is not None and profile_id != selected:
+            raise ValueError('Personal request override is active; disable SONARA_PERSONAL_CANDIDATE before switching profiles')
+        self.profile_id = selected
+        try:
+            files = [target/'candidate.json', target/'references.npz']
+            stamp = tuple((p.stat().st_mtime_ns,p.stat().st_size) for p in files)
+            if self._candidate is not None and stamp == self._stamp:
+                return
+            candidate = PersonalWordCandidate.load(target)
+            labels = CONTEXTS['requests']
+            if any(self.cfg.intent(label) is None for label in labels):
+                raise ValueError('Candidate request is missing from configured intents')
+            if set(candidate.labels).intersection(labels) != set(labels):
+                raise ValueError('Candidate request vocabulary is incomplete')
+            view = self.new_classifier()
+            for label,seq in zip(candidate.labels,candidate.sequences):
+                if label in labels:
+                    view.labels.append(label); view.seqs.append(seq)
+            view.profile_id = selected
+            view.calibration = {'requires_more_recordings':True,
+                                'reason':'Experimental personal request candidate; acceptance calibration unresolved',
+                                'mode':'personal_requests', 'voice_confirmation':False,
+                                'independent_sources':len({f for f,l in zip(candidate.families,candidate.labels) if l in labels})}
+            self._candidate,self.clf,self._stamp = candidate,view,stamp
+            self.profile_error = self._selection_error = ''
+            LOG.warning('Loaded personal request candidate: %s; voice YES/NO disabled',target)
+        except (ValueError,KeyError,TypeError,OSError,EOFError,RuntimeError,zipfile.BadZipFile) as exc:
+            self._candidate = None
+            self.clf = self.new_classifier()
+            self._stamp = None
+            self.profile_error = f'Personal request candidate unavailable: {exc}'
 
     def prepare(self, audio: np.ndarray, manual: bool = False) -> tuple[np.ndarray, dict]:
         audio = np.asarray(audio, dtype=np.float32)
@@ -133,11 +188,22 @@ class Recognizer:
         t0 = time.perf_counter()
         with self._lock:
             self.reload()
-            seq = self.embed(audio, manual)
-            if seq is None:
-                result = Prediction(None, None, float("inf"), 0., 0., {}, reason="invalid or silent recording")
+            seq = None
+            if self._candidate_path:
+                result = (self._candidate.predict(audio,context='requests') if self._candidate is not None else
+                          Prediction(None,None,float('inf'),0.,.8,{},reason=self.profile_error))
             else:
-                result = self.clf.predict(seq, self.threshold, self.margin)
+                seq = self.embed(audio, manual)
+                if seq is None:
+                    result = Prediction(None, None, float("inf"), 0., 0., {}, reason="invalid or silent recording")
+                else:
+                    result = self.clf.predict(seq, self.threshold, self.margin)
         result.latency_ms = (time.perf_counter()-t0)*1000
         METRICS.incr("accepted" if result.accepted else "rejected")
+        log = LOG.info if result.accepted else LOG.warning
+        log("recognition accepted=%s best=%s distance=%.4f threshold=%.4f margin=%.4f "
+            "required_margin=%.4f frames=%d templates=%d processing_ms=%.1f reason=%s",
+            result.accepted, result.best, result.distance, result.threshold, result.margin,
+            self.margin, 0 if seq is None else len(seq), len(self.clf.seqs), result.latency_ms,
+            result.reason or "accepted")
         return result

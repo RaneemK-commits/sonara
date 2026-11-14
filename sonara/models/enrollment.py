@@ -42,6 +42,8 @@ class EnrollmentService:
         if self.controller.state != "IDLE":
             raise ValueError("confirm or cancel the pending interaction before enrollment")
         draft = PrototypeClassifier.load(path) if path.exists() else self.rec.new_classifier()
+        if path.exists() and draft.profile_id != profile_id:
+            raise ValueError("profile ID does not match its directory")
         draft.profile_id = profile_id
         self.draft, self.intent, self.pending = draft, None, None
         self.keep_audio = keep_audio
