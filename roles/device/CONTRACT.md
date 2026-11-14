@@ -45,3 +45,41 @@ Server → client:
 
 Client → server (caregiver only):
 - `{type: "receipt", request_id}`: send **only when the request is actually rendered on a visible screen**. This is what sets `DISPLAYED`.
+
+## Authoritative room display (additive)
+`room_state.display = {view, intent, event_id}`. Existing `state` and request statuses remain unchanged.
+`view` uses existing UI names: ready, listening, processing, confirm, retry, cancelled,
+sending, failed, notified, acked. The browser renders this field directly; only transport
+disconnect and explicit demo previews override it locally. Do not infer retry from identical
+`last` values or expire device views using browser timers. `intent` retains the pending phrase
+during rejection/retry, and `event_id` distinguishes repeated attempts/outcomes within a process.
+Snapshots on reconnect include the current display; event IDs are not durable across restart.
+
+Priority: capture/processing → five-second retry/cancel feedback → pending confirmation →
+request status → ready. Feedback expiry is published by the controller. QUEUED and
+NOT_DISPLAYED never expire into success. DISPLAYED/ACKNOWLEDGED/CANCELLED use the existing
+60-second recency rule, now on device time. COMPLETED returns to ready.
+An expired confirmation cannot create a request, including under queued input load.
+This does not claim actual TTS playback: no playback start/end contract exists yet.
+
+## Optional Web Push (human-approved internet exception)
+
+All `/api/push/*` routes require the existing `X-Sonara-Token` when configured.
+- GET `/api/push/config`: `{enabled, public_key, error}`. `error` is null or
+  `push_not_configured`. No private key or subscription secrets returned.
+- POST `/api/push/subscriptions`: browser subscription `{endpoint, keys:{auth,p256dh}}`;
+  extra browser fields ignored. Returns `{ok:true}`; 503 if not enabled, 422 for invalid
+  endpoint/keys or capacity (16 phones). Stored locally in SQLite.
+- DELETE `/api/push/subscriptions`: `{endpoint}`; idempotent `{ok:true}`, also available
+  while delivery is disabled. Deletes the stored subscription and its delivery metadata.
+- GET `/sw.js`: UI-owned `web/sw.js`, root scope allowed, no-cache.
+- GET `/manifest.webmanifest`: UI-owned manifest.
+- GET `/sonara-demo-ca.crt`: public local demo CA certificate, 404 unless installed;
+  never exposes the CA private key. Installing/trusting it is a separate human phone action.
+
+Push JSON is exactly `{title:"Sonara",body:"New Sonara request",url:"/caregiver"}`.
+No patient/bed/intent/request ID or audio in push payloads. Each subscribed phone gets at
+most one send attempt per unacknowledged request within 120 seconds, including across
+restarts. No retries after a failed send; browser delivery is best effort, not assured.
+Revoked (404/410) subscriptions are removed. Sending/accepting a push never transitions
+request status. Only visible dashboard receipts and caregiver clicks do that.

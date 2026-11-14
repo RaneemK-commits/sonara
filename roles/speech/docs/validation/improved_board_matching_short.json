@@ -1,0 +1,36 @@
+{
+  "hardware": "Linux-7.0.0-g122c2c22d838-aarch64-with-glibc2.41",
+  "machine": "aarch64",
+  "python": "3.13.5",
+  "numpy": "2.2.6",
+  "audio_s": 0.6,
+  "frames": 59,
+  "counts": {
+    "BATHROOM": 5,
+    "FOOD": 5,
+    "HELP": 5,
+    "PAIN": 5,
+    "WATER": 5
+  },
+  "runs": 30,
+  "band": 0.2,
+  "matching_ms": {
+    "scalar": {
+      "mean": 502.5133420333077,
+      "p50": 480.8100829995965,
+      "p95": 577.1833899003468,
+      "max": 594.1488089993072
+    },
+    "batched": {
+      "mean": 169.251510466529,
+      "p50": 162.67637399869272,
+      "p95": 194.56923364969043,
+      "max": 215.00519400069606
+    }
+  },
+  "speedup_mean": 2.9690331309195863,
+  "maximum_score_difference": 0.0,
+  "prediction_unchanged": true,
+  "peak_process_rss_mib": 36.37890625,
+  "note": "Paired alternating matching-only timings; no audio capture, feature extraction, network or TTS."
+}

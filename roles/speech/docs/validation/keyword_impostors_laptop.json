@@ -1,0 +1,859 @@
+{
+  "variants": {
+    "refined_30ms": {
+      "trials": 60,
+      "trials_with_false_accepts": 0,
+      "false_accepted_events": 0,
+      "rows": [
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0285.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0256.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0023.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0161.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0244.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_2_headMic_0156.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_2_headMic_0220.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_1_headMic_0091.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_2_headMic_0107.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_2_headMic_0219.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0291.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0295.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0103.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0290.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0365.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0311.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0375.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0319.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0237.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0262.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_3_headMic_0146.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_3_headMic_0200.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_3_headMic_0161.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_2_headMic_0119.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_3_headMic_0170.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0285.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0256.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0023.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0161.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0244.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0291.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0295.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0103.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0290.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0365.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0311.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0375.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0319.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0237.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0262.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_3_headMic_0146.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_3_headMic_0200.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_3_headMic_0161.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_2_headMic_0119.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_3_headMic_0170.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0285.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0256.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0023.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0161.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0244.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_2_headMic_0156.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_2_headMic_0220.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_1_headMic_0091.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_2_headMic_0107.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_2_headMic_0219.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0311.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0375.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0319.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0237.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0262.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        }
+      ]
+    },
+    "refined_augmented_40ms": {
+      "trials": 60,
+      "trials_with_false_accepts": 0,
+      "false_accepted_events": 0,
+      "rows": [
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0285.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0256.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0023.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0161.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M01_3_headMic_0244.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_2_headMic_0156.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_2_headMic_0220.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_1_headMic_0091.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_2_headMic_0107.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M02_2_headMic_0219.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0291.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0295.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0103.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0290.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M03_2_headMic_0365.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0311.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0375.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0319.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0237.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "F03",
+          "source": "M05_2_headMic_0262.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_3_headMic_0146.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_3_headMic_0200.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_3_headMic_0161.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_2_headMic_0119.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "F03_3_headMic_0170.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0285.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0256.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0023.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0161.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M01_3_headMic_0244.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0291.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0295.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0103.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0290.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M03_2_headMic_0365.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0311.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0375.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0319.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0237.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M02",
+          "source": "M05_2_headMic_0262.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_3_headMic_0146.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_3_headMic_0200.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_3_headMic_0161.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_2_headMic_0119.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "F03_3_headMic_0170.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0285.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0256.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0023.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0161.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M01_3_headMic_0244.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_2_headMic_0156.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_2_headMic_0220.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_1_headMic_0091.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_2_headMic_0107.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M02_2_headMic_0219.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0311.wav",
+          "spoken_word": "yes",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0375.wav",
+          "spoken_word": "no",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0319.wav",
+          "spoken_word": "sip",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0237.wav",
+          "spoken_word": "sigh",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        },
+        {
+          "profile": "M03",
+          "source": "M05_2_headMic_0262.wav",
+          "spoken_word": "leak",
+          "truth": "UNKNOWN",
+          "accepted_events": []
+        }
+      ]
+    }
+  },
+  "warning": "Speaker-dependent matching is not speaker authentication. Few-shot corpus profiles and reused development data; no threshold tuning on these queries."
+}

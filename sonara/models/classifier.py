@@ -13,7 +13,7 @@ from uuid import uuid4
 
 import numpy as np
 
-from .dtw import dtw_distance
+from .dtw import dtw_distance, dtw_distances
 from .features import FeatureConfig
 
 
@@ -102,9 +102,11 @@ class PrototypeClassifier:
 
     def scores(self, seq: np.ndarray, exclude: int | None = None) -> dict[str, float]:
         per: dict[str, list[float]] = {}
-        for i, (label, template) in enumerate(zip(self.labels, self.seqs)):
-            if i != exclude:
-                per.setdefault(label, []).append(self._dist(seq, template))
+        selected = [(label, template) for i, (label, template) in enumerate(zip(self.labels, self.seqs))
+                    if i != exclude]
+        distances = dtw_distances(seq, [template for _, template in selected], band=self.band)
+        for (label, _), distance in zip(selected, distances):
+            per.setdefault(label, []).append(distance)
         return {label: float(np.mean(sorted(values)[:self.k])) for label, values in per.items()}
 
     def predict(self, seq: np.ndarray, threshold: float | None = None,
@@ -133,9 +135,14 @@ class PrototypeClassifier:
         """
         positives = {c: [] for c in self.classes}
         negatives = {c: [] for c in self.classes}
+        positive_gaps = {c: [] for c in self.classes}
         for i, label in enumerate(self.labels):
-            for c, d in self.scores(self.seqs[i], exclude=i).items():
+            scores = self.scores(self.seqs[i], exclude=i)
+            for c, d in scores.items():
                 (positives if c == label else negatives)[c].append(d)
+            others = [distance for c, distance in scores.items() if c != label]
+            if label in scores and others:
+                positive_gaps[label].append(min(others) - scores[label])
         for seq in unknown or []:
             for c, d in self.scores(seq).items():
                 negatives[c].append(d)
@@ -148,9 +155,21 @@ class PrototypeClassifier:
             limit = min(self.threshold, max(.05, p90 * slack) if p90 is not None else .6,
                         n10 * .8 if n10 is not None else .6)
             self.per_intent_thresholds[c] = max(0., limit)
-            reliable = len(pos) >= 3 and len(neg) >= 3 and p90 < limit
+            gap_p10 = float(np.percentile(positive_gaps[c], 10)) if positive_gaps[c] else None
+            if len(pos) < 3 or len(neg) < 3:
+                status = "insufficient_examples"
+            elif p90 >= n10:
+                status = "overlapping_intents"
+            elif p90 >= limit:
+                status = "distance_threshold_rejects_enrollment"
+            elif gap_p10 is None or gap_p10 < self.margin:
+                status = "margin_not_separated"
+            else:
+                status = "separated_on_enrollment_only"
+            reliable = status == "separated_on_enrollment_only"
             detail[c] = {"positive_loo": len(pos), "negative": len(neg), "positive_p90": p90,
-                         "negative_p10": n10, "threshold": limit, "requires_more_recordings": not reliable}
+                         "negative_p10": n10, "threshold": limit, "requires_more_recordings": not reliable,
+                         "loo_gap_p10": gap_p10, "required_margin": self.margin, "status": status}
         self.calibration = {"method": "leave-one-out positives and cross-intent negatives",
                             "requires_more_recordings": not detail or any(
                                 d["requires_more_recordings"] for d in detail.values()),
@@ -179,35 +198,38 @@ class PrototypeClassifier:
 
     @classmethod
     def load(cls, path: str | Path) -> PrototypeClassifier:
-        path = Path(path)
-        meta = json.loads((path / "metadata.json").read_text())
-        if meta["version"] != 1:
-            raise ValueError("unsupported profile version; re-enroll")
-        archive = path / "templates.npz"
-        if archive.stat().st_size > 16_000_000:
-            raise ValueError("profile too large")
-        if hashlib.sha256(archive.read_bytes()).hexdigest() != meta["templates_sha256"]:
-            raise ValueError("incomplete profile; template checksum mismatch")
-        with zipfile.ZipFile(archive) as z:
-            if sum(i.file_size for i in z.infolist()) > 16_000_000:
-                raise ValueError("profile expands beyond size limit")
-        matching = meta["matching"]
-        clf = cls(k=matching["k"], band=matching["band"], feature_config=FeatureConfig(**meta["feature_config"]))
-        with np.load(archive, allow_pickle=False) as z:
-            lengths, labels, data = z["lengths"], z["labels"], z["data"]
-            if (lengths.ndim != 1 or labels.ndim != 1 or len(labels) != len(lengths)
-                    or len(labels) > 100 or not np.issubdtype(lengths.dtype, np.integer)
-                    or np.any(lengths < 1) or np.any(lengths > 600) or lengths.sum() != len(data)):
-                raise ValueError("invalid profile arrays")
-            offsets = np.cumsum(np.r_[0, lengths])
-            for label, a, b in zip(labels, offsets[:-1], offsets[1:]):
-                clf.add(str(label), data[a:b])
-        clf.threshold = float(meta["threshold"])
-        clf.margin = float(matching["margin"])
-        clf.per_intent_thresholds = {c: float(v) for c, v in meta["per_intent_thresholds"].items()}
-        if (not np.isfinite(clf.threshold) or clf.threshold < 0 or not np.isfinite(clf.margin)
-                or clf.margin < 0 or any(not np.isfinite(v) or v < 0 for v in clf.per_intent_thresholds.values())):
-            raise ValueError("invalid profile thresholds")
-        clf.calibration = meta["calibration"]
-        clf.profile_id, clf.created_at = meta["profile_id"], meta["created_at"]
-        return clf
+        try:
+            path = Path(path)
+            meta = json.loads((path / "metadata.json").read_text())
+            if meta["version"] != 1:
+                raise ValueError("unsupported profile version; re-enroll")
+            archive = path / "templates.npz"
+            if archive.stat().st_size > 16_000_000:
+                raise ValueError("profile too large")
+            if hashlib.sha256(archive.read_bytes()).hexdigest() != meta["templates_sha256"]:
+                raise ValueError("incomplete profile; template checksum mismatch")
+            with zipfile.ZipFile(archive) as z:
+                if sum(i.file_size for i in z.infolist()) > 16_000_000:
+                    raise ValueError("profile expands beyond size limit")
+            matching = meta["matching"]
+            clf = cls(k=matching["k"], band=matching["band"], feature_config=FeatureConfig(**meta["feature_config"]))
+            with np.load(archive, allow_pickle=False) as z:
+                lengths, labels, data = z["lengths"], z["labels"], z["data"]
+                if (lengths.ndim != 1 or labels.ndim != 1 or len(labels) != len(lengths)
+                        or len(labels) > 100 or not np.issubdtype(lengths.dtype, np.integer)
+                        or np.any(lengths < 1) or np.any(lengths > 600) or lengths.sum() != len(data)):
+                    raise ValueError("invalid profile arrays")
+                offsets = np.cumsum(np.r_[0, lengths])
+                for label, a, b in zip(labels, offsets[:-1], offsets[1:]):
+                    clf.add(str(label), data[a:b])
+            clf.threshold = float(meta["threshold"])
+            clf.margin = float(matching["margin"])
+            clf.per_intent_thresholds = {c: float(v) for c, v in meta["per_intent_thresholds"].items()}
+            if (not np.isfinite(clf.threshold) or clf.threshold < 0 or not np.isfinite(clf.margin)
+                    or clf.margin < 0 or any(not np.isfinite(v) or v < 0 for v in clf.per_intent_thresholds.values())):
+                raise ValueError("invalid profile thresholds")
+            clf.calibration = meta["calibration"]
+            clf.profile_id, clf.created_at = meta["profile_id"], meta["created_at"]
+            return clf
+        except (TypeError, KeyError, OverflowError, EOFError, RuntimeError, zipfile.BadZipFile) as exc:
+            raise ValueError(f"invalid profile format: {exc}") from exc

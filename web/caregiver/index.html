@@ -181,13 +181,22 @@ if (wantSound) {
     unlockAudio(); removeEventListener("pointerdown", once);
   });
 }
-function beep() {
+async function beep() {
   if (!soundOn || !audioCtx) return;
-  if (audioCtx.state !== "running") audioCtx.resume();
-  [0, .25].forEach(t => { const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-    o.frequency.value = 880; g.gain.setValueAtTime(.2, audioCtx.currentTime + t);
-    g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + t + .2);
-    o.connect(g).connect(audioCtx.destination); o.start(audioCtx.currentTime + t); o.stop(audioCtx.currentTime + t + .2); });
+  try { if (audioCtx.state !== "running") await audioCtx.resume(); } catch { return; }
+  if (!soundOn || audioCtx.state !== "running") return;
+  const now = audioCtx.currentTime;
+  [0, .55, 1.1].forEach((delay, i) => {           // three longer alternating tones, loud enough on a phone speaker
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = now + delay;
+    o.frequency.value = i === 1 ? 1175 : 880;
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(.65, t + .01);
+    g.gain.setValueAtTime(.65, t + .22);
+    g.gain.exponentialRampToValueAtTime(.001, t + .4);
+    o.connect(g).connect(audioCtx.destination);
+    o.start(t); o.stop(t + .41);
+    o.onended = () => { o.disconnect(); g.disconnect(); };
+  });
 }
 
 const wait = iso => { const m = Math.max(0, (Date.now() - Date.parse(iso)) / 60000 | 0); return m < 1 ? "<1 min" : m < 60 ? `${m} min` : `${m / 60 | 0} h ${m % 60} min`; };

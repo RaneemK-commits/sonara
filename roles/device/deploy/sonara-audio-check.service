@@ -11,6 +11,7 @@ After=multi-user.target
 
 [Service]
 Type=oneshot
+TimeoutStartSec=150
 ExecStart=/bin/sh -c '\
   recovered=0; \
   for try in 1 2 3; do \
@@ -29,7 +30,7 @@ ExecStart=/bin/sh -c '\
     uid=$(id -u arduino); \
     runuser -u arduino -- env XDG_RUNTIME_DIR=/run/user/$uid systemctl --user restart pipewire pipewire-pulse wireplumber || exit 1; \
   fi; \
-  grep -Eq "eld_valid[[:space:]]+1" /proc/asound/card*/eld* 2>/dev/null || echo "WARNING: HDMI ELD missing; replug HDMI if audio is silent"'
+  grep -Eq "^monitor_name[[:space:]]+[^[:space:]]" /proc/asound/card*/eld* 2>/dev/null || echo "WARNING: HDMI ELD missing; replug HDMI if audio is silent"'
 
 [Install]
 WantedBy=multi-user.target

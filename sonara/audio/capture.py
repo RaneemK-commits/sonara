@@ -5,11 +5,13 @@ Audio is kept only in a bounded in-memory queue; nothing is written to disk here
 from __future__ import annotations
 
 import queue
+import threading
+from collections import deque
 import time
 
 import numpy as np
 
-from .vad import StreamingVAD
+from .vad import StreamingVAD, rms
 
 
 class AudioCapture:
@@ -18,6 +20,11 @@ class AudioCapture:
                  speech_start_factor: float = 3.0, min_speech_ms: int = 200):
         if sr != 16000 or not 5 <= block_ms <= 100 or not .3 <= max_utterance_s <= 5:
             raise ValueError("capture requires 16 kHz, 5–100 ms blocks, and 0.3–5 second utterances")
+        self._recording = threading.Event()
+        self._dropped_blocks = 0
+        self._ambient_lock = threading.Lock()
+        # Keep quiet-frame evidence across short spoken prompts; never learn from capture itself.
+        self._ambient_energies: deque[float] = deque(maxlen=max(10, 10000 // block_ms))
         self.sr = sr
         self.block = int(sr * block_ms / 1000)
         self.max_blocks = int(max_utterance_s * 1000 / block_ms)
@@ -45,11 +52,17 @@ class AudioCapture:
             raise
 
     def _cb(self, indata, frames, t, status):  # audio thread
+        if not self._recording.is_set():
+            energy = rms(indata[:, 0])
+            if np.isfinite(energy):
+                with self._ambient_lock:
+                    self._ambient_energies.append(energy)
         try:
             self._q.put_nowait(indata[:, 0].copy())
         except queue.Full:  # drop oldest to stay bounded
             try:
                 self._q.get_nowait()
+                self._dropped_blocks = getattr(self, "_dropped_blocks", 0) + 1
             except queue.Empty:
                 pass
             try:
@@ -64,12 +77,44 @@ class AudioCapture:
             except queue.Empty:
                 break
 
+    @property
+    def dropped_blocks(self) -> int:
+        """Monotonic overrun counter: stream workers must reset on discontinuities."""
+        return getattr(self, "_dropped_blocks", 0)
+
+    def read_chunk(self, timeout_s: float = .1) -> np.ndarray | None:
+        """Read one existing-stream block for a dedicated keyword worker.
+
+        Caller must own the shared audio lock; do not mix with enrollment/Talk
+        capture. Flush stale audio and reset the detector after TTS or queue loss.
+        No second microphone stream is opened. Returns None when input times out.
+        """
+        if not np.isfinite(timeout_s) or not 0 <= timeout_s <= 1:
+            raise ValueError("chunk timeout must be 0–1 seconds")
+        if self._recording.is_set():
+            raise RuntimeError("another recording owns the microphone; use the shared audio lock")
+        try:
+            return self._q.get(timeout=timeout_s)
+        except queue.Empty:
+            return None
+
     def record_utterance(self, wait_s: float) -> np.ndarray | None:
         """Wait up to `wait_s` for speech to start, then record until trailing silence.
 
         Returns float32 mono audio in [-1, 1] or None if no speech started.
         """
-        self.vad.reset()
+        self._recording.set()
+        try:
+            with self._ambient_lock:
+                ambient = tuple(self._ambient_energies)
+            # A low percentile resists occasional speech/tones in the idle history.
+            floor = float(np.percentile(ambient, 10)) if len(ambient) >= 10 else None
+            self.vad.reset(noise_floor=floor)
+            return self._record_segment(wait_s)
+        finally:
+            self._recording.clear()
+
+    def _record_segment(self, wait_s: float) -> np.ndarray | None:
         preroll: list[np.ndarray] = []
         deadline = time.monotonic() + wait_s
         while True:
@@ -98,6 +143,13 @@ class AudioCapture:
         """Fixed manual boundary on the same input stream; never opens a second mic."""
         if not .3 <= seconds <= 5:
             raise ValueError("manual duration must be 0.3–5 seconds")
+        self._recording.set()
+        try:
+            return self._record_manual(seconds)
+        finally:
+            self._recording.clear()
+
+    def _record_manual(self, seconds: float) -> np.ndarray:
         self.flush()
         chunks = []
         for _ in range(int(np.ceil(seconds * self.sr / self.block))):

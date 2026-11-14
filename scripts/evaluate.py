@@ -10,7 +10,6 @@ import argparse
 import hashlib
 import json
 import platform
-import resource
 import sys
 import time
 from collections import defaultdict
@@ -21,6 +20,7 @@ from sonara.audio.wavio import read_wav, resample_linear
 from sonara.config import load_config
 from sonara.models.classifier import Prediction
 from sonara.recognizer import Recognizer
+from roles.speech.evaluation.memory import peak_process_rss_mib
 
 
 def load_dataset(root: Path, rec: Recognizer):
@@ -115,7 +115,7 @@ def evaluate(enrollment, test, rec, count, band, unknown):
             "confusion_matrix": {k: dict(v) for k, v in confusion.items()},
             "latency_ms": {"mean": float(np.mean(latencies)), "p50": float(np.percentile(latencies, 50)),
                            "p95": float(np.percentile(latencies, 95)), "max": max(latencies)},
-            "peak_process_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024,
+            "peak_process_rss_mib": peak_process_rss_mib(),
             "template_mib": sum(s.nbytes for s in clf.seqs)/1024**2,
             "calibration_ms": calibration_ms, "calibration": clf.calibration}
 

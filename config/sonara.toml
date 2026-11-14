@@ -52,3 +52,8 @@ display_timeout_s = 10     # no caregiver receipt within this → NOT_DISPLAYED
 
 [hardware]
 mcu = "keyboard"           # "keyboard" (laptop dev) | "unoq" (Arduino Bridge) | "none"
+
+[push]
+enabled = false            # optional internet-enabled Web Push; configure only in data/local.toml
+private_key = "data/webpush-private.pem"
+subject = ""               # real contact mailto: address or HTTPS contact URL required when enabled

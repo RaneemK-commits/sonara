@@ -9,7 +9,6 @@ import argparse
 import hashlib
 import json
 import platform
-import resource
 import sys
 import tempfile
 from collections import Counter
@@ -21,6 +20,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[3]))
 from sonara.audio.wavio import read_wav
 from sonara.config import Config, Intent, load_config
 from sonara.recognizer import Recognizer, profile_path
+from roles.speech.evaluation.memory import peak_process_rss_mib
 
 
 def checked_path(bundle: Path, entry: dict) -> Path:
@@ -120,7 +120,7 @@ def run(bundle: Path, output: Path, band: float=.2) -> dict:
                            'rejection_rate':1-accepted/len(valid) if valid else None,
                            'confusion':dict(Counter(r['intent'] or 'UNKNOWN' for r in valid))},
                 'per_input_kind':per_kind,'processing_latency_ms':stats(times),
-                'peak_process_rss_mib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024,
+                'peak_process_rss_mib':peak_process_rss_mib(),
                 'template_mib':sum(s.nbytes for s in rec.clf.seqs)/1024**2,'rows':rows,
                 'isolated_from_running_service':True,'caregiver_requests_created':0}
     output.parent.mkdir(parents=True,exist_ok=True)
