@@ -45,6 +45,12 @@ class Recognizer:
         self._candidate = None
         self.threshold = rec.get("threshold")
         self.margin = rec.get("margin", .12)
+        if self._candidate_path:
+            self.threshold = float(os.environ.get('SONARA_PERSONAL_REQUEST_THRESHOLD', '.8'))
+            self.margin = float(os.environ.get('SONARA_PERSONAL_REQUEST_MARGIN', '.12'))
+            if (not np.isfinite(self.threshold) or self.threshold <= 0 or
+                    not np.isfinite(self.margin) or self.margin < 0):
+                raise ValueError('Invalid personal request rejection limits')
         self.profile_id = profile_path(cfg).name
         self.clf = self.new_classifier()
         self._stamp = None
@@ -145,6 +151,7 @@ class Recognizer:
             view.calibration = {'requires_more_recordings':True,
                                 'reason':'Experimental personal request candidate; acceptance calibration unresolved',
                                 'mode':'personal_requests', 'voice_confirmation':False,
+                                'distance_threshold':self.threshold,'required_margin':self.margin,
                                 'independent_sources':len({f for f,l in zip(candidate.families,candidate.labels) if l in labels})}
             self._candidate,self.clf,self._stamp = candidate,view,stamp
             self.profile_error = self._selection_error = ''
@@ -190,7 +197,8 @@ class Recognizer:
             self.reload()
             seq = None
             if self._candidate_path:
-                result = (self._candidate.predict(audio,context='requests') if self._candidate is not None else
+                result = (self._candidate.predict(audio,context='requests',
+                                                  threshold=self.threshold,required_margin=self.margin) if self._candidate is not None else
                           Prediction(None,None,float('inf'),0.,.8,{},reason=self.profile_error))
             else:
                 seq = self.embed(audio, manual)

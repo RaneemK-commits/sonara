@@ -102,3 +102,22 @@ systemctl --user restart sonara.service
 Without the environment variable, Recognizer uses the original profile path and selector.
 Previous live recognizer and DTW files were backed up in
 `/home/arduino/sonara-personal-live-backup-20261114`.
+
+
+## Live request-limit adjustment
+
+At the human's request the board drop-in now also sets:
+
+```ini
+Environment=SONARA_PERSONAL_REQUEST_THRESHOLD=0.85
+Environment=SONARA_PERSONAL_REQUEST_MARGIN=0.10
+```
+
+Defaults remain 0.8/0.12 if these variables are absent. The live API reports effective settings.
+Rescoring the existing development request trials changes accepted correct predictions from
+1/75 to 4/75, with zero wrong labels; all 14 similar-word negatives still reject. These settings
+were selected using those results, so this is tuning evidence, not independent validation.
+Reducing margin to 0.08 admits a negative (walker); 0.06 admits two. Genuine-request acceptance
+remains low even with this update. Physical confirmation is required and voice YES/NO remains
+excluded. Prior code/settings for this adjustment are backed up in
+`/home/arduino/sonara-personal-limits-backup-20261114`.

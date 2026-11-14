@@ -67,3 +67,30 @@ def test_live_recognizer_routes_requests_and_fails_closed(tmp_path,monkeypatch):
     assert not rec.ready
     assert not rec.recognize(tone(202)).accepted
     assert 'unavailable' in rec.profile_error
+
+
+def test_explicit_request_limits_are_validated_and_reported(tmp_path,monkeypatch):
+    from sonara.config import load_config
+    from sonara.recognizer import Recognizer
+    path=tmp_path/'candidate'; candidate().save(path)
+    monkeypatch.setenv('SONARA_PERSONAL_CANDIDATE',str(path))
+    monkeypatch.setenv('SONARA_PERSONAL_REQUEST_THRESHOLD','.85')
+    monkeypatch.setenv('SONARA_PERSONAL_REQUEST_MARGIN','.10')
+    cfg=load_config();cfg.root=tmp_path
+    rec=Recognizer(cfg)
+    assert rec.recognize(tone(202)).threshold==.85
+    assert rec.clf.calibration['required_margin']==.10
+    monkeypatch.setenv('SONARA_PERSONAL_REQUEST_MARGIN','nan')
+    with pytest.raises(ValueError,match='rejection limits'):
+        Recognizer(cfg)
+
+
+def test_relaxed_limits_accept_only_when_both_distance_and_margin_pass(monkeypatch):
+    model=candidate()
+    monkeypatch.setattr('sonara.models.personal.dtw_distances',
+                        lambda *args,**kwargs: [.84,.84,.95,.95,1.2,1.2,1.3,1.3,1.4,1.4])
+    audio=tone(202)
+    assert not model.predict(audio).accepted
+    assert not model.predict(audio,threshold=.85).accepted
+    assert not model.predict(audio,required_margin=.10).accepted
+    assert model.predict(audio,threshold=.85,required_margin=.10).intent=='WATER'
