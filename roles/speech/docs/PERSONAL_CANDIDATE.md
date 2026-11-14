@@ -162,3 +162,14 @@ Single pass is less work than retrying, but 225 request references remain. Earli
 processing took about 6–8 s on the shared board; this update does not establish subsecond latency.
 Remove/move `85-closest-label-demo.conf` and restart to restore the underlying margin setting.
 Live app sources are backed up in `/home/arduino/sonara-closest-demo-backup`.
+
+
+## Current update: native DTW and guarded closest matching
+
+The unguarded closest-label demo was too permissive on idle audio. The live app now retains
+all references but runs exact compiled DTW (~0.72–0.81 s on the paired board WATER benchmark,
+versus 7.41 s NumPy), with speech activity/level and per-intent ambiguity guards. Human confirmed
+that fresh silence is rejected and words work. Single-pass processing and physical confirmation
+remain. Current distance cap is .75, RMS floor .003 and minimum gaps .01 / FOOD .025.
+The profile is now `/home/arduino/sonara-native-final-guards/candidate`; it supersedes the earlier
+candidate and override values above. [Build, evidence, policy and rollback](NATIVE_DTW.md).

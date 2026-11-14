@@ -17,6 +17,8 @@ def main():
     parser.add_argument('--sessions',type=Path,nargs='+')
     parser.add_argument('--wav',type=Path)
     parser.add_argument('--context',choices=['requests','confirmation'],default='requests')
+    parser.add_argument('--threshold',type=float,default=.8)
+    parser.add_argument('--margin',type=float,default=.12)
     args = parser.parse_args()
     if bool(args.sessions) == bool(args.wav):
         parser.error('Choose --sessions to build OR --wav to score')
@@ -47,7 +49,7 @@ def main():
     else:
         audio,sr = read_wav(args.wav)
         if sr != 16000: raise ValueError('16 kHz required')
-        result = PersonalWordCandidate.load(args.candidate).predict(audio,args.context)
+        result = PersonalWordCandidate.load(args.candidate).predict(audio,args.context,threshold=args.threshold,required_margin=args.margin)
         print(json.dumps(result.to_dict(),indent=2))
 
 if __name__ == '__main__': main()

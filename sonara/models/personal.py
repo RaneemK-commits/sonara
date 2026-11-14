@@ -51,8 +51,30 @@ def focused_word(audio: np.ndarray) -> np.ndarray:
     return audio[max(0,indices[0]-4)*frame:min(len(audio),(indices[-1]+5)*frame)]
 
 
+def has_speech_activity(audio: np.ndarray, min_rms: float=0.) -> bool:
+    """Reject steady room noise/clicks before DTW; intended for padded Talk clips."""
+    audio=np.asarray(audio,dtype=np.float32)
+    if audio.ndim!=1 or not 4800<=len(audio)<=80000 or not np.isfinite(audio).all():
+        return False
+    audio=audio-audio.mean()
+    if np.sqrt(np.mean(audio.astype(float)**2))<min_rms:
+        return False
+    frame=320
+    energy=np.sqrt(np.mean(audio[:len(audio)//frame*frame].reshape(-1,frame).astype(float)**2,axis=1))
+    floor=max(float(np.percentile(energy,20)),1e-6)
+    if float(np.percentile(energy,95))/floor<2.5:
+        return False
+    voiced=energy>max(2*floor,2*min_rms)
+    return bool(np.any(np.convolve(voiced.astype(int),np.ones(3,dtype=int),'valid')>=3))
+
+
 class PersonalWordCandidate:
     def __init__(self):
+        from .native_dtw import engine_from_env
+        self._native = engine_from_env()
+        self.min_rms = 0.
+        self.speech_gate = False
+        self.intent_margins: dict[str,float] = {}
         self.sequences: list[np.ndarray] = []
         self.labels: list[str] = []
         self.families: list[str] = []
@@ -93,6 +115,9 @@ class PersonalWordCandidate:
             raise ValueError('Invalid rejection limits')
         started = time.perf_counter()
         try:
+            if self.speech_gate and not has_speech_activity(audio,self.min_rms):
+                return Prediction(None,None,float('inf'),0.,threshold,{},
+                                  (time.perf_counter()-started)*1000,'no clear speech activity')
             query = self.features(audio)
         except (ValueError, TypeError) as exc:
             return Prediction(None,None,float('inf'),0.,threshold,{},reason=str(exc))
@@ -118,7 +143,8 @@ class PersonalWordCandidate:
         groups: dict[str,dict[str,float]] = {}
         for start in range(0,len(indices),16):
             selected = indices[start:start+16]
-            distances = dtw_distances(query,[self.sequences[i] for i in selected],band=.2)
+            matcher=self._native.distances if self._native is not None else dtw_distances
+            distances = matcher(query,[self.sequences[i] for i in selected],band=.2)
             for i,distance in zip(selected,distances):
                 family = groups.setdefault(self.labels[i],{})
                 family[self.families[i]] = min(family.get(self.families[i],float('inf')),float(distance))
@@ -127,17 +153,19 @@ class PersonalWordCandidate:
         scores = {label:float(np.mean(sorted(families.values())[:2])) for label,families in groups.items()}
         ranked = sorted(scores,key=scores.get)
         best = ranked[0]; distance = scores[best]; margin = scores[ranked[1]]-distance
-        accepted = distance <= threshold and margin >= required_margin
+        intent_margin=max(required_margin,self.intent_margins.get(best,0.))
+        accepted = distance <= threshold and margin >= intent_margin
         return Prediction(best if accepted else None,best,distance,margin,threshold,scores,
                           0.,
-                          ('closest-label demo; confirmation required' if required_margin==0 else '')
+                          ('closest-label demo; confirmation required' if intent_margin==0 else '')
                           if accepted else 'distant or ambiguous')
 
     def save(self, directory: Path) -> None:
         directory.mkdir(parents=True,exist_ok=False)
         archive = directory/'references.npz'
         np.savez_compressed(archive,**{f's{i}':seq for i,seq in enumerate(self.sequences)})
-        metadata = {'version':1,'labels':self.labels,'families':self.families,
+        metadata = {'version':2,'labels':self.labels,'families':self.families,
+                    'speech_gate':self.speech_gate,'intent_margins':self.intent_margins,'min_rms':self.min_rms,
                     'sha256':hashlib.sha256(archive.read_bytes()).hexdigest(),
                     'threshold':.8,'margin':.12,'feature_weights':[1.,.5,.25],
                     'trim_pad_ms':80,'alignment_stride':2,
@@ -148,9 +176,19 @@ class PersonalWordCandidate:
     def load(cls, directory: Path) -> PersonalWordCandidate:
         metadata = json.loads((directory/'candidate.json').read_text())
         archive = directory/'references.npz'
-        if metadata.get('version') != 1 or hashlib.sha256(archive.read_bytes()).hexdigest() != metadata['sha256']:
+        if metadata.get('version') not in (1,2) or hashlib.sha256(archive.read_bytes()).hexdigest() != metadata['sha256']:
             raise ValueError('Invalid candidate version or checksum')
         model = cls()
+        model.min_rms=metadata.get('min_rms',0.)
+        if not isinstance(model.min_rms,(int,float)) or not np.isfinite(model.min_rms) or not 0<=model.min_rms<=.05:
+            raise ValueError('Invalid speech level floor')
+        model.speech_gate=metadata.get('speech_gate',False)
+        model.intent_margins=metadata.get('intent_margins',{})
+        if not isinstance(model.speech_gate,bool) or not isinstance(model.intent_margins,dict):
+            raise ValueError('Invalid candidate policy')
+        if any(label not in sum(CONTEXTS.values(),()) or not isinstance(value,(int,float)) or
+               not np.isfinite(value) or value<0 for label,value in model.intent_margins.items()):
+            raise ValueError('Invalid intent margins')
         model.labels,model.families = metadata['labels'],metadata['families']
         if not 1 <= len(model.labels) <= 400 or len(model.labels) != len(model.families):
             raise ValueError('Invalid reference counts')

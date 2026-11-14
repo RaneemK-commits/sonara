@@ -228,3 +228,17 @@ otherwise `distance_and_margin`. Zero-margin mode executes exactly one DTW pass;
 focused-boundary retry entirely. Invalid audio and distant matches still reject. An accepted
 prediction reason identifies `closest-label demo; confirmation required`. No controller or voice
 YES/NO interface changes. Soundalike negatives can be proposed: confirmation must remain mandatory.
+
+
+## Native matcher and guarded profile v2
+
+Optional `SONARA_DTW_LIBRARY` points to a locally compiled ABI-1 exact DTW library. Without it,
+NumPy remains default. Invalid configured libraries fail load instead of silently claiming native
+execution. Candidate format v2 optionally stores `speech_gate`, `min_rms`, `intent_margins`; v1
+loads with original behavior. Per-intent gap is max(global gap, profile gap), even in demo mode.
+
+Live diagnostics additionally expose `dtw_engine`, `speech_activity_gate`, `speech_min_rms`,
+`intent_margins`, `request_references`; zero global gap with profile gaps is `guarded_closest`.
+Activity/level rejection happens before DTW. Current board uses .75 distance, .003 RMS, .01 gap
+for requests except FOOD .025. Single pass remains; no controller/caregiver/voice-YES-NO API change.
+Human confirmed fresh silence rejection and word operation after deployment. See docs/NATIVE_DTW.md.

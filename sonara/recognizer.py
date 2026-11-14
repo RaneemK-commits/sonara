@@ -151,8 +151,14 @@ class Recognizer:
             view.calibration = {'requires_more_recordings':True,
                                 'reason':'Experimental personal request candidate; acceptance calibration unresolved',
                                 'mode':'personal_requests', 'voice_confirmation':False,
-                                'decision_policy':('closest_with_distance_gate' if self.margin==0 else 'distance_and_margin'),
+                                'decision_policy':(('guarded_closest' if candidate.intent_margins else 'closest_with_distance_gate')
+                                                   if self.margin==0 else 'distance_and_margin'),
                                 'distance_threshold':self.threshold,'required_margin':self.margin,
+                                'speech_activity_gate':candidate.speech_gate,
+                                'speech_min_rms':candidate.min_rms,
+                                'intent_margins':candidate.intent_margins,
+                                'request_references':len(view.seqs),
+                                'dtw_engine':('native' if candidate._native is not None else 'numpy'),
                                 'independent_sources':len({f for f,l in zip(candidate.families,candidate.labels) if l in labels})}
             self._candidate,self.clf,self._stamp = candidate,view,stamp
             self.profile_error = self._selection_error = ''
