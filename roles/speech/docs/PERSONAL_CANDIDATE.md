@@ -4,7 +4,8 @@ The feature-only candidate is experimental. It preserves weighted MFCC features,
 80 ms endpoint padding, 20 ms matching steps, source-family aggregation and fixed
 0.8 distance / 0.12 margin limits from the personal-session development experiment.
 The five request words and YES/NO are separate contexts. Request context is default.
-It never loads into the production Recognizer or changes the active patient.
+It is separate from standard profiles. The human-authorized live override described below
+connects it to Recognizer without modifying the saved standard patient selector.
 
 All three enrollment sessions contain 15 real examples per word in total. Two mild
 speed/gain variants per real source change pitch and duration together; these are
@@ -65,8 +66,7 @@ Score a new 16 kHz mono WAV, with UNKNOWN rejection and closest-label diagnostic
 
 Separate copy: `/home/arduino/sonara-speech-personal-20261114/source`.
 Candidate: sibling directory `../candidate`. Uses existing board Python dependencies.
-The live `/home/arduino/sonara` application, firmware, microphone owner and active profile
-were not modified. To score a WAV on the board:
+The initial deployment was isolated. The later live adapter activation is documented below. To score a WAV on the board:
 
 ```bash
 cd /home/arduino/sonara-speech-personal-20261114/source
@@ -77,3 +77,28 @@ cd /home/arduino/sonara-speech-personal-20261114/source
 This deployment supports offline candidate testing. Live controller integration requires
 separate calibration and device-owner changes; no accepted result dispatches a request here.
 Recording CLI requires the production microphone owner to be stopped first.
+
+
+## Live activation on UNO Q
+
+Human explicitly requested live integration. Recognizer now supports the optional environment
+variable `SONARA_PERSONAL_CANDIDATE`. Board service drop-in:
+`/home/arduino/.config/systemd/user/sonara.service.d/50-personal-requests.conf` points to
+`/home/arduino/sonara-speech-personal-20261114/candidate`.
+
+The running app reports `personal_requests_demo`. Talk uses request context only. Confirmation
+continues through physical/touch controls; no YES/NO candidate output is passed to the controller.
+The existing standard profile selection is preserved for rollback. Runtime activation does not
+improve the measured rejection rates: the same 0.8/0.12 limits remain.
+
+To roll back this override on the board:
+
+```bash
+mv ~/.config/systemd/user/sonara.service.d/50-personal-requests.conf    ~/50-personal-requests.conf.disabled
+systemctl --user daemon-reload
+systemctl --user restart sonara.service
+```
+
+Without the environment variable, Recognizer uses the original profile path and selector.
+Previous live recognizer and DTW files were backed up in
+`/home/arduino/sonara-personal-live-backup-20261114`.

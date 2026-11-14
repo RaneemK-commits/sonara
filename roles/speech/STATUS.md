@@ -1,5 +1,20 @@
 # Speech STATUS
 
+## Live personal request integration (human authorized)
+
+- Added explicit SONARA_PERSONAL_CANDIDATE override to Recognizer. Request-only scoring;
+  version/checksum failures reject instead of falling back to a different patient. Profile API
+  reports personal_requests_demo and warns calibration remains unresolved. Switching standard
+  profiles requires disabling the override. Legacy behavior unchanged when override is absent.
+- Activated on UNO Q via user-service drop-in 50-personal-requests.conf. Backups of the prior
+  live recognizer/DTW are in /home/arduino/sonara-personal-live-backup-20261114. Device-owned
+  controller/server/config and concurrent playback edits were not changed.
+- Live health verified: IDLE, recognizer_ready=true, personal_requests_demo active, microphone
+  available, one room and one caregiver screen connected. No request sent during deployment.
+- 156 tests passed in isolated local release (6.28 s); four candidate/integration tests passed
+  against live board code (1.95 s). Human microphone recognition with new adapter remains
+  unverified. Absolute 0.8 / margin 0.12 remain restrictive; activation is not an accuracy fix.
+
 ## Personal sessions and isolated UNO Q candidate
 
 - Added Enter-to-start/Enter-to-stop recording CLI, repeat/discard/quit controls, recording-only

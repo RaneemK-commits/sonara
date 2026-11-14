@@ -45,3 +45,25 @@ def test_incomplete_context_rejects_and_families_cannot_cross_labels():
     assert not model.predict(tone(200)).accepted
     with pytest.raises(ValueError,match='conflicting'):
         model.add('PAIN','one',tone(400))
+
+
+def test_live_recognizer_routes_requests_and_fails_closed(tmp_path,monkeypatch):
+    from sonara.config import load_config
+    from sonara.recognizer import Recognizer
+    path=tmp_path/'candidate'
+    candidate().save(path)
+    monkeypatch.setenv('SONARA_PERSONAL_CANDIDATE',str(path))
+    cfg=load_config()
+    cfg.root=tmp_path
+    rec=Recognizer(cfg)
+    assert rec.ready
+    assert rec.profile_id=='personal_requests_demo'
+    result=rec.recognize(tone(202),manual=True)
+    assert set(result.scores)==set(CONTEXTS['requests'])
+    assert 'YES' not in result.scores and 'NO' not in result.scores
+    with pytest.raises(ValueError,match='override'):
+        rec.reload('patient_001')
+    (path/'references.npz').unlink()
+    assert not rec.ready
+    assert not rec.recognize(tone(202)).accepted
+    assert 'unavailable' in rec.profile_error

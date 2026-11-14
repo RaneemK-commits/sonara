@@ -193,3 +193,13 @@ only (known snow/NO false acceptance). Weighted/decimated features and source fa
 stored in a separate checksummed candidate.json/references.npz format. Do not load it as a
 production profile or silently discard its feature transformations. No controller/server/config
 hook was added. Deployment, test commands and limitations: docs/PERSONAL_CANDIDATE.md.
+
+
+## Live personal override
+
+`SONARA_PERSONAL_CANDIDATE=/absolute/path/to/candidate` opts Recognizer into the personal
+request adapter. Only the five request labels reach the controller; no YES/NO predictions.
+Normal Prediction semantics and mandatory confirmation remain intact. Profile API identifies
+`personal_requests_demo`; calibration still reports requires_more_recordings. Corrupt/missing
+candidate files fail closed. Remove the service override and restart to use the original
+standard profile selector again. Enrollment/profile switching is not supported while pinned.
