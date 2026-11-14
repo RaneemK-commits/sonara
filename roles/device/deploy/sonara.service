@@ -11,6 +11,10 @@ Wants=pipewire.service wireplumber.service
 
 [Service]
 WorkingDirectory=%h/sonara
+# UNO Q display-jack audio: reassert the verified I2S route after boot/profile restore.
+ExecStartPre=-/usr/bin/amixer -c ArduinoImolaHPH set "DISPLAY_PORT_RX Audio Mixer MultiMedia4" off
+ExecStartPre=-/usr/bin/amixer -c ArduinoImolaHPH set "SEC_MI2S_RX Audio Mixer MultiMedia4" on
+ExecStartPre=-/usr/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
 ExecStartPre=-/usr/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.8
 ExecStart=%h/sonara/.venv/bin/python -m sonara --mcu unoq
 Restart=on-failure

@@ -32,4 +32,18 @@ Speech owner notified of real recognition rejection; no thresholds changed or re
 - Cancel-before-send attempt was not injected: automatic approval review hit its usage
   limit before executing the command. Do not claim this or physical reboot passed.
 - Human requested louder phone chime after successful sound check; prepared UI handoff
-  patch locally, not deployed.
+  patch, then received explicit permission to edit this UI function. Deployed three
+  longer tones at gain .65 and awaited audio resume. Entire served script passes Node
+  syntax check. Human reported silence on retest; board then showed zero caregiver
+  connections. Waiting for confirmed connected/visible Chrome page and bell state.
+  Louder chime is deployed, but audible phone verification has NOT passed yet.
+
+## November 14 follow-up
+
+- Human confirmed louder phone alert worked for simulated req-0008 (selection and
+  confirmation both explicitly simulated at the human's request); actual phone receipt
+  marked DISPLAYED. This supersedes the earlier pending louder-alert result.
+- Board speaker did not play the phrase. PipeWire HDMI sink was in error and correct
+  mixer route off; first playback blocked the speaker worker. Recovery restored route
+  and bounded aplay returned 0, but human still reported silence. Audible output is
+  therefore FAILED/pending physical cable/power checks, not passed.
