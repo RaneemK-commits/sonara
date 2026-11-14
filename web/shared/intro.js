@@ -28,7 +28,7 @@
           .bg { position: absolute; inset: 0; background: var(--intro-bg, #FBF7F3); }
           .mark, .word, sonara-orb { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; }
           .mark { overflow: visible; }
-          .word { margin: 0; font: 700 64px/1 var(--intro-font, "Inter", "Segoe UI", system-ui, sans-serif);
+          .word { margin: 0; font: var(--w-logo, 200) 64px/1 var(--intro-font, "Inter", "Segoe UI", system-ui, sans-serif);
             letter-spacing: -.02em; color: var(--ink, #161616); white-space: nowrap; transform-origin: 0 50%; }
           sonara-orb { opacity: 0; }
         </style>

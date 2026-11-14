@@ -18,6 +18,7 @@
   --orange-wash: #FDEBD9; --orange-line: #F3C9A0; --orange-ink: #8A4A12;   /* the room orb's orange: what is new */
   --on-ink: #FBF7F3;
   --radius-card: 8px; --radius-chip: 10px; --radius-control: 4px;
+  --w-logo: 200; --w-display: 300;   /* thin type: wordmark Inter ExtraLight, display text Inter Light */
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
   font-feature-settings: "cv11", "ss01";
   color-scheme: light;
@@ -30,7 +31,7 @@ button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .tnum { font-variant-numeric: tabular-nums; }
 .ico { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-.logo { display: inline-flex; align-items: center; gap: .4em; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+.logo { display: inline-flex; align-items: center; gap: .4em; font-weight: var(--w-logo); letter-spacing: 0; color: var(--ink); }
 .logo .ico { width: 1.25em; height: 1.25em; stroke-width: 2.6; }
 
 /* Connection chip: wifi icon + word, never colour alone */

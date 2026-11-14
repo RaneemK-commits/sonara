@@ -45,7 +45,7 @@
   @keyframes in { from { opacity: 0; } }
 
   .t { position: absolute; left: 0; right: 0; text-align: center; margin: 0; padding: 0 calc(24 * var(--px)); }
-  h1.t { font-weight: 800; letter-spacing: -.028em; line-height: 1.05; }
+  h1.t { font-weight: var(--w-display); letter-spacing: -.015em; line-height: 1.05; }
   .gray { color: var(--ink-2); font-weight: 400; letter-spacing: -.01em; }
 
   /* one layout for every screen: character (orb, or the card it becomes) centred at y 165, headline + subline stacked from y 262 */
@@ -62,7 +62,7 @@
   .card > * { animation: in .3s .35s ease both; }
   .card .ico { width: calc(54 * var(--px)); height: calc(54 * var(--px)); stroke-width: 1.6; }
   .card .sep { width: 1px; height: calc(58 * var(--px)); background: var(--lilac); margin: 0 calc(36 * var(--px)) 0 calc(42 * var(--px)); }
-  .card .phrase { font-size: calc(50 * var(--px)); font-weight: 800; letter-spacing: -.035em; white-space: nowrap; }
+  .card .phrase { font-size: calc(50 * var(--px)); font-weight: var(--w-display); letter-spacing: -.02em; white-space: nowrap; }
   #v-confirm .hint { top: calc(262 * var(--px)); font-size: calc(24 * var(--px)); }
   .pill { position: absolute; left: 50%; top: calc(312 * var(--px)); transform: translateX(-50%); height: calc(42 * var(--px));
     padding: 0 calc(30 * var(--px)); border-radius: calc(8 * var(--px)); background: var(--lilac-wash); display: flex; align-items: center;

@@ -39,7 +39,8 @@ Sonara orb, and a plain nurse list that a busy nurse can read in two seconds.
 ## 2. Logo
 
 - **Soundmark + wordmark:** five rounded vertical bars (lengths 10, 20, 32, 22, 12, 8 units
-  apart) to the left of **Sonara** in Inter Bold, near-black `--ink`.
+  apart) to the left of **Sonara** in Inter ExtraLight (200, `--w-logo`), untracked, near-black `--ink`.
+  The mark keeps its 2.6 stroke; the thin wordmark beside it is the brand's signature.
 - Symbol: `#i-mark` (viewBox `0 0 42 40`, stroke 2.6, round caps), used inline from SVG.
 - **Where it appears:** nurse app header (top left). The patient screen does **not** show the
   logo: its header is only the connection glyph, so the screen stays about the patient's need.
@@ -86,19 +87,23 @@ keep both, and purple appears only as the listening/confirm state colour on the 
 
 - **Inter** (variable, 100 to 900), bundled at `web/shared/fonts/Inter.ttf` (OFL). Fallback
   `Segoe UI, system-ui`. Features `cv11`, `ss01`.
+- **Thin display type** (2026-11-14): the wordmark is ExtraLight (`--w-logo: 200`); display text
+  (patient headline, confirm phrase, nurse page and section titles) is Light (`--w-display: 300`).
+  Working text (bed IDs, needs, badges, buttons) keeps its weight so it stays scannable.
+- Slides: `roles/ui/presentation/Sonara-template.pptx`, titles Inter ExtraLight, body Inter Light.
 - Sentence case everywhere. No all-caps labels, no tracked caps.
 - Tabular numerals (`.tnum`) for bed IDs and wait times.
 
 | Patient screen (mock px, scaled) | Size | Weight |
 |---|---|---|
-| Headline | 48 | 800, tracking -0.028em |
+| Headline | 48 | 300, tracking -0.015em |
 | Subline / prompts | 24 | 400, `--ink-2` |
-| Confirm phrase | 50 (shrinks to fit the card) | 800 |
+| Confirm phrase | 50 (shrinks to fit the card) | 300 |
 | Buttons | 22 | 600 |
 
 | Nurse app (px) | Size | Weight |
 |---|---|---|
-| Page title | 28 | 800 |
+| Page title | 28 | 300 |
 | Bed / card title | 21 | 700 |
 | Request (need) | 17 | 500 |
 | Meta, waits | 15 | 400 |
