@@ -171,9 +171,12 @@ the only state the page decides itself (the socket is gone).
 | ready | idle | What do you need? | Just speak, and I’ll let your nurse know. |
 | listening | listening | I’m listening… | Tell me what you need. |
 | processing | thinking | One moment… | Working out what you said. |
-| confirm | card | Did you mean… / **I need water?** | Say “yes” to confirm, or “no” to try again. |
+| confirm | card | Did you mean… / **I need water?** | Press B to send it, or C if it’s wrong. |
 | retry | idle | I didn’t understand. | Please try again. |
 | cancelled | idle | Okay, not sent. | Say something whenever you’re ready. |
+| request_cancelled | idle, grey | **Water request cancelled.** (a request already sent was withdrawn) | If you still need something, just ask again. |
+| yes | success (green) | **Yes** (110 px) | |
+| no | idle, rose | **No** (110 px) | |
 | sending | thinking | Sending to your nurse… | |
 | notified | success | Your nurse has been notified. | |
 | acked | success | Your nurse acknowledged your request. | |
@@ -182,7 +185,13 @@ the only state the page decides itself (the socket is gone).
 
 - **Confirm phrases:** WATER "I need water?", HELP "I need help?", FOOD "I’m hungry?",
   PAIN "I’m in pain?", BATHROOM "I need the bathroom?", with a line icon left of a divider.
-- **Confirm buttons** (the board has a touchscreen): Try again, No (outlined), **Yes** (ink).
+- **Confirm buttons** (the board has a touchscreen), in the Modulino's physical order with keycaps:
+  A Say it again, **B Yes, send** (ink), C No, don’t send.
+- **A/B/C legend** under the text on every other view: A Talk, B Confirm, C Cancel (C reads
+  "Cancel request" while a sent request is open). Shown only when the device sends
+  `display.actions`; a button that does nothing right now is greyed (32% opacity), never hidden.
+- **Yes / No** answer the room: a spoken yes or no with nothing pending, set large enough to
+  read from across the room. The page never claims it was spoken aloud.
 - **"Playing aloud…" pill:** hidden whenever the device sends `display`, because no real
   playback events exist yet. We never claim speech is playing when it is only queued.
 - Copy rules: short, gentle, sentence case, no jargon, no promises the system cannot keep.

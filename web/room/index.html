@@ -16,6 +16,9 @@
   body[data-view="confirm"] { --wash: var(--lilac-wash); }
   body[data-view="notified"], body[data-view="acked"] { --wash: var(--green-wash); }
   body[data-view="failed"], body[data-view="offline"] { --wash: var(--rose-wash); }
+  body[data-view="yes"] { --wash: var(--green-wash); }
+  body[data-view="no"] { --wash: var(--rose-wash); }
+  body[data-view="request_cancelled"] { --wash: var(--divider); }
 
   /* full-bleed: fills the whole display (1024x600 on the board), no frame */
   .screen { position: fixed; inset: 0; overflow: hidden; background: var(--canvas); }
@@ -41,7 +44,8 @@
   body[data-view="listening"] #v-listen, body[data-view="processing"] #v-listen,
   body[data-view="confirm"] #v-confirm,
   body[data-view="sending"] #v-done, body[data-view="notified"] #v-done, body[data-view="acked"] #v-done,
-  body[data-view="failed"] #v-done, body[data-view="offline"] #v-done { display: block; animation: in .25s ease both; }
+  body[data-view="failed"] #v-done, body[data-view="offline"] #v-done,
+  body[data-view="yes"] #v-done, body[data-view="no"] #v-done, body[data-view="request_cancelled"] #v-done { display: block; animation: in .25s ease both; }
   @keyframes in { from { opacity: 0; } }
 
   .t { position: absolute; left: 0; right: 0; text-align: center; margin: 0; padding: 0 calc(24 * var(--px)); }
@@ -69,11 +73,27 @@
     gap: calc(14 * var(--px)); font-size: calc(20 * var(--px)); color: #333; white-space: nowrap; }
   .pill .ico { width: calc(28 * var(--px)); height: calc(28 * var(--px)); }
   .btns { position: absolute; left: calc(40 * var(--px)); right: calc(27 * var(--px)); top: calc(390 * var(--px));
-    display: grid; grid-template-columns: 201fr 187fr 187fr; gap: calc(21 * var(--px)); }
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(21 * var(--px)); }
   .btns button { height: calc(62 * var(--px)); border-radius: calc(4 * var(--px)); border: calc(1.6 * var(--px)) solid #8E8A86; background: var(--surface);
-    display: flex; align-items: center; justify-content: center; gap: calc(14 * var(--px)); font-size: calc(22 * var(--px)); font-weight: 600; letter-spacing: -.01em; }
+    display: flex; align-items: center; justify-content: center; gap: calc(10 * var(--px)); font-size: calc(21 * var(--px)); font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
   .btns button .ico { width: calc(28 * var(--px)); height: calc(28 * var(--px)); stroke-width: 2.2; }
-  .btns .yes { background: #161616; border-color: #161616; color: #fff; }
+  .btns .yes { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+  .btns button:disabled, .legend .off { opacity: .32; }
+
+  /* the Modulino's three buttons, in their physical order A B C */
+  .key { display: inline-grid; place-items: center; flex: none; width: calc(34 * var(--px)); height: calc(34 * var(--px));
+    border: calc(1.6 * var(--px)) solid currentColor; border-radius: calc(6 * var(--px)); font-size: calc(18 * var(--px)); font-weight: 600; line-height: 1; }
+  .legend { position: absolute; left: 0; right: 0; top: calc(50% + (404 - 239) * var(--px)); display: flex; justify-content: center;
+    gap: calc(44 * var(--px)); margin: 0; padding: 0; list-style: none; z-index: 3; }
+  .legend li { display: flex; align-items: center; gap: calc(12 * var(--px)); font-size: calc(22 * var(--px)); color: var(--ink); white-space: nowrap; }
+  .legend[hidden], body[data-view="confirm"] .legend, body[data-view="offline"] .legend { display: none; }
+
+  /* a spoken yes / no: the answer itself, large enough to read from across the room */
+  body[data-view="yes"] #doneHead, body[data-view="no"] #doneHead { font-size: calc(110 * var(--px)); letter-spacing: -.02em; }
+  body[data-view="yes"] .orb, body[data-view="no"] .orb { --y: 150; --s: 220; }
+  body[data-view="yes"] .txt, body[data-view="no"] .txt { top: calc(236 * var(--px)); }
+  body[data-view="no"] .orb { --orb-idle: #E0697B; }
+  body[data-view="request_cancelled"] .orb { --orb-idle: #A8A29C; }   /* grey: withdrawn, not failed */
 
   /* sending / notified / acknowledged / failed / offline */
   body[data-view="failed"] #v-done h1, body[data-view="offline"] #v-done h1 { color: var(--rose-ink); }
@@ -138,12 +158,12 @@
   <section class="view" id="v-confirm" aria-live="polite">
     <p class="t gray ask">Did you mean…</p>
     <div class="card"><span id="cardIcon"></span><span class="sep" id="cardSep"></span><span class="phrase" id="phrase"></span></div>
-    <p class="t gray hint">Say “yes” to confirm, or “no” to try again.</p>
+    <p class="t gray hint">Press B to send it, or C if it’s wrong.</p>
     <div class="pill" id="pill"><svg class="ico"><use href="#i-speaker"/></svg>Playing aloud…</div>
     <div class="btns">
-      <button data-a="retry"><svg class="ico"><use href="#i-retry"/></svg>Try again</button>
-      <button data-a="cancel"><svg class="ico"><use href="#i-x"/></svg>No</button>
-      <button class="yes" data-a="confirm"><svg class="ico"><use href="#i-check"/></svg>Yes</button>
+      <button data-a="retry" data-k="talk"><span class="key">A</span>Say it again</button>
+      <button class="yes" data-a="confirm" data-k="confirm"><span class="key">B</span>Yes, send</button>
+      <button data-a="cancel" data-k="cancel"><span class="key">C</span>No, don’t send</button>
     </div>
   </section>
 
@@ -153,6 +173,12 @@
       <p class="t gray sub" id="doneSub"></p>
     </div>
   </section>
+
+  <ul class="legend" id="legend" hidden aria-label="Buttons">
+    <li data-k="talk"><span class="key">A</span><span>Talk</span></li>
+    <li data-k="confirm"><span class="key">B</span><span id="legB">Confirm</span></li>
+    <li data-k="cancel"><span class="key">C</span><span id="legC">Cancel</span></li>
+  </ul>
 </div>
 
 <section class="demo" id="demo" hidden aria-label="Demo controls">
@@ -160,7 +186,8 @@
   <button data-a="talk">Talk</button>
   <span>Orb preview (screen only, nothing is sent)</span>
   <button data-p="ready">Idle</button><button data-p="listening">Listening</button><button data-p="processing">Thinking</button>
-  <button data-p="notified">Success</button><button data-p="failed">Failure</button><button data-p="">Live</button>
+  <button data-p="notified">Success</button><button data-p="failed">Failure</button>
+  <button data-p="yes">Yes</button><button data-p="no">No</button><button data-p="request_cancelled">Request cancelled</button><button data-p="">Live</button>
 </section>
 
 <script>
@@ -185,6 +212,9 @@ const DONE = {
   acked:    ["success", "Your nurse acknowledged your request.", ""],
   failed:   ["error", "Unable to notify your nurse.", "Use the existing nurse-call system."],
   offline:  ["error", "Not connected.", "Use the existing nurse-call system."],
+  yes:      ["success", "Yes", ""],
+  no:       ["idle", "No", ""],
+  request_cancelled: ["idle", "Request cancelled.", "If you still need something, just ask again."],
 };
 const RECENT_MS = 60000, PILL_MS = 4000;
 let current = "", retryUntil = 0, lastKey = "", last = null, confirmSince = 0;
@@ -213,12 +243,13 @@ function pick(s) {
 function show(key, s) {
   const intent = s && (s.display ? s.display.intent : s.last && s.last.intent);
   const it = s && (s.intents || []).find(i => i.id === intent);
-  const sig = key + (it ? it.id : "") + (s && s.display ? s.display.event_id : "");
+  const sig = key + (it ? it.id : "") + (s && s.display ? s.display.event_id + JSON.stringify(s.display.actions || null) : "");
   if (key === "confirm") $("pill").hidden = !!(s && s.display) || Date.now() - confirmSince > PILL_MS;
   if (sig === current) return;
   if (key === "confirm") { confirmSince = Date.now(); $("pill").hidden = !!(s && s.display); }
   current = sig;
   document.body.dataset.view = key;
+  $("orb").colMode = "";   // re-read --orb-* even when the mode name stays the same (no / request_cancelled are both idle)
   $("orb").setAttribute("mode", DONE[key] ? DONE[key][0] : key === "listening" ? "listening" : key === "processing" ? "thinking" : key === "confirm" ? "card" : "idle");
   $("readyHead").textContent = key === "retry" ? "I didn’t understand." : key === "cancelled" ? "Okay, not sent." : "What do you need?";
   $("readySub").textContent = key === "retry" ? "Please try again." : key === "cancelled" ? "Say something whenever you’re ready." : "Just speak, and I’ll let your nurse know.";
@@ -233,8 +264,23 @@ function show(key, s) {
   }
   if (DONE[key]) {
     const [, head, sub] = DONE[key];
-    $("doneHead").textContent = head; $("doneSub").textContent = sub;
+    $("doneHead").textContent = key === "request_cancelled" && it ? `${it.label} request cancelled.` : head;
+    $("doneSub").textContent = sub;
   }
+  keys(key, s);
+}
+
+// A/B/C legend: shown only when the device says which buttons do something right now (display.actions)
+const PENDING = new Set(["sending", "notified", "acked"]);
+function keys(key, s) {
+  const a = s && s.display && s.display.actions;
+  $("legend").hidden = !a;
+  $("legC").textContent = PENDING.has(key) ? "Cancel request" : "Cancel";
+  document.querySelectorAll("[data-k]").forEach(el => {
+    const on = !a || !!a[el.dataset.k];
+    if (el.tagName === "BUTTON") el.disabled = !on; else el.classList.toggle("off", !on);
+    if (el.tagName === "LI") el.setAttribute("aria-disabled", String(!on));
+  });
 }
 
 // shrink a long phrase until it fits inside the card (mockup size is the maximum)
