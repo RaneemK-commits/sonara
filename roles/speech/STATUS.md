@@ -1,5 +1,25 @@
 # Speech STATUS
 
+## Supervised closest-label MVP mode (human requested)
+
+- Human explicitly requested closest-label matching to stop repeated FOOD/WATER margin rejects.
+  Board now uses 85-closest-label-demo.conf: distance 0.85, required margin 0. No voice YES/NO.
+  Audio validation, distance rejection and patient confirmation remain. API exposes decision_policy
+  closest_with_distance_gate. Defaults without override still use conservative margin rejection.
+- Demo mode runs exactly one matching pass, even if distance rejects; focused-boundary retry is
+  retained only when a positive margin is configured. This avoids the second DTW pass. Original
+  225 request references remain, so earlier 6–8 s first-pass latency is still a material limitation.
+- Earlier development scores (before boundary retry) at 0.85: margin 0.05 accepts 47/75 correct
+  requests, margin zero accepts 75/75. Negative false accepts increase from 3/14 to 14/14. These
+  are reused development recordings, not independent general accuracy. Do not describe as robust
+  UNKNOWN rejection or use unsupervised. Wrong spoken proposals must be cancelled by the user.
+- Eleven related tests cover explicit policy reporting, single-pass behavior, distance/audio
+  rejection and unchanged conservative defaults. Initial closest-mode deployment passed ten tests
+  on board (4.00 s); follow-up single-pass deployment is documented in main merge verification.
+- Other-agent playback changes and README draft were excluded. Live device/controller/server
+  sources remain unchanged. Remove 85-closest-label-demo.conf and restart to restore underlying
+  margin policy. Backups: /home/arduino/sonara-closest-demo-backup.
+
 ## Live WATER boundary retry and opt-in diagnostics
 
 - Diagnosed a real board WATER attempt (same speaker as laptop enrollment). Mic captured speech,

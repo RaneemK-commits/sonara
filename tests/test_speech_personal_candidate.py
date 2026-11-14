@@ -134,3 +134,30 @@ def test_boundary_retry_requires_agreement(monkeypatch):
         monkeypatch.setattr(model,'_match',lambda *args:next(results))
         result=model.predict(audio,threshold=.85,required_margin=.05)
         assert result.accepted == (retry_label=='WATER')
+
+
+def test_closest_label_demo_keeps_distance_and_invalid_audio_rejection(monkeypatch):
+    model=candidate()
+    distances=[.64,.64,.65,.65,.7,.7,.75,.75,.8,.8]
+    monkeypatch.setattr('sonara.models.personal.dtw_distances',lambda *a,**k:distances)
+    audio=tone(202)
+    assert not model.predict(audio,threshold=.85,required_margin=.05).accepted
+    result=model.predict(audio,threshold=.85,required_margin=0)
+    assert result.intent=='WATER'
+    assert result.reason=='closest-label demo; confirmation required'
+    assert not model.predict(audio,threshold=.6,required_margin=0).accepted
+    assert not model.predict(np.zeros(8000,np.float32),required_margin=0).accepted
+
+
+
+def test_closest_label_demo_uses_one_pass_even_when_distance_rejects(monkeypatch):
+    from sonara.models.classifier import Prediction
+    model=candidate()
+    calls=[]
+    def match(*args):
+        calls.append(1)
+        return Prediction(None,'WATER',1.,.01,.85,{})
+    monkeypatch.setattr(model,'_match',match)
+    audio=np.concatenate([np.zeros(16000,np.float32),tone(202),np.zeros(16000,np.float32)])
+    assert not model.predict(audio,threshold=.85,required_margin=0).accepted
+    assert len(calls)==1

@@ -143,3 +143,22 @@ Runtime margin 0.05 comes from the separate `60-demo-margin.conf` override; it s
 Human-authorized diagnostics temporarily save at most ten clips under the board's ignored
 `data/speech_diagnostics_20261114`. Remove/move `90-speech-diagnostics.conf` out of the user service
 drop-in directory and restart Sonara to disable capture. Diagnostic audio never enters Git.
+
+
+## Current supervised MVP policy: closest label, single pass
+
+At explicit human request, board `85-closest-label-demo.conf` sets distance 0.85 and margin zero.
+The API labels this `closest_with_distance_gate`. This avoids margin-based rejection of FOOD
+and WATER and skips the boundary retry, guaranteeing at most one template-matching pass.
+Audio validation and the absolute distance limit still apply. It does not automatically send
+requests: the patient must confirm the spoken proposal. Voice YES/NO is still excluded.
+
+This is a usability tradeoff for supervised demonstrations: rescoring the earlier development
+request scores increases correct accepts from 47/75 (margin 0.05) to 75/75 (zero), but accepts
+all 14 similar-word negatives instead of three. These reused recordings do not establish general
+accuracy. Incorrect suggestions must be cancelled. No speaker-authentication claim.
+
+Single pass is less work than retrying, but 225 request references remain. Earlier first-pass
+processing took about 6–8 s on the shared board; this update does not establish subsecond latency.
+Remove/move `85-closest-label-demo.conf` and restart to restore the underlying margin setting.
+Live app sources are backed up in `/home/arduino/sonara-closest-demo-backup`.
