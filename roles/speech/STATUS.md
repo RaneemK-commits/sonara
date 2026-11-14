@@ -1,5 +1,25 @@
 # Speech STATUS
 
+## Personal sessions and isolated UNO Q candidate
+
+- Added Enter-to-start/Enter-to-stop recording CLI, repeat/discard/quit controls, recording-only
+  collection, similar-word prompts and separate repeatable test-run folders. No active profile
+  selection changes. Local recordings remain ignored; no personal audio goes into Git.
+- Compared 105 real enrollment recordings across sessions 02/03/04, holding out each complete
+  session. Separate request and confirmation vocabularies. Weighted/augmented candidate gets
+  nearest labels correct on 75/75 request and 28/30 confirmation development trials, but fixed
+  rejection accepts only 1/75 and 4/30. Fourteen similar-word negatives reject in request context;
+  confirmation incorrectly accepts snow as NO. No production-readiness claim.
+- Exported feature-only candidate with 315 references from 105 independent parents. Source-family
+  aggregation prevents augmented siblings voting twice. Round-trip scores match all 28 study
+  negative/context comparisons. No thresholds were tuned on the negative test recordings.
+- Local isolated release suite: 155 passed (6.39 s), excluding concurrent playback edits.
+  Eight new CLI/candidate tests also pass on UNO Q (2.07 s). Candidate deployed separately at
+  /home/arduino/sonara-speech-personal-20261114/{source,candidate}; production service and active
+  patient_001 remain unchanged. Physical capture/live recognition with this candidate unverified.
+- Documentation: docs/PERSONAL_CANDIDATE.md. Personal results stay in ignored data/profiles;
+  candidate binary stays in ignored data/candidates. GitHub contains source/tests only.
+
 ## Keyword review after device handoff
 
 - Fixed `KeywordSpotter.feed`: every scheduled scan runs at the same audio-clock position

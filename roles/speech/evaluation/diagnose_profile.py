@@ -26,7 +26,21 @@ def diagnose(path: Path) -> dict:
         rows.append({'label': label, 'frames': len(seq), 'best': ranked[0] if ranked else None,
                      'own_distance': own, 'nearest_other_distance': other if np.isfinite(other) else None,
                      'own_separation': other-own if own is not None and np.isfinite(other) else None})
+    # Pair-specific confusion tells enrollment which words need attention. These
+    # are independent-template comparisons, but still enrollment diagnostics.
+    confusion = {label: {other: 0 for other in clf.classes} for label in clf.classes}
+    for row in rows:
+        if row['best'] is not None:
+            confusion[row['label']][row['best']] += 1
+    confused_pairs = [
+        {'intents': [a, b], 'nearest_label_errors': confusion[a][b] + confusion[b][a]}
+        for index, a in enumerate(clf.classes) for b in clf.classes[index + 1:]
+        if confusion[a][b] + confusion[b][a]
+    ]
+    confused_pairs.sort(key=lambda pair: (-pair['nearest_label_errors'], pair['intents']))
     result = {'counts': clf.counts(), 'matching': {'k': clf.k, 'band': clf.band, 'margin': clf.margin},
+              'enrollment_nearest_label_confusion': confusion,
+              'confused_pairs': confused_pairs,
               'global_threshold': clf.threshold, 'calibration': clf.calibration,
               'loo_nearest_intent_correct_count': sum(r['label'] == r['best'] for r in rows),
               'loo_trials': len(rows), 'rows': rows,

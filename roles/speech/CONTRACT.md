@@ -183,3 +183,13 @@ lower-cadence replay cases had RTF <1, but long per-call processing still exceed
 independent-source recall is poor. These are test tools, not an instruction to activate the
 new keyword mode. The device capture-lifecycle FYI is parked separately at the user's request;
 this follow-up does not change AudioCapture or the running microphone owner.
+
+## Isolated personal-word candidate (experimental)
+
+`sonara.models.personal.PersonalWordCandidate.load(directory).predict(audio, context='requests')`
+returns the existing `Prediction` with explicit rejection. Context `requests` restricts scoring
+solely to WATER/HELP/FOOD/PAIN/BATHROOM; `confirmation` restricts to YES/NO and is diagnostic
+only (known snow/NO false acceptance). Weighted/decimated features and source families are
+stored in a separate checksummed candidate.json/references.npz format. Do not load it as a
+production profile or silently discard its feature transformations. No controller/server/config
+hook was added. Deployment, test commands and limitations: docs/PERSONAL_CANDIDATE.md.
