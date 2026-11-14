@@ -1,0 +1,4807 @@
+{
+  "kind": "measured CPU/temperature; NOT watts",
+  "machine": "aarch64",
+  "logical_cpus": 4,
+  "samples": [
+    {
+      "elapsed_s": 1.0012222329996803,
+      "system_cpu_fraction": 0.5470737913486005,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 7.102049476999127,
+      "system_cpu_fraction": 0.47897392767031116,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 13.25329880999925,
+      "system_cpu_fraction": 0.49624373956594325,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 19.399938056999417,
+      "system_cpu_fraction": 0.50187265917603,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 25.535424275999503,
+      "system_cpu_fraction": 0.48303309593632177,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 31.678055402999235,
+      "system_cpu_fraction": 0.498330550918197,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 55.1,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.8,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 37.825735199999144,
+      "system_cpu_fraction": 0.4970833333333333,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 43.96559042199988,
+      "system_cpu_fraction": 0.49895702962035876,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 50.116845313999875,
+      "system_cpu_fraction": 0.48307563727538655,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 56.25402687299993,
+      "system_cpu_fraction": 0.5008305647840532,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 54.8,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.8,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 62.41054168099981,
+      "system_cpu_fraction": 0.5008305647840532,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 68.54109589399923,
+      "system_cpu_fraction": 0.49081035923141186,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 74.68835259299976,
+      "system_cpu_fraction": 0.4914973040232269,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 80.83303433799938,
+      "system_cpu_fraction": 0.5099833610648918,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 86.97669950899945,
+      "system_cpu_fraction": 0.5299003322259136,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 93.12084163799955,
+      "system_cpu_fraction": 0.5168961201501877,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 50.1,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 99.26032182799918,
+      "system_cpu_fraction": 0.5297544735746983,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 49.5,
+        "mapss_thermal/temp1_input": 51.4,
+        "camera_thermal/temp1_input": 50.7,
+        "gpu_thermal/temp1_input": 50.4,
+        "mdm0_thermal/temp1_input": 50.1,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 105.40836067499913,
+      "system_cpu_fraction": 0.5350767953507679,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 111.55361842699949,
+      "system_cpu_fraction": 0.5345257903494176,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.6,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 117.6966205209992,
+      "system_cpu_fraction": 0.5164241164241165,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 54.5,
+        "wlan_thermal/temp1_input": 49.5,
+        "mapss_thermal/temp1_input": 51.4,
+        "camera_thermal/temp1_input": 50.7,
+        "gpu_thermal/temp1_input": 50.4,
+        "mdm0_thermal/temp1_input": 50.1,
+        "cpuss0_thermal/temp1_input": 55.1,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 123.84850839599949,
+      "system_cpu_fraction": 0.5372825186412593,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 129.9843271259997,
+      "system_cpu_fraction": 0.5164377861007075,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 136.12291627399918,
+      "system_cpu_fraction": 0.5301204819277109,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 54.5,
+        "wlan_thermal/temp1_input": 49.5,
+        "mapss_thermal/temp1_input": 51.4,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.4,
+        "mdm0_thermal/temp1_input": 50.1,
+        "cpuss0_thermal/temp1_input": 54.8,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 142.2785601429996,
+      "system_cpu_fraction": 0.5367372353673724,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 148.41577443999995,
+      "system_cpu_fraction": 0.5345545378850958,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 50.1,
+        "cpuss1_thermal/temp1_input": 53.9,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.4,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 154.5648065489995,
+      "system_cpu_fraction": 0.5194859038142621,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 53.9,
+        "wlan_thermal/temp1_input": 49.5,
+        "mapss_thermal/temp1_input": 51.4,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 160.7043326239991,
+      "system_cpu_fraction": 0.5317295727913729,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 166.8475502249994,
+      "system_cpu_fraction": 0.5348547717842324,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.6,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 172.98701614499987,
+      "system_cpu_fraction": 0.5195670274771024,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 53.9,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.7,
+        "gpu_thermal/temp1_input": 50.4,
+        "mdm0_thermal/temp1_input": 50.1,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 179.13776021299964,
+      "system_cpu_fraction": 0.5350584307178631,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 49.5,
+        "mapss_thermal/temp1_input": 51.4,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.4,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 54.8,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 185.29643127499912,
+      "system_cpu_fraction": 0.5304347826086957,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 191.42293712599985,
+      "system_cpu_fraction": 0.46921797004991683,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 197.5686556769997,
+      "system_cpu_fraction": 0.4964568570237599,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 203.71300566099944,
+      "system_cpu_fraction": 0.4989596337910945,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 209.8592682949993,
+      "system_cpu_fraction": 0.4933444259567388,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 216.0128684779993,
+      "system_cpu_fraction": 0.4898213543830494,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 222.14952796299985,
+      "system_cpu_fraction": 0.4930350358801182,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 228.28879690899976,
+      "system_cpu_fraction": 0.49623430962343096,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 234.43195513699993,
+      "system_cpu_fraction": 0.4931106471816284,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 240.58571433999987,
+      "system_cpu_fraction": 0.5002087682672234,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 246.71959653299928,
+      "system_cpu_fraction": 0.5027117229870671,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 252.8674939449993,
+      "system_cpu_fraction": 0.501039501039501,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 259.009115285,
+      "system_cpu_fraction": 0.479664570230608,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 265.15088109299995,
+      "system_cpu_fraction": 0.498330550918197,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 271.2957653329995,
+      "system_cpu_fraction": 0.4964568570237599,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 277.44474407099915,
+      "system_cpu_fraction": 0.48388447048974464,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 283.5839122339994,
+      "system_cpu_fraction": 0.496427070197562,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 289.7341259149998,
+      "system_cpu_fraction": 0.4949664429530201,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 295.87311370299994,
+      "system_cpu_fraction": 0.49313358302122345,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 302.0155774169998,
+      "system_cpu_fraction": 0.4945833333333333,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 308.16389606099983,
+      "system_cpu_fraction": 0.5014577259475219,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 314.3097639309999,
+      "system_cpu_fraction": 0.4987510407993339,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 320.4491282069994,
+      "system_cpu_fraction": 0.4809384164222874,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 326.5929754339995,
+      "system_cpu_fraction": 0.49346818373367046,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 332.74839000299926,
+      "system_cpu_fraction": 0.5006211180124224,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 338.8813683999997,
+      "system_cpu_fraction": 0.4871578947368421,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 345.02791220699964,
+      "system_cpu_fraction": 0.49519431675720854,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 351.1683344969997,
+      "system_cpu_fraction": 0.5187053383774696,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 357.31331904299986,
+      "system_cpu_fraction": 0.49875,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 363.4547401479995,
+      "system_cpu_fraction": 0.4786253143336127,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 369.6059420399997,
+      "system_cpu_fraction": 0.5012468827930174,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 375.74047030199927,
+      "system_cpu_fraction": 0.49707602339181284,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 381.89374580599997,
+      "system_cpu_fraction": 0.4799163179916318,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 388.0366374789992,
+      "system_cpu_fraction": 0.5002085940759282,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 394.178296565,
+      "system_cpu_fraction": 0.498330550918197,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 400.3223742699993,
+      "system_cpu_fraction": 0.4964390448261416,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 406.468142361,
+      "system_cpu_fraction": 0.48075313807531384,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 412.60809323099966,
+      "system_cpu_fraction": 0.4945332211942809,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 418.75668304099963,
+      "system_cpu_fraction": 0.5012479201331115,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 424.90291376799996,
+      "system_cpu_fraction": 0.5,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 431.0436037569998,
+      "system_cpu_fraction": 0.49415204678362573,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 437.1821035839994,
+      "system_cpu_fraction": 0.5217932752179327,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 443.33256497299953,
+      "system_cpu_fraction": 0.5185185185185185,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 449.46468191199983,
+      "system_cpu_fraction": 0.52375,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 455.61904422099997,
+      "system_cpu_fraction": 0.5439034540158135,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 461.76762982699984,
+      "system_cpu_fraction": 0.5353577371048253,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 467.9084055839994,
+      "system_cpu_fraction": 0.5191666666666667,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 474.0542526219997,
+      "system_cpu_fraction": 0.5360566902876198,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 480.1923496669997,
+      "system_cpu_fraction": 0.538558256496228,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 486.3414985549998,
+      "system_cpu_fraction": 0.5187032418952618,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 492.4833786149993,
+      "system_cpu_fraction": 0.5358474927476171,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 498.6279311389999,
+      "system_cpu_fraction": 0.5316296606619187,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 504.7793673879996,
+      "system_cpu_fraction": 0.5250933222729158,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 510.9099904729992,
+      "system_cpu_fraction": 0.49874371859296485,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 517.0590852139994,
+      "system_cpu_fraction": 0.4993762993762994,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 523.2033546789999,
+      "system_cpu_fraction": 0.4952063359733222,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 529.3483741559994,
+      "system_cpu_fraction": 0.48197820620285,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 535.4870482959996,
+      "system_cpu_fraction": 0.49603671255736337,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 541.6293938019999,
+      "system_cpu_fraction": 0.4989561586638831,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 547.7764895989994,
+      "system_cpu_fraction": 0.471530999578237,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 553.9238158909993,
+      "system_cpu_fraction": 0.4972837442540744,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 560.061579063,
+      "system_cpu_fraction": 0.49832915622389307,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 566.2072695609995,
+      "system_cpu_fraction": 0.4979166666666667,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 572.3526097249996,
+      "system_cpu_fraction": 0.5354166666666667,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 54.5,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.8,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 578.505651855,
+      "system_cpu_fraction": 0.5371215263376192,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 584.6383248049997,
+      "system_cpu_fraction": 0.5251141552511416,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 590.786257277,
+      "system_cpu_fraction": 0.5338842975206611,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 55.1,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.8,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 596.9409108809996,
+      "system_cpu_fraction": 0.5340531561461794,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 603.0652723809999,
+      "system_cpu_fraction": 0.547430004178855,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.6,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 609.2181849389999,
+      "system_cpu_fraction": 0.4908864954432477,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 615.3591113149996,
+      "system_cpu_fraction": 0.49348465741908365,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 621.508790375,
+      "system_cpu_fraction": 0.49391523289970624,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 627.6517602069998,
+      "system_cpu_fraction": 0.4798994974874372,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 633.7931099429998,
+      "system_cpu_fraction": 0.49854227405247814,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 639.9531942169997,
+      "system_cpu_fraction": 0.49563772330702116,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 646.0865728269991,
+      "system_cpu_fraction": 0.48444628784736626,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 652.2229441199997,
+      "system_cpu_fraction": 0.4991638795986622,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 54.5,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 658.3752402889995,
+      "system_cpu_fraction": 0.5006242197253433,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 664.5091410699997,
+      "system_cpu_fraction": 0.5022945348352107,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 670.6552213239993,
+      "system_cpu_fraction": 0.47611064543168485,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 676.8026065969998,
+      "system_cpu_fraction": 0.4958368026644463,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 682.9412344249995,
+      "system_cpu_fraction": 0.49812421842434346,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 689.0849730049995,
+      "system_cpu_fraction": 0.4809862097785207,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 695.2372765969994,
+      "system_cpu_fraction": 0.49812421842434346,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 53.9,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 701.3811687499992,
+      "system_cpu_fraction": 0.4962248322147651,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 707.5288088859998,
+      "system_cpu_fraction": 0.4815745393634841,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 713.6659227229993,
+      "system_cpu_fraction": 0.4947676852239431,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 54.5,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 719.8166784699997,
+      "system_cpu_fraction": 0.4945788156797331,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 725.9539974729996,
+      "system_cpu_fraction": 0.4995840266222962,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 732.0977842449993,
+      "system_cpu_fraction": 0.48544093178036607,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 738.2407554199999,
+      "system_cpu_fraction": 0.4941324392288349,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 744.4027811309998,
+      "system_cpu_fraction": 0.49896565990897807,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 750.5294229289993,
+      "system_cpu_fraction": 0.49375520399666945,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 756.6759390699999,
+      "system_cpu_fraction": 0.48877805486284287,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 762.8140882909993,
+      "system_cpu_fraction": 0.49434436531210724,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 768.9750393919994,
+      "system_cpu_fraction": 0.4979235880398671,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 51.4,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 775.1027466239993,
+      "system_cpu_fraction": 0.48557089084065247,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 781.2481809449991,
+      "system_cpu_fraction": 0.5081351689612015,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 787.4014423439994,
+      "system_cpu_fraction": 0.4979061976549414,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 793.5388651909998,
+      "system_cpu_fraction": 0.507890365448505,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 799.6830080279997,
+      "system_cpu_fraction": 0.5285535639849938,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 805.8198688749999,
+      "system_cpu_fraction": 0.532804011700794,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 811.9665807419997,
+      "system_cpu_fraction": 0.53255910410618,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 818.1123553849993,
+      "system_cpu_fraction": 0.5170265780730897,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 824.2550314279997,
+      "system_cpu_fraction": 0.5477386934673367,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 830.4054987339996,
+      "system_cpu_fraction": 0.5325542570951586,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 836.5471086839998,
+      "system_cpu_fraction": 0.519318653926049,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 842.6821681809997,
+      "system_cpu_fraction": 0.5287979966611018,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 848.8399380219998,
+      "system_cpu_fraction": 0.5355665839536807,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 854.9821834099994,
+      "system_cpu_fraction": 0.5165700082850041,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 861.1152384809993,
+      "system_cpu_fraction": 0.5320299500831946,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 54.5,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 55.1,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 867.2752048839993,
+      "system_cpu_fraction": 0.5316402997502082,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 873.413008646,
+      "system_cpu_fraction": 0.5172700790678318,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 879.5480797219998,
+      "system_cpu_fraction": 0.5349417637271214,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 885.7039272249995,
+      "system_cpu_fraction": 0.5376967688483845,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 891.8450095209992,
+      "system_cpu_fraction": 0.527719883284702,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 897.9802474899998,
+      "system_cpu_fraction": 0.5316930775646372,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 49.5,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.4,
+        "mdm0_thermal/temp1_input": 50.1,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 904.1265636619992,
+      "system_cpu_fraction": 0.5387484459179445,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.3,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 910.2754981039998,
+      "system_cpu_fraction": 0.5358474927476171,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.6,
+        "mdm1_thermal/temp1_input": 49.8,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 916.4103938149992,
+      "system_cpu_fraction": 0.5183028286189684,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 922.5631068179991,
+      "system_cpu_fraction": 0.521431543903454,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 928.7062407789999,
+      "system_cpu_fraction": 0.497489539748954,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 934.8466891609996,
+      "system_cpu_fraction": 0.47822445561139026,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 940.9905740609993,
+      "system_cpu_fraction": 0.49937473947478117,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 947.1401779529997,
+      "system_cpu_fraction": 0.4956268221574344,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 953.2791676469997,
+      "system_cpu_fraction": 0.49854105877448934,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 959.4242761339992,
+      "system_cpu_fraction": 0.47946353730092206,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 965.5725816649992,
+      "system_cpu_fraction": 0.49391012179756405,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 971.7158467099998,
+      "system_cpu_fraction": 0.49707846410684475,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 977.8574571379995,
+      "system_cpu_fraction": 0.4868366067697451,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 983.9999552709996,
+      "system_cpu_fraction": 0.49333888426311406,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 990.147218911,
+      "system_cpu_fraction": 0.4970735785953177,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 996.2882791429993,
+      "system_cpu_fraction": 0.4972882770129328,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1002.4351540109992,
+      "system_cpu_fraction": 0.48502495840266224,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 1008.5722417939996,
+      "system_cpu_fraction": 0.49581939799331104,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1014.7201261419996,
+      "system_cpu_fraction": 0.49666388657214344,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1020.8668841239996,
+      "system_cpu_fraction": 0.48180677540777916,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 1027.0115944279996,
+      "system_cpu_fraction": 0.5284586622351475,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 1033.1549911269994,
+      "system_cpu_fraction": 0.5377280265339967,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 1039.3010861379998,
+      "system_cpu_fraction": 0.5161557580778791,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 1045.4414729719992,
+      "system_cpu_fraction": 0.53255910410618,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.9,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.4,
+        "gpu_thermal/temp1_input": 50.4,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 52.0
+      }
+    },
+    {
+      "elapsed_s": 1051.5821552339994,
+      "system_cpu_fraction": 0.5397419891801915,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1057.7301715889998,
+      "system_cpu_fraction": 0.4955937893411666,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.5,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 1063.8744284389995,
+      "system_cpu_fraction": 0.4843292937735061,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 1070.0174661739993,
+      "system_cpu_fraction": 0.49330543933054394,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 1076.1810226199996,
+      "system_cpu_fraction": 0.49563772330702116,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1082.3067794829994,
+      "system_cpu_fraction": 0.48304730012557556,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 1088.447134219,
+      "system_cpu_fraction": 0.4901052631578947,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 54.5,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.7,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 1094.5997950349993,
+      "system_cpu_fraction": 0.49937369519832986,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1100.7332568789998,
+      "system_cpu_fraction": 0.4814968814968815,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 50.1,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 1106.8812693599994,
+      "system_cpu_fraction": 0.4899413243922883,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 54.5,
+        "wlan_thermal/temp1_input": 49.2,
+        "mapss_thermal/temp1_input": 51.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.8,
+        "cpuss0_thermal/temp1_input": 54.8,
+        "video_thermal/temp1_input": 51.7
+      }
+    },
+    {
+      "elapsed_s": 1113.0312370919992,
+      "system_cpu_fraction": 0.49728601252609606,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1119.1656183939995,
+      "system_cpu_fraction": 0.48177628822790114,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1125.3111225409993,
+      "system_cpu_fraction": 0.49917081260364843,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 53.3,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.8,
+        "mdm0_thermal/temp1_input": 49.5,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.4
+      }
+    },
+    {
+      "elapsed_s": 1131.4574982369995,
+      "system_cpu_fraction": 0.4947894956231763,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 50.1,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1137.6023992609998,
+      "system_cpu_fraction": 0.495393634840871,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 52.0,
+        "mdm1_thermal/temp1_input": 49.2,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1143.7453629539996,
+      "system_cpu_fraction": 0.48691316992106354,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.5,
+        "mdm0_thermal/temp1_input": 49.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1149.8887107989995,
+      "system_cpu_fraction": 0.4943491000418585,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 54.8,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1156.0410331939993,
+      "system_cpu_fraction": 0.49979227253842956,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 51.4,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1162.1727397999994,
+      "system_cpu_fraction": 0.4890939597315436,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1168.3216666629996,
+      "system_cpu_fraction": 0.4882747068676717,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1174.4655862249992,
+      "system_cpu_fraction": 0.49685006299874,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 50.1,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1180.6119616839997,
+      "system_cpu_fraction": 0.49604331528529777,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 51.7,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1186.7535321389996,
+      "system_cpu_fraction": 0.48474717927287925,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1192.8983035539995,
+      "system_cpu_fraction": 0.49625,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1199.0419948999997,
+      "system_cpu_fraction": 0.4974916387959866,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1205.1880894389997,
+      "system_cpu_fraction": 0.4972791963164504,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1211.3367624359998,
+      "system_cpu_fraction": 0.499168744804655,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1217.4828332689995,
+      "system_cpu_fraction": 0.4989596337910945,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1223.616899402,
+      "system_cpu_fraction": 0.4843292937735061,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1229.7581026339994,
+      "system_cpu_fraction": 0.49603671255736337,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1235.9030547559996,
+      "system_cpu_fraction": 0.5002085940759282,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 50.4,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1242.0548124129991,
+      "system_cpu_fraction": 0.4985446985446986,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 50.4,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.4,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1248.1925392109997,
+      "system_cpu_fraction": 0.4794007490636704,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.1,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1254.340312202,
+      "system_cpu_fraction": 0.4985398414685023,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.7,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1260.4828756689994,
+      "system_cpu_fraction": 0.49750208159866777,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 50.1,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 50.7,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1266.6252046619993,
+      "system_cpu_fraction": 0.4800671422576584,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 49.8,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1272.7665411529997,
+      "system_cpu_fraction": 0.5391628677994198,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 53.9,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1278.92103512,
+      "system_cpu_fraction": 0.5345257903494176,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1285.0556584939995,
+      "system_cpu_fraction": 0.5293872446852855,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1291.2038403399993,
+      "system_cpu_fraction": 0.5282940933498554,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 51.4,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1297.3431304999995,
+      "system_cpu_fraction": 0.5230961298377028,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 50.1,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.6,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.4,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1303.4900217859995,
+      "system_cpu_fraction": 0.4931048892603427,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 50.1,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.6,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.4,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1309.6292901499992,
+      "system_cpu_fraction": 0.4799498746867168,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.1,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 50.4,
+        "wlan_thermal/temp1_input": 47.0,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1315.7741319159995,
+      "system_cpu_fraction": 0.4974916387959866,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.1,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.4,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1321.9260227739996,
+      "system_cpu_fraction": 0.4962374581939799,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.1,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 49.8,
+        "wlan_thermal/temp1_input": 47.0,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.2,
+        "gpu_thermal/temp1_input": 47.6,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.4,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1328.0669329739994,
+      "system_cpu_fraction": 0.5008326394671108,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.1,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 50.1,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.6,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1334.2064355759994,
+      "system_cpu_fraction": 0.4787322768974145,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.1,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1340.3562390219995,
+      "system_cpu_fraction": 0.5191826522101751,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.1,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1346.5038565309997,
+      "system_cpu_fraction": 0.4956122022565817,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.1,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 50.4,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.6,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1352.6408477129999,
+      "system_cpu_fraction": 0.49500416319733553,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1358.7909358609995,
+      "system_cpu_fraction": 0.5226611226611226,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1364.9212613519994,
+      "system_cpu_fraction": 0.5324132162275199,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1371.0715625189996,
+      "system_cpu_fraction": 0.5390980554406288,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1377.214780366,
+      "system_cpu_fraction": 0.5223695111847556,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1383.3527214709993,
+      "system_cpu_fraction": 0.5393537696768849,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1389.5016256739991,
+      "system_cpu_fraction": 0.5395772896808951,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1395.649780887,
+      "system_cpu_fraction": 0.524026512013256,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1401.7904773109994,
+      "system_cpu_fraction": 0.5322445561139029,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1407.9310475139991,
+      "system_cpu_fraction": 0.5360696517412935,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1414.0828373299992,
+      "system_cpu_fraction": 0.5209456656988801,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1420.2295704649996,
+      "system_cpu_fraction": 0.5359070153590701,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1426.3654532209994,
+      "system_cpu_fraction": 0.5345545378850958,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1432.5103173419993,
+      "system_cpu_fraction": 0.5310805173133083,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1438.6635016249993,
+      "system_cpu_fraction": 0.5229623500206868,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1444.8026322229998,
+      "system_cpu_fraction": 0.5333611342785655,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1450.9472719159994,
+      "system_cpu_fraction": 0.5365853658536586,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1457.0829133889993,
+      "system_cpu_fraction": 0.5223880597014925,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1463.2330190389994,
+      "system_cpu_fraction": 0.5339159384103205,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1469.373237504,
+      "system_cpu_fraction": 0.5406976744186046,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1475.5194242909993,
+      "system_cpu_fraction": 0.5178719866999169,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1481.6667987329993,
+      "system_cpu_fraction": 0.5378850957535387,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 54.5,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.8,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1487.8177814759993,
+      "system_cpu_fraction": 0.5344970906068163,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1493.9523588019993,
+      "system_cpu_fraction": 0.5312629399585921,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1500.0916689739997,
+      "system_cpu_fraction": 0.527536231884058,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1506.2425498639996,
+      "system_cpu_fraction": 0.5344970906068163,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.4,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1512.3833302389994,
+      "system_cpu_fraction": 0.5391666666666667,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1518.5232658079995,
+      "system_cpu_fraction": 0.5211618257261411,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1524.671867436,
+      "system_cpu_fraction": 0.5355213959285418,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1530.8156384939994,
+      "system_cpu_fraction": 0.535,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1536.9589465219997,
+      "system_cpu_fraction": 0.5181023720349563,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1543.1027310599993,
+      "system_cpu_fraction": 0.5351059410054009,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 53.9,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1549.2482670679992,
+      "system_cpu_fraction": 0.5304674457429048,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1555.3905621059994,
+      "system_cpu_fraction": 0.5238292581848322,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1561.5383053659998,
+      "system_cpu_fraction": 0.5371287128712872,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 53.6,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1567.688019579,
+      "system_cpu_fraction": 0.534777176176593,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1573.8193910239997,
+      "system_cpu_fraction": 0.519783423573511,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1579.9651417099994,
+      "system_cpu_fraction": 0.5358772293654085,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 53.9,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1586.116843803,
+      "system_cpu_fraction": 0.5403392635498552,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1592.2556799489994,
+      "system_cpu_fraction": 0.5187343880099917,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1598.4006219309995,
+      "system_cpu_fraction": 0.5344180225281602,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.6,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1604.5438410869992,
+      "system_cpu_fraction": 0.5320299500831946,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1610.6842535019996,
+      "system_cpu_fraction": 0.5332778702163061,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1616.8276522999995,
+      "system_cpu_fraction": 0.5192866030692659,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1622.975302285,
+      "system_cpu_fraction": 0.5325271059216014,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.4,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 54.2,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1629.1238883759997,
+      "system_cpu_fraction": 0.5352523988318731,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 51.1,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1635.2676078139993,
+      "system_cpu_fraction": 0.4853801169590643,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1641.4124891939991,
+      "system_cpu_fraction": 0.5297792586422324,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 51.1
+      }
+    },
+    {
+      "elapsed_s": 1647.547659037,
+      "system_cpu_fraction": 0.5294117647058824,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1653.6906244229995,
+      "system_cpu_fraction": 0.5351351351351351,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1659.8453217939996,
+      "system_cpu_fraction": 0.5142738932561026,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1665.9782626269998,
+      "system_cpu_fraction": 0.5346616853466168,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1672.1282338259998,
+      "system_cpu_fraction": 0.5380479735318445,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1678.2754075079993,
+      "system_cpu_fraction": 0.5199335548172758,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1684.41445493,
+      "system_cpu_fraction": 0.5350877192982456,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 54.2,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 53.9,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1690.566773259,
+      "system_cpu_fraction": 0.5499168053244592,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1696.7044456369995,
+      "system_cpu_fraction": 0.5266024298282362,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1702.8475723439997,
+      "system_cpu_fraction": 0.5301957517700958,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 53.9,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 54.5,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1708.9987898089994,
+      "system_cpu_fraction": 0.5340008343763037,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.9,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1715.1475009609994,
+      "system_cpu_fraction": 0.5360566902876198,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.4,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1721.2805611569993,
+      "system_cpu_fraction": 0.5215751989945538,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 52.6,
+        "wlan_thermal/temp1_input": 48.2,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.5,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1727.4234641579997,
+      "system_cpu_fraction": 0.5385256143273636,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.3,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1733.5743615639994,
+      "system_cpu_fraction": 0.5398414685022945,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.7,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1739.7149539469992,
+      "system_cpu_fraction": 0.5222772277227723,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 50.1,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 49.2,
+        "mdm0_thermal/temp1_input": 48.9,
+        "cpuss0_thermal/temp1_input": 53.3,
+        "video_thermal/temp1_input": 50.7
+      }
+    },
+    {
+      "elapsed_s": 1745.8620716079995,
+      "system_cpu_fraction": 0.5391304347826087,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.6,
+        "cpuss1_thermal/temp1_input": 52.0,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.8,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1752.003940957,
+      "system_cpu_fraction": 0.5371523453715235,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 51.1,
+        "mdm1_thermal/temp1_input": 48.9,
+        "cpuss1_thermal/temp1_input": 50.4,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1758.1420424239996,
+      "system_cpu_fraction": 0.47951505016722407,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.7,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1764.2891740359992,
+      "system_cpu_fraction": 0.4974958263772955,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.7,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1770.4399633509993,
+      "system_cpu_fraction": 0.4993762993762994,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 48.2,
+        "cpuss1_thermal/temp1_input": 50.4,
+        "wlan_thermal/temp1_input": 47.9,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1776.5752114019997,
+      "system_cpu_fraction": 0.48264324550397325,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 51.7,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 49.2,
+        "gpu_thermal/temp1_input": 48.9,
+        "mdm0_thermal/temp1_input": 48.6,
+        "cpuss0_thermal/temp1_input": 52.3,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1782.7203036699993,
+      "system_cpu_fraction": 0.5039665970772442,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 52.9,
+        "wlan_thermal/temp1_input": 47.6,
+        "mapss_thermal/temp1_input": 49.5,
+        "camera_thermal/temp1_input": 48.9,
+        "gpu_thermal/temp1_input": 48.6,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 53.6,
+        "video_thermal/temp1_input": 50.4
+      }
+    },
+    {
+      "elapsed_s": 1788.8735618049996,
+      "system_cpu_fraction": 0.4970809007506255,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 50.1,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1795.0069015059998,
+      "system_cpu_fraction": 0.48530646515533166,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 50.1,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1801.1519430429998,
+      "system_cpu_fraction": 0.49269311064718163,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 49.2,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 48.2,
+        "cpuss0_thermal/temp1_input": 52.0,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1807.2960106319997,
+      "system_cpu_fraction": 0.49623430962343096,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 50.1,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.6,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1813.4487734179993,
+      "system_cpu_fraction": 0.49833472106577853,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.0,
+        "mapss_thermal/temp1_input": 48.6,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1819.5812091219987,
+      "system_cpu_fraction": 0.48203842940685043,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 49.8,
+        "mdm1_thermal/temp1_input": 47.3,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.0,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 50.1
+      }
+    },
+    {
+      "elapsed_s": 1825.7260209409988,
+      "system_cpu_fraction": 0.49812421842434346,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.1,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 49.8,
+        "wlan_thermal/temp1_input": 47.0,
+        "mapss_thermal/temp1_input": 48.6,
+        "camera_thermal/temp1_input": 47.9,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 47.6,
+        "cpuss0_thermal/temp1_input": 51.4,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1831.8686460460003,
+      "system_cpu_fraction": 0.49158249158249157,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 50.4,
+        "mdm1_thermal/temp1_input": 47.9,
+        "cpuss1_thermal/temp1_input": 49.8,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.6,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 47.9,
+        "mdm0_thermal/temp1_input": 47.9,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 49.8
+      }
+    },
+    {
+      "elapsed_s": 1838.0174412259994,
+      "system_cpu_fraction": 0.48113998323554064,
+      "temperatures_c": {
+        "hm_center_thermal/temp1_input": 49.8,
+        "mdm1_thermal/temp1_input": 47.6,
+        "cpuss1_thermal/temp1_input": 50.7,
+        "wlan_thermal/temp1_input": 47.3,
+        "mapss_thermal/temp1_input": 48.9,
+        "camera_thermal/temp1_input": 48.6,
+        "gpu_thermal/temp1_input": 48.2,
+        "mdm0_thermal/temp1_input": 47.6,
+        "cpuss0_thermal/temp1_input": 51.1,
+        "video_thermal/temp1_input": 49.8
+      }
+    }
+  ]
+}

@@ -1,0 +1,545 @@
+{
+  "unique_cases": 22,
+  "timing_repetitions": 5,
+  "evidence_grade": "Illustrative modelled SCI scenarios, not measured electricity/carbon or a certified footprint",
+  "functional_unit": "one occupied bed-day, 24 hours of reserved communication service",
+  "measured": {
+    "numpy": {
+      "wall_s": {
+        "median": 4.92814337100026,
+        "mean": 5.108559273279825,
+        "p95": 8.857580354199309
+      },
+      "cpu_s": {
+        "median": 4.744969643999994,
+        "mean": 4.92092841904,
+        "p95": 8.596476763800002
+      }
+    },
+    "native": {
+      "wall_s": {
+        "median": 0.4941757130000042,
+        "mean": 0.5567386130801606,
+        "p95": 0.9717245063999144
+      },
+      "cpu_s": {
+        "median": 0.47374328200000093,
+        "mean": 0.5290964800000005,
+        "p95": 0.8783350513999949
+      }
+    }
+  },
+  "quality_unique_recordings": {
+    "numpy": {
+      "known_trials": 5,
+      "correct_accepted": 4,
+      "wrong_known_accepts": 0,
+      "known_rejected": 1,
+      "real_negative_trials": 14,
+      "real_negative_false_accepts": 11,
+      "synthetic_noise_trials": 3,
+      "synthetic_noise_rejected": 3
+    },
+    "native": {
+      "known_trials": 5,
+      "correct_accepted": 4,
+      "wrong_known_accepts": 0,
+      "known_rejected": 1,
+      "real_negative_trials": 14,
+      "real_negative_false_accepts": 11,
+      "synthetic_noise_trials": 3,
+      "synthetic_noise_rejected": 3
+    }
+  },
+  "modelled_scenarios": [
+    {
+      "engine": "numpy",
+      "scenario": "low",
+      "attempts_per_day": 20,
+      "estimated_energy_kwh": 0.15652666361977102,
+      "operational_g": {
+        "board": 38.976,
+        "display": 19.488,
+        "mic_speaker_hub_buttons": 1.9488,
+        "router": 2.9232,
+        "caregiver_phone": 0.203,
+        "recognition_increment": 0.010380351734892513,
+        "capture_playback_delivery_setup_increment": 0.00044507789214563546
+      },
+      "embodied_g": {
+        "board": 1.1741682974559686,
+        "display": 3.913894324853229,
+        "mic_speaker_hub_buttons": 0.7827788649706459,
+        "router": 0.09784735812133073,
+        "caregiver_phone": 0.24461839530332682
+      },
+      "sci_g_per_bed_day": 69.76313267033153,
+      "modelled_correct_requests": 12.8,
+      "g_per_modelled_correct_request": 5.4502447398696505,
+      "matching_increment_g_per_attempt": 0.0005190175867446256,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "numpy",
+      "scenario": "low",
+      "attempts_per_day": 100,
+      "estimated_energy_kwh": 0.156632404856846,
+      "operational_g": {
+        "board": 38.976,
+        "display": 19.488,
+        "mic_speaker_hub_buttons": 1.9488,
+        "router": 2.9232,
+        "caregiver_phone": 0.203,
+        "recognition_increment": 0.05190175867446256,
+        "capture_playback_delivery_setup_increment": 0.0018546132050204149
+      },
+      "embodied_g": {
+        "board": 1.1741682974559686,
+        "display": 3.913894324853229,
+        "mic_speaker_hub_buttons": 0.7827788649706459,
+        "router": 0.09784735812133073,
+        "caregiver_phone": 0.24461839530332682
+      },
+      "sci_g_per_bed_day": 69.80606361258398,
+      "modelled_correct_requests": 64.0,
+      "g_per_modelled_correct_request": 1.0907197439466247,
+      "matching_increment_g_per_attempt": 0.0005190175867446256,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "numpy",
+      "scenario": "low",
+      "attempts_per_day": 300,
+      "estimated_energy_kwh": 0.15689675794953348,
+      "operational_g": {
+        "board": 38.976,
+        "display": 19.488,
+        "mic_speaker_hub_buttons": 1.9488,
+        "router": 2.9232,
+        "caregiver_phone": 0.203,
+        "recognition_increment": 0.15570527602338768,
+        "capture_playback_delivery_setup_increment": 0.005378451487207363
+      },
+      "embodied_g": {
+        "board": 1.1741682974559686,
+        "display": 3.913894324853229,
+        "mic_speaker_hub_buttons": 0.7827788649706459,
+        "router": 0.09784735812133073,
+        "caregiver_phone": 0.24461839530332682
+      },
+      "sci_g_per_bed_day": 69.9133909682151,
+      "modelled_correct_requests": 192.0,
+      "g_per_modelled_correct_request": 0.3641322446261203,
+      "matching_increment_g_per_attempt": 0.0005190175867446256,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "numpy",
+      "scenario": "central",
+      "attempts_per_day": 20,
+      "estimated_energy_kwh": 0.2386466613345993,
+      "operational_g": {
+        "board": 48.72,
+        "display": 38.976,
+        "mic_speaker_hub_buttons": 4.872,
+        "router": 3.8976,
+        "caregiver_phone": 0.406,
+        "recognition_increment": 0.018165615536061896,
+        "capture_playback_delivery_setup_increment": 0.0007788863112548622
+      },
+      "embodied_g": {
+        "board": 3.561643835616438,
+        "display": 16.43835616438356,
+        "mic_speaker_hub_buttons": 2.73972602739726,
+        "router": 0.410958904109589,
+        "caregiver_phone": 0.5251141552511416
+      },
+      "sci_g_per_bed_day": 120.5663435886053,
+      "modelled_correct_requests": 12.8,
+      "g_per_modelled_correct_request": 9.41924559285979,
+      "matching_increment_g_per_attempt": 0.0009082807768030947,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "numpy",
+      "scenario": "central",
+      "attempts_per_day": 100,
+      "estimated_energy_kwh": 0.23883170849948052,
+      "operational_g": {
+        "board": 48.72,
+        "display": 38.976,
+        "mic_speaker_hub_buttons": 4.872,
+        "router": 3.8976,
+        "caregiver_phone": 0.406,
+        "recognition_increment": 0.09082807768030948,
+        "capture_playback_delivery_setup_increment": 0.003245573108785726
+      },
+      "embodied_g": {
+        "board": 3.561643835616438,
+        "display": 16.43835616438356,
+        "mic_speaker_hub_buttons": 2.73972602739726,
+        "router": 0.410958904109589,
+        "caregiver_phone": 0.5251141552511416
+      },
+      "sci_g_per_bed_day": 120.64147273754709,
+      "modelled_correct_requests": 64.0,
+      "g_per_modelled_correct_request": 1.8850230115241733,
+      "matching_increment_g_per_attempt": 0.0009082807768030947,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "numpy",
+      "scenario": "central",
+      "attempts_per_day": 300,
+      "estimated_energy_kwh": 0.2392943264116836,
+      "operational_g": {
+        "board": 48.72,
+        "display": 38.976,
+        "mic_speaker_hub_buttons": 4.872,
+        "router": 3.8976,
+        "caregiver_phone": 0.406,
+        "recognition_increment": 0.27248423304092845,
+        "capture_playback_delivery_setup_increment": 0.009412290102612885
+      },
+      "embodied_g": {
+        "board": 3.561643835616438,
+        "display": 16.43835616438356,
+        "mic_speaker_hub_buttons": 2.73972602739726,
+        "router": 0.410958904109589,
+        "caregiver_phone": 0.5251141552511416
+      },
+      "sci_g_per_bed_day": 120.82929560990154,
+      "modelled_correct_requests": 192.0,
+      "g_per_modelled_correct_request": 0.6293192479682371,
+      "matching_increment_g_per_attempt": 0.0009082807768030947,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "numpy",
+      "scenario": "high",
+      "attempts_per_day": 20,
+      "estimated_energy_kwh": 0.3764466613345993,
+      "operational_g": {
+        "board": 77.952,
+        "display": 58.464,
+        "mic_speaker_hub_buttons": 9.744,
+        "router": 5.8464,
+        "caregiver_phone": 0.812,
+        "recognition_increment": 0.018165615536061896,
+        "capture_playback_delivery_setup_increment": 0.0007788863112548622
+      },
+      "embodied_g": {
+        "board": 18.264840182648403,
+        "display": 54.794520547945204,
+        "mic_speaker_hub_buttons": 13.698630136986301,
+        "router": 1.3698630136986303,
+        "caregiver_phone": 1.3318112633181127
+      },
+      "sci_g_per_bed_day": 242.297009646444,
+      "modelled_correct_requests": 12.8,
+      "g_per_modelled_correct_request": 18.929453878628436,
+      "matching_increment_g_per_attempt": 0.0009082807768030947,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "numpy",
+      "scenario": "high",
+      "attempts_per_day": 100,
+      "estimated_energy_kwh": 0.3766317084994806,
+      "operational_g": {
+        "board": 77.952,
+        "display": 58.464,
+        "mic_speaker_hub_buttons": 9.744,
+        "router": 5.8464,
+        "caregiver_phone": 0.812,
+        "recognition_increment": 0.09082807768030948,
+        "capture_playback_delivery_setup_increment": 0.003245573108785726
+      },
+      "embodied_g": {
+        "board": 18.264840182648403,
+        "display": 54.794520547945204,
+        "mic_speaker_hub_buttons": 13.698630136986301,
+        "router": 1.3698630136986303,
+        "caregiver_phone": 1.3318112633181127
+      },
+      "sci_g_per_bed_day": 242.37213879538575,
+      "modelled_correct_requests": 64.0,
+      "g_per_modelled_correct_request": 3.7870646686779024,
+      "matching_increment_g_per_attempt": 0.0009082807768030947,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "numpy",
+      "scenario": "high",
+      "attempts_per_day": 300,
+      "estimated_energy_kwh": 0.3770943264116836,
+      "operational_g": {
+        "board": 77.952,
+        "display": 58.464,
+        "mic_speaker_hub_buttons": 9.744,
+        "router": 5.8464,
+        "caregiver_phone": 0.812,
+        "recognition_increment": 0.27248423304092845,
+        "capture_playback_delivery_setup_increment": 0.009412290102612885
+      },
+      "embodied_g": {
+        "board": 18.264840182648403,
+        "display": 54.794520547945204,
+        "mic_speaker_hub_buttons": 13.698630136986301,
+        "router": 1.3698630136986303,
+        "caregiver_phone": 1.3318112633181127
+      },
+      "sci_g_per_bed_day": 242.5599616677402,
+      "modelled_correct_requests": 192.0,
+      "g_per_modelled_correct_request": 1.2633331336861469,
+      "matching_increment_g_per_attempt": 0.0009082807768030947,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "native",
+      "scenario": "low",
+      "attempts_per_day": 20,
+      "estimated_energy_kwh": 0.1565038399002123,
+      "operational_g": {
+        "board": 38.976,
+        "display": 19.488,
+        "mic_speaker_hub_buttons": 1.9488,
+        "router": 2.9232,
+        "caregiver_phone": 0.203,
+        "recognition_increment": 0.0011139215940483896,
+        "capture_playback_delivery_setup_increment": 0.00044507789214563546
+      },
+      "embodied_g": {
+        "board": 1.1741682974559686,
+        "display": 3.913894324853229,
+        "mic_speaker_hub_buttons": 0.7827788649706459,
+        "router": 0.09784735812133073,
+        "caregiver_phone": 0.24461839530332682
+      },
+      "sci_g_per_bed_day": 69.75386624019069,
+      "modelled_correct_requests": 12.8,
+      "g_per_modelled_correct_request": 5.449520800014898,
+      "matching_increment_g_per_attempt": 5.5696079702419486e-05,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "native",
+      "scenario": "low",
+      "attempts_per_day": 100,
+      "estimated_energy_kwh": 0.15651828625905237,
+      "operational_g": {
+        "board": 38.976,
+        "display": 19.488,
+        "mic_speaker_hub_buttons": 1.9488,
+        "router": 2.9232,
+        "caregiver_phone": 0.203,
+        "recognition_increment": 0.005569607970241947,
+        "capture_playback_delivery_setup_increment": 0.0018546132050204149
+      },
+      "embodied_g": {
+        "board": 1.1741682974559686,
+        "display": 3.913894324853229,
+        "mic_speaker_hub_buttons": 0.7827788649706459,
+        "router": 0.09784735812133073,
+        "caregiver_phone": 0.24461839530332682
+      },
+      "sci_g_per_bed_day": 69.75973146187975,
+      "modelled_correct_requests": 64.0,
+      "g_per_modelled_correct_request": 1.0899958040918711,
+      "matching_increment_g_per_attempt": 5.5696079702419486e-05,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "native",
+      "scenario": "low",
+      "attempts_per_day": 300,
+      "estimated_energy_kwh": 0.15655440215615254,
+      "operational_g": {
+        "board": 38.976,
+        "display": 19.488,
+        "mic_speaker_hub_buttons": 1.9488,
+        "router": 2.9232,
+        "caregiver_phone": 0.203,
+        "recognition_increment": 0.016708823910725843,
+        "capture_playback_delivery_setup_increment": 0.005378451487207363
+      },
+      "embodied_g": {
+        "board": 1.1741682974559686,
+        "display": 3.913894324853229,
+        "mic_speaker_hub_buttons": 0.7827788649706459,
+        "router": 0.09784735812133073,
+        "caregiver_phone": 0.24461839530332682
+      },
+      "sci_g_per_bed_day": 69.77439451610243,
+      "modelled_correct_requests": 192.0,
+      "g_per_modelled_correct_request": 0.3634083047713668,
+      "matching_increment_g_per_attempt": 5.5696079702419486e-05,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "native",
+      "scenario": "central",
+      "attempts_per_day": 20,
+      "estimated_energy_kwh": 0.23860671982537154,
+      "operational_g": {
+        "board": 48.72,
+        "display": 38.976,
+        "mic_speaker_hub_buttons": 4.872,
+        "router": 3.8976,
+        "caregiver_phone": 0.406,
+        "recognition_increment": 0.0019493627895846818,
+        "capture_playback_delivery_setup_increment": 0.0007788863112548622
+      },
+      "embodied_g": {
+        "board": 3.561643835616438,
+        "display": 16.43835616438356,
+        "mic_speaker_hub_buttons": 2.73972602739726,
+        "router": 0.410958904109589,
+        "caregiver_phone": 0.5251141552511416
+      },
+      "sci_g_per_bed_day": 120.55012733585883,
+      "modelled_correct_requests": 12.8,
+      "g_per_modelled_correct_request": 9.41797869811397,
+      "matching_increment_g_per_attempt": 9.74681394792341e-05,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "native",
+      "scenario": "central",
+      "attempts_per_day": 100,
+      "estimated_energy_kwh": 0.23863200095334164,
+      "operational_g": {
+        "board": 48.72,
+        "display": 38.976,
+        "mic_speaker_hub_buttons": 4.872,
+        "router": 3.8976,
+        "caregiver_phone": 0.406,
+        "recognition_increment": 0.00974681394792341,
+        "capture_playback_delivery_setup_increment": 0.003245573108785726
+      },
+      "embodied_g": {
+        "board": 3.561643835616438,
+        "display": 16.43835616438356,
+        "mic_speaker_hub_buttons": 2.73972602739726,
+        "router": 0.410958904109589,
+        "caregiver_phone": 0.5251141552511416
+      },
+      "sci_g_per_bed_day": 120.5603914738147,
+      "modelled_correct_requests": 64.0,
+      "g_per_modelled_correct_request": 1.8837561167783547,
+      "matching_increment_g_per_attempt": 9.74681394792341e-05,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "native",
+      "scenario": "central",
+      "attempts_per_day": 300,
+      "estimated_energy_kwh": 0.23869520377326697,
+      "operational_g": {
+        "board": 48.72,
+        "display": 38.976,
+        "mic_speaker_hub_buttons": 4.872,
+        "router": 3.8976,
+        "caregiver_phone": 0.406,
+        "recognition_increment": 0.029240441843770223,
+        "capture_playback_delivery_setup_increment": 0.009412290102612885
+      },
+      "embodied_g": {
+        "board": 3.561643835616438,
+        "display": 16.43835616438356,
+        "mic_speaker_hub_buttons": 2.73972602739726,
+        "router": 0.410958904109589,
+        "caregiver_phone": 0.5251141552511416
+      },
+      "sci_g_per_bed_day": 120.58605181870438,
+      "modelled_correct_requests": 192.0,
+      "g_per_modelled_correct_request": 0.6280523532224186,
+      "matching_increment_g_per_attempt": 9.74681394792341e-05,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "native",
+      "scenario": "high",
+      "attempts_per_day": 20,
+      "estimated_energy_kwh": 0.37640671982537155,
+      "operational_g": {
+        "board": 77.952,
+        "display": 58.464,
+        "mic_speaker_hub_buttons": 9.744,
+        "router": 5.8464,
+        "caregiver_phone": 0.812,
+        "recognition_increment": 0.0019493627895846818,
+        "capture_playback_delivery_setup_increment": 0.0007788863112548622
+      },
+      "embodied_g": {
+        "board": 18.264840182648403,
+        "display": 54.794520547945204,
+        "mic_speaker_hub_buttons": 13.698630136986301,
+        "router": 1.3698630136986303,
+        "caregiver_phone": 1.3318112633181127
+      },
+      "sci_g_per_bed_day": 242.28079339369748,
+      "modelled_correct_requests": 12.8,
+      "g_per_modelled_correct_request": 18.928186983882615,
+      "matching_increment_g_per_attempt": 9.74681394792341e-05,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "native",
+      "scenario": "high",
+      "attempts_per_day": 100,
+      "estimated_energy_kwh": 0.37643200095334167,
+      "operational_g": {
+        "board": 77.952,
+        "display": 58.464,
+        "mic_speaker_hub_buttons": 9.744,
+        "router": 5.8464,
+        "caregiver_phone": 0.812,
+        "recognition_increment": 0.00974681394792341,
+        "capture_playback_delivery_setup_increment": 0.003245573108785726
+      },
+      "embodied_g": {
+        "board": 18.264840182648403,
+        "display": 54.794520547945204,
+        "mic_speaker_hub_buttons": 13.698630136986301,
+        "router": 1.3698630136986303,
+        "caregiver_phone": 1.3318112633181127
+      },
+      "sci_g_per_bed_day": 242.29105753165334,
+      "modelled_correct_requests": 64.0,
+      "g_per_modelled_correct_request": 3.7857977739320834,
+      "matching_increment_g_per_attempt": 9.74681394792341e-05,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    },
+    {
+      "engine": "native",
+      "scenario": "high",
+      "attempts_per_day": 300,
+      "estimated_energy_kwh": 0.37649520377326695,
+      "operational_g": {
+        "board": 77.952,
+        "display": 58.464,
+        "mic_speaker_hub_buttons": 9.744,
+        "router": 5.8464,
+        "caregiver_phone": 0.812,
+        "recognition_increment": 0.029240441843770223,
+        "capture_playback_delivery_setup_increment": 0.009412290102612885
+      },
+      "embodied_g": {
+        "board": 18.264840182648403,
+        "display": 54.794520547945204,
+        "mic_speaker_hub_buttons": 13.698630136986301,
+        "router": 1.3698630136986303,
+        "caregiver_phone": 1.3318112633181127
+      },
+      "sci_g_per_bed_day": 242.316717876543,
+      "modelled_correct_requests": 192.0,
+      "g_per_modelled_correct_request": 1.262066238940328,
+      "matching_increment_g_per_attempt": 9.74681394792341e-05,
+      "kind": "MODELLED scenario; not measured watts/carbon. Correct requests assume confirmation and delivery."
+    }
+  ],
+  "measured_median_latency_speedup": 9.972451582217312,
+  "measured_median_cpu_reduction_fraction": 0.9001588381921372,
+  "warning": "Timing repeats are not independent recognition samples. Electricity, carbon, lifecycle, daily usage and common-stage costs are modelled. No power meter."
+}

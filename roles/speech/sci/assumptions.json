@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "country": "Germany",
+  "functional_unit": "one occupied bed-day, 24 hours of reserved communication service",
+  "evidence_grade": "Illustrative modelled SCI scenarios, not measured electricity/carbon or a certified footprint",
+  "grid_gco2e_per_kwh": 406.0,
+  "grid_source": "https://www.umweltbundesamt.de/system/files/medien/11850/publikationen/2026-03/16_2026_CC.pdf",
+  "grid_note": "UBA March 2026, estimated 2025 German mix, GHG including upstream emissions; not the 344 g CO2-only factor",
+  "attempts_per_day": [20, 100, 300],
+  "workload_weights": {"real_known": 0.8, "real_similar_word": 0.15, "synthetic_noise": 0.05},
+  "workload_note": "Assumed Talk-attempt mix, not observed hospital usage. Every attempt consumes energy, including wrong/rejected predictions.",
+  "capture_cpu_s_per_audio_s": 0.02,
+  "playback_cpu_s_per_audio_s": 0.02,
+  "delivery_cpu_s_per_attempt": 0.01,
+  "setup_cpu_s": 300.0,
+  "profile_lifetime_days": 365.0,
+  "common_stage_note": "Capture/playback/delivery/setup CPU are assumptions. Playback duration comes from WAV metadata where available; no audible output or actual requests.",
+  "scenarios": {
+    "low": {
+      "board_idle_w": 4.0, "board_full_w": 8.0, "lifespan_years": 7.0,
+      "components": [
+        {"id": "board", "power_w": 4.0, "hours": 24.0, "resource_share": 1.0, "embodied_kg": 3.0},
+        {"id": "display", "power_w": 2.0, "hours": 24.0, "resource_share": 1.0, "embodied_kg": 10.0},
+        {"id": "mic_speaker_hub_buttons", "power_w": 0.2, "hours": 24.0, "resource_share": 1.0, "embodied_kg": 2.0},
+        {"id": "router", "power_w": 6.0, "hours": 24.0, "resource_share": 0.05, "embodied_kg": 5.0},
+        {"id": "caregiver_phone", "power_w": 1.0, "hours": 0.5, "resource_share": 1.0, "embodied_kg": 30.0}
+      ]
+    },
+    "central": {
+      "board_idle_w": 5.0, "board_full_w": 12.0, "lifespan_years": 5.0,
+      "components": [
+        {"id": "board", "power_w": 5.0, "hours": 24.0, "resource_share": 1.0, "embodied_kg": 6.5},
+        {"id": "display", "power_w": 4.0, "hours": 24.0, "resource_share": 1.0, "embodied_kg": 30.0},
+        {"id": "mic_speaker_hub_buttons", "power_w": 0.5, "hours": 24.0, "resource_share": 1.0, "embodied_kg": 5.0},
+        {"id": "router", "power_w": 8.0, "hours": 24.0, "resource_share": 0.05, "embodied_kg": 15.0},
+        {"id": "caregiver_phone", "power_w": 2.0, "hours": 0.5, "resource_share": 1.0, "embodied_kg": 46.0}
+      ]
+    },
+    "high": {
+      "board_idle_w": 8.0, "board_full_w": 15.0, "lifespan_years": 3.0,
+      "components": [
+        {"id": "board", "power_w": 8.0, "hours": 24.0, "resource_share": 1.0, "embodied_kg": 20.0},
+        {"id": "display", "power_w": 6.0, "hours": 24.0, "resource_share": 1.0, "embodied_kg": 60.0},
+        {"id": "mic_speaker_hub_buttons", "power_w": 1.0, "hours": 24.0, "resource_share": 1.0, "embodied_kg": 15.0},
+        {"id": "router", "power_w": 12.0, "hours": 24.0, "resource_share": 0.05, "embodied_kg": 30.0},
+        {"id": "caregiver_phone", "power_w": 4.0, "hours": 0.5, "resource_share": 1.0, "embodied_kg": 70.0}
+      ]
+    }
+  },
+  "parameter_sources": {
+    "board_power_context": "https://store.arduino.cc/collections/single-board-computers (advertised 5–12 W; idle/full assignment and linear CPU scaling are unvalidated assumptions)",
+    "board_embodied_context": "https://investors.raspberrypi.com/reports (2024 report describes ~6.5 kg non-use footprint for its SBC class; proxy context only, NOT an UNO Q LCA)",
+    "display_identity": "Read-only board EDID identified MPI7010. https://www.lcdwiki.com/7inch_HDMI_Display-D. Power and embodied values here are assumed sensitivity scenarios, not measured/model-specific LCA data.",
+    "phone_proxy": "https://www.apple.com/environment/pdf/products/iphone/iPhone_15_and_iPhone_15_Plus_PER_Sept2023.pdf (56 kg total, 18% use; ~46 kg non-use proxy, NOT identification of actual caregiver phone)",
+    "unvalidated_inputs": "Display/peripheral/router embodied figures, lifespan, shares, power curve, phone use time and common-stage CPU are explicit assumptions. Low/high are scenarios, NOT confidence intervals.",
+    "allocation": "Dedicated board/display/peripherals reserved all 24 h; router allocated equally across 20 beds; caregiver phone reserved 30 min per bed-day. All are workload assumptions.",
+    "boundary": "Operational equipment and amortized local setup included. Development/research test runs and internet model-download infrastructure excluded from daily service score; their footprint is not claimed zero. Runtime is local. No displaced/avoided nurse trips or carbon offsets credited. No PUE applied to bedside equipment."
+  }
+}
