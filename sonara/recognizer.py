@@ -151,6 +151,7 @@ class Recognizer:
             view.calibration = {'requires_more_recordings':True,
                                 'reason':'Experimental personal request candidate; acceptance calibration unresolved',
                                 'mode':'personal_requests', 'voice_confirmation':False,
+                                'decision_policy':('closest_with_distance_gate' if self.margin==0 else 'distance_and_margin'),
                                 'distance_threshold':self.threshold,'required_margin':self.margin,
                                 'independent_sources':len({f for f,l in zip(candidate.families,candidate.labels) if l in labels})}
             self._candidate,self.clf,self._stamp = candidate,view,stamp

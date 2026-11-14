@@ -97,7 +97,7 @@ class PersonalWordCandidate:
         except (ValueError, TypeError) as exc:
             return Prediction(None,None,float('inf'),0.,threshold,{},reason=str(exc))
         result = self._match(query,context,threshold,required_margin)
-        if not result.accepted and context=='requests':
+        if not result.accepted and context=='requests' and required_margin>0:
             cropped=focused_word(audio)
             # Retry only a substantial endpoint reduction, preserving a meaningful word span.
             if 2400<=len(cropped)<=.75*len(audio):
@@ -130,7 +130,8 @@ class PersonalWordCandidate:
         accepted = distance <= threshold and margin >= required_margin
         return Prediction(best if accepted else None,best,distance,margin,threshold,scores,
                           0.,
-                          '' if accepted else 'distant or ambiguous')
+                          ('closest-label demo; confirmation required' if required_margin==0 else '')
+                          if accepted else 'distant or ambiguous')
 
     def save(self, directory: Path) -> None:
         directory.mkdir(parents=True,exist_ok=False)

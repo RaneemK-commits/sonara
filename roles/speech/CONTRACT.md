@@ -218,3 +218,13 @@ retry reason is `accepted after word-boundary retry`; Prediction/controller inte
 `SONARA_SPEECH_DIAGNOSTICS=/private/directory` explicitly opts into <=10 local WAV/JSON diagnostic
 pairs. Default remains no raw retention. Human authorized this temporarily on UNO Q. No extra
 microphone access or server endpoints are introduced. Full two-pass matching may exceed 10 s.
+
+
+## Closest-label supervised demo
+
+Human-authorized margin zero selects the closest request passing the absolute distance gate.
+`/api/profiles.calibration.decision_policy` is `closest_with_distance_gate` when margin is zero,
+otherwise `distance_and_margin`. Zero-margin mode executes exactly one DTW pass; it skips the
+focused-boundary retry entirely. Invalid audio and distant matches still reject. An accepted
+prediction reason identifies `closest-label demo; confirmation required`. No controller or voice
+YES/NO interface changes. Soundalike negatives can be proposed: confirmation must remain mandatory.
