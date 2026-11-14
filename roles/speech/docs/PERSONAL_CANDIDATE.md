@@ -121,3 +121,25 @@ Reducing margin to 0.08 admits a negative (walker); 0.06 admits two. Genuine-req
 remains low even with this update. Physical confirmation is required and voice YES/NO remains
 excluded. Prior code/settings for this adjustment are backed up in
 `/home/arduino/sonara-personal-limits-backup-20261114`.
+
+
+## Rejected-word boundary retry
+
+A real USB-mic WATER clip contained a long noisy lead-in. Default trimming kept all 3 s and
+failed the margin test. The candidate now retries one focused span only after request rejection:
+ignore energy spikes shorter than 60 ms, retain 80 ms endpoint padding, preserve internal pauses,
+and require a substantial shortening. The original and retry nearest labels must agree. All
+original thresholds remain enforced; this is not automatic nearest-label acceptance.
+
+The recorded board WATER regression changes from rejected (margin 0.0158) to accepted (0.053).
+This clip informed development, so it is not independent validation. It took 10.55 s on the
+shared board, including both matching passes. Four of five known laptop tests still accept
+correctly; PAIN remains rejected. The current margin 0.05 also admits walker/fool/paint among
+14 negative examples; this retry adds none, but does not resolve those existing false accepts.
+
+Runtime margin 0.05 comes from the separate `60-demo-margin.conf` override; it supersedes the
+0.10 setting documented in the earlier deployment. Distance remains 0.85. No voice YES/NO.
+
+Human-authorized diagnostics temporarily save at most ten clips under the board's ignored
+`data/speech_diagnostics_20261114`. Remove/move `90-speech-diagnostics.conf` out of the user service
+drop-in directory and restart Sonara to disable capture. Diagnostic audio never enters Git.

@@ -1,5 +1,27 @@
 # Speech STATUS
 
+## Live WATER boundary retry and opt-in diagnostics
+
+- Diagnosed a real board WATER attempt (same speaker as laptop enrollment). Mic captured speech,
+  but old trim retained all 3 s; margin was 0.0158. Laptop held-out WATER passed at margin 0.075.
+- Added one bounded request-only retry after rejection: energy spans must persist >=60 ms;
+  discard isolated endpoint spikes, retain 80 ms padding and internal pauses. Retry only when
+  cropped span >=0.15 s and <=75% of original duration. Both passes must agree on closest label;
+  retry still needs full distance/margin checks. Confirmation context has no retry.
+- Same saved board WAV now accepts WATER at margin 0.053, distance 0.6302. Replay processing
+  10.55 s on shared UNO Q: functional recovery for this clip, NOT a latency fix or fresh accuracy.
+  The clip was used to develop the change, so this replay is a regression check.
+- Five laptop known tests preserve four correct accepts, one PAIN rejection. At current board
+  margin 0.05 the 14 negatives still have three false accepts (walker/fool/paint); retry adds none.
+  Separate aggressive retraining experiments harmed WATER; those candidates were not deployed.
+- Another session lowered runtime margin to 0.05 via 60-demo-margin.conf; preserved that and
+  distance 0.85. No more limit changes in this fix. Physical/touch confirmation remains required.
+- Explicit human opt-in enabled SONARA_SPEECH_DIAGNOSTICS; <=10 WAV/JSON pairs stay locally in
+  board data/speech_diagnostics_20261114, private directory, excluded from Git. No board raw audio
+  was transferred. Remove 90-speech-diagnostics.conf and restart to disable further retention.
+- Local isolated suite: 161 passed (6.06 s); board: 9 related tests passed (3.58 s). Live health
+  verified IDLE/ready with microphone available. Human confirmed a fresh live WATER attempt now speaks the request and asks for confirmation.
+
 ## Live rejection limits adjusted at human request
 
 - Added explicit SONARA_PERSONAL_REQUEST_THRESHOLD / SONARA_PERSONAL_REQUEST_MARGIN environment
